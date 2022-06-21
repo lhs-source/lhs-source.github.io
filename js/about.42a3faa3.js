@@ -1,0 +1,2 @@
+"use strict";(self["webpackChunklhs_github_page"]=self["webpackChunklhs_github_page"]||[]).push([[443],{4335:function(n,u,t){t.r(u),t.d(u,{default:function(){return o}});var a=t(3396);const e={class:"about"},s=(0,a._)("h1",null,"This is an about page",-1),r=[s];function i(n,u){return(0,a.wg)(),(0,a.iD)("div",e,r)}var c=t(89);const h={},l=(0,c.Z)(h,[["render",i]]);var o=l}}]);
+//# sourceMappingURL=about.42a3faa3.js.map
