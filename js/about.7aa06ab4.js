@@ -1,2 +1,0 @@
-"use strict";(self["webpackChunklhs_githubio"]=self["webpackChunklhs_githubio"]||[]).push([[443],{897:function(n,u,t){t.r(u),t.d(u,{default:function(){return l}});var s=t(793);const i={class:"about"},a=(0,s._)("h1",null,"This is an about page",-1),e=[a];function r(n,u){return(0,s.wg)(),(0,s.iD)("div",i,e)}var c=t(744);const h={},o=(0,c.Z)(h,[["render",r]]);var l=o}}]);
-//# sourceMappingURL=about.7aa06ab4.js.map
