@@ -27,5 +27,5 @@ jobs:
         env:
           PERSONAL_TOKEN: ${{secrets.GH_TOKEN}}
           PUBLISH_BRANCH: master
-          PUBLISH_DIR: ./public
+          PUBLISH_DIR: ./dist
           SCRIPT_MODE: true
