@@ -13,17 +13,9 @@ jobs:
         uses: actions/setup-node@master
         with:
           node-version: 16.x
-
-      - name: Cache node_modules
-        uses: actions/cache@v1
-        with:
-          path: node_modules
-          key: ${{runner.OS}}-build-${{hashFiles('**/yarn.lock')}}
-          restore-keys: |
-            ${{ runner.OS }}-build-${{ runner.OS }}-
       
       - name: Install dependencies
-        run: npm install --prod --pure-lockfile
+        run: npm install
 
       - name: Build
         run: npm run build
