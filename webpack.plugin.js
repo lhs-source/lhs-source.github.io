@@ -1,5 +1,5 @@
 const path = require('path')
-const PrerenderSpaPlugin = require('prerender-spa-plugin')
+const PrerenderSpaPlugin = require('prerender-spa-wp5-plugin')
 
 const posts = require('./public/posts/postlist.json')
 const routes = posts.map(post => `/${post.url}`)
