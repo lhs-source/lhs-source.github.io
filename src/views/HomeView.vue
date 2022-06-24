@@ -32,7 +32,7 @@ const postList = computed<Post[]>(() => {
 }) 
 
 const onClickPost = (post: Post) => {
-  router.push(`/${post.fileName}`);
+  router.push(`/${post.url}`);
 }
 
 </script>

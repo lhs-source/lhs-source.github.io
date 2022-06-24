@@ -17,10 +17,26 @@ export interface Post {
 })
 class Posts extends VuexModule {
   public postList:Post[] = [];
+  public currentUrl = '';
+
+  get currentPost(): Post | undefined {
+    if(this.currentUrl == null || this.currentUrl == '' || this.postList.length <= 0){
+      return undefined;
+    }
+    else {
+      return this.postList.find(post => {
+        return post.url === this.currentUrl;
+      })
+    }
+  }
   
   @Mutation
   public setPostList(postList: Post[]) {
     this.postList = postList;
+  }
+  @Mutation
+  public setCurrentUrl(currentUrl: string) {
+    this.currentUrl = currentUrl;
   }
 
   @Action
@@ -39,6 +55,10 @@ class Posts extends VuexModule {
       const md2html = converter.makeHtml(markdownPost);
       return md2html;
     });
+  }
+  @Action
+  public moveCurrentUrl(url: string) {
+    this.context.commit("setCurrentUrl", url);
   }
 }
 
