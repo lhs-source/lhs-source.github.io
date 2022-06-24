@@ -1,18 +1,49 @@
 <template>
   <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js + TypeScript App"/>
+    <h1>마크다운 테스트</h1>
+    <div class="original">{{markdownPost}}</div>
+    <div class="result-html">{{md2html}}</div>
+    <div class="converted" ref="postArea"></div>
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent } from 'vue';
-import HelloWorld from '@/components/HelloWorld.vue'; // @ is an alias to /src
+<script setup lang="ts">
+import { onMounted, ref } from 'vue';
+import showdown from 'showdown';
 
-export default defineComponent({
-  name: 'Home',
-  components: {
-    HelloWorld,
-  },
-});
+const markdownPost = `# heading 1
+
+something...
+
+# heading 2
+
+# heading 3
+
+# heading 4
+
+`;
+
+const postArea = ref();
+const converter = new showdown.Converter()
+const md2html = converter.makeHtml(markdownPost);
+
+onMounted(() => {
+  if(postArea.value) {
+    console.log('postArea', postArea);
+    postArea.value.innerHTML = md2html;
+  }
+})
 </script>
+
+<style lang="scss">
+.original {
+
+}
+.result-html {
+  margin-top: 112px;
+  background-color: #eee;
+}
+.converted { 
+  margin-top: 112px;
+}
+</style>
