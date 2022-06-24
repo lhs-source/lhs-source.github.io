@@ -1,9 +1,14 @@
 <template>
-  <div id="nav">
-    <router-link to="/">Home</router-link>
-  </div>
   <router-view/>
 </template>
+
+<script setup lang="ts">
+import { useStore } from 'vuex';
+
+const store = useStore();
+store.dispatch("Posts/requestGetPostList");
+
+</script>
 
 <style lang="scss">
 #app {
