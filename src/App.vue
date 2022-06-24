@@ -3,6 +3,7 @@
 </template>
 
 <script setup lang="ts">
+import { onMounted } from 'vue';
 import { useStore } from 'vuex';
 
 const store = useStore();
