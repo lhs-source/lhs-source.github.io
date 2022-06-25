@@ -1,9 +1,7 @@
 <template>
   <div class="about">
     <h1>글 테스트</h1>
-    <div ref="postArea">
-
-    </div>
+    <div v-html="postContents"></div>
     <div>
       url: {{post.url}}
       title: {{post.title}}
@@ -35,10 +33,6 @@ console.log('post', post.value);
 onMounted(() => {
   store.dispatch("Posts/requestGetMarkdoen", post.value.fileName).then((res) => {
     postContents.value = res;
-    
-    if(postArea.value) {
-      postArea.value.innerHTML = postContents.value;
-    }
   })
 })
 
