@@ -94,6 +94,7 @@ onMounted(() => {
       margin: 24px 0;
       padding: 16px;
       overflow-x: auto;
+      line-height: 1.3;
     }
     code {
       background-color: #dadada;
