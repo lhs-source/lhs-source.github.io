@@ -1,6 +1,6 @@
 <template>
   <div class="home">
-    <h1>블로그 목록 테스트</h1>
+    <h1>How to Developing</h1>
     <!-- <div class="original">{{markdownPost}}</div>
     <div class="result-html">{{md2html}}</div>
     <div class="converted" ref="postArea"></div> -->
