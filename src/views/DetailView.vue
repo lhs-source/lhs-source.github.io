@@ -83,6 +83,7 @@ onMounted(() => {
     padding: 64px 32px;
     max-width: 720px;
     text-align: left;
+    word-break: keep-all;
 
     img {
       max-width: 100%;
