@@ -411,7 +411,7 @@ $section-margin-top: 112px;
 @media (min-width: 1280px) and (max-width: 4000px) {
   .main-title {
     .title {
-      padding-top: 64px !important;
+      padding-top: 128px !important;
     }
     .label-area {
       margin-top: calc($section-margin-top * 2) !important;

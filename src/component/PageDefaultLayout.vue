@@ -34,8 +34,7 @@ $section-margin-top: 112px;
 
   .panel {
     width: 100%;
-    height: 50vh;
-    max-height: 360px;
+    height: 28vh;
     background-color: $color-primary;
   }
 
@@ -70,13 +69,13 @@ $section-margin-top: 112px;
 
   .body {
     width: 92vw;
-    margin-top: 16vh;
+    margin-top: 20vh;
     margin-bottom: calc($section-margin-top * 1);
     min-height: 50vh;
     box-shadow: 2px 2px 8px #1d1d1d11;
     background: linear-gradient(
-      rgba(255, 255, 255, 0.85) 64px,
-      $color-primary-white calc($section-margin-top * 2)
+      rgba(255, 255, 255, 0.92) 64px,
+      $color-primary-white calc($section-margin-top * 4)
     );
     transition: margin .2s;
   }
@@ -85,13 +84,11 @@ $section-margin-top: 112px;
 @media (min-width: 1280px) and (max-width: 4000px) {
   .background {
     .panel {
-      max-height: 560px;
     }
   }
 
   .frame {
     .body {
-      margin-top: 24vh;
     }
   }
 }
