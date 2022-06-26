@@ -51,7 +51,7 @@ $section-margin-top: 112px;
     line-height: 0.85;
     font-weight: 600;
     text-align: left;
-    color: #2d2d2d;
+    color: #1d1d1d;
 
     .sentense {
       position: relative;

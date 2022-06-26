@@ -369,6 +369,8 @@ $section-margin-top: 112px;
         box-shadow: 0 0 0 0px $color-primary inset; 
         box-sizing: border-box;
 
+        word-break: keep-all;
+
         cursor: pointer;
         user-select: none;
         transition: .2s;;
@@ -400,11 +402,29 @@ $section-margin-top: 112px;
   }
 }
 
+// modile
 @media screen and (max-width: 480px) {
   .post-list {
     grid-template-columns: 1fr;
   }
-  
+}
+@media (min-width: 1280px) and (max-width: 4000px) {
+  .main-title {
+    .title {
+      padding-top: 64px !important;
+    }
+    .label-area {
+      margin-top: calc($section-margin-top * 2) !important;
+    }
+  }
+  .post-list {
+    grid-template-columns: 1fr 1fr 1fr 1fr !important;
+    .post {
+      .name {
+        font-size: 1.2rem;
+      }
+    }
+  }
 }
 
 </style>

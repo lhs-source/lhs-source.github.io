@@ -43,7 +43,7 @@ $color-primary-white: #fafafa;
   font-weight: 700;
 }
 
-@media screen and (max-width: 460px) {
+@media screen and (max-width: 560px) {
   .typo-0h {
     font-size: 0.75rem;
     font-weight: 400;
@@ -84,4 +84,46 @@ $color-primary-white: #fafafa;
     font-weight: 700;
   }
 
+}
+
+@media screen and (min-width: 1280px) and (max-width: 4000px) {
+  .typo-0h {
+    font-size: 0.75rem;
+    font-weight: 400;
+  }
+
+  .typo-1 {
+    font-size: 1rem;
+    font-weight: 400;
+  }
+
+  .typo-1h {
+    font-size: 1.25rem;
+    font-weight: 400;
+  }
+
+  .typo-2 {
+    font-size: 2.5rem;
+    font-weight: 400;
+  }
+
+  .typo-3 {
+    font-size: 3.5rem;
+    font-weight: 500;
+  }
+
+  .typo-4 {
+    font-size: 5rem;
+    font-weight: 600;
+  }
+
+  .typo-5 {
+    font-size: 6rem;
+    font-weight: 700;
+  }
+
+  .typo-6 {
+    font-size: 8rem;
+    font-weight: 700;
+  }
 }
