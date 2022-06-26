@@ -1,7 +1,7 @@
 <template>
-  <PageDefaultLayout class="home">
+  <PageDefaultLayout class="home-wrapper">
     <div class="main-title">
-      <div class="title typo-3">How to Developing</div>
+      <div class="title typo-3">Development Log</div>
       <div class="by typo-1">Front End Dev</div>
       <div class="by typo-1h">Lee Hyunsoo</div>
       <div class="label-area">
@@ -307,7 +307,7 @@ const onClickPost = (post: Post) => {
 <style lang="scss" scoped>
 $section-margin-top: 112px;
 
-.home {
+.home-wrapper {
   .main-title {
     width: 92vw;
     min-height: 260px;
@@ -366,13 +366,34 @@ $section-margin-top: 112px;
       grid-auto-columns: auto;
       .post {
         padding: 32px;
-        // border: 1px solid $color-primary;
+        box-shadow: 0 0 0 0px $color-primary inset; 
+        box-sizing: border-box;
+
+        cursor: pointer;
+        user-select: none;
+        transition: .2s;;
 
         .name {
           font-weight: 500;
           height: 4rem;
+          transition: .2s;
         }
         .tag-list {
+          display: flex;
+          flex-wrap: wrap;
+          justify-content: center;
+          gap: 4px 8px;
+          label {
+            padding: 2px 3px 2px 4px;
+            transition: .2s;
+          }
+        }
+        &:hover {
+        box-shadow: 0 -3px 0 $color-primary inset; 
+          .name {
+            transform: scale(1.1, 1.1);
+            color: black;
+          }
         }
       }
     }
