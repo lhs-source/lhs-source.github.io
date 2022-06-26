@@ -43,7 +43,6 @@ class Posts extends VuexModule {
   public requestGetPostList() {
     axios.get(`/posts/postlist.json`).then(res => {
       this.context.commit("setPostList", res.data);
-      // this.setPostList(res.data);
     });
   }
 
@@ -52,6 +51,7 @@ class Posts extends VuexModule {
     return axios.get(`/posts/${postName}.md`).then(res => {
       const markdownPost = res.data;
       const converter = new showdown.Converter()
+      converter.setOption('tables', true);
       const md2html = converter.makeHtml(markdownPost);
       return md2html;
     });
@@ -61,48 +61,4 @@ class Posts extends VuexModule {
     this.context.commit("setCurrentUrl", url);
   }
 }
-
-// class PostsState {
-//   public postList: Post[] = [];
-// }
-
-// const getters: GetterTree<PostsState, any> = {
-
-// }
-
-// const mutations: MutationTree<PostsState> = {
-//   setPostList(state, postList) {
-//     axios.get(`/posts/postlist.json`).then(res => {
-//       state.postList = res.data;
-//     });
-//   }
-// }
-
-// const actions: ActionTree<PostsState, any> = {
-//   requestGetPostList(state: ActionContext<PostsState, any>) {
-//     axios.get(`/posts/postlist.json`).then(res => {
-//       state.commit("setPostList", res.data);
-//       return true;
-//     }).catch(reason => {
-//       return false;
-//     });
-//   },
-//   requestGetMarkdoen(state: ActionContext<PostsState, any>, postName: string) {
-//     return axios.get(`/posts/${postName}.md`).then(res => {
-//       console.log('get markdown post', res);
-//       // 
-//       return res.data;
-//     });
-//   }
-// }
-
-// const Posts: Module<PostsState, any> = {
-//   namespaced: true,
-//   state: new PostsState(),
-//   getters,
-//   mutations,
-//   actions,
-// }
-
-
 export default Posts;
