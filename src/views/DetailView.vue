@@ -15,7 +15,8 @@
     </div>
     <div 
       ref="postArea"
-      class="post">
+      class="post"
+      v-html="postContents">
     </div>
   </PageDefaultLayout>
 </template>
@@ -42,10 +43,6 @@ const post = computed(() => {
 onMounted(() => {
   store.dispatch("Posts/requestGetMarkdoen", post.value.fileName).then((res) => {
     postContents.value = res;
-    
-    if(postArea.value) {
-      postArea.value.innerHTML = postContents.value;
-    }
   })
 })
 
