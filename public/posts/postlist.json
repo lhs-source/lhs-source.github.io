@@ -13,9 +13,9 @@
         "url": "d5c653f34310b85f731a497e64970059921fba363647f5cc1e39ead9ea9cf76f",
         "fileName": "making-blog-githubio-vue3-1",
         "title": "Github.io + Vue3 로 블로그 만들기",
-        "description": "",
+        "description": "Github.io 와 Vue3 를 활용해서 블로그를 시작. SPA를 prerendering 하여 개별 페이지를 생성하고, 메타태그를 추가. 구글 검색 엔진에 등록할 사이트맵 자동 생성. 마크다운을 html 로 변환.",
         "createdAt": "2022-06-24",
         "updatedAt": "2022-06-26",
-        "tags": ["Vue", "Vue3", "Github", "Blog"]
+        "tags": ["Vue", "Vue3", "Github", "Blog", "Markdown", "SEO"]
     }
 ]
