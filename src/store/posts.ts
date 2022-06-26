@@ -1,5 +1,4 @@
 import { VuexModule, Module, Mutation, Action } from "vuex-module-decorators";
-// import { ActionContext, ActionTree, GetterTree, Module, MutationTree } from "vuex";
 import axios from "axios";
 import showdown from 'showdown';
 
