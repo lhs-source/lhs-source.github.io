@@ -12,8 +12,8 @@ const app = createApp(App)
 .use(router)
 .use(VueGTag, {
     property: {
-        id: "G-GK9H6TP6JE", // dev
-        // id: "G-SH1GZR1KME",
+        // id: "G-GK9H6TP6JE", // dev
+        id: "G-SH1GZR1KME", // prod
         useDebugger: true,
     }
 })
