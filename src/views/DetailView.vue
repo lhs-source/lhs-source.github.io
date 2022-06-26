@@ -15,7 +15,8 @@
     </div>
     <div 
       ref="postArea"
-      class="post">
+      class="post"
+      v-html="postContents">
     </div>
   </PageDefaultLayout>
 </template>
