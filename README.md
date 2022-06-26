@@ -5,6 +5,36 @@
 yarn install
 ```
 
+### prerender-spa-plugin 이슈 해결
+
+```javascript
+// node_modules/prerender-spa-plugin/es6/index.js
+
+// 58 line
+// mkdirp 함수를 대체한다.
+const mkdirp = function (dir, opts) {
+  return new Promise((resolve, reject) => {
+    try {
+      compilerFS.mkdirp(dir, opts, (err, made) => err === null ? resolve(made) : reject(err))
+    } catch(e) {
+      compilerFS.mkdir(dir, opts, (err, made) => err === null ? resolve(made) : reject(err))
+    }
+  })
+}
+
+// 124 line
+// recursive 옵션을 추가해준다.
+return mkdirp(path.dirname(processedRoute.outputPath), {recursive: true})
+```
+
+위 fix 는 webpack5 에서 다음 두 문제가 발생하기 때문이다.
+1. webpack5 에서 `compiler.outputFileSystem.mkdirp` 함수가 없다.
+2. `mkdir` 함수로 바꾼다 하더라도, route 가 여러개인 경우, 폴더를 여러번 만드려고 시도하는데, 이미 존재하는 폴더라 에러가 발생한다.
+
+> [prerender-spa-plugin] Unable to prerender all routes!
+
+그래서 아무 정보 없이 위 에러가 발생하는데, 이를 해결하기 위함이다.
+
 ### For Windows (deprecated)
 
 **node-sass 를 사용하지 않으면서 이 부분은 필요 없게 됐다.**
