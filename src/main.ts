@@ -12,7 +12,9 @@ const app = createApp(App)
 .use(router)
 .use(VueGTag, {
     property: {
-        id: "3796825107",
+        id: "G-GK9H6TP6JE", // dev
+        // id: "G-SH1GZR1KME",
+        useDebugger: true,
     }
 })
 .mount('#app')
