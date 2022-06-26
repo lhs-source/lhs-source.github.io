@@ -11,7 +11,7 @@
 
 ![Untitled](/img/making-blog-githubio-vue3-1/Untitled.png)
 
-당연히 Github 계정이 있어야한다. `[유저명.github.io](http://유저명.github.io)` 라고 프로젝트를 하나 만든다. 이렇게 프로젝트를 만들면 자동으로 Github Pages 를 사용하겠다고 알리는 격이다. 필수는 아니고, 나중에 Github Pages 를 사용하겠다고 따로 설정할 수도 있다. 
+당연히 Github 계정이 있어야한다. `유저명.github.io` 라고 프로젝트를 하나 만든다. 이렇게 프로젝트를 만들면 자동으로 Github Pages 를 사용하겠다고 알리는 격이다. 필수는 아니고, 나중에 Github Pages 를 사용하겠다고 따로 설정할 수도 있다. 
 
 ![Untitled](/img/making-blog-githubio-vue3-1/Untitled%201.png)
 
@@ -37,7 +37,7 @@ Github Pages 로 사용되는 레포는 대부분 결과물을 관리하는 레�
 
 ## 수동 빌드
 
-**수동 빌드** 는 Github Pages 설정 펠이지에서 호스팅할 폴더를 고를 수 있다. 기본적으로 root 폴더이며, `/docs` 폴더를 추가로 지정할 수 있다. 해당 레포 브랜치의 docs 폴더를 호스팅하겠다는 것이다. 
+**수동 빌드** 는 Github Pages 설정 페이지에서 호스팅할 폴더를 고를 수 있다. 기본적으로 root 폴더이며, `/docs` 폴더를 추가로 지정할 수 있다. 해당 레포 브랜치의 docs 폴더를 호스팅하겠다는 것이다. 
 
 ![Untitled](/img/making-blog-githubio-vue3-1/Untitled%203.png)
 
