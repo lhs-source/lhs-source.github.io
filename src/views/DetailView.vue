@@ -84,6 +84,7 @@ onMounted(() => {
     max-width: 720px;
     text-align: left;
     word-break: keep-all;
+    line-height: 1.4;
 
     img {
       max-width: 100%;
