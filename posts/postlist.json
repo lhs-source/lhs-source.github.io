@@ -3,9 +3,9 @@
         "url": "8689a6f9a9428af5a3570a0236abdb9abf62409077138a3d02a676b3a3f757f4",
         "fileName": "second-post",
         "title": "두 번째 포스트",
-        "description": "아직 작성 안함~",
+        "description": "",
         "createdAt": "2022-06-24",
-        "updatedAt": "2022-06-25",
+        "updatedAt": "2022-06-24",
         "tags": ["tag1"]
     },
     {
