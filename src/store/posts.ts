@@ -50,6 +50,7 @@ class Posts extends VuexModule {
     return axios.get(`/posts/${postName}.md`).then(res => {
       const markdownPost = res.data;
       const converter = new showdown.Converter()
+      converter.setOption('tables', true);
       const md2html = converter.makeHtml(markdownPost);
       return md2html;
     });
@@ -59,5 +60,4 @@ class Posts extends VuexModule {
     this.context.commit("setCurrentUrl", url);
   }
 }
-
 export default Posts;

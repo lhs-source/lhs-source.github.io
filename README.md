@@ -14,7 +14,6 @@ yarn install
 // mkdirp 함수를 대체한다.
 const mkdirp = function (dir, opts) {
   return new Promise((resolve, reject) => {
-    console.log('\ndir', dir, opts, '\n');
     try {
       compilerFS.mkdirp(dir, opts, (err, made) => err === null ? resolve(made) : reject(err))
     } catch(e) {
