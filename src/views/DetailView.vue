@@ -18,6 +18,10 @@
       class="post"
       v-html="postContents">
     </div>
+    <div class="post-footer">
+      포스팅은 여기까지입니다. <br />
+      의견은 <a href="mailto:iddms5446@gmail.com">iddms5446@gmail.com</a>으로 보내주시면 감사드리겠습니다!
+    </div>
   </PageDefaultLayout>
 </template>
 
@@ -114,6 +118,12 @@ onMounted(() => {
         content: "📎 ";
       }
     }
+  }
+  .post-footer {
+    margin: 0 auto;
+    padding: 32px 0;
+    max-width: 720px;
+    // border-top: 2px solid #dadada;
   }
 }
 

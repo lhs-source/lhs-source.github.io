@@ -13,6 +13,7 @@
     "register-service-worker": "^1.7.2",
     "showdown": "^2.1.0",
     "showdown-table": "^1.0.1",
+    "showdown-toc": "^1.0.1",
     "vue": "^3.2.13",
     "vue-gtag-next": "^1.14.0",
     "vue-router": "^4.0.3",
