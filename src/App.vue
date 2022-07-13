@@ -12,6 +12,9 @@ store.dispatch("Posts/requestGetPostList");
 </script>
 
 <style lang="scss">
+html {
+  scroll-behavior: smooth;
+}
 #app {
   font-family: Pretendard, Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;

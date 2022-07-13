@@ -72,7 +72,7 @@ $section-margin-top: 112px;
     margin-top: 20vh;
     margin-bottom: calc($section-margin-top * 1);
     min-height: 50vh;
-    box-shadow: 2px 2px 8px #1d1d1d11;
+    box-shadow: 1px 2px 6px #1d1d1d55;
     background: linear-gradient(
       rgba(255, 255, 255, 0.92) 64px,
       $color-primary-white calc($section-margin-top * 4)

@@ -1,11 +1,14 @@
 import { VuexModule, Module, Mutation, Action } from "vuex-module-decorators";
 import axios from "axios";
-import showdown from 'showdown';
+import MarkdownIt from "markdown-it";
+import MDAnchor from "markdown-it-anchor";
+import MDToc from "markdown-it-table-of-contents";
 
 export interface Post {
   url: string;
   fileName: string;
   title: string;
+  description: string;
   tags: string[];
   data: string;
 }
@@ -16,6 +19,7 @@ export interface Post {
 })
 class Posts extends VuexModule {
   public postList:Post[] = [];
+  private md = new MarkdownIt().use(MDAnchor).use(MDToc);
   public currentUrl = '';
 
   get currentPost(): Post | undefined {
@@ -49,9 +53,8 @@ class Posts extends VuexModule {
   public requestGetMarkdoen(postName: string) {
     return axios.get(`/posts/${postName}.md`).then(res => {
       const markdownPost = res.data;
-      const converter = new showdown.Converter()
-      converter.setOption('tables', true);
-      const md2html = converter.makeHtml(markdownPost);
+      const md2html = this.md.render(markdownPost);
+      console.log('md2html', md2html);
       return md2html;
     });
   }

@@ -6,7 +6,7 @@ import store from './store'
 
 import VueGTag from "vue-gtag-next";
 
-let GAID = "G-GK9H6TP6JE";  // dev
+let GAID = "G-258YQYTM9J";  // dev
 if(process.env.NODE_ENV === "production") {
     GAID = "G-SH1GZR1KME";  // prod
 }

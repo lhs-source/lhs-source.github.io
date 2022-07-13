@@ -19,6 +19,7 @@ module.exports = {
     }
   },
   devServer: {
+    // allowedHosts: ['.host.com', 'host2.com'],
     allowedHosts: 'all',
   }
 }
