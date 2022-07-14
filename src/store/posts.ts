@@ -3,6 +3,7 @@ import axios from "axios";
 import MarkdownIt from "markdown-it";
 import MDAnchor from "markdown-it-anchor";
 import MDToc from "markdown-it-table-of-contents";
+import MDHLJS from "markdown-it-highlightjs";
 
 export interface Post {
   url: string;
@@ -19,7 +20,7 @@ export interface Post {
 })
 class Posts extends VuexModule {
   public postList:Post[] = [];
-  private md = new MarkdownIt().use(MDAnchor).use(MDToc);
+  private md = new MarkdownIt().use(MDAnchor).use(MDToc).use(MDHLJS);
   public currentUrl = '';
 
   get currentPost(): Post | undefined {
@@ -54,7 +55,7 @@ class Posts extends VuexModule {
     return axios.get(`/posts/${postName}.md`).then(res => {
       const markdownPost = res.data;
       const md2html = this.md.render(markdownPost);
-      console.log('md2html', md2html);
+      // console.log('md2html', md2html);
       return md2html;
     });
   }

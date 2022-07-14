@@ -35,8 +35,7 @@ $section-margin-top: 112px;
   .panel {
     width: 100%;
     height: 28vh;
-    background-color: $color-primary;
-
+    background-color: $color-primary-g-darker;
 
     .words {
       position: absolute;
