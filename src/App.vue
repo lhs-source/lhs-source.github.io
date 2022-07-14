@@ -1,5 +1,6 @@
 <template>
   <router-view/>
+  <div id="modal-portal"></div>
 </template>
 
 <script setup lang="ts">
@@ -12,11 +13,14 @@ store.dispatch("Posts/requestGetPostList");
 </script>
 
 <style lang="scss">
+html {
+  scroll-behavior: smooth;
+}
 #app {
   font-family: Pretendard, Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: $color-primary;
+  color: $color-primary-g-dark;
 }
 </style>
