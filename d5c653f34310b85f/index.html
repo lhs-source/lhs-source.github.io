@@ -13,7 +13,7 @@
         <meta property="twitter:title" content="Github.io + Vue3 로 블로그 만들기" />
         <meta property="twitter:description" content="Github.io 와 Vue3 를 활용해서 블로그를 시작. SPA를 prerendering 하여 개별 페이지를 생성하고, 메타태그를 추가. 구글 검색 엔진에 등록할 사이트맵 자동 생성. 마크다운을 html 로 변환. Google Analytics 도입으로 방문자 수 체크." />
         <meta property="twitter:image" content="https://lhs-source.github.io/images/thumbnail.jpg" />
-      <meta charset="utf-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="google-site-verification" content="p4lZFdtKOsDj6_1O2f_PsufQnO068kmB_Sgrs5UlweQ"><!--[if IE]><link rel="icon" href="/favicon.ico"><![endif]--><title>lhs-githubio</title><script defer="defer" src="/js/chunk-vendors.df132d55.js"></script><script defer="defer" src="/js/app.008f2387.js"></script><link href="/css/app.960f6357.css" rel="stylesheet"><link rel="icon" type="image/svg+xml" href="/img/icons/favicon.svg"><link rel="icon" type="image/png" sizes="32x32" href="/img/icons/favicon-32x32.png"><link rel="icon" type="image/png" sizes="16x16" href="/img/icons/favicon-16x16.png"><link rel="manifest" href="/manifest.json"><meta name="theme-color" content="#4DBA87"><meta name="apple-mobile-web-app-capable" content="no"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name="apple-mobile-web-app-title" content="lhs-githubio"><link rel="apple-touch-icon" href="/img/icons/apple-touch-icon-152x152.png"><link rel="mask-icon" href="/img/icons/safari-pinned-tab.svg" color="#4DBA87"><meta name="msapplication-TileImage" content="/img/icons/msapplication-icon-144x144.png"><meta name="msapplication-TileColor" content="#000000"><link href="https://www.googletagmanager.com" rel="preconnect"><script async="" src="https://www.googletagmanager.com/gtag/js?id=G-SH1GZR1KME&amp;l=dataLayer" charset="utf-8"></script><link rel="stylesheet" type="text/css" href="/css/detail.9a964259.css"></head><body style="margin: 0;"><noscript><strong>We're sorry but lhs-githubio doesn't work properly without JavaScript enabled. Please enable it to continue.</strong></noscript><div id="app" data-v-app=""><div class="page-wrapper" data-v-6902bc0c=""><div class="background" data-v-6902bc0c=""><div class="panel" data-v-6902bc0c=""><div class="words" data-v-6902bc0c=""><div class="sentense typo-3" data-v-6902bc0c=""> The bird fights its way out of the egg. The egg is the world. </div><div class="sentense typo-2" data-v-6902bc0c=""> Who would be born must first destroy a world. The bird flies to God. </div><div class="sentense typo-4" data-v-6902bc0c=""> That God's name is Abraxas.</div><div class="sentense typo-3" data-v-6902bc0c=""> 우리들 속에는 모든 것을 알고, 모든 것을 하고자 하고, 모든 것을 우리들 자신보다 더 잘해내는 어떤 사람이 있다.</div><div class="sentense typo-4" data-v-6902bc0c=""> 블로그 까짓거 대충, 하고는 싶은데 해보는 김에 잘 해봐야지. 속도는 빨라야 하니까 간단한 게 좋겠다. </div><div class="sentense typo-5" data-v-6902bc0c=""> You've never lived what you are thinking, and that isn't good. </div></div></div></div><div class="frame" data-v-6902bc0c=""><div class="body" data-v-6902bc0c=""><div class="detail-wrapper"><div class="toc"><div class="toc-toggle"><div class="open">목차</div></div><div><div class="table-of-contents"><ul><li><a href="#github.io-%ED%8E%98%EC%9D%B4%EC%A7%80-%EB%A7%8C%EB%93%A4%EA%B8%B0">Github.io 페이지 만들기</a></li><li><a href="#github-actions-%EB%A1%9C-github-pages-%EB%B0%B0%ED%8F%AC">Github Actions 로 Github Pages 배포</a><ul><li><a href="#gh-pages">gh-pages</a></li><li><a href="#%EC%88%98%EB%8F%99-%EB%B9%8C%EB%93%9C">수동 빌드</a></li><li><a href="#github-actions">Github Actions</a></li></ul></li><li><a href="#%EB%B8%94%EB%A1%9C%EA%B7%B8-%ED%8F%AC%EC%8A%A4%ED%8A%B8-%EB%AA%A9%EB%A1%9D-%EA%B4%80%EB%A6%AC%ED%95%98%EA%B8%B0">블로그 포스트 목록 관리하기</a></li><li><a href="#markdown-%EC%A0%81%EC%9A%A9%ED%95%98%EA%B8%B0">Markdown 적용하기</a></li><li><a href="#prerendering">Prerendering</a></li><li><a href="#sitemap-%EC%9E%90%EB%8F%99-%EC%83%9D%EC%84%B1">Sitemap 자동 생성</a><ul><li><a href="#%EC%82%AC%EC%9D%B4%ED%8A%B8%EB%A7%B5-%EB%93%B1%EB%A1%9D%ED%95%98%EA%B8%B0">사이트맵 등록하기</a></li></ul></li><li><a href="#%EB%A9%94%ED%83%80%ED%83%9C%EA%B7%B8-%EC%9E%91%EC%84%B1%ED%95%98%EA%B8%B0">메타태그 작성하기</a></li><li><a href="#google-analytics-%EC%B6%94%EA%B0%80">Google Analytics 추가</a><ul><li><a href="#ga4-%EA%B3%84%EC%A0%95-%EC%83%9D%EC%84%B1%ED%95%98%EA%B8%B0">GA4 계정 생성하기</a></li><li><a href="#vue%EC%97%90%EC%84%9C-ga4%EB%A1%9C-%EB%8D%B0%EC%9D%B4%ED%84%B0-%EC%A0%84%EC%86%A1%ED%95%98%EA%B8%B0">Vue에서 GA4로 데이터 전송하기</a></li></ul></li></ul></div></div></div><div class="contents"><h1 class="title">Github.io + Vue3 로 블로그 만들기</h1><div class="tag-list"><label>Vue</label><label>Vue3</label><label>Github</label><label>Blog</label><label>Markdown</label><label>SEO</label><label>GoogleAnalytics</label></div><div class="date"> 작성일 : 2022-06-24, <b>마지막 업데이트 : 2022-06-26</b></div><div class="post"><p></p><div class="table-of-contents"><ul><li><a href="#github.io-%ED%8E%98%EC%9D%B4%EC%A7%80-%EB%A7%8C%EB%93%A4%EA%B8%B0">Github.io 페이지 만들기</a></li><li><a href="#github-actions-%EB%A1%9C-github-pages-%EB%B0%B0%ED%8F%AC">Github Actions 로 Github Pages 배포</a><ul><li><a href="#gh-pages">gh-pages</a></li><li><a href="#%EC%88%98%EB%8F%99-%EB%B9%8C%EB%93%9C">수동 빌드</a></li><li><a href="#github-actions">Github Actions</a></li></ul></li><li><a href="#%EB%B8%94%EB%A1%9C%EA%B7%B8-%ED%8F%AC%EC%8A%A4%ED%8A%B8-%EB%AA%A9%EB%A1%9D-%EA%B4%80%EB%A6%AC%ED%95%98%EA%B8%B0">블로그 포스트 목록 관리하기</a></li><li><a href="#markdown-%EC%A0%81%EC%9A%A9%ED%95%98%EA%B8%B0">Markdown 적용하기</a></li><li><a href="#prerendering">Prerendering</a></li><li><a href="#sitemap-%EC%9E%90%EB%8F%99-%EC%83%9D%EC%84%B1">Sitemap 자동 생성</a><ul><li><a href="#%EC%82%AC%EC%9D%B4%ED%8A%B8%EB%A7%B5-%EB%93%B1%EB%A1%9D%ED%95%98%EA%B8%B0">사이트맵 등록하기</a></li></ul></li><li><a href="#%EB%A9%94%ED%83%80%ED%83%9C%EA%B7%B8-%EC%9E%91%EC%84%B1%ED%95%98%EA%B8%B0">메타태그 작성하기</a></li><li><a href="#google-analytics-%EC%B6%94%EA%B0%80">Google Analytics 추가</a><ul><li><a href="#ga4-%EA%B3%84%EC%A0%95-%EC%83%9D%EC%84%B1%ED%95%98%EA%B8%B0">GA4 계정 생성하기</a></li><li><a href="#vue%EC%97%90%EC%84%9C-ga4%EB%A1%9C-%EB%8D%B0%EC%9D%B4%ED%84%B0-%EC%A0%84%EC%86%A1%ED%95%98%EA%B8%B0">Vue에서 GA4로 데이터 전송하기</a></li></ul></li></ul></div><p></p>
+      <meta charset="utf-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="google-site-verification" content="p4lZFdtKOsDj6_1O2f_PsufQnO068kmB_Sgrs5UlweQ"><!--[if IE]><link rel="icon" href="/favicon.ico"><![endif]--><title>lhs-githubio</title><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/4.0.0/github-markdown.min.css"><link rel="alternate stylesheet" title="Vs 2015" href="styles/vs2015.css"><script defer="defer" src="/js/chunk-vendors.b5df7df7.js"></script><script defer="defer" src="/js/app.3df39990.js"></script><link href="/css/app.247787da.css" rel="stylesheet"><link rel="icon" type="image/svg+xml" href="/img/icons/favicon.svg"><link rel="icon" type="image/png" sizes="32x32" href="/img/icons/favicon-32x32.png"><link rel="icon" type="image/png" sizes="16x16" href="/img/icons/favicon-16x16.png"><link rel="manifest" href="/manifest.json"><meta name="theme-color" content="#4DBA87"><meta name="apple-mobile-web-app-capable" content="no"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name="apple-mobile-web-app-title" content="lhs-githubio"><link rel="apple-touch-icon" href="/img/icons/apple-touch-icon-152x152.png"><link rel="mask-icon" href="/img/icons/safari-pinned-tab.svg" color="#4DBA87"><meta name="msapplication-TileImage" content="/img/icons/msapplication-icon-144x144.png"><meta name="msapplication-TileColor" content="#000000"><link href="https://www.googletagmanager.com" rel="preconnect"><script async="" src="https://www.googletagmanager.com/gtag/js?id=G-SH1GZR1KME&amp;l=dataLayer" charset="utf-8"></script><link rel="stylesheet" type="text/css" href="/css/detail.d2ac0d35.css"></head><body style="margin: 0;"><noscript><strong>We're sorry but lhs-githubio doesn't work properly without JavaScript enabled. Please enable it to continue.</strong></noscript><div id="app" data-v-app=""><div class="page-wrapper page-custom" data-v-39d54868=""><div class="background" data-v-39d54868=""><div class="panel" data-v-39d54868=""><div class="words" data-v-39d54868=""><div class="sentense typo-3" data-v-39d54868=""> The bird fights its way out of the egg. The egg is the world. </div><div class="sentense typo-2" data-v-39d54868=""> Who would be born must first destroy a world. The bird flies to God. </div><div class="sentense typo-4" data-v-39d54868=""> That God's name is Abraxas.</div><div class="sentense typo-3" data-v-39d54868=""> 우리들 속에는 모든 것을 알고, 모든 것을 하고자 하고, 모든 것을 우리들 자신보다 더 잘해내는 어떤 사람이 있다.</div><div class="sentense typo-4" data-v-39d54868=""> 블로그 까짓거 대충, 하고는 싶은데 해보는 김에 잘 해봐야지. 속도는 빨라야 하니까 간단한 게 좋겠다. </div><div class="sentense typo-5" data-v-39d54868=""> You've never lived what you are thinking, and that isn't good. </div></div></div></div><div class="frame" data-v-39d54868=""><div class="body" data-v-39d54868=""><div class="detail-wrapper"><div class="info"><div class="to-home"><a href="/">🏠</a></div><div class="who"> Written by <b>LeeHyunsoo</b><br> Contact me <b>iddms5446@gmail.com</b></div><div class="post-list"><div class="post"><a href="/1e93fc5dc5f94045"><span class="icon">📜</span><span class="title">Vue2, Vue3 Reactivity 비교 - Vue2 편</span></a></div><div class="post"><a href="/d5c653f34310b85f"><span class="icon">📜</span><span class="title">Github.io + Vue3 로 블로그 만들기</span></a></div></div></div><div class="contents"><h1 class="title">Github.io + Vue3 로 블로그 만들기</h1><div class="tag-list"><label>Vue</label><label>Vue3</label><label>Github</label><label>Blog</label><label>Markdown</label><label>SEO</label><label>GoogleAnalytics</label></div><div class="date"> 작성일 : 2022-06-24, <b>마지막 업데이트 : 2022-06-26</b></div><div class="post"><p></p><div class="table-of-contents"><ul><li><a href="#github.io-%ED%8E%98%EC%9D%B4%EC%A7%80-%EB%A7%8C%EB%93%A4%EA%B8%B0">Github.io 페이지 만들기</a></li><li><a href="#github-actions-%EB%A1%9C-github-pages-%EB%B0%B0%ED%8F%AC">Github Actions 로 Github Pages 배포</a><ul><li><a href="#gh-pages">gh-pages</a></li><li><a href="#%EC%88%98%EB%8F%99-%EB%B9%8C%EB%93%9C">수동 빌드</a></li><li><a href="#github-actions">Github Actions</a></li></ul></li><li><a href="#%EB%B8%94%EB%A1%9C%EA%B7%B8-%ED%8F%AC%EC%8A%A4%ED%8A%B8-%EB%AA%A9%EB%A1%9D-%EA%B4%80%EB%A6%AC%ED%95%98%EA%B8%B0">블로그 포스트 목록 관리하기</a></li><li><a href="#markdown-%EC%A0%81%EC%9A%A9%ED%95%98%EA%B8%B0">Markdown 적용하기</a></li><li><a href="#prerendering">Prerendering</a></li><li><a href="#sitemap-%EC%9E%90%EB%8F%99-%EC%83%9D%EC%84%B1">Sitemap 자동 생성</a><ul><li><a href="#%EC%82%AC%EC%9D%B4%ED%8A%B8%EB%A7%B5-%EB%93%B1%EB%A1%9D%ED%95%98%EA%B8%B0">사이트맵 등록하기</a></li></ul></li><li><a href="#%EB%A9%94%ED%83%80%ED%83%9C%EA%B7%B8-%EC%9E%91%EC%84%B1%ED%95%98%EA%B8%B0">메타태그 작성하기</a></li><li><a href="#google-analytics-%EC%B6%94%EA%B0%80">Google Analytics 추가</a><ul><li><a href="#ga4-%EA%B3%84%EC%A0%95-%EC%83%9D%EC%84%B1%ED%95%98%EA%B8%B0">GA4 계정 생성하기</a></li><li><a href="#vue%EC%97%90%EC%84%9C-ga4%EB%A1%9C-%EB%8D%B0%EC%9D%B4%ED%84%B0-%EC%A0%84%EC%86%A1%ED%95%98%EA%B8%B0">Vue에서 GA4로 데이터 전송하기</a></li></ul></li></ul></div><p></p>
 <p>개발 블로그를 작성하기 위해서 github.io 를 사용하기로 했다. velog나 tistory, medium 같은 것들도 있지만, 내가 완전히 커스터마이징 가능한 페이지를 갖고 싶었다. 그렇다고 서버를 돌리거나, AWS를 통해서 구축하는 수고까지는 하지 않으려 했다. 지금 와서 생각해보면 거의 비슷한 공수가 들었다. Notion도 고려했는데, 내 개인 노트로 아주 잘 활용하고 있으나 블로그로 사용하기에는 너무 에디터다. 이렇게 쓰니까 깃헙을 고른 이유는 그냥 해보고싶어서에 가까워 보인다.</p>
 <p>페이지를 구축할 언어로는 내가 지금 사용하고 있는 Vue 프레임워크를 사용할 것이다. 단순히 정말 지금 내가 익숙한 것이기 때문에 골랐다. 그렇다고 블로그에 대단한 기능을 넣을 것은 아니다. 나중에 게시글 뿐 아니라 포트폴리오의 역할도 해줄 수 있을 것 같아서, 주력 프레임워크를 선택해야겠다고 다짐했다.</p>
 <p><a href="https://yemsu.github.io/">ENJOY DEV</a></p>
@@ -38,45 +38,45 @@
 <h2 id="%EC%88%98%EB%8F%99-%EB%B9%8C%EB%93%9C" tabindex="-1">수동 빌드</h2>
 <p><strong>수동 빌드</strong> 는 Github Pages 설정 페이지에서 호스팅할 폴더를 고를 수 있다. 기본적으로 root 폴더이며, <code>/docs</code> 폴더를 추가로 지정할 수 있다. 해당 레포 브랜치의 docs 폴더를 호스팅하겠다는 것이다.</p>
 <p><img src="../img/making-blog-githubio-vue3-1/Untitled%203.png" alt="Untitled"></p>
-<pre><code class="language-jsx">// vue.config.js
-module.exports = {
-  outputDir: 'docs',
+<pre><code class="hljs language-jsx"><span class="hljs-comment">// vue.config.js</span>
+<span class="hljs-variable language_">module</span>.<span class="hljs-property">exports</span> = {
+  <span class="hljs-attr">outputDir</span>: <span class="hljs-string">'docs'</span>,
 }
 </code></pre>
 <p>빌드의 결과물을 docs 폴더에 생성되게 하고, 레포에 올려주기면 하면 된다. vue 의 경우 <code>outputDir</code> 속성을 docs 로 변경해주면 간단하게 결과 폴더가 바뀐다. 추가로 <code>.gitignore</code> 에 docs 폴더가 있다면 항목을 제거해서 원격 레포에 푸시해주면 자동으로 봇이 실행되면서 페이지를 배포한다.</p>
 <h2 id="github-actions" tabindex="-1">Github Actions</h2>
 <p>Github Actions 는 간단하게 설명하면, CICD 툴이다. 젠킨스나, aws pipeline, circleCI 같은 역할을 한다. Gitlab 에도 비슷한 기능이 있는데, 이쪽은 아직 써보지 못했다. Github Actions 는 프로젝트에 포함된 yaml 파일을 기반으로 명령을 실행한다.</p>
-<pre><code class="language-yaml">name: Deployment to Github Pages
-on:
-  push:
-    branches:
-      - deploy
+<pre><code class="hljs language-yaml"><span class="hljs-attr">name:</span> <span class="hljs-string">Deployment</span> <span class="hljs-string">to</span> <span class="hljs-string">Github</span> <span class="hljs-string">Pages</span>
+<span class="hljs-attr">on:</span>
+  <span class="hljs-attr">push:</span>
+    <span class="hljs-attr">branches:</span>
+      <span class="hljs-bullet">-</span> <span class="hljs-string">deploy</span>
 
-jobs:
-  deploy:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@master
-      - name: Set up Node.js
-        uses: actions/setup-node@master
-        with:
-          node-version: 16.x
+<span class="hljs-attr">jobs:</span>
+  <span class="hljs-attr">deploy:</span>
+    <span class="hljs-attr">runs-on:</span> <span class="hljs-string">ubuntu-latest</span>
+    <span class="hljs-attr">steps:</span>
+      <span class="hljs-bullet">-</span> <span class="hljs-attr">uses:</span> <span class="hljs-string">actions/checkout@master</span>
+      <span class="hljs-bullet">-</span> <span class="hljs-attr">name:</span> <span class="hljs-string">Set</span> <span class="hljs-string">up</span> <span class="hljs-string">Node.js</span>
+        <span class="hljs-attr">uses:</span> <span class="hljs-string">actions/setup-node@master</span>
+        <span class="hljs-attr">with:</span>
+          <span class="hljs-attr">node-version:</span> <span class="hljs-number">16.</span><span class="hljs-string">x</span>
       
-      - name: Install dependencies
-        run: npm install
+      <span class="hljs-bullet">-</span> <span class="hljs-attr">name:</span> <span class="hljs-string">Install</span> <span class="hljs-string">dependencies</span>
+        <span class="hljs-attr">run:</span> <span class="hljs-string">npm</span> <span class="hljs-string">install</span>
 
-      - name: Build
-        run: npm run build
-        env:
-          NODE_ENV: production
+      <span class="hljs-bullet">-</span> <span class="hljs-attr">name:</span> <span class="hljs-string">Build</span>
+        <span class="hljs-attr">run:</span> <span class="hljs-string">npm</span> <span class="hljs-string">run</span> <span class="hljs-string">build</span>
+        <span class="hljs-attr">env:</span>
+          <span class="hljs-attr">NODE_ENV:</span> <span class="hljs-string">production</span>
       
-      - name: Deploy
-        uses: peaceiris/actions-gh-pages@v2.5.0
-        env:
-          PERSONAL_TOKEN: ${{secrets.GH_TOKEN}}
-          PUBLISH_BRANCH: master
-          PUBLISH_DIR: ./dist
-          SCRIPT_MODE: true
+      <span class="hljs-bullet">-</span> <span class="hljs-attr">name:</span> <span class="hljs-string">Deploy</span>
+        <span class="hljs-attr">uses:</span> <span class="hljs-string">peaceiris/actions-gh-pages@v2.5.0</span>
+        <span class="hljs-attr">env:</span>
+          <span class="hljs-attr">PERSONAL_TOKEN:</span> <span class="hljs-string">${{secrets.GH_TOKEN}}</span>
+          <span class="hljs-attr">PUBLISH_BRANCH:</span> <span class="hljs-string">master</span>
+          <span class="hljs-attr">PUBLISH_DIR:</span> <span class="hljs-string">./dist</span>
+          <span class="hljs-attr">SCRIPT_MODE:</span> <span class="hljs-literal">true</span>
 </code></pre>
 <p><code>on</code> 은 트리거로 Github 대부분의 훅을 활용할 수 있다. 가장 기본적으로 푸시가 있으며, 라벨, 이슈 관리, 풀 리퀘스트, 스케줄 등이 있다. <a href="https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions">자세한 건 Github Docs 에 자세히 작성</a>되었다.</p>
 <p><code>jobs</code> 는 말 그대로 작업이며, 적힌대로 쭉 작업을 진행한다.</p>
@@ -95,80 +95,80 @@ jobs:
 <p>봇이 돌린 Workflow 에서 배포가 완료된 우리의 페이지도 확인할 수 있다. 아래 Artifacts 는 Jekyll 이 빌드한 결과물이다. 실제로 보면 npm build 결과를 그대로 래핑하는 것과 매한가지다.</p>
 <h1 id="%EB%B8%94%EB%A1%9C%EA%B7%B8-%ED%8F%AC%EC%8A%A4%ED%8A%B8-%EB%AA%A9%EB%A1%9D-%EA%B4%80%EB%A6%AC%ED%95%98%EA%B8%B0" tabindex="-1">블로그 포스트 목록 관리하기</h1>
 <p>따로 서버를 관리할 것이 아니라면 레포에 글 목록도 관리를 하는 게 맞다고 판단했다. 클라에서 모든 것을 해결하는 것은 어렵지 않다. 데이터를 직접 작성해서 갖고 있으면 된다.</p>
-<pre><code class="language-jsx">// public/posts/postlist.json
+<pre><code class="hljs language-jsx"><span class="hljs-comment">// public/posts/postlist.json</span>
 [
   {
-    "url": "d5c653f34310b85f731a497e64970059921fba363647f5cc1e39ead9ea9cf76f",
-    "fileName": "first-post",
-    "title": "블로그를 Github.io 로 시작하는 첫 포스트",
-		"description": "요약을 써줘요",
-    "createdAt": "2022-06-24",
-    "updatedAt": "2022-06-25",
-    "tags": ["tag1"]
+    <span class="hljs-string">"url"</span>: <span class="hljs-string">"d5c653f34310b85f731a497e64970059921fba363647f5cc1e39ead9ea9cf76f"</span>,
+    <span class="hljs-string">"fileName"</span>: <span class="hljs-string">"first-post"</span>,
+    <span class="hljs-string">"title"</span>: <span class="hljs-string">"블로그를 Github.io 로 시작하는 첫 포스트"</span>,
+		<span class="hljs-string">"description"</span>: <span class="hljs-string">"요약을 써줘요"</span>,
+    <span class="hljs-string">"createdAt"</span>: <span class="hljs-string">"2022-06-24"</span>,
+    <span class="hljs-string">"updatedAt"</span>: <span class="hljs-string">"2022-06-25"</span>,
+    <span class="hljs-string">"tags"</span>: [<span class="hljs-string">"tag1"</span>]
   },
   {
-    "url": "8689a6f9a9428af5a3570a0236abdb9abf62409077138a3d02a676b3a3f757f4",
-    "fileName": "second-post",
-    "title": "두 번째 포스트",
-		"description": "요약을 써줘요",
-    "createdAt": "2022-06-24",
-    "updatedAt": "2022-06-25",
-    "tags": ["tag1"]
+    <span class="hljs-string">"url"</span>: <span class="hljs-string">"8689a6f9a9428af5a3570a0236abdb9abf62409077138a3d02a676b3a3f757f4"</span>,
+    <span class="hljs-string">"fileName"</span>: <span class="hljs-string">"second-post"</span>,
+    <span class="hljs-string">"title"</span>: <span class="hljs-string">"두 번째 포스트"</span>,
+		<span class="hljs-string">"description"</span>: <span class="hljs-string">"요약을 써줘요"</span>,
+    <span class="hljs-string">"createdAt"</span>: <span class="hljs-string">"2022-06-24"</span>,
+    <span class="hljs-string">"updatedAt"</span>: <span class="hljs-string">"2022-06-25"</span>,
+    <span class="hljs-string">"tags"</span>: [<span class="hljs-string">"tag1"</span>]
   }
 ]
 </code></pre>
 <p>static 하게 직접 관리할 대상이기 때문에, <code>public</code> 폴더에 두었다. Vue 빌드 시 public 폴더 안의 내용물은 그대로 결과폴더에 복사되기 때문에, 깃헙에서 바로 읽어올 수 있다.</p>
-<pre><code class="language-tsx">import { VuexModule, Module, Mutation, Action } from "vuex-module-decorators";
-import axios from "axios";
+<pre><code class="hljs language-tsx"><span class="hljs-keyword">import</span> { <span class="hljs-title class_">VuexModule</span>, <span class="hljs-title class_">Module</span>, <span class="hljs-title class_">Mutation</span>, <span class="hljs-title class_">Action</span> } <span class="hljs-keyword">from</span> <span class="hljs-string">"vuex-module-decorators"</span>;
+<span class="hljs-keyword">import</span> axios <span class="hljs-keyword">from</span> <span class="hljs-string">"axios"</span>;
 
-export interface Post {
-  url: string;
-  fileName: string;
-	description: string;
-  title: string;
-  tags: string[];
-  data: string;
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">interface</span> <span class="hljs-title class_">Post</span> {
+  <span class="hljs-attr">url</span>: <span class="hljs-built_in">string</span>;
+  <span class="hljs-attr">fileName</span>: <span class="hljs-built_in">string</span>;
+	<span class="hljs-attr">description</span>: <span class="hljs-built_in">string</span>;
+  <span class="hljs-attr">title</span>: <span class="hljs-built_in">string</span>;
+  <span class="hljs-attr">tags</span>: <span class="hljs-built_in">string</span>[];
+  <span class="hljs-attr">data</span>: <span class="hljs-built_in">string</span>;
 }
 
-@Module({ namespaced: true, })
-class Posts extends VuexModule {
-  public postList:Post[] = [];
-  public currentUrl = '';
+<span class="hljs-meta">@Module</span>({ <span class="hljs-attr">namespaced</span>: <span class="hljs-literal">true</span>, })
+<span class="hljs-keyword">class</span> <span class="hljs-title class_">Posts</span> <span class="hljs-keyword">extends</span> <span class="hljs-title class_ inherited__">VuexModule</span> {
+  <span class="hljs-keyword">public</span> <span class="hljs-attr">postList</span>:<span class="hljs-title class_">Post</span>[] = [];
+  <span class="hljs-keyword">public</span> currentUrl = <span class="hljs-string">''</span>;
 
-  get currentPost(): Post | undefined {
-    if(this.currentUrl == null || this.currentUrl == '' || this.postList.length &lt;= 0){
-      return undefined;
+  <span class="hljs-keyword">get</span> <span class="hljs-title function_">currentPost</span>(): <span class="hljs-title class_">Post</span> | <span class="hljs-literal">undefined</span> {
+    <span class="hljs-keyword">if</span>(<span class="hljs-variable language_">this</span>.<span class="hljs-property">currentUrl</span> == <span class="hljs-literal">null</span> || <span class="hljs-variable language_">this</span>.<span class="hljs-property">currentUrl</span> == <span class="hljs-string">''</span> || <span class="hljs-variable language_">this</span>.<span class="hljs-property">postList</span>.<span class="hljs-property">length</span> &lt;= <span class="hljs-number">0</span>){
+      <span class="hljs-keyword">return</span> <span class="hljs-literal">undefined</span>;
     }
-    else {
-      return this.postList.find(post =&gt; {
-        return post.url === this.currentUrl;
+    <span class="hljs-keyword">else</span> {
+      <span class="hljs-keyword">return</span> <span class="hljs-variable language_">this</span>.<span class="hljs-property">postList</span>.<span class="hljs-title function_">find</span>(<span class="hljs-function"><span class="hljs-params">post</span> =&gt;</span> {
+        <span class="hljs-keyword">return</span> post.<span class="hljs-property">url</span> === <span class="hljs-variable language_">this</span>.<span class="hljs-property">currentUrl</span>;
       })
     }
   }
   
-  @Mutation
-  public setPostList(postList: Post[]) {
-    this.postList = postList;
+  <span class="hljs-meta">@Mutation</span>
+  <span class="hljs-keyword">public</span> <span class="hljs-title function_">setPostList</span>(<span class="hljs-params">postList: Post[]</span>) {
+    <span class="hljs-variable language_">this</span>.<span class="hljs-property">postList</span> = postList;
   }
-  @Mutation
-  public setCurrentUrl(currentUrl: string) {
-    this.currentUrl = currentUrl;
+  <span class="hljs-meta">@Mutation</span>
+  <span class="hljs-keyword">public</span> <span class="hljs-title function_">setCurrentUrl</span>(<span class="hljs-params">currentUrl: <span class="hljs-built_in">string</span></span>) {
+    <span class="hljs-variable language_">this</span>.<span class="hljs-property">currentUrl</span> = currentUrl;
   }
 
-  @Action
-  public requestGetPostList() {
-    axios.get(`/posts/postlist.json`).then(res =&gt; {
-      this.context.commit("setPostList", res.data);
+  <span class="hljs-meta">@Action</span>
+  <span class="hljs-keyword">public</span> <span class="hljs-title function_">requestGetPostList</span>(<span class="hljs-params"></span>) {
+    axios.<span class="hljs-title function_">get</span>(<span class="hljs-string">`/posts/postlist.json`</span>).<span class="hljs-title function_">then</span>(<span class="hljs-function"><span class="hljs-params">res</span> =&gt;</span> {
+      <span class="hljs-variable language_">this</span>.<span class="hljs-property">context</span>.<span class="hljs-title function_">commit</span>(<span class="hljs-string">"setPostList"</span>, res.<span class="hljs-property">data</span>);
     });
   }
 
-  @Action
-  public moveCurrentUrl(url: string) {
-    this.context.commit("setCurrentUrl", url);
+  <span class="hljs-meta">@Action</span>
+  <span class="hljs-keyword">public</span> <span class="hljs-title function_">moveCurrentUrl</span>(<span class="hljs-params">url: <span class="hljs-built_in">string</span></span>) {
+    <span class="hljs-variable language_">this</span>.<span class="hljs-property">context</span>.<span class="hljs-title function_">commit</span>(<span class="hljs-string">"setCurrentUrl"</span>, url);
   }
 }
 
-export default Posts;
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> <span class="hljs-title class_">Posts</span>;
 </code></pre>
 <p>posts store의 기능은 다음과 같다.</p>
 <ol>
@@ -177,24 +177,24 @@ export default Posts;
 <li><strong>포스트 페이지에서 전달받은 포스트 url 을 갖고 해당하는 포스트를 조회한다.(포스트 페이지 진입 시)</strong>
 이 부분은 갖고 있는 포스팅 목록에서 단순히 조회하는 기능이다. 추후에 글이 엄청 많아져서 조회에 걸리는 데 부하가 걸리면 행복한 고민이니까 나중에 하자.</li>
 </ol>
-<pre><code class="language-tsx">// App.vue
-import { useStore } from 'vuex';
-const store = useStore();
-store.dispatch("Posts/requestGetPostList");
+<pre><code class="hljs language-tsx"><span class="hljs-comment">// App.vue</span>
+<span class="hljs-keyword">import</span> { useStore } <span class="hljs-keyword">from</span> <span class="hljs-string">'vuex'</span>;
+<span class="hljs-keyword">const</span> store = <span class="hljs-title function_">useStore</span>();
+store.<span class="hljs-title function_">dispatch</span>(<span class="hljs-string">"Posts/requestGetPostList"</span>);
 </code></pre>
 <p>사이트 최초 접속 시에만 포스트 목록을 가져오게끔 <code>App.vue</code> 의 setup 훅에서 조회하도록 했다.</p>
-<pre><code class="language-tsx">// DetailView.vue
-import { ref, defineProps, onMounted, computed } from 'vue';
-import { useRoute } from 'vue-router';
-import { useStore } from 'vuex';
+<pre><code class="hljs language-tsx"><span class="hljs-comment">// DetailView.vue</span>
+<span class="hljs-keyword">import</span> { ref, defineProps, onMounted, computed } <span class="hljs-keyword">from</span> <span class="hljs-string">'vue'</span>;
+<span class="hljs-keyword">import</span> { useRoute } <span class="hljs-keyword">from</span> <span class="hljs-string">'vue-router'</span>;
+<span class="hljs-keyword">import</span> { useStore } <span class="hljs-keyword">from</span> <span class="hljs-string">'vuex'</span>;
 
-const store = useStore();
-const route = useRoute();
-const paramId = route.params.id;
+<span class="hljs-keyword">const</span> store = <span class="hljs-title function_">useStore</span>();
+<span class="hljs-keyword">const</span> route = <span class="hljs-title function_">useRoute</span>();
+<span class="hljs-keyword">const</span> paramId = route.<span class="hljs-property">params</span>.<span class="hljs-property">id</span>;
 
-store.dispatch("Posts/moveCurrentUrl", paramId);
-const post = computed(() =&gt; {
-  return store.getters["Posts/currentPost"];
+store.<span class="hljs-title function_">dispatch</span>(<span class="hljs-string">"Posts/moveCurrentUrl"</span>, paramId);
+<span class="hljs-keyword">const</span> post = <span class="hljs-title function_">computed</span>(<span class="hljs-function">() =&gt;</span> {
+  <span class="hljs-keyword">return</span> store.<span class="hljs-property">getters</span>[<span class="hljs-string">"Posts/currentPost"</span>];
 });
 </code></pre>
 <p>DetailView 가 포스트 내용을 보여줄 뷰인데, 포스트 url 을 확인한 후 해당하는 포스트 데이터를 가져오게 했다.</p>
@@ -202,38 +202,38 @@ const post = computed(() =&gt; {
 <p>이걸 토대로 글 목록을 보여주니 잘 나온다.</p>
 <h1 id="markdown-%EC%A0%81%EC%9A%A9%ED%95%98%EA%B8%B0" tabindex="-1">Markdown 적용하기</h1>
 <p>나는 개발 노트를 2014년부터 사용했는데, 에버노트 - Typora - Joplin - 노션 순서로 넘어왔다. Typora 와 Joplin 은 사용기간이 매우 짧아서 에버노트 사용 후 노션으로 넘어왔다고 봐도 무방하다. 그 이유가 마크다운이었던 만큼, 개발 블로그는 무조건 마크다운이다 라고 생각했다.</p>
-<pre><code class="language-tsx">npm i showdown
+<pre><code class="hljs language-tsx">npm i showdown
 npm i showdown-table
 </code></pre>
 <p><strong>showdown</strong> 이라는 라이브러리를 사용할 것이다. 참고한 블로그에서 사용했기 때문이다. 왠지 마크다운 변환 라이브러리가 많을 것 같아서 다 알아봐야하는 데 시간 좀 걸리겠다 했는데, 빠르게 정할 수 있었다. 이 라이브러리는 단순하게 md 데이터를 html 로 마크업해주는 역할이다. 단순 스트링을 인자로 넘겨주면 된다.</p>
 <p><strong>showdown-table</strong> 은 이름 그대로 table 까지 지원해주는 확장라이브러리이다. 그 말은 즉슨 showdown 라이브러리에서는 기본으로 지워하지 않는다는 뜻이다.</p>
-<pre><code class="language-tsx">// src/store/posts.ts
-@Action
-public requestGetMarkdoen(postName: string) {
-  return axios.get(`/posts/${postName}.md`).then(res =&gt; {
-    const markdownPost = res.data;
-    **const converter = new showdown.Converter()**
-		converter.setOption('tables', true);
-    **const md2html = converter.makeHtml(markdownPost);
-    return md2html;**
+<pre><code class="hljs language-tsx"><span class="hljs-comment">// src/store/posts.ts</span>
+<span class="hljs-meta">@Action</span>
+<span class="hljs-keyword">public</span> <span class="hljs-title function_">requestGetMarkdoen</span>(<span class="hljs-params">postName: <span class="hljs-built_in">string</span></span>) {
+  <span class="hljs-keyword">return</span> axios.<span class="hljs-title function_">get</span>(<span class="hljs-string">`/posts/<span class="hljs-subst">${postName}</span>.md`</span>).<span class="hljs-title function_">then</span>(<span class="hljs-function"><span class="hljs-params">res</span> =&gt;</span> {
+    <span class="hljs-keyword">const</span> markdownPost = res.<span class="hljs-property">data</span>;
+    **<span class="hljs-keyword">const</span> converter = <span class="hljs-keyword">new</span> showdown.<span class="hljs-title class_">Converter</span>()**
+		converter.<span class="hljs-title function_">setOption</span>(<span class="hljs-string">'tables'</span>, <span class="hljs-literal">true</span>);
+    **<span class="hljs-keyword">const</span> md2html = converter.<span class="hljs-title function_">makeHtml</span>(markdownPost);
+    <span class="hljs-keyword">return</span> md2html;**
   });
 }
 </code></pre>
 <p>사용 방법도 간단하다. converter 를 할당해주고, <code>makeHtml</code> 함수를 호출하면 끝이다. table 확장을 추가할 때, 공식 Github 문서에서는 <strong><code>new showdown.Converter({ extensions: ['table'] })</code></strong> 로 사용하라고 하지만, md 변환이 전혀 안되는 문제가 있어서 다른 방법을 찾았다.</p>
-<pre><code class="language-tsx">// DetailView.vue
-&lt;div v-html="postContents"&gt;&lt;/div&gt;
+<pre><code class="hljs language-tsx"><span class="hljs-comment">// DetailView.vue</span>
+&lt;div v-html=<span class="hljs-string">"postContents"</span>&gt;&lt;/div&gt;
 
-// script
-onMounted(() =&gt; {
-  store.dispatch("Posts/requestGetMarkdoen", post.value.fileName).then((res) =&gt; {
-    postContents.value = res;
+<span class="hljs-comment">// script</span>
+<span class="hljs-title function_">onMounted</span>(<span class="hljs-function">() =&gt;</span> {
+  store.<span class="hljs-title function_">dispatch</span>(<span class="hljs-string">"Posts/requestGetMarkdoen"</span>, post.<span class="hljs-property">value</span>.<span class="hljs-property">fileName</span>).<span class="hljs-title function_">then</span>(<span class="hljs-function">(<span class="hljs-params">res</span>) =&gt;</span> {
+    postContents.<span class="hljs-property">value</span> = res;
   })
 })
 </code></pre>
 <p>DOM의 innerValue 로 넣어주면 간단하게 md 로 작성했던 포스팅이 html 이 렌더링된다. 간단-</p>
 <h1 id="prerendering" tabindex="-1">Prerendering</h1>
 <p>Github Pages 특성상 SPA 지원을 안하기 때문에, 홈이 아닌 다른 URL을 접속하려고 하면 404 페이지가 뜬다. 물론 SPA 사이트도 홈에서 라우팅을 한다면 작동은 하겠지만은 누가 블로그를 홈에서부터 여행을 하겠는가. 구글엔진은 SPA도 js를 실행해 크롤링한다고는 하는데, Github Pages는 홈을 제외한 페이지에 아예 접속조차 안되며, SEO도 신경써야하니 Prerendering 은 필수이다.</p>
-<pre><code class="language-tsx">npm i -D prerender-spa-plugin -&gt; webpack4
+<pre><code class="hljs language-tsx">npm i -D prerender-spa-plugin -&gt; webpack4
 npm i -D prerender-spa-wp5-plugin -&gt; webpack5
 </code></pre>
 <p>한참 애를 먹었던 녀석이다. 참고하던 블로그에서는 Vue가 내부적으로 Webpack4 를 사용해서 원본 라이브러리로도 잘 돌아가지만, 내가 만든 프로젝트에서는 계속 에러가 발생했다.</p>
@@ -244,55 +244,55 @@ npm i -D prerender-spa-wp5-plugin -&gt; webpack5
 <p>개같이 찾아봤지만 확실한 답을 얻지 못하고, 아예 라이브러리 소스를 디버깅해보기로 했다. 저 에러를 콘솔에 찍는 부분부터 역으로 코드를 확인해서 답을 얻었다.</p>
 <p>Webpack5 에서의 <code>complier.outputFileSystem</code> 에는 <code>mkdirp</code> 가 없는데, 이걸 사용하려고 해서 에러가 발생했다. Webpack5로의 마이그레이션이 전혀 안된 것이다. 그제야 Github에서도 2018년에 업데이트가 끝났다는 걸 확인했다.</p>
 <p>소스를 바꿔서 사용해야하나 싶었다.</p>
-<pre><code class="language-tsx">// node_modules/prerender-spa-plugin/es6/index.js
+<pre><code class="hljs language-tsx"><span class="hljs-comment">// node_modules/prerender-spa-plugin/es6/index.js</span>
 
-// 58 line
-// mkdirp 함수를 대체한다.
-const mkdirp = function (dir, opts) {
-  return new Promise((resolve, reject) =&gt; {
-    console.log('\ndir', dir, opts, '\n');
-    try {
-      compilerFS.mkdirp(dir, opts, (err, made) =&gt; err === null ? resolve(made) : reject(err))
-    } catch(e) {
-      compilerFS.mkdir(dir, opts, (err, made) =&gt; err === null ? resolve(made) : reject(err))
+<span class="hljs-comment">// 58 line</span>
+<span class="hljs-comment">// mkdirp 함수를 대체한다.</span>
+<span class="hljs-keyword">const</span> mkdirp = <span class="hljs-keyword">function</span> (<span class="hljs-params">dir, opts</span>) {
+  <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Promise</span>(<span class="hljs-function">(<span class="hljs-params">resolve, reject</span>) =&gt;</span> {
+    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">'\ndir'</span>, dir, opts, <span class="hljs-string">'\n'</span>);
+    <span class="hljs-keyword">try</span> {
+      compilerFS.<span class="hljs-title function_">mkdirp</span>(dir, opts, <span class="hljs-function">(<span class="hljs-params">err, made</span>) =&gt;</span> err === <span class="hljs-literal">null</span> ? <span class="hljs-title function_">resolve</span>(made) : <span class="hljs-title function_">reject</span>(err))
+    } <span class="hljs-keyword">catch</span>(e) {
+      compilerFS.<span class="hljs-title function_">mkdir</span>(dir, opts, <span class="hljs-function">(<span class="hljs-params">err, made</span>) =&gt;</span> err === <span class="hljs-literal">null</span> ? <span class="hljs-title function_">resolve</span>(made) : <span class="hljs-title function_">reject</span>(err))
     }
   })
 }
 
-// 124 line
-// recursive 옵션을 추가해준다.
-return mkdirp(path.dirname(processedRoute.outputPath), {recursive: true}) 
+<span class="hljs-comment">// 124 line</span>
+<span class="hljs-comment">// recursive 옵션을 추가해준다.</span>
+<span class="hljs-keyword">return</span> <span class="hljs-title function_">mkdirp</span>(path.<span class="hljs-title function_">dirname</span>(processedRoute.<span class="hljs-property">outputPath</span>), {<span class="hljs-attr">recursive</span>: <span class="hljs-literal">true</span>}) 
 </code></pre>
 <p>소스 수정 항목은 매우 간단하다. <code>mkdir</code> 함수로 바꾸면 되는데 이러면 또 문제가 생긴다. 포스팅 여러개를 렌더링할 때 <code>mkdir</code> 을 여러번 호출하는데, 중복이 된 경우에도 예외가 발생해서 렌더링이 안된다. 그래서 <code>recursive</code> 옵션까지 주어야 완벽하게 호환이 된다.</p>
 <p>하지만 문제는 Github Actions 를 사용한다는 것이다. Actions 가 실행될 때는 <code>npm install</code> 로 종속성 다운로드 후 바로 빌드를 하기 때문에 바뀐 소스를 적용하지 못한다. 그래서 결국 Webpack5 버전으로 누군가 새로 올려준 라이브러리를 받아서 진행했다. 그게 <code>prerender-spa-wp5-plugin</code> 이다.</p>
-<pre><code class="language-tsx">const path = require('path')
-const PrerenderSpaPlugin = require('prerender-spa-wp5-plugin')
+<pre><code class="hljs language-tsx"><span class="hljs-keyword">const</span> path = <span class="hljs-built_in">require</span>(<span class="hljs-string">'path'</span>)
+<span class="hljs-keyword">const</span> <span class="hljs-title class_">PrerenderSpaPlugin</span> = <span class="hljs-built_in">require</span>(<span class="hljs-string">'prerender-spa-wp5-plugin'</span>)
 
-const posts = require('./public/posts/postlist.json')
-const routes = posts.map(post =&gt; `/${post.url}`)
-const paths = posts.map(post =&gt; {
-  return { 
-    path: `/${post.name}/`,
-    lastmod: post.lastmod || post.date,
-    changefreq: 'yearly'
+<span class="hljs-keyword">const</span> posts = <span class="hljs-built_in">require</span>(<span class="hljs-string">'./public/posts/postlist.json'</span>)
+<span class="hljs-keyword">const</span> routes = posts.<span class="hljs-title function_">map</span>(<span class="hljs-function"><span class="hljs-params">post</span> =&gt;</span> <span class="hljs-string">`/<span class="hljs-subst">${post.url}</span>`</span>)
+<span class="hljs-keyword">const</span> paths = posts.<span class="hljs-title function_">map</span>(<span class="hljs-function"><span class="hljs-params">post</span> =&gt;</span> {
+  <span class="hljs-keyword">return</span> { 
+    <span class="hljs-attr">path</span>: <span class="hljs-string">`/<span class="hljs-subst">${post.name}</span>/`</span>,
+    <span class="hljs-attr">lastmod</span>: post.<span class="hljs-property">lastmod</span> || post.<span class="hljs-property">date</span>,
+    <span class="hljs-attr">changefreq</span>: <span class="hljs-string">'yearly'</span>
   }
 })
 
-module.exports = [
-  new PrerenderSpaPlugin({
-    staticDir: path.join(__dirname, 'dist'),
-    routes: ["/", ...routes],
-    renderer: new PrerenderSpaPlugin.PuppeteerRenderer({
-      renderAfterElementExists: '#app',
+<span class="hljs-variable language_">module</span>.<span class="hljs-property">exports</span> = [
+  <span class="hljs-keyword">new</span> <span class="hljs-title class_">PrerenderSpaPlugin</span>({
+    <span class="hljs-attr">staticDir</span>: path.<span class="hljs-title function_">join</span>(__dirname, <span class="hljs-string">'dist'</span>),
+    <span class="hljs-attr">routes</span>: [<span class="hljs-string">"/"</span>, ...routes],
+    <span class="hljs-attr">renderer</span>: <span class="hljs-keyword">new</span> <span class="hljs-title class_">PrerenderSpaPlugin</span>.<span class="hljs-title class_">PuppeteerRenderer</span>({
+      <span class="hljs-attr">renderAfterElementExists</span>: <span class="hljs-string">'#app'</span>,
     }),
   }),
 ];
-// vue.config.js
-const webpackPlugins = require('./webpack.plugin');
-module.exports = {
-	configureWebpack: (config) =&gt; {
-	  if (process.env.NODE_ENV === 'production') {
-	    config.plugins.push(...webpackPlugins); // 상단에서 정의한 postPlugins 내용 삽입
+<span class="hljs-comment">// vue.config.js</span>
+<span class="hljs-keyword">const</span> webpackPlugins = <span class="hljs-built_in">require</span>(<span class="hljs-string">'./webpack.plugin'</span>);
+<span class="hljs-variable language_">module</span>.<span class="hljs-property">exports</span> = {
+	<span class="hljs-attr">configureWebpack</span>: <span class="hljs-function">(<span class="hljs-params">config</span>) =&gt;</span> {
+	  <span class="hljs-keyword">if</span> (process.<span class="hljs-property">env</span>.<span class="hljs-property">NODE_ENV</span> === <span class="hljs-string">'production'</span>) {
+	    config.<span class="hljs-property">plugins</span>.<span class="hljs-title function_">push</span>(...webpackPlugins); <span class="hljs-comment">// 상단에서 정의한 postPlugins 내용 삽입</span>
 	  }
 	},
 }
@@ -301,37 +301,37 @@ module.exports = {
 <p><img src="../img/making-blog-githubio-vue3-1/Untitled%209.png" alt="Untitled"></p>
 <p>빌드하면 결과물 폴더에, 변환한 URL에 해당하는 index.html 파일들이 우수수 빌드가 된 걸 확인할 수 있다. 그리고 포스팅 URL 로 바로 접속도 가능해졌다.</p>
 <h1 id="sitemap-%EC%9E%90%EB%8F%99-%EC%83%9D%EC%84%B1" tabindex="-1">Sitemap 자동 생성</h1>
-<pre><code class="language-tsx">npm i -D sitemap-webpack-plugin
+<pre><code class="hljs language-tsx">npm i -D sitemap-webpack-plugin
 </code></pre>
 <p>사이트맵 생성에는 <code>sitemap-webpack-plugin</code> 을 사용한다. 개발자들의 스승님인 구글 검색 엔진에 블로그가 더 잘 노출이 되고, 크롤링에 도움을 주기위해서 사이트맵은 필요하다. Webpack 이 참 플러그인 생태계가 좋다.</p>
-<pre><code class="language-tsx">const SitemapPlugin = require('sitemap-webpack-plugin').default;
-const paths = posts.map(post =&gt; {
-  return { 
-		path: `/${post.url}/`,
-    lastmod: post.updatedAt || post.createdAt,
-    changefreq: 'yearly'
+<pre><code class="hljs language-tsx"><span class="hljs-keyword">const</span> <span class="hljs-title class_">SitemapPlugin</span> = <span class="hljs-built_in">require</span>(<span class="hljs-string">'sitemap-webpack-plugin'</span>).<span class="hljs-property">default</span>;
+<span class="hljs-keyword">const</span> paths = posts.<span class="hljs-title function_">map</span>(<span class="hljs-function"><span class="hljs-params">post</span> =&gt;</span> {
+  <span class="hljs-keyword">return</span> { 
+		<span class="hljs-attr">path</span>: <span class="hljs-string">`/<span class="hljs-subst">${post.url}</span>/`</span>,
+    <span class="hljs-attr">lastmod</span>: post.<span class="hljs-property">updatedAt</span> || post.<span class="hljs-property">createdAt</span>,
+    <span class="hljs-attr">changefreq</span>: <span class="hljs-string">'yearly'</span>
   }
 })
 
-module.exports = [
+<span class="hljs-variable language_">module</span>.<span class="hljs-property">exports</span> = [
 	...,
-  new SitemapPlugin({
-    base: process.env.VUE_APP_BASE_URL,
+  <span class="hljs-keyword">new</span> <span class="hljs-title class_">SitemapPlugin</span>({
+    <span class="hljs-attr">base</span>: process.<span class="hljs-property">env</span>.<span class="hljs-property">VUE_APP_BASE_URL</span>,
     paths
   })
 ];
 </code></pre>
 <p>또 플러그인을 작성하고, 빌드하면 끝이다.</p>
-<pre><code class="language-tsx">&lt;url&gt;
-	&lt;loc&gt;https://lhs-source.github.io/d5c653f34310b85f731a497e64970059921fba363647f5cc1e39ead9ea9cf76f/&lt;/loc&gt;
-	&lt;lastmod&gt;2022-06-25T00:00:00.000Z&lt;/lastmod&gt;
-	&lt;changefreq&gt;yearly&lt;/changefreq&gt;
+<pre><code class="hljs language-tsx">&lt;url&gt;
+	<span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">loc</span>&gt;</span>https://lhs-source.github.io/d5c653f34310b85f731a497e64970059921fba363647f5cc1e39ead9ea9cf76f/<span class="hljs-tag">&lt;/<span class="hljs-name">loc</span>&gt;</span></span>
+	<span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">lastmod</span>&gt;</span>2022-06-25T00:00:00.000Z<span class="hljs-tag">&lt;/<span class="hljs-name">lastmod</span>&gt;</span></span>
+	<span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">changefreq</span>&gt;</span>yearly<span class="hljs-tag">&lt;/<span class="hljs-name">changefreq</span>&gt;</span></span>
 &lt;/url&gt;
-&lt;url&gt;
-	&lt;loc&gt;https://lhs-source.github.io/8689a6f9a9428af5a3570a0236abdb9abf62409077138a3d02a676b3a3f757f4/&lt;/loc&gt;
-	&lt;lastmod&gt;2022-06-25T00:00:00.000Z&lt;/lastmod&gt;
-	&lt;changefreq&gt;yearly&lt;/changefreq&gt;
-&lt;/url&gt;
+<span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">url</span>&gt;</span>
+	<span class="hljs-tag">&lt;<span class="hljs-name">loc</span>&gt;</span>https://lhs-source.github.io/8689a6f9a9428af5a3570a0236abdb9abf62409077138a3d02a676b3a3f757f4/<span class="hljs-tag">&lt;/<span class="hljs-name">loc</span>&gt;</span>
+	<span class="hljs-tag">&lt;<span class="hljs-name">lastmod</span>&gt;</span>2022-06-25T00:00:00.000Z<span class="hljs-tag">&lt;/<span class="hljs-name">lastmod</span>&gt;</span>
+	<span class="hljs-tag">&lt;<span class="hljs-name">changefreq</span>&gt;</span>yearly<span class="hljs-tag">&lt;/<span class="hljs-name">changefreq</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">url</span>&gt;</span></span>
 </code></pre>
 <p>이렇게 구글 엔진에 등록할 <code>sitemap.xml</code> 이 저절로 만들어진다. 결과물 폴더에 만들어지기 때문에, 브라우저에서도 바로 접속할 수 있다.</p>
 <h2 id="%EC%82%AC%EC%9D%B4%ED%8A%B8%EB%A7%B5-%EB%93%B1%EB%A1%9D%ED%95%98%EA%B8%B0" tabindex="-1">사이트맵 등록하기</h2>
@@ -340,12 +340,12 @@ module.exports = [
 <p><img src="../img/making-blog-githubio-vue3-1/Untitled%2010.png" alt="Untitled"></p>
 <p>URL 을 입력하고 다음으로 넘어가자.</p>
 <p><img src="../img/making-blog-githubio-vue3-1/Untitled%2011.png" alt="Untitled"></p>
-<pre><code class="language-tsx">&lt;!DOCTYPE html&gt;
-&lt;html lang=""&gt;
-  &lt;head&gt;
-    &lt;meta name="google-site-verification" content="p4lZFdtKOsDj6_1O2f_PsufQnO068kmB_Sgrs5UlweQ" /&gt;
-	&lt;/head&gt;
-&lt;/html&gt;
+<pre><code class="hljs language-tsx">&lt;!<span class="hljs-variable constant_">DOCTYPE</span> html&gt;
+<span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">html</span> <span class="hljs-attr">lang</span>=<span class="hljs-string">""</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">head</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">meta</span> <span class="hljs-attr">name</span>=<span class="hljs-string">"google-site-verification"</span> <span class="hljs-attr">content</span>=<span class="hljs-string">"p4lZFdtKOsDj6_1O2f_PsufQnO068kmB_Sgrs5UlweQ"</span> /&gt;</span>
+	<span class="hljs-tag">&lt;/<span class="hljs-name">head</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">html</span>&gt;</span></span>
 </code></pre>
 <p>제일 간단한 메타태그 추가를 통해 사이트 인증을 진행한다. 사이트 루트에 메타태그가 있어야하기 때문에, public/index.html 에 메타태그를 추가해주자.</p>
 <p><img src="../img/making-blog-githubio-vue3-1/Untitled%2012.png" alt="Untitled"></p>
@@ -358,42 +358,42 @@ module.exports = [
 <p>성공!</p>
 <h1 id="%EB%A9%94%ED%83%80%ED%83%9C%EA%B7%B8-%EC%9E%91%EC%84%B1%ED%95%98%EA%B8%B0" tabindex="-1">메타태그 작성하기</h1>
 <p>블로그 내용에 대해서 잘 알려주기 위해 렌더링하는 포스팅 페이지에 메타태그를 추가하자. 누군가 링크를 퍼가거나, 검색엔진에서 긁어갈 때 메타태그가 아주 중요한 역할을 한다.</p>
-<pre><code class="language-tsx">module.exports = [
-  new PrerenderSpaPlugin({
-    postProcess(renderedHtml) {
-			let { html, route } = renderedHtml;
-      console.log('renderedHtml', renderedHtml);
-      const foundPost = posts.find(post =&gt; route.includes(post.url))
-      if(foundPost == null) {
-        return renderedHtml;
+<pre><code class="hljs language-tsx"><span class="hljs-variable language_">module</span>.<span class="hljs-property">exports</span> = [
+  <span class="hljs-keyword">new</span> <span class="hljs-title class_">PrerenderSpaPlugin</span>({
+    <span class="hljs-title function_">postProcess</span>(<span class="hljs-params">renderedHtml</span>) {
+			<span class="hljs-keyword">let</span> { html, route } = renderedHtml;
+      <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">'renderedHtml'</span>, renderedHtml);
+      <span class="hljs-keyword">const</span> foundPost = posts.<span class="hljs-title function_">find</span>(<span class="hljs-function"><span class="hljs-params">post</span> =&gt;</span> route.<span class="hljs-title function_">includes</span>(post.<span class="hljs-property">url</span>))
+      <span class="hljs-keyword">if</span>(foundPost == <span class="hljs-literal">null</span>) {
+        <span class="hljs-keyword">return</span> renderedHtml;
       }
-      const { title, description, tags } = foundPost;
-      const titleText = title ? title.replace(/&lt;br&gt;/ig, '') : process.env.VUE_APP_TITLE
-      const descriptionText = description || '이현수 개발기'
-      const tagsText = tags || '개발, 프론트엔드, 블로그, github pages, Vue3'
-      const url = `${process.env.VUE_APP_BASE_URL}${route}`
-      const imgUrl = `${process.env.VUE_APP_BASE_URL}/images/thumbnail.jpg`
+      <span class="hljs-keyword">const</span> { title, description, tags } = foundPost;
+      <span class="hljs-keyword">const</span> titleText = title ? title.<span class="hljs-title function_">replace</span>(<span class="hljs-regexp">/&lt;br&gt;/ig</span>, <span class="hljs-string">''</span>) : process.<span class="hljs-property">env</span>.<span class="hljs-property">VUE_APP_TITLE</span>
+      <span class="hljs-keyword">const</span> descriptionText = description || <span class="hljs-string">'이현수 개발기'</span>
+      <span class="hljs-keyword">const</span> tagsText = tags || <span class="hljs-string">'개발, 프론트엔드, 블로그, github pages, Vue3'</span>
+      <span class="hljs-keyword">const</span> url = <span class="hljs-string">`<span class="hljs-subst">${process.env.VUE_APP_BASE_URL}</span><span class="hljs-subst">${route}</span>`</span>
+      <span class="hljs-keyword">const</span> imgUrl = <span class="hljs-string">`<span class="hljs-subst">${process.env.VUE_APP_BASE_URL}</span>/images/thumbnail.jpg`</span>
 
-      const metaData = `
-        &lt;title&gt;${titleText}&lt;/title&gt;
-        &lt;meta name="title" content="${titleText}" /&gt;
-        &lt;meta name="description" content="${descriptionText}" /&gt;
-        &lt;meta name="keywords" content="${tagsText}" /&gt;
-        &lt;meta property="og:url" content="${url}" /&gt;
+      <span class="hljs-keyword">const</span> metaData = <span class="hljs-string">`
+        &lt;title&gt;<span class="hljs-subst">${titleText}</span>&lt;/title&gt;
+        &lt;meta name="title" content="<span class="hljs-subst">${titleText}</span>" /&gt;
+        &lt;meta name="description" content="<span class="hljs-subst">${descriptionText}</span>" /&gt;
+        &lt;meta name="keywords" content="<span class="hljs-subst">${tagsText}</span>" /&gt;
+        &lt;meta property="og:url" content="<span class="hljs-subst">${url}</span>" /&gt;
         &lt;meta property="og:type" content="article" /&gt;
-        &lt;meta property="og:title" content="${titleText}" /&gt;
-        &lt;meta property="og:description" content="${descriptionText}" /&gt;
-        &lt;meta property="og:image" content="${imgUrl}" /&gt;
-        &lt;meta property="twitter:card" content="${imgUrl}" /&gt;
-        &lt;meta property="twitter:url" content="${url}" /&gt;
-        &lt;meta property="twitter:title" content="${titleText}" /&gt;
-        &lt;meta property="twitter:description" content="${descriptionText}" /&gt;
-        &lt;meta property="twitter:image" content="${imgUrl}" /&gt;
-      `;
-      const start = html.indexOf('&lt;head&gt;') + '&lt;head&gt;'.length;
-      html = html.slice(0, start) + metaData + html.slice(start);
-      renderedRoute.html = html;
-      return renderedRoute;
+        &lt;meta property="og:title" content="<span class="hljs-subst">${titleText}</span>" /&gt;
+        &lt;meta property="og:description" content="<span class="hljs-subst">${descriptionText}</span>" /&gt;
+        &lt;meta property="og:image" content="<span class="hljs-subst">${imgUrl}</span>" /&gt;
+        &lt;meta property="twitter:card" content="<span class="hljs-subst">${imgUrl}</span>" /&gt;
+        &lt;meta property="twitter:url" content="<span class="hljs-subst">${url}</span>" /&gt;
+        &lt;meta property="twitter:title" content="<span class="hljs-subst">${titleText}</span>" /&gt;
+        &lt;meta property="twitter:description" content="<span class="hljs-subst">${descriptionText}</span>" /&gt;
+        &lt;meta property="twitter:image" content="<span class="hljs-subst">${imgUrl}</span>" /&gt;
+      `</span>;
+      <span class="hljs-keyword">const</span> start = html.<span class="hljs-title function_">indexOf</span>(<span class="hljs-string">'&lt;head&gt;'</span>) + <span class="hljs-string">'&lt;head&gt;'</span>.<span class="hljs-property">length</span>;
+      html = html.<span class="hljs-title function_">slice</span>(<span class="hljs-number">0</span>, start) + metaData + html.<span class="hljs-title function_">slice</span>(start);
+      renderedRoute.<span class="hljs-property">html</span> = html;
+      <span class="hljs-keyword">return</span> renderedRoute;
     },
 </code></pre>
 <p>아까 사용했던 <code>PrerenderSpaPlugin</code> 을 활용한다. 훅 중 하나인 <code>postProcess</code> 에 메타 태그를 심어주는 코드를 작성한다. 필수로 들어가면 좋을 태그는 <code>title</code>, <code>description</code> , <code>keyword</code> 라고 한다.</p>
@@ -407,66 +407,66 @@ module.exports = [
 <p>그 후 데이터스트림을 만들어준다. 스트림 이름은 적당히 알아볼 수 있게 하고, 중요한 것은 “측정 ID” 이다. 이것이 데이터를 전송하는 데 사용하는 키가 된다.</p>
 <h3 id="%EB%A1%9C%EC%BB%AC-%ED%85%8C%EC%8A%A4%ED%8A%B8%EC%9A%A9-%EB%8D%B0%EC%9D%B4%ED%84%B0%EC%8A%A4%ED%8A%B8%EB%A6%BC-%EB%A7%8C%EB%93%A4%EA%B8%B0" tabindex="-1">로컬 테스트용 데이터스트림 만들기</h3>
 <p>스트림 URL 에는 <code>localhost</code> 혹은 <code>127.0.0.1</code> 같은 루프백 주소는 입력할 수 없다. 그렇다고 테스트할 때마다 매번 Github에 배포하는 것도 번거로운 일이다. 적어도 1분에서 3분정도 걸리는데 그 시간이 누적되면 손해가 이만저만이 아니다.</p>
-<pre><code class="language-tsx">##
-# Host Database
+<pre><code class="hljs language-tsx">##
+# <span class="hljs-title class_">Host</span> <span class="hljs-title class_">Database</span>
 #
-# localhost is used to configure the loopback interface
-# when the system is booting.  Do not change this entry.
+# localhost is used to configure the loopback <span class="hljs-keyword">interface</span>
+# when the system is booting.  <span class="hljs-title class_">Do</span> not change this entry.
 ##
 127.0.0.1	localhost
 255.255.255.255	broadcasthost
 ::1             localhost
-# Added by Docker Desktop
-# To allow the same kube context to work on the host and the container:
+# <span class="hljs-title class_">Added</span> by <span class="hljs-title class_">Docker</span> <span class="hljs-title class_">Desktop</span>
+# <span class="hljs-title class_">To</span> allow the same kube context to work on the host and the container:
 127.0.0.1 kubernetes.docker.internal
 **127.0.0.1 blog.local**
-# End of section
+# <span class="hljs-title class_">End</span> of section
 </code></pre>
 <p><code>hosts</code> 파일에 DNS 정보를 넣어서 가상의 URL을 만들어준 후에, 이 URL로 로컬 테스트를 진행하면 된다. 나는 단순하게 <code>blog.local</code> 이라고 정했다.</p>
 <p><img src="../img/making-blog-githubio-vue3-1/Untitled%2018.png" alt="Untitled"></p>
 <p>나의 경우 실제 오픈한 블로그와 로컬 테스트 블로그 각각에서 잡히는 데이터를 분리하고 싶었다. 그래서 아예 속성 자체를 분리했다. 그래야 섞이지 않고 올바르게 데이터를 쌓을 수 있다.</p>
-<pre><code class="language-tsx">// vue.config.js
-module.exports = {
-	devServer: {
-		// webpack4
-		disableHostCheck: true,
-		// webpack5
-    // allowedHosts: ['.host.com', 'host2.com'],
-    allowedHosts: 'all',
+<pre><code class="hljs language-tsx"><span class="hljs-comment">// vue.config.js</span>
+<span class="hljs-variable language_">module</span>.<span class="hljs-property">exports</span> = {
+	<span class="hljs-attr">devServer</span>: {
+		<span class="hljs-comment">// webpack4</span>
+		<span class="hljs-attr">disableHostCheck</span>: <span class="hljs-literal">true</span>,
+		<span class="hljs-comment">// webpack5</span>
+    <span class="hljs-comment">// allowedHosts: ['.host.com', 'host2.com'],</span>
+    <span class="hljs-attr">allowedHosts</span>: <span class="hljs-string">'all'</span>,
   }
 }
 </code></pre>
 <p>vue.config.js 에다가 추가로 설정이 필요하다. Webpack4 를 사용 중이라면 <code>disableHostCheck</code> 속성을, Webpack5 사용 중이라면 <code>allowedHosts</code> 를 사용한다.</p>
 <h2 id="vue%EC%97%90%EC%84%9C-ga4%EB%A1%9C-%EB%8D%B0%EC%9D%B4%ED%84%B0-%EC%A0%84%EC%86%A1%ED%95%98%EA%B8%B0" tabindex="-1">Vue에서 GA4로 데이터 전송하기</h2>
-<pre><code class="language-tsx">npm install vue-gtag-next
+<pre><code class="hljs language-tsx">npm install vue-gtag-next
 </code></pre>
 <p>Vue에서는 <code>vue-gtag</code>라는 라이브러리를 사용해서 간단하게 GA 태그를 심을 수 있다. 하지만 <code>vue-gtag</code> 는 Vue2 까지 지원하며, Vue3 에서는 <code>vue-gtag-next</code> 를 사용해야한다. 사용법도 조금은 다르다.</p>
-<pre><code class="language-tsx">// main.ts
-import VueGTag from "vue-gtag-next";
+<pre><code class="hljs language-tsx"><span class="hljs-comment">// main.ts</span>
+<span class="hljs-keyword">import</span> <span class="hljs-title class_">VueGTag</span> <span class="hljs-keyword">from</span> <span class="hljs-string">"vue-gtag-next"</span>;
 
-let GAID = "G-XXYYZZXXTT";  // dev
-if(process.env.NODE_ENV === "production") {
-    GAID = "G-XXYYZZXXEE";  // prod
+<span class="hljs-keyword">let</span> <span class="hljs-variable constant_">GAID</span> = <span class="hljs-string">"G-XXYYZZXXTT"</span>;  <span class="hljs-comment">// dev</span>
+<span class="hljs-keyword">if</span>(process.<span class="hljs-property">env</span>.<span class="hljs-property">NODE_ENV</span> === <span class="hljs-string">"production"</span>) {
+    <span class="hljs-variable constant_">GAID</span> = <span class="hljs-string">"G-XXYYZZXXEE"</span>;  <span class="hljs-comment">// prod</span>
 }
 
-const app = createApp(App)
-.use(store)
-.use(router)
-**.use(VueGTag, {
-    property: {
-        id: GAID, // prod
+<span class="hljs-keyword">const</span> app = <span class="hljs-title function_">createApp</span>(<span class="hljs-title class_">App</span>)
+.<span class="hljs-title function_">use</span>(store)
+.<span class="hljs-title function_">use</span>(router)
+**.<span class="hljs-title function_">use</span>(<span class="hljs-title class_">VueGTag</span>, {
+    <span class="hljs-attr">property</span>: {
+        <span class="hljs-attr">id</span>: <span class="hljs-variable constant_">GAID</span>, <span class="hljs-comment">// prod</span>
     }
 })**
-.mount('#app')
+.<span class="hljs-title function_">mount</span>(<span class="hljs-string">'#app'</span>)
 </code></pre>
 <p>우선 main.ts 에서 “측정 ID” 를 가지고 GA 초기화를 해야한다. 실서버와 로컬 환경의 키를 분리해서 할당하고는, Vue app의 <code>use</code> 로 등록해주자.</p>
-<pre><code class="language-tsx">// router/index.ts
-import { trackRouter } from 'vue-gtag-next'
-const router = createRouter({
+<pre><code class="hljs language-tsx"><span class="hljs-comment">// router/index.ts</span>
+<span class="hljs-keyword">import</span> { trackRouter } <span class="hljs-keyword">from</span> <span class="hljs-string">'vue-gtag-next'</span>
+<span class="hljs-keyword">const</span> router = <span class="hljs-title function_">createRouter</span>({
 	...
 })
 
-trackRouter(router);
+<span class="hljs-title function_">trackRouter</span>(router);
 </code></pre>
 <p><code>trackRouter</code> 로 간단하게 Vue-Router 와 연동하여 라우팅 페이지 뷰를 자동으로 인식하고 데이터를 전송할 수 있다.</p>
-</div><div class="post-footer"> 포스팅은 여기까지입니다. <br> 의견은 <a href="mailto:iddms5446@gmail.com">iddms5446@gmail.com</a>으로 보내주시면 감사드리겠습니다! </div></div></div></div></div></div></div></body></html>
+</div><div class="post-footer"> 포스팅은 여기까지입니다. <br> 의견은 <a href="mailto:iddms5446@gmail.com">iddms5446@gmail.com</a>으로 보내주시면 감사드리겠습니다! </div></div><div class="toc"><div class="toc-contents"><div class="toc-list"><div class="table-of-contents"><ul><li><a href="#github.io-%ED%8E%98%EC%9D%B4%EC%A7%80-%EB%A7%8C%EB%93%A4%EA%B8%B0">Github.io 페이지 만들기</a></li><li><a href="#github-actions-%EB%A1%9C-github-pages-%EB%B0%B0%ED%8F%AC">Github Actions 로 Github Pages 배포</a><ul><li><a href="#gh-pages">gh-pages</a></li><li><a href="#%EC%88%98%EB%8F%99-%EB%B9%8C%EB%93%9C">수동 빌드</a></li><li><a href="#github-actions">Github Actions</a></li></ul></li><li><a href="#%EB%B8%94%EB%A1%9C%EA%B7%B8-%ED%8F%AC%EC%8A%A4%ED%8A%B8-%EB%AA%A9%EB%A1%9D-%EA%B4%80%EB%A6%AC%ED%95%98%EA%B8%B0">블로그 포스트 목록 관리하기</a></li><li><a href="#markdown-%EC%A0%81%EC%9A%A9%ED%95%98%EA%B8%B0">Markdown 적용하기</a></li><li><a href="#prerendering">Prerendering</a></li><li><a href="#sitemap-%EC%9E%90%EB%8F%99-%EC%83%9D%EC%84%B1">Sitemap 자동 생성</a><ul><li><a href="#%EC%82%AC%EC%9D%B4%ED%8A%B8%EB%A7%B5-%EB%93%B1%EB%A1%9D%ED%95%98%EA%B8%B0">사이트맵 등록하기</a></li></ul></li><li><a href="#%EB%A9%94%ED%83%80%ED%83%9C%EA%B7%B8-%EC%9E%91%EC%84%B1%ED%95%98%EA%B8%B0">메타태그 작성하기</a></li><li><a href="#google-analytics-%EC%B6%94%EA%B0%80">Google Analytics 추가</a><ul><li><a href="#ga4-%EA%B3%84%EC%A0%95-%EC%83%9D%EC%84%B1%ED%95%98%EA%B8%B0">GA4 계정 생성하기</a></li><li><a href="#vue%EC%97%90%EC%84%9C-ga4%EB%A1%9C-%EB%8D%B0%EC%9D%B4%ED%84%B0-%EC%A0%84%EC%86%A1%ED%95%98%EA%B8%B0">Vue에서 GA4로 데이터 전송하기</a></li></ul></li></ul></div></div></div></div><div class="control-list"><div class="info-toggle control"><span>🧙‍♂️</span><span>정보</span></div><div class="toc-toggle control"><span>📚</span><span>목차</span></div></div></div></div></div></div><div id="modal-portal"><!----><!----></div></div></body></html>
