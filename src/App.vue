@@ -1,5 +1,6 @@
 <template>
   <router-view/>
+  <div id="modal-portal"></div>
 </template>
 
 <script setup lang="ts">
@@ -20,6 +21,6 @@ html {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: $color-primary;
+  color: $color-primary-g-dark;
 }
 </style>

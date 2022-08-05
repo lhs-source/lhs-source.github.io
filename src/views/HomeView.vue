@@ -39,6 +39,7 @@
           :key="post.url"
           class="post"
           @click="onClickPost(post)">
+          <div class="date">{{post.createdAt}}</div>
           <div class="name">{{post.title}}</div>
           <div class="tag-list">
             <label
@@ -59,194 +60,11 @@ import { computed, onMounted, ref } from 'vue';
 import { useStore } from 'vuex';
 import { Post } from "@/store/posts";
 import { useRoute, useRouter } from 'vue-router';
-import PageDefaultLayout from "@/component/PageDefaultLayout.vue";
+import PageDefaultLayout from "@/component/Atom/PageDefaultLayout.vue";
 
 const store = useStore();
 const route = useRoute();
 const router = useRouter();
-
-const chooseClass = () => {
-  const random = Math.random() * 4;
-  if(random < 1) {
-    return "typo-5";
-  }
-  else if(random < 2) {
-    return "typo-4";
-  }
-  else if(random < 3) {
-    return "typo-3";
-  }
-  else if(random < 4) {
-    return "typo-2";
-  }
-}
-
-const HTMLTagList = [
-  {
-    tag: "html",
-    class: chooseClass(),
-  }, 
-  {
-    tag: "head",
-    class: chooseClass(),
-  }, 
-  {
-    tag: "body",
-    class: chooseClass(),
-  }, 
-  {
-    tag: "title",
-    class: chooseClass(),
-  }, 
-  {
-    tag: "meta",
-    class: chooseClass(),
-  }, 
-  {
-    tag: "div",
-    class: chooseClass(),
-  }, 
-  {
-    tag: "a",
-    class: chooseClass(),
-  }, 
-  {
-    tag: "script",
-    class: chooseClass(),
-  }, 
-  {
-    tag: "link",
-    class: chooseClass(),
-  }, 
-  {
-    tag: "img",
-    class: chooseClass(),
-  }, 
-  {
-    tag: "span",
-    class: chooseClass(),
-  }, 
-  {
-    tag: "p",
-    class: chooseClass(),
-  }, 
-  {
-    tag: "li",
-    class: chooseClass(),
-  }, 
-  {
-    tag: "ul",
-    class: chooseClass(),
-  }, 
-  {
-    tag: "style",
-    class: chooseClass(),
-  }, 
-  {
-    tag: "br",
-    class: chooseClass(),
-  }, 
-  {
-    tag: "h2",
-    class: chooseClass(),
-  }, 
-  {
-    tag: "input",
-    class: chooseClass(),
-  }, 
-  {
-    tag: "h3",
-    class: chooseClass(),
-  }, 
-  {
-    tag: "nav",
-    class: chooseClass(),
-  }, 
-  {
-    tag: "footer",
-    class: chooseClass(),
-  }, 
-  {
-    tag: "header",
-    class: chooseClass(),
-  }, 
-  {
-    tag: "iframe",
-    class: chooseClass(),
-  }, 
-  {
-    tag: "button",
-    class: chooseClass(),
-  }, 
-  {
-    tag: "strong",
-    class: chooseClass(),
-  }, 
-  {
-    tag: "i",
-    class: chooseClass(),
-  }, 
-  {
-    tag: "html",
-    class: chooseClass(),
-  }, 
-  {
-    tag: "section",
-    class: chooseClass(),
-  }, 
-  {
-    tag: "article",
-    class: chooseClass(),
-  }, 
-  {
-    tag: "address",
-    class: chooseClass(),
-  }, 
-  {
-    tag: "aside",
-    class: chooseClass(),
-  }, 
-  {
-    tag: "hggroup",
-    class: chooseClass(),
-  }, 
-  {
-    tag: "figcaption",
-    class: chooseClass(),
-  }, 
-  {
-    tag: "pre",
-    class: chooseClass(),
-  }, 
-  {
-    tag: "dd",
-    class: chooseClass(),
-  }, 
-  {
-    tag: "dt",
-    class: chooseClass(),
-  }, 
-  {
-    tag: "dl",
-    class: chooseClass(),
-  }, 
-  {
-    tag: "strong",
-    class: chooseClass(),
-  }, 
-  {
-    tag: "b",
-    class: chooseClass(),
-  }, 
-  {
-    tag: "small",
-    class: chooseClass(),
-  }, 
-  {
-    tag: "time",
-    class: chooseClass(),
-  }, 
-]
 
 const keywordList = [
   {
@@ -328,24 +146,24 @@ $section-margin-top: 112px;
         margin-top: 24px;
         padding: 24px 24px;
 
-        border-top: 1px solid $color-primary;
-        border-bottom: 1px solid $color-primary;
+        border-top: 1px solid $color-primary-g-dark;
+        border-bottom: 1px solid $color-primary-g-dark;
 
         display: flex;
         flex-wrap: wrap;
         justify-content: center;
         gap: 12px 16px;
         label {
-          background-color: $color-primary;
+          background-color: $color-primary-g-dark;
           color: $color-primary-white;
           padding: 4px 8px;
         }
         &.invert {
-          background-color: $color-primary;
+          background-color: $color-primary-g-dark;
           border-color: $color-primary-white;
           label {
             background-color: $color-primary-white;
-            color: $color-primary;
+            color: $color-primary-g-dark;
           }
         }
       }
@@ -366,7 +184,7 @@ $section-margin-top: 112px;
       grid-auto-columns: auto;
       .post {
         padding: 32px;
-        box-shadow: 0 0 0 0px $color-primary inset; 
+        box-shadow: 0 0 0 0px $color-primary-g-dark inset; 
         box-sizing: border-box;
 
         word-break: keep-all;
@@ -375,12 +193,19 @@ $section-margin-top: 112px;
         user-select: none;
         transition: .2s;;
 
+        .date {
+          font-size: 0.875rem;
+          filter: brightness(1.1);
+        }
         .name {
-          font-weight: 500;
-          height: 4rem;
+          margin-top: 8px;
+          font-size: 1.25rem;
+          font-weight: 600;
+          min-height: 4rem;
           transition: .2s;
         }
         .tag-list {
+          margin-top: 8px;
           display: flex;
           flex-wrap: wrap;
           justify-content: center;
@@ -391,7 +216,7 @@ $section-margin-top: 112px;
           }
         }
         &:hover {
-        box-shadow: 0 -3px 0 $color-primary inset; 
+        box-shadow: 0 -3px 0 $color-primary-g-dark inset; 
           .name {
             transform: scale(1.1, 1.1);
             color: black;
@@ -404,8 +229,22 @@ $section-margin-top: 112px;
 
 // modile
 @media screen and (max-width: 480px) {
-  .post-list {
-    grid-template-columns: 1fr;
+  .home-wrapper {
+    .post-area {
+      .post-list {
+        grid-template-columns: 1fr;
+        .post {
+          padding: 16px 24px;
+          text-align: left;
+          .name {
+            min-height: unset;
+          }
+          .tag-list {
+            justify-content: flex-start;
+          }
+        }
+      }
+    }
   }
 }
 @media (min-width: 1280px) and (max-width: 4000px) {
