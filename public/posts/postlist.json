@@ -1,6 +1,15 @@
 [
     {
         "url": "1e93fc5dc5f94045",
+        "fileName": "Vue-Prefetch",
+        "title": "Vue Code Spliting 간단히 알아보기 (+ Prefetch)",
+        "description": "Vue 프로젝트의 Code Spliting 이 어떻게 작동하는지와 webpack prefetch 옵션 에 대해서 간략한 설명.",
+        "createdAt": "2022-08-05",
+        "updatedAt": "2022-08-05",
+        "tags": ["Vue", "Vue2", "Vue3", "Code Spliting", "코드분산", "Prefecth", "Webpack"]
+    },
+    {
+        "url": "1e93fc5dc5f94045",
         "fileName": "Vue2-Reactivity",
         "title": "Vue2, Vue3 Reactivity 비교 - Vue2 편",
         "description": "Vue2 Vue3 의 Reactivity 비교. Vue2 Reactive에 대한 설명. VNODE, Watcher, Dependency, ref, reactive, update, vue hook 에 대해서 전반적인 설명.",

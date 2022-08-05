@@ -498,5 +498,23 @@ a {
     }
   }
 }
+
+
+@media screen and (max-width: 480px) {
+  .detail-wrapper {
+    .contents {
+      .post {
+        ul {
+          padding-left: 24px;
+        }
+        pre {
+          font-size: 0.75rem;
+        }
+      }
+    }
+  }
+}
+
+
 </style>
 

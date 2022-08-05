@@ -39,6 +39,7 @@
           :key="post.url"
           class="post"
           @click="onClickPost(post)">
+          <div class="date">{{post.createdAt}}</div>
           <div class="name">{{post.title}}</div>
           <div class="tag-list">
             <label
@@ -192,7 +193,12 @@ $section-margin-top: 112px;
         user-select: none;
         transition: .2s;;
 
+        .date {
+          font-size: 0.875rem;
+          filter: brightness(1.1);
+        }
         .name {
+          margin-top: 8px;
           font-size: 1.25rem;
           font-weight: 600;
           min-height: 4rem;
@@ -223,8 +229,22 @@ $section-margin-top: 112px;
 
 // modile
 @media screen and (max-width: 480px) {
-  .post-list {
-    grid-template-columns: 1fr;
+  .home-wrapper {
+    .post-area {
+      .post-list {
+        grid-template-columns: 1fr;
+        .post {
+          padding: 16px 24px;
+          text-align: left;
+          .name {
+            min-height: unset;
+          }
+          .tag-list {
+            justify-content: flex-start;
+          }
+        }
+      }
+    }
   }
 }
 @media (min-width: 1280px) and (max-width: 4000px) {
