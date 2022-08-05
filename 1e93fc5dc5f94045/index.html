@@ -1,497 +1,82 @@
 <!DOCTYPE html><html lang=""><head>
-        <title>Vue2, Vue3 Reactivity 비교 - Vue2 편</title>
-        <meta name="title" content="Vue2, Vue3 Reactivity 비교 - Vue2 편" />
-        <meta name="description" content="Vue2 Vue3 의 Reactivity 비교. Vue2 Reactive에 대한 설명. VNODE, Watcher, Dependency, ref, reactive, update, vue hook 에 대해서 전반적인 설명." />
-        <meta name="keywords" content="Vue,Vue2,Vue Reactivity,반응성,Vue Rendering" />
+        <title>Vue Code Spliting 간단히 알아보기 (+ Prefetch)</title>
+        <meta name="title" content="Vue Code Spliting 간단히 알아보기 (+ Prefetch)" />
+        <meta name="description" content="Vue 프로젝트의 Code Spliting 이 어떻게 작동하는지와 webpack prefetch 옵션 에 대해서 간략한 설명." />
+        <meta name="keywords" content="Vue,Vue2,Vue3,Code Spliting,코드분산,Prefecth,Webpack" />
         <meta property="og:url" content="https://lhs-source.github.io/1e93fc5dc5f94045" />
         <meta property="og:type" content="article" />
-        <meta property="og:title" content="Vue2, Vue3 Reactivity 비교 - Vue2 편" />
-        <meta property="og:description" content="Vue2 Vue3 의 Reactivity 비교. Vue2 Reactive에 대한 설명. VNODE, Watcher, Dependency, ref, reactive, update, vue hook 에 대해서 전반적인 설명." />
+        <meta property="og:title" content="Vue Code Spliting 간단히 알아보기 (+ Prefetch)" />
+        <meta property="og:description" content="Vue 프로젝트의 Code Spliting 이 어떻게 작동하는지와 webpack prefetch 옵션 에 대해서 간략한 설명." />
         <meta property="og:image" content="https://lhs-source.github.io/images/thumbnail.jpg" />
         <meta property="twitter:card" content="https://lhs-source.github.io/images/thumbnail.jpg" />
         <meta property="twitter:url" content="https://lhs-source.github.io/1e93fc5dc5f94045" />
-        <meta property="twitter:title" content="Vue2, Vue3 Reactivity 비교 - Vue2 편" />
-        <meta property="twitter:description" content="Vue2 Vue3 의 Reactivity 비교. Vue2 Reactive에 대한 설명. VNODE, Watcher, Dependency, ref, reactive, update, vue hook 에 대해서 전반적인 설명." />
+        <meta property="twitter:title" content="Vue Code Spliting 간단히 알아보기 (+ Prefetch)" />
+        <meta property="twitter:description" content="Vue 프로젝트의 Code Spliting 이 어떻게 작동하는지와 webpack prefetch 옵션 에 대해서 간략한 설명." />
         <meta property="twitter:image" content="https://lhs-source.github.io/images/thumbnail.jpg" />
-      <meta charset="utf-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="google-site-verification" content="p4lZFdtKOsDj6_1O2f_PsufQnO068kmB_Sgrs5UlweQ"><!--[if IE]><link rel="icon" href="/favicon.ico"><![endif]--><title>lhs-githubio</title><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/4.0.0/github-markdown.min.css"><link rel="alternate stylesheet" title="Vs 2015" href="styles/vs2015.css"><script defer="defer" src="/js/chunk-vendors.b5df7df7.js"></script><script defer="defer" src="/js/app.3df39990.js"></script><link href="/css/app.247787da.css" rel="stylesheet"><link rel="icon" type="image/svg+xml" href="/img/icons/favicon.svg"><link rel="icon" type="image/png" sizes="32x32" href="/img/icons/favicon-32x32.png"><link rel="icon" type="image/png" sizes="16x16" href="/img/icons/favicon-16x16.png"><link rel="manifest" href="/manifest.json"><meta name="theme-color" content="#4DBA87"><meta name="apple-mobile-web-app-capable" content="no"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name="apple-mobile-web-app-title" content="lhs-githubio"><link rel="apple-touch-icon" href="/img/icons/apple-touch-icon-152x152.png"><link rel="mask-icon" href="/img/icons/safari-pinned-tab.svg" color="#4DBA87"><meta name="msapplication-TileImage" content="/img/icons/msapplication-icon-144x144.png"><meta name="msapplication-TileColor" content="#000000"><link href="https://www.googletagmanager.com" rel="preconnect"><script async="" src="https://www.googletagmanager.com/gtag/js?id=G-SH1GZR1KME&amp;l=dataLayer" charset="utf-8"></script><link rel="stylesheet" type="text/css" href="/css/detail.d2ac0d35.css"></head><body style="margin: 0;"><noscript><strong>We're sorry but lhs-githubio doesn't work properly without JavaScript enabled. Please enable it to continue.</strong></noscript><div id="app" data-v-app=""><div class="page-wrapper page-custom" data-v-39d54868=""><div class="background" data-v-39d54868=""><div class="panel" data-v-39d54868=""><div class="words" data-v-39d54868=""><div class="sentense typo-3" data-v-39d54868=""> The bird fights its way out of the egg. The egg is the world. </div><div class="sentense typo-2" data-v-39d54868=""> Who would be born must first destroy a world. The bird flies to God. </div><div class="sentense typo-4" data-v-39d54868=""> That God's name is Abraxas.</div><div class="sentense typo-3" data-v-39d54868=""> 우리들 속에는 모든 것을 알고, 모든 것을 하고자 하고, 모든 것을 우리들 자신보다 더 잘해내는 어떤 사람이 있다.</div><div class="sentense typo-4" data-v-39d54868=""> 블로그 까짓거 대충, 하고는 싶은데 해보는 김에 잘 해봐야지. 속도는 빨라야 하니까 간단한 게 좋겠다. </div><div class="sentense typo-5" data-v-39d54868=""> You've never lived what you are thinking, and that isn't good. </div></div></div></div><div class="frame" data-v-39d54868=""><div class="body" data-v-39d54868=""><div class="detail-wrapper"><div class="info"><div class="to-home"><a href="/">🏠</a></div><div class="who"> Written by <b>LeeHyunsoo</b><br> Contact me <b>iddms5446@gmail.com</b></div><div class="post-list"><div class="post"><a href="/1e93fc5dc5f94045"><span class="icon">📜</span><span class="title">Vue2, Vue3 Reactivity 비교 - Vue2 편</span></a></div><div class="post"><a href="/d5c653f34310b85f"><span class="icon">📜</span><span class="title">Github.io + Vue3 로 블로그 만들기</span></a></div></div></div><div class="contents"><h1 class="title">Vue2, Vue3 Reactivity 비교 - Vue2 편</h1><div class="tag-list"><label>Vue</label><label>Vue2</label><label>Vue Reactivity</label><label>반응성</label><label>Vue Rendering</label></div><div class="date"> 작성일 : 2022-07-12, <b>마지막 업데이트 : 2022-07-12</b></div><div class="post"><p></p><div class="table-of-contents"><ul><li><a href="#%EB%B0%98%EC%9D%91%EC%84%B1%3F">반응성?</a></li><li><a href="#vue2%EC%97%90%EC%84%9C%EB%8A%94-%EB%B0%98%EC%9D%91%EC%84%B1%EC%9D%84-%EC%96%B4%EB%96%BB%EA%B2%8C-%EA%B5%AC%ED%98%84%ED%96%88%EB%82%98.">Vue2에서는 반응성을 어떻게 구현했나.</a><ul><li><a href="#getter%2Fsetter-%EC%A3%BC%EC%9E%85">Getter/Setter 주입</a></li><li><a href="#watcher">Watcher</a></li></ul></li><li><a href="#vue2%EC%9D%98-%EB%B0%98%EC%9D%91%EC%84%B1-%EB%AC%B8%EC%A0%9C-%EB%B0%8F-%ED%8A%B9%EC%A7%95">Vue2의 반응성 문제 및 특징</a><ul><li><a href="#data-option-%EC%97%90-%EB%8D%B0%EC%9D%B4%ED%84%B0-%EC%B6%94%EA%B0%80%ED%95%98%EA%B8%B0">data option 에 데이터 추가하기</a></li><li><a href="#object-%EC%97%90-assign-%EC%9C%BC%EB%A1%9C-%EC%83%88%EB%A1%9C%EC%9A%B4-%ED%94%84%EB%A1%9C%ED%8D%BC%ED%8B%B0-%EC%B6%94%EA%B0%80%ED%95%98%EA%B8%B0">object 에 assign 으로 새로운 프로퍼티 추가하기</a></li><li><a href="#%EB%B0%B0%EC%97%B4-%EB%AC%B8%EC%A0%9C">배열 문제</a></li><li><a href="#%EB%B9%84%EB%8F%99%EA%B8%B0-%EC%97%85%EB%8D%B0%EC%9D%B4%ED%8A%B8-%ED%81%90">비동기 업데이트 큐</a></li><li><a href="#created-%EC%99%80-mounted">created 와 mounted</a></li></ul></li></ul></div><p></p>
-<h1 id="%EB%B0%98%EC%9D%91%EC%84%B1%3F" tabindex="-1">반응성?</h1>
-<p>Vue 프레임워크로 컴포넌트를 작업하다보면, 데이터를 바꿨을 뿐인데 화면에 바뀐 데이터를 바로바로 반영하는 것이 그저 익숙할 것이다. 그런데 Vue를 비롯한 프론트엔드 프레임워크를 사용하지 않을 때, 데이터만 바꿨다고 화면에 바로 뿌려줬는가? 아니다. 개발자가 직접 DOM을 수정해서 보여주어야 했다. 아니면 서버에서 바뀐 데이터로 렌더링한 결과물을 새로 받아야 했다.</p>
-<p>Vue에서는 컴포넌트의 데이터 정보만 바꾸면 화면에 알아서 적용된다. 이를 반응성이라 한다. 컴포넌트의 데이터를 관찰하고 있다가 변경이 감지되면 Virtual DOM을 다시 컴파일한 후 만들어진 트리를 실제 DOM에 적용시킨다.</p>
-<p>개발자는 이러한 내부적 로직은 알 필요 없이 데이터에 집중하는 개발을 하도록 Vue 는 유도하고 있다. 하지만 개발자는 내가 사용하는 도구; 여기서는 프레임워크가 어떻게 작동하는 녀석인지 알아야 입맛대로 작업할 수 있고, 문제 해결을 할 수 있다. 처음엔 쉬워도 언젠가 구조적 문제에 직면하는 게 개발자 삶이다.</p>
-<h1 id="vue2%EC%97%90%EC%84%9C%EB%8A%94-%EB%B0%98%EC%9D%91%EC%84%B1%EC%9D%84-%EC%96%B4%EB%96%BB%EA%B2%8C-%EA%B5%AC%ED%98%84%ED%96%88%EB%82%98." tabindex="-1">Vue2에서는 반응성을 어떻게 구현했나.</h1>
-<p><img src="../img/Vue2-Reactivity/Untitled.png" alt="Untitled"></p>
-<p>Vue의 모든 컴포넌트는 Watcher 를 갖고 있다. 또 data option에 등록한 데이터는 자동으로 <code>getter</code> 와 <code>setter</code> 를 주입받는다. 데이터의 <code>setter</code> 가 실행되는 순간, 컴포넌트의 Watcher 가 이를 감지하고, 렌더 함수를 발동시킨다. 그로 인해 Virtual DOM을 다시 구성하게 되고, 이것이 화면에 나타나는 것이다. data 뿐 아니라 computed 도 마찬가지다. data 의 변경 감지 → computed 로직 실행 → computed 변경 감지 → 렌더링의 순서로 이루어진다.</p>
-<h2 id="getter%2Fsetter-%EC%A3%BC%EC%9E%85" tabindex="-1">Getter/Setter 주입</h2>
-<p>Vue의 코드를 조금 살펴보면서 반응형을 어떻게 구현했는지 간단하게 알아보자.</p>
-<p>Vue의 데이터에 주입하는 getter/setter은 <code>defineReactive</code> 라는 함수에서 주입한다.</p>
-<pre><code class="hljs language-jsx"><span class="hljs-title class_">Object</span>.<span class="hljs-title function_">defineProperty</span>(obj, key, {
-  <span class="hljs-attr">enumerable</span>: <span class="hljs-literal">true</span>,
-  <span class="hljs-attr">configurable</span>: <span class="hljs-literal">true</span>,
-  <span class="hljs-attr">get</span>: <span class="hljs-keyword">function</span> <span class="hljs-title function_">reactiveGetter</span>(<span class="hljs-params"></span>) {
-      <span class="hljs-keyword">var</span> value = getter ? getter.<span class="hljs-title function_">call</span>(obj) : val;
-      <span class="hljs-keyword">if</span> (<span class="hljs-title class_">Dep</span>.<span class="hljs-property">target</span>) {
-          <span class="hljs-keyword">if</span> (process.<span class="hljs-property">env</span>.<span class="hljs-property">NODE_ENV</span> !== <span class="hljs-string">'production'</span>) {
-              dep.<span class="hljs-title function_">depend</span>({
-                  <span class="hljs-attr">target</span>: obj,
-                  <span class="hljs-attr">type</span>: <span class="hljs-string">"get"</span> <span class="hljs-comment">/* TrackOpTypes.GET */</span>,
-                  <span class="hljs-attr">key</span>: key
-              });
-          }
-          <span class="hljs-keyword">else</span> {
-              dep.<span class="hljs-title function_">depend</span>();
-          }
-          <span class="hljs-keyword">if</span> (childOb) {
-              childOb.<span class="hljs-property">dep</span>.<span class="hljs-title function_">depend</span>();
-              <span class="hljs-keyword">if</span> (<span class="hljs-title function_">isArray</span>(value)) {
-                  <span class="hljs-title function_">dependArray</span>(value);
-              }
-          }
-      }
-      <span class="hljs-keyword">return</span> <span class="hljs-title function_">isRef</span>(value) &amp;&amp; !shallow ? value.<span class="hljs-property">value</span> : value;
-  },
-  <span class="hljs-attr">set</span>: <span class="hljs-keyword">function</span> <span class="hljs-title function_">reactiveSetter</span>(<span class="hljs-params">newVal</span>) {
-      <span class="hljs-keyword">var</span> value = getter ? getter.<span class="hljs-title function_">call</span>(obj) : val;
-      <span class="hljs-keyword">if</span> (!<span class="hljs-title function_">hasChanged</span>(value, newVal)) {
-          <span class="hljs-keyword">return</span>;
-      }
-      <span class="hljs-keyword">if</span> (process.<span class="hljs-property">env</span>.<span class="hljs-property">NODE_ENV</span> !== <span class="hljs-string">'production'</span> &amp;&amp; customSetter) {
-          <span class="hljs-title function_">customSetter</span>();
-      }
-      <span class="hljs-keyword">if</span> (setter) {
-          setter.<span class="hljs-title function_">call</span>(obj, newVal);
-      }
-      <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (getter) {
-          <span class="hljs-comment">// #7981: for accessor properties without setter</span>
-          <span class="hljs-keyword">return</span>;
-      }
-      <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (<span class="hljs-title function_">isRef</span>(value) &amp;&amp; !<span class="hljs-title function_">isRef</span>(newVal)) {
-          value.<span class="hljs-property">value</span> = newVal;
-          <span class="hljs-keyword">return</span>;
-      }
-      <span class="hljs-keyword">else</span> {
-          val = newVal;
-      }
-      childOb = !shallow &amp;&amp; <span class="hljs-title function_">observe</span>(newVal, <span class="hljs-literal">false</span>, mock);
-      <span class="hljs-keyword">if</span> (process.<span class="hljs-property">env</span>.<span class="hljs-property">NODE_ENV</span> !== <span class="hljs-string">'production'</span>) {
-          dep.<span class="hljs-title function_">notify</span>({
-              <span class="hljs-attr">type</span>: <span class="hljs-string">"set"</span> <span class="hljs-comment">/* TriggerOpTypes.SET */</span>,
-              <span class="hljs-attr">target</span>: obj,
-              <span class="hljs-attr">key</span>: key,
-              <span class="hljs-attr">newValue</span>: newVal,
-              <span class="hljs-attr">oldValue</span>: value
-          });
-      }
-      <span class="hljs-keyword">else</span> {
-          dep.<span class="hljs-title function_">notify</span>();
-      }
-  }
-});
+      <meta charset="utf-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="google-site-verification" content="p4lZFdtKOsDj6_1O2f_PsufQnO068kmB_Sgrs5UlweQ"><!--[if IE]><link rel="icon" href="/favicon.ico"><![endif]--><title>lhs-githubio</title><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/4.0.0/github-markdown.min.css"><link rel="alternate stylesheet" title="Vs 2015" href="styles/vs2015.css"><script defer="defer" src="/js/chunk-vendors.b5df7df7.js"></script><script defer="defer" src="/js/app.a8261ff8.js"></script><link href="/css/app.e02b41be.css" rel="stylesheet"><link rel="icon" type="image/svg+xml" href="/img/icons/favicon.svg"><link rel="icon" type="image/png" sizes="32x32" href="/img/icons/favicon-32x32.png"><link rel="icon" type="image/png" sizes="16x16" href="/img/icons/favicon-16x16.png"><link rel="manifest" href="/manifest.json"><meta name="theme-color" content="#4DBA87"><meta name="apple-mobile-web-app-capable" content="no"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name="apple-mobile-web-app-title" content="lhs-githubio"><link rel="apple-touch-icon" href="/img/icons/apple-touch-icon-152x152.png"><link rel="mask-icon" href="/img/icons/safari-pinned-tab.svg" color="#4DBA87"><meta name="msapplication-TileImage" content="/img/icons/msapplication-icon-144x144.png"><meta name="msapplication-TileColor" content="#000000"><link href="https://www.googletagmanager.com" rel="preconnect"><script async="" src="https://www.googletagmanager.com/gtag/js?id=G-SH1GZR1KME&amp;l=dataLayer" charset="utf-8"></script><link rel="stylesheet" type="text/css" href="/css/detail.58297ac3.css"></head><body style="margin: 0;"><noscript><strong>We're sorry but lhs-githubio doesn't work properly without JavaScript enabled. Please enable it to continue.</strong></noscript><div id="app" data-v-app=""><div class="page-wrapper page-custom" data-v-39d54868=""><div class="background" data-v-39d54868=""><div class="panel" data-v-39d54868=""><div class="words" data-v-39d54868=""><div class="sentense typo-3" data-v-39d54868=""> The bird fights its way out of the egg. The egg is the world. </div><div class="sentense typo-2" data-v-39d54868=""> Who would be born must first destroy a world. The bird flies to God. </div><div class="sentense typo-4" data-v-39d54868=""> That God's name is Abraxas.</div><div class="sentense typo-3" data-v-39d54868=""> 우리들 속에는 모든 것을 알고, 모든 것을 하고자 하고, 모든 것을 우리들 자신보다 더 잘해내는 어떤 사람이 있다.</div><div class="sentense typo-4" data-v-39d54868=""> 블로그 까짓거 대충, 하고는 싶은데 해보는 김에 잘 해봐야지. 속도는 빨라야 하니까 간단한 게 좋겠다. </div><div class="sentense typo-5" data-v-39d54868=""> You've never lived what you are thinking, and that isn't good. </div></div></div></div><div class="frame" data-v-39d54868=""><div class="body" data-v-39d54868=""><div class="detail-wrapper"><div class="info"><div class="to-home"><a href="/">🏠</a></div><div class="who"> Written by <b>LeeHyunsoo</b><br> Contact me <b>iddms5446@gmail.com</b></div><div class="post-list"><div class="post"><a href="/1e93fc5dc5f94045"><span class="icon">📜</span><span class="title">Vue Code Spliting 간단히 알아보기 (+ Prefetch)</span></a></div><div class="post"><a href="/1e93fc5dc5f94045"><span class="icon">📜</span><span class="title">Vue2, Vue3 Reactivity 비교 - Vue2 편</span></a></div><div class="post"><a href="/d5c653f34310b85f"><span class="icon">📜</span><span class="title">Github.io + Vue3 로 블로그 만들기</span></a></div></div></div><div class="contents"><h1 class="title">Vue Code Spliting 간단히 알아보기 (+ Prefetch)</h1><div class="tag-list"><label>Vue</label><label>Vue2</label><label>Vue3</label><label>Code Spliting</label><label>코드분산</label><label>Prefecth</label><label>Webpack</label></div><div class="date"> 작성일 : 2022-08-05, <b>마지막 업데이트 : 2022-08-05</b></div><div class="post"><p></p><div class="table-of-contents"><ul><li><a href="#code-spliting">Code Spliting</a><ul><li><a href="#vue-%EC%97%90%EC%84%9C%EB%8A%94-%EC%96%B4%EB%96%BB%EA%B2%8C-%EA%B8%B0%EB%8A%A5%EC%9D%84-%EC%82%AC%EC%9A%A9%ED%95%98%EB%82%98">Vue 에서는 어떻게 기능을 사용하나</a></li></ul></li><li><a href="#prefetch%3F">Prefetch?</a></li><li><a href="#vue-cli">Vue-Cli</a></li><li><a href="#vite">Vite</a></li></ul></div><p></p>
+<h1 id="code-spliting" tabindex="-1">Code Spliting</h1>
+<p>우리가 Vue 프로젝트에서 Code Spliting 을 사용하는 이유는 <strong>빌드 결과물의 데이터 양을 분산시키기 위해서</strong>다. 기본적으로 SPA 프론트엔드 프로젝트를 번들링할 때, 스크립트 파일은 하나로 뭉쳐진다. 프로젝트 크기에 따라서 이 파일의 크기는 선형으로 증가하며, 초기에 모든 기능을 로드하는 SPA 특성상 초기 렌더링 시간이 급격하게 늘어난다.</p>
+<h2 id="vue-%EC%97%90%EC%84%9C%EB%8A%94-%EC%96%B4%EB%96%BB%EA%B2%8C-%EA%B8%B0%EB%8A%A5%EC%9D%84-%EC%82%AC%EC%9A%A9%ED%95%98%EB%82%98" tabindex="-1">Vue 에서는 어떻게 기능을 사용하나</h2>
+<pre><code class="hljs language-tsx"><span class="hljs-keyword">import</span> <span class="hljs-title class_">Home</span> <span class="hljs-keyword">from</span> <span class="hljs-string">'../views/HomeView.vue'</span>
+{
+  <span class="hljs-attr">path</span>: <span class="hljs-string">'/'</span>,
+  <span class="hljs-attr">name</span>: <span class="hljs-string">'Home'</span>,
+  <span class="hljs-attr">component</span>: <span class="hljs-title class_">Home</span>
+}, {
+  <span class="hljs-attr">path</span>: <span class="hljs-string">'/:id'</span>,
+  <span class="hljs-attr">name</span>: <span class="hljs-string">'Datail'</span>,
+  <span class="hljs-attr">component</span>: <span class="hljs-function">() =&gt;</span> <span class="hljs-title function_">import</span>(<span class="hljs-comment">/* webpackChunkName: "detail" */</span> <span class="hljs-string">'../views/DetailView.vue'</span>)
+}
 </code></pre>
-<p>해당 함수는 객체의 속성마다 실행되는데, 그 속성에 대한 <code>enumerable</code> , <code>configurable</code> 과 <code>get</code> , <code>set</code> 을 <code>Object.defineProperty</code> 로 추가한다. 반응형인 대상에 변경이 일어나면 아래 과정을 거친다.</p>
-<ol>
-<li><code>set</code> 함수가 실행된다. (observe 혹은 proxy 를 통해서)</li>
-<li>새로운 데이터로 변경이 되었을 때만 진행한다.</li>
-<li>새로운 데이터로 값을 바꾼다.</li>
-<li><code>observe</code> 함수로 새로운 데이터에 대한 observe를 할당한다.</li>
-<li><code>dep.notify</code> 가 발생하고, 렌더링을 트리깅 한다.</li>
-<li>Watcher 가 queue 에 추가하고, <code>flushSchedulerQueue</code> 를 통해 queue 를 플러시한다.</li>
-<li>queue 에 있는 모든 watcher의 <code>run</code> 함수를 호출하고 vue 인스턴스들의 <code>updated</code> 훅을 호출한다.</li>
-</ol>
-<p><img src="../img/Vue2-Reactivity/Untitled%201.png" alt="Untitled"></p>
-<p>위 함수가 실행되는 부분은 다음과 같다.</p>
+<p>vue-router 에서 컴포넌트를 정적으로 로드할 경우 app.js 에 컴포넌트 코드가 함께 번들링된다. 위 코드의 Detail 컴포넌트 처럼 함수를 통해 동적으로 로드할 경우 코드는 분산된다. <code>webpackChunkName</code> 에 정의된 이름으로 하나의 청크로 묶인다. 서로 다른 두 개의 라우트에서 같은 <code>webpackChunkName</code> 을 사용하면, 하나의 파일에 두 라우트 컴포넌트가 묶인다.</p>
+<h3 id="%EB%A7%8C%EC%95%BD-%EC%84%9C%EB%A1%9C-%EB%8B%A4%EB%A5%B8-%EB%9D%BC%EC%9A%B0%ED%8A%B8%EC%97%90%EC%84%9C-%EA%B0%99%EC%9D%80-%EC%BB%B4%ED%8F%AC%EB%84%8C%ED%8A%B8%EB%A5%BC-%EC%82%AC%EC%9A%A9%ED%95%9C%EB%8B%A4%EB%A9%B4%3F" tabindex="-1">만약 서로 다른 라우트에서 같은 컴포넌트를 사용한다면?</h3>
+<pre><code class="hljs language-tsx">{
+	<span class="hljs-comment">// Input 컴포넌트를 사용</span>
+  <span class="hljs-attr">path</span>: <span class="hljs-string">'/'</span>,
+  <span class="hljs-attr">name</span>: <span class="hljs-string">'Home'</span>,
+	<span class="hljs-attr">component</span>: <span class="hljs-function">() =&gt;</span> <span class="hljs-title function_">import</span>(<span class="hljs-comment">/* webpackChunkName: "home" */</span> <span class="hljs-string">'../views/HomeView.vue'</span>)
+}, {
+	<span class="hljs-comment">// 마찬가지로 Input 컴포넌트를 사용</span>
+  <span class="hljs-attr">path</span>: <span class="hljs-string">'/:id'</span>,
+  <span class="hljs-attr">name</span>: <span class="hljs-string">'Datail'</span>,
+  <span class="hljs-attr">component</span>: <span class="hljs-function">() =&gt;</span> <span class="hljs-title function_">import</span>(<span class="hljs-comment">/* webpackChunkName: "detail" */</span> <span class="hljs-string">'../views/DetailView.vue'</span>)
+}
+</code></pre>
+<p>만약 Home과 Detail 컴포넌트 모두 Input 컴포넌트를 공통으로 사용하고 있다면, 코드는 어떻게 묶일까.</p>
 <ul>
-<li>컴포넌트의 props 를 초기화할 때, props 데이터도 반응형이다. (initProps$1)</li>
-<li>컴포넌트의 inject 를 초기화할 때 (initInjection)</li>
-<li>컴포넌트의 data 를 초기화할 때(initData)</li>
-<li>watch 를 등록할 때,</li>
-<li>set 등으로 인한 Observer 할당시(<strong>ob</strong>) (observe)</li>
-<li>vuex state 초기화 + mutate (initData, set)</li>
-<li>…</li>
+<li>home.js</li>
+<li>detail.js</li>
+<li>home-detail.js</li>
 </ul>
-<h2 id="watcher" tabindex="-1">Watcher</h2>
-<pre><code class="hljs language-jsx"><span class="hljs-keyword">var</span> <span class="hljs-title class_">Watcher</span> = <span class="hljs-comment">/** <span class="hljs-doctag">@class</span> */</span> (<span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) {
-    <span class="hljs-title class_">Watcher</span>.<span class="hljs-property"><span class="hljs-keyword">prototype</span></span>.<span class="hljs-property">addDep</span> = <span class="hljs-keyword">function</span> (<span class="hljs-params">dep</span>) {};
-    <span class="hljs-title class_">Watcher</span>.<span class="hljs-property"><span class="hljs-keyword">prototype</span></span>.<span class="hljs-property">update</span> = <span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) {
-        <span class="hljs-keyword">if</span> (<span class="hljs-variable language_">this</span>.<span class="hljs-property">lazy</span>) {
-            <span class="hljs-variable language_">this</span>.<span class="hljs-property">dirty</span> = <span class="hljs-literal">true</span>;
-        }
-        <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (<span class="hljs-variable language_">this</span>.<span class="hljs-property">sync</span>) {
-            <span class="hljs-variable language_">this</span>.<span class="hljs-title function_">run</span>();
-        }
-        <span class="hljs-keyword">else</span> {
-            <span class="hljs-title function_">queueWatcher</span>(<span class="hljs-variable language_">this</span>);
-        }
-    };
-<span class="hljs-comment">// ...</span>
-  <span class="hljs-keyword">return</span> <span class="hljs-title class_">Watcher</span>;
-}());
-</code></pre>
-<p>우선 코드는 많은 부분을 생략했다. Watcher 의 경우 <code>set</code> 발생 시 notify 를 전달할 Dependency 들을 관리한다. <code>notify</code> 발생 시  <code>queueWatcher</code> 를 통해 큐에 자기 자신을 담아서 실행을 기다린다. Watcher가 <code>sync</code> 속성을 가졌다면 큐에 넣어서 비동기로 작동하지 않고, 동기적으로 바로 <code>run</code> 을 실행한다.</p>
-<pre><code class="hljs language-jsx"><span class="hljs-keyword">function</span> <span class="hljs-title function_">flushSchedulerQueue</span>(<span class="hljs-params"></span>) {
-    currentFlushTimestamp = <span class="hljs-title function_">getNow</span>();
-    flushing = <span class="hljs-literal">true</span>;
-    <span class="hljs-keyword">var</span> watcher, id;
-    queue.<span class="hljs-title function_">sort</span>(<span class="hljs-keyword">function</span> (<span class="hljs-params">a, b</span>) { <span class="hljs-keyword">return</span> a.<span class="hljs-property">id</span> - b.<span class="hljs-property">id</span>; });
-    <span class="hljs-keyword">for</span> (index$<span class="hljs-number">1</span> = <span class="hljs-number">0</span>; index$<span class="hljs-number">1</span> &lt; queue.<span class="hljs-property">length</span>; index$<span class="hljs-number">1</span>++) {
-        watcher = queue[index$<span class="hljs-number">1</span>];
-        <span class="hljs-keyword">if</span> (watcher.<span class="hljs-property">before</span>) {
-            watcher.<span class="hljs-title function_">before</span>();
-        }
-        id = watcher.<span class="hljs-property">id</span>;
-        has[id] = <span class="hljs-literal">null</span>;
-        watcher.<span class="hljs-title function_">run</span>();
-        <span class="hljs-keyword">if</span> (process.<span class="hljs-property">env</span>.<span class="hljs-property">NODE_ENV</span> !== <span class="hljs-string">'production'</span> &amp;&amp; has[id] != <span class="hljs-literal">null</span>) {
-            circular[id] = (circular[id] || <span class="hljs-number">0</span>) + <span class="hljs-number">1</span>;
-            <span class="hljs-keyword">if</span> (circular[id] &gt; <span class="hljs-variable constant_">MAX_UPDATE_COUNT</span>) {
-                <span class="hljs-title function_">warn$2</span>(<span class="hljs-string">'You may have an infinite update loop '</span> +
-                    (watcher.<span class="hljs-property">user</span>
-                        ? <span class="hljs-string">"in watcher with expression \""</span>.<span class="hljs-title function_">concat</span>(watcher.<span class="hljs-property">expression</span>, <span class="hljs-string">"\""</span>)
-                        : <span class="hljs-string">"in a component render function."</span>), watcher.<span class="hljs-property">vm</span>);
-                <span class="hljs-keyword">break</span>;
-            }
-        }
-    }
-    <span class="hljs-keyword">var</span> activatedQueue = activatedChildren.<span class="hljs-title function_">slice</span>();
-    <span class="hljs-keyword">var</span> updatedQueue = queue.<span class="hljs-title function_">slice</span>();
-    <span class="hljs-title function_">resetSchedulerState</span>();
-    <span class="hljs-title function_">callActivatedHooks</span>(activatedQueue);
-    <span class="hljs-title function_">callUpdatedHooks</span>(updatedQueue);
-}
-</code></pre>
-<p>여기서 큐의 Watcher 들을 실행하기 전에 정렬을 하는데, 이유는 3가지가 있다.</p>
-<ol>
-<li>컴포넌트들이 부모부터 자식 순서로 업데이트되도록 한다. (부모가 자식보다 전에 만들어지기 때문에)</li>
-<li>컴포넌트의 Watcher들은 render watcher 의 Watcher보다 먼저 업데이트한다.</li>
-<li>부모 컴포넌트의 watcher 가 실행될 때 자식 컴포넌트가 파괴되었다면 그 watcher 들은 스킵될 수 있다.</li>
-</ol>
-<p>queue 에 있는 watcher를 순회하며 <code>before</code> 과 <code>run</code> 을 차례대로 호출한다. 여기서 before 은 <code>beforeUpdated</code> 훅을 발생시킨다.</p>
-<p>모두 완료되면 <code>activateChildComponent</code> 을 통해 <code>_inactive</code> 를 켜고 <strong>activated</strong> 훅을 발생시킨다. 대상 컴포넌트는 <code>keepAlive</code> 속성을 가진 컴포넌트들이다.</p>
-<p>그 다음으로는 <code>callUpdatedHooks</code> 를 통해 컴포넌트의 <code>updated</code> 훅을 발생시킨다.</p>
-<pre><code class="hljs language-jsx"><span class="hljs-title class_">Watcher</span>.<span class="hljs-property"><span class="hljs-keyword">prototype</span></span>.<span class="hljs-property">run</span> = <span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) {
-	<span class="hljs-keyword">if</span> (<span class="hljs-variable language_">this</span>.<span class="hljs-property">active</span>) {
-    <span class="hljs-keyword">var</span> value = <span class="hljs-variable language_">this</span>.<span class="hljs-title function_">get</span>();
-    <span class="hljs-keyword">if</span> (value !== <span class="hljs-variable language_">this</span>.<span class="hljs-property">value</span> ||
-      <span class="hljs-comment">// Deep watchers and watchers on Object/Arrays should fire even</span>
-      <span class="hljs-comment">// when the value is the same, because the value may</span>
-      <span class="hljs-comment">// have mutated.</span>
-      <span class="hljs-title function_">isObject</span>(value) || <span class="hljs-variable language_">this</span>.<span class="hljs-property">deep</span>) {
-      <span class="hljs-comment">// set new value</span>
-      <span class="hljs-keyword">var</span> oldValue = <span class="hljs-variable language_">this</span>.<span class="hljs-property">value</span>;
-      <span class="hljs-variable language_">this</span>.<span class="hljs-property">value</span> = value;
-      <span class="hljs-keyword">if</span> (<span class="hljs-variable language_">this</span>.<span class="hljs-property">user</span>) {
-        <span class="hljs-keyword">var</span> info = <span class="hljs-string">"callback for watcher \""</span>.<span class="hljs-title function_">concat</span>(<span class="hljs-variable language_">this</span>.<span class="hljs-property">expression</span>, <span class="hljs-string">"\""</span>);
-        <span class="hljs-title function_">invokeWithErrorHandling</span>(<span class="hljs-variable language_">this</span>.<span class="hljs-property">cb</span>, <span class="hljs-variable language_">this</span>.<span class="hljs-property">vm</span>, [value, oldValue], <span class="hljs-variable language_">this</span>.<span class="hljs-property">vm</span>, info);
-      }
-      <span class="hljs-keyword">else</span> {
-        <span class="hljs-variable language_">this</span>.<span class="hljs-property">cb</span>.<span class="hljs-title function_">call</span>(<span class="hljs-variable language_">this</span>.<span class="hljs-property">vm</span>, value, oldValue);
-      }
-    }
-	}
-};
-</code></pre>
-<p>결국은 Watcher 의 <code>run</code> 함수를 위해서 위 과정들을 열심히 진행한 것이다. 그렇다면 <code>run</code> 함수는 내부적으로 어떤 것을 처리할까?</p>
-<p>디버깅을 걸어보면 알겠지만, 화면의 렌더링은 <code>this.get</code> 에서 끝난다. 그리고 그 뒤로는 콜백을 실행하는 것 뿐이다. 그럼 <code>get</code> 함수를 살펴봐야 한다.</p>
-<pre><code class="hljs language-jsx"><span class="hljs-title class_">Watcher</span>.<span class="hljs-property"><span class="hljs-keyword">prototype</span></span>.<span class="hljs-property">get</span> = <span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) {
-  <span class="hljs-title function_">pushTarget</span>(<span class="hljs-variable language_">this</span>);
-  <span class="hljs-keyword">var</span> value;
-  <span class="hljs-keyword">var</span> vm = <span class="hljs-variable language_">this</span>.<span class="hljs-property">vm</span>;
-  <span class="hljs-keyword">try</span> {
-    value = <span class="hljs-variable language_">this</span>.<span class="hljs-property">getter</span>.<span class="hljs-title function_">call</span>(vm, vm);
-  }
-  <span class="hljs-keyword">catch</span> (e) {
-    <span class="hljs-keyword">if</span> (<span class="hljs-variable language_">this</span>.<span class="hljs-property">user</span>) {
-      <span class="hljs-title function_">handleError</span>(e, vm, <span class="hljs-string">"getter for watcher \""</span>.<span class="hljs-title function_">concat</span>(<span class="hljs-variable language_">this</span>.<span class="hljs-property">expression</span>, <span class="hljs-string">"\""</span>));
-    }
-    <span class="hljs-keyword">else</span> {
-      <span class="hljs-keyword">throw</span> e;
-    }
-  }
-  <span class="hljs-keyword">finally</span> {
-    <span class="hljs-comment">// "touch" every property so they are all tracked as</span>
-    <span class="hljs-comment">// dependencies for deep watching</span>
-    <span class="hljs-keyword">if</span> (<span class="hljs-variable language_">this</span>.<span class="hljs-property">deep</span>) {
-      <span class="hljs-title function_">traverse</span>(value);
-    }
-    <span class="hljs-title function_">popTarget</span>();
-    <span class="hljs-variable language_">this</span>.<span class="hljs-title function_">cleanupDeps</span>();
-  }
-  <span class="hljs-keyword">return</span> value;
-};
-</code></pre>
-<p>단순히 <code>this.getter</code> 를 호출한다. 이 <code>getter</code> 함수는 Watcher 초기화 시 외부로부터 받는다.</p>
-<pre><code class="hljs language-jsx"><span class="hljs-keyword">function</span> <span class="hljs-title function_">mountComponent</span>(<span class="hljs-params">vm, el, hydrating</span>) {
-  vm.<span class="hljs-property">$el</span> = el;
-  <span class="hljs-keyword">if</span> (!vm.<span class="hljs-property">$options</span>.<span class="hljs-property">render</span>) {
-    vm.<span class="hljs-property">$options</span>.<span class="hljs-property">render</span> = createEmptyVNode;
-  }
-  <span class="hljs-title function_">callHook$1</span>(vm, <span class="hljs-string">'beforeMount'</span>);
-  <span class="hljs-keyword">var</span> updateComponent;
-  <span class="hljs-keyword">if</span> (process.<span class="hljs-property">env</span>.<span class="hljs-property">NODE_ENV</span> !== <span class="hljs-string">'production'</span> &amp;&amp; config.<span class="hljs-property">performance</span> &amp;&amp; mark) {
-    updateComponent = <span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) {
-      <span class="hljs-keyword">var</span> name = vm.<span class="hljs-property">_name</span>;
-      <span class="hljs-keyword">var</span> id = vm.<span class="hljs-property">_uid</span>;
-      <span class="hljs-keyword">var</span> startTag = <span class="hljs-string">"vue-perf-start:"</span>.<span class="hljs-title function_">concat</span>(id);
-      <span class="hljs-keyword">var</span> endTag = <span class="hljs-string">"vue-perf-end:"</span>.<span class="hljs-title function_">concat</span>(id);
-      <span class="hljs-title function_">mark</span>(startTag);
-      **<span class="hljs-keyword">var</span> vnode = vm.<span class="hljs-title function_">_render</span>();**
-      <span class="hljs-title function_">mark</span>(endTag);
-      <span class="hljs-title function_">measure</span>(<span class="hljs-string">"vue "</span>.<span class="hljs-title function_">concat</span>(name, <span class="hljs-string">" render"</span>), startTag, endTag);
-      <span class="hljs-title function_">mark</span>(startTag);
-      vm.<span class="hljs-title function_">_update</span>(vnode, hydrating);
-      <span class="hljs-title function_">mark</span>(endTag);
-      <span class="hljs-title function_">measure</span>(<span class="hljs-string">"vue "</span>.<span class="hljs-title function_">concat</span>(name, <span class="hljs-string">" patch"</span>), startTag, endTag);
-    };
-  }
-  <span class="hljs-keyword">else</span> {
-    updateComponent = <span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) {
-      vm.<span class="hljs-title function_">_update</span>(vm.<span class="hljs-title function_">_render</span>(), hydrating);
-    };
-  }
-  <span class="hljs-keyword">var</span> watcherOptions = {
-    <span class="hljs-attr">before</span>: <span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) {
-      <span class="hljs-keyword">if</span> (vm.<span class="hljs-property">_isMounted</span> &amp;&amp; !vm.<span class="hljs-property">_isDestroyed</span>) {
-        <span class="hljs-title function_">callHook$1</span>(vm, <span class="hljs-string">'beforeUpdate'</span>);
-      }
-    }
-  };
-  <span class="hljs-keyword">if</span> (process.<span class="hljs-property">env</span>.<span class="hljs-property">NODE_ENV</span> !== <span class="hljs-string">'production'</span>) {
-    watcherOptions.<span class="hljs-property">onTrack</span> = <span class="hljs-keyword">function</span> (<span class="hljs-params">e</span>) { <span class="hljs-keyword">return</span> <span class="hljs-title function_">callHook$1</span>(vm, <span class="hljs-string">'renderTracked'</span>, [e]); };
-    watcherOptions.<span class="hljs-property">onTrigger</span> = <span class="hljs-keyword">function</span> (<span class="hljs-params">e</span>) { <span class="hljs-keyword">return</span> <span class="hljs-title function_">callHook$1</span>(vm, <span class="hljs-string">'renderTriggered'</span>, [e]); };
-  }
-  <span class="hljs-comment">// we set this to vm._watcher inside the watcher's constructor</span>
-  <span class="hljs-comment">// since the watcher's initial patch may call $forceUpdate (e.g. inside child</span>
-  <span class="hljs-comment">// component's mounted hook), which relies on vm._watcher being already defined</span>
-  <span class="hljs-keyword">new</span> <span class="hljs-title class_">Watcher</span>(vm, updateComponent, noop, watcherOptions, <span class="hljs-literal">true</span> <span class="hljs-comment">/* isRenderWatcher */</span>);
-  hydrating = <span class="hljs-literal">false</span>;
-  <span class="hljs-comment">// flush buffer for flush: "pre" watchers queued in setup()</span>
-  <span class="hljs-keyword">var</span> preWatchers = vm.<span class="hljs-property">_preWatchers</span>;
-  <span class="hljs-keyword">if</span> (preWatchers) {
-    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">var</span> i = <span class="hljs-number">0</span>; i &lt; preWatchers.<span class="hljs-property">length</span>; i++) {
-      preWatchers[i].<span class="hljs-title function_">run</span>();
-    }
-  }
-  <span class="hljs-keyword">if</span> (vm.<span class="hljs-property">$vnode</span> == <span class="hljs-literal">null</span>) {
-    vm.<span class="hljs-property">_isMounted</span> = <span class="hljs-literal">true</span>;
-    <span class="hljs-title function_">callHook$1</span>(vm, <span class="hljs-string">'mounted'</span>);
-  }
-  <span class="hljs-keyword">return</span> vm;
-}
-</code></pre>
-<p><code>mountComponent</code> 함수 실행 시 작동은 다음과 같다.</p>
-<ol>
-<li>beforeMount 훅 실행</li>
-<li>watcher 옵션으로 beforeUpdate 훅을 등록한다.</li>
-<li><code>vm._render</code> 를 실행하는 <code>vm._update</code> 함수를 Watcher 옵션으로 넘긴다.</li>
-<li>mounted 훅 실행</li>
-</ol>
-<p>일부 경우에 따라 <code>getter</code> 함수가 달라질 순 있지만, 대부분의 경우 결론적으로는 <code>vm._render</code> 를 Watcher 의 <code>getter</code> 로 실행한다.</p>
-<pre><code class="hljs language-jsx">vnode = render.<span class="hljs-title function_">call</span>(vm.<span class="hljs-property">_renderProxy</span>, vm.<span class="hljs-property">$createElement</span>);
-</code></pre>
-<p>최종적으로는 컴포넌트에 동적으로 생성된 render 함수를 실행하게 된다. 이 render 함수는 컴포넌트의 템플릿을 가지고 생성된다. 혹은 render 함수를 직접 구현하거나.</p>
-<p>render 함수로 생성된 <code>vnode</code> 를 가지고 <code>vm._update</code> 함수를 실행한다.</p>
-<pre><code class="hljs language-tsx"><span class="hljs-title class_">Vue</span>.<span class="hljs-property"><span class="hljs-keyword">prototype</span></span>.<span class="hljs-property">_update</span> = <span class="hljs-keyword">function</span> (<span class="hljs-params">vnode, hydrating</span>) {
-    <span class="hljs-keyword">var</span> vm = <span class="hljs-variable language_">this</span>;
-    <span class="hljs-keyword">var</span> prevEl = vm.<span class="hljs-property">$el</span>;
-    <span class="hljs-keyword">var</span> prevVnode = vm.<span class="hljs-property">_vnode</span>;
-    <span class="hljs-keyword">var</span> restoreActiveInstance = <span class="hljs-title function_">setActiveInstance</span>(vm);
-    vm.<span class="hljs-property">_vnode</span> = vnode; 
-
-    <span class="hljs-keyword">if</span> (!prevVnode) {
-      <span class="hljs-comment">// initial render</span>
-      vm.<span class="hljs-property">$el</span> = vm.<span class="hljs-title function_">__patch__</span>(vm.<span class="hljs-property">$el</span>, vnode, hydrating, <span class="hljs-literal">false</span>);
-    } <span class="hljs-keyword">else</span> {
-      <span class="hljs-comment">// updates</span>
-      vm.<span class="hljs-property">$el</span> = vm.<span class="hljs-title function_">__patch__</span>(prevVnode, vnode);
-    }
-    <span class="hljs-title function_">restoreActiveInstance</span>();
-    <span class="hljs-keyword">if</span> (prevEl) {
-      prevEl.<span class="hljs-property">__vue__</span> = <span class="hljs-literal">null</span>;
-    }
-    <span class="hljs-keyword">if</span> (vm.<span class="hljs-property">$el</span>) {
-      vm.<span class="hljs-property">$el</span>.<span class="hljs-property">__vue__</span> = vm;
-    }
-    <span class="hljs-keyword">if</span> (vm.<span class="hljs-property">$vnode</span> &amp;&amp; vm.<span class="hljs-property">$parent</span> &amp;&amp; vm.<span class="hljs-property">$vnode</span> === vm.<span class="hljs-property">$parent</span>.<span class="hljs-property">_vnode</span>) {
-      vm.<span class="hljs-property">$parent</span>.<span class="hljs-property">$el</span> = vm.<span class="hljs-property">$el</span>;
-    }
-  };
-</code></pre>
-<p><code>vm.__patch__</code> 를 호출하면서, 실제 DOM;여기서는 <code>vm.$el</code> 에 업데이트한다.</p>
-<h1 id="vue2%EC%9D%98-%EB%B0%98%EC%9D%91%EC%84%B1-%EB%AC%B8%EC%A0%9C-%EB%B0%8F-%ED%8A%B9%EC%A7%95" tabindex="-1">Vue2의 반응성 문제 및 특징</h1>
-<p>Vue2의 반응성 구현에는 문제가 있다. 이는 자바스크립트의 한계 때문에 발생한 것이다. Vue의 데이터들은 추가, 감소가 발생했을 때는 변화를 감지하지 못한다. <code>getter</code> 와 <code>setter</code> 를 주입받지 못하기 때문이다.</p>
-<h2 id="data-option-%EC%97%90-%EB%8D%B0%EC%9D%B4%ED%84%B0-%EC%B6%94%EA%B0%80%ED%95%98%EA%B8%B0" tabindex="-1">data option 에 데이터 추가하기</h2>
-<pre><code class="hljs language-jsx"><span class="hljs-attr">data</span>: {
-	<span class="hljs-attr">some</span>: <span class="hljs-number">1</span>
-}
-
-<span class="hljs-variable language_">this</span>.<span class="hljs-property">other</span> = <span class="hljs-number">2</span>;
-</code></pre>
-<p>컴포넌트의 data option 에 기존에 선언한 <code>some</code> 은 반응형이지만, <code>other</code> 는 반응형이 아니다. other 를 아무리 바꿔도 화면에는 아무런 영향을 주지 못한다.</p>
-<pre><code class="hljs language-jsx"><span class="hljs-variable language_">this</span>.$set(<span class="hljs-variable language_">this</span>, <span class="hljs-string">'other'</span>, <span class="hljs-number">2</span>);
-</code></pre>
-<p>하지만 Vue 인스턴스의 <code>$set</code> 함수를 이용해 반응형을 이끌어낼 수 있다.</p>
-<h2 id="object-%EC%97%90-assign-%EC%9C%BC%EB%A1%9C-%EC%83%88%EB%A1%9C%EC%9A%B4-%ED%94%84%EB%A1%9C%ED%8D%BC%ED%8B%B0-%EC%B6%94%EA%B0%80%ED%95%98%EA%B8%B0" tabindex="-1">object 에 assign 으로 새로운 프로퍼티 추가하기</h2>
-<p><code>Object.assign</code> 혹은 <code>_.extend()</code> 를 통한 객체 복사 역시 감지하지 못한다. 속성을 가져올 때는 <code>[[Get]]</code> 을 사용하고 속성을 지정할 때 <code>[[Set]]</code> 을 사용하기 때문에 <code>getter/setter</code> 를 트리깅하지 못한다.</p>
-<pre><code class="hljs language-jsx"><span class="hljs-title class_">Object</span>.<span class="hljs-title function_">assign</span>(<span class="hljs-variable language_">this</span>.<span class="hljs-property">someObject</span>, { <span class="hljs-attr">a</span>: <span class="hljs-number">1</span>, <span class="hljs-attr">b</span>: <span class="hljs-number">2</span> }) <span class="hljs-comment">// 이렇게 하면 반응성을 이끌어내지 못함.</span>
-<span class="hljs-variable language_">this</span>.<span class="hljs-property">someObject</span> = <span class="hljs-title class_">Object</span>.<span class="hljs-title function_">assign</span>({}, <span class="hljs-variable language_">this</span>.<span class="hljs-property">someObject</span>, { <span class="hljs-attr">a</span>: <span class="hljs-number">1</span>, <span class="hljs-attr">b</span>: <span class="hljs-number">2</span> })
-</code></pre>
-<p>그래서 새로운 객체에 대상을 2개로 엮어서 병합한 후에 새로운 객체로 반환해야 한다.</p>
-<h2 id="%EB%B0%B0%EC%97%B4-%EB%AC%B8%EC%A0%9C" tabindex="-1">배열 문제</h2>
-<p>배열을 다루면서 아래 행동은 변화를 감지할 수 없다.</p>
-<ol>
-<li>배열의 인덱스에 값을 넣으려는 것</li>
-<li>배열의 크기를 바꾸는 것</li>
-</ol>
-<pre><code class="hljs language-jsx"><span class="hljs-keyword">var</span> vm = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Vue</span>({
-  <span class="hljs-attr">data</span>: {
-    <span class="hljs-attr">items</span>: [<span class="hljs-string">'a'</span>, <span class="hljs-string">'b'</span>, <span class="hljs-string">'c'</span>]
-  }
-})
-vm.<span class="hljs-property">items</span>[<span class="hljs-number">1</span>] = <span class="hljs-string">'x'</span>
-vm.<span class="hljs-property">items</span>.<span class="hljs-property">length</span> = <span class="hljs-number">2</span>
-</code></pre>
-<p>아래 두 코드는 반응성을 이끌어내지 못했다. 그렇다면 배열은 어떻게 다뤄야 반응형일까? 배열의 특정 함수들을 이용해야 한다.</p>
+<p>위처럼 공통된 컴포넌트는 별도의 파일로 묶이며 각 페이지 진입 시에 <strong>home-detail.js</strong> 파일을 똑같이 로드한다.</p>
 <ul>
-<li>push 배열에 뒤에 값을 추가</li>
-<li>shift 배열 맨 처음 값을 빼냄</li>
-<li>unshift 배열 앞에 값을 추가</li>
-<li>splice 일부를 교체함</li>
+<li>Home 컴포넌트 진입 시 <strong>home.js</strong> 와 <strong>home-detail.js</strong> 로드 + <strong>detail.js</strong> 로드 안함</li>
+<li>Detail 컴포넌트 진입 시 <strong>detail.js</strong> 와 <strong>home-detail.js</strong> 로드 + <strong>home.js</strong> 로드 안함</li>
 </ul>
-<pre><code class="hljs language-jsx"><span class="hljs-variable language_">this</span>.$set(<span class="hljs-variable language_">this</span>.<span class="hljs-property">items</span>, <span class="hljs-number">1</span>, changedValue);
+<h1 id="prefetch%3F" tabindex="-1">Prefetch?</h1>
+<p>Code Spliting 을 통해 번들을 여러 파일로 분산하고, 필요에 따라 브라우저가 동적으로 요청하게끔 하는 것으로 초기 렌더링 시간을 줄일 수 있게 되었다. 그런데 여기서 설명하는 <code>prefetch</code> 라는 것은 분산 시킨 코드들을 <code>index.html</code> 에서 미리 로드해 갖고 있는 것이다.</p>
+<pre><code class="hljs language-tsx">&lt;head&gt;
+	&lt;link href="/js/somepart1.js" rel="prefetch"&gt;
+	&lt;link href="/js/somepart2.js" rel="prefetch"&gt;
+&lt;head&gt;
 </code></pre>
-<p>혹은 <code>$set</code> 함수를 이용해 특정 인덱스의 값을 변경한다.</p>
-<h3 id="object-%EB%B0%B0%EC%97%B4" tabindex="-1">Object 배열</h3>
-<pre><code class="hljs language-jsx"><span class="hljs-attr">animals</span>: [
-	{<span class="hljs-attr">id</span>: <span class="hljs-number">1</span>, <span class="hljs-attr">comments</span>: <span class="hljs-string">'cat'</span>,},
-	{<span class="hljs-attr">id</span>: <span class="hljs-number">2</span>, <span class="hljs-attr">comments</span>: <span class="hljs-string">'bird'</span>,},
-	{<span class="hljs-attr">id</span>: <span class="hljs-number">3</span>, <span class="hljs-attr">comments</span>: <span class="hljs-string">'dog'</span>,},
-]
-
-<span class="hljs-title function_">created</span>(<span class="hljs-params"></span>) {
-	<span class="hljs-variable language_">this</span>.<span class="hljs-property">animals</span>[<span class="hljs-number">3</span>] = {<span class="hljs-attr">id</span>: <span class="hljs-number">4</span>, <span class="hljs-attr">comments</span>: <span class="hljs-string">'cow'</span>};
-}
-</code></pre>
-<p>우리는 개발을 하면서 흔하게 Object 를 여러개 담아놓은 배열을 다루게 된다. 이를 리스트 렌더링을 통해 화면에 심심치 않게 보여준다. 그런데 아까 얘기하기로는 Vue2의 배열은 인덱스에 해당하는 값을 바꾸려고 하면 반응성이 안나타난다고 했다.</p>
-<pre><code class="hljs language-jsx"><span class="hljs-variable language_">this</span>.<span class="hljs-property">animals</span>[<span class="hljs-number">1</span>].<span class="hljs-property">comments</span> = <span class="hljs-string">"whale"</span>;
-</code></pre>
-<p>배열 1번의 객체의 데이터를 바꾸려고 하니, 세상에나 반응한다! 배열 내부의 객체는 반응형이다.</p>
-<p><img src="../img/Vue2-Reactivity/Untitled%202.png" alt="Untitled"></p>
-<p>이는 콘솔에 데이터를 찍어보면 간단하게 알 수 있다. 배열의 경우 getter, setter 함수는 없지만 Observer 를 갖고 있다.</p>
-<p><img src="../img/Vue2-Reactivity/Untitled%203.png" alt="Untitled"></p>
-<p>다만 내부에 있는 객체 3개는 각각 속성에 대해서 getter, setter 를 갖고 있다. 그렇기 때문에 배열 내부의 객체에 대해서는 반응형이다.</p>
-<p><img src="../img/Vue2-Reactivity/Untitled%204.png" alt="Untitled"></p>
-<p>단 <code>created</code> 에서 인덱스로 할당한 객체의 경우 Observer 할당이 안되어 있다. 또 getter, setter 역시 주입되지 않았기 때문에, <code>this.animals[3].comments = "some";</code> 코드는 반응형이 아니다.</p>
-<pre><code class="hljs language-jsx"><span class="hljs-keyword">const</span> newObject = { 
-  <span class="hljs-string">"id"</span>: <span class="hljs-number">1</span>, 
-  <span class="hljs-string">"comments"</span>: <span class="hljs-string">"새로운 오브젝트를 넣음!"</span>, 
-};
-<span class="hljs-variable language_">this</span>.<span class="hljs-property">animals</span>[<span class="hljs-number">1</span>] = newObject; <span class="hljs-comment">// 반응형 x</span>
-<span class="hljs-variable language_">this</span>.$set(<span class="hljs-variable language_">this</span>.<span class="hljs-property">animals</span>, <span class="hljs-number">1</span>, newObject); <span class="hljs-comment">// 반응형 o</span>
-<span class="hljs-variable language_">this</span>.<span class="hljs-property">animals</span>[<span class="hljs-number">1</span>].<span class="hljs-property">comments</span> = <span class="hljs-string">"내가 바꾸었다!!!"</span>; <span class="hljs-comment">// 반응형 o</span>
-<span class="hljs-variable language_">this</span>.$set(<span class="hljs-variable language_">this</span>.<span class="hljs-property">animals</span>[<span class="hljs-number">1</span>], <span class="hljs-string">'comments'</span>, <span class="hljs-string">"내가 바꾸었다!!!"</span>); <span class="hljs-comment">// 반응형 o</span>
-</code></pre>
-<p>물론 위 코드를 하나의 함수에서 실행하면 모든 변경대상이 반응형이다. 왜냐하면 반응을 감지하고 re-rendering 할 때는, 바뀐 데이터를 모두 적용하기 때문이다. 데이터는 변경이 되어 있지만, 화면에 적용만 안 되어 있던 것이다. 렌더링 시점에 모든 변경사항이 적용된다.</p>
-<h3 id="%EB%8B%A4%EC%A4%91-%EB%B0%B0%EC%97%B4" tabindex="-1">다중 배열</h3>
-<pre><code class="hljs language-jsx"><span class="hljs-attr">twoDimensionalArray</span>: [
-  [
-    {<span class="hljs-attr">id</span>: <span class="hljs-number">1</span>, <span class="hljs-attr">cat</span>: <span class="hljs-string">'first'</span>},
-    {<span class="hljs-attr">id</span>: <span class="hljs-number">2</span>, <span class="hljs-attr">cat</span>: <span class="hljs-string">'first'</span>},
-  ],
-  [
-    {<span class="hljs-attr">id</span>: <span class="hljs-number">1</span>, <span class="hljs-attr">cat</span>: <span class="hljs-string">'second'</span>},
-    {<span class="hljs-attr">id</span>: <span class="hljs-number">2</span>, <span class="hljs-attr">cat</span>: <span class="hljs-string">'second'</span>},
-  ],
-  [],
-]
-
-<span class="hljs-title function_">created</span>(<span class="hljs-params"></span>) {
-	<span class="hljs-variable language_">this</span>.<span class="hljs-property">twoDimensionalArray</span>[<span class="hljs-number">2</span>] = [
-    {<span class="hljs-attr">id</span>: <span class="hljs-number">1</span>, <span class="hljs-attr">cat</span>: <span class="hljs-string">'third'</span>},
-    {<span class="hljs-attr">id</span>: <span class="hljs-number">2</span>, <span class="hljs-attr">cat</span>: <span class="hljs-string">'third'</span>},
-  ]
-  <span class="hljs-variable language_">this</span>.<span class="hljs-property">twoDimensionalArray</span>[<span class="hljs-number">3</span>] = [
-    {<span class="hljs-attr">id</span>: <span class="hljs-number">1</span>, <span class="hljs-attr">cat</span>: <span class="hljs-string">'forth'</span>},
-    {<span class="hljs-attr">id</span>: <span class="hljs-number">2</span>, <span class="hljs-attr">cat</span>: <span class="hljs-string">'forth'</span>},
-  ]
-}
-</code></pre>
-<p>만약 다중 배열의 경우 어떻게 될까? 배열 요소가 배열이고, 그 안에는 객체들이 있는 구조이다.</p>
-<pre><code class="hljs language-jsx"><span class="hljs-keyword">const</span> newObject = { 
-  <span class="hljs-string">"id"</span>: <span class="hljs-number">1</span>, 
-  <span class="hljs-string">"comments"</span>: <span class="hljs-string">"새로운 오브젝트를 넣음!"</span>, 
-};
-<span class="hljs-variable language_">this</span>.<span class="hljs-property">twoDimensionalArray</span>[<span class="hljs-number">1</span>][<span class="hljs-number">1</span>] = newObject <span class="hljs-comment">// 반응형 x</span>
-<span class="hljs-variable language_">this</span>.$set(<span class="hljs-variable language_">this</span>.<span class="hljs-property">twoDimensionalArray</span>[<span class="hljs-number">1</span>], <span class="hljs-number">1</span>, newObject); <span class="hljs-comment">// 반응형 o</span>
-<span class="hljs-variable language_">this</span>.<span class="hljs-property">twoDimensionalArray</span>[<span class="hljs-number">0</span>][<span class="hljs-number">0</span>].<span class="hljs-property">cat</span> = <span class="hljs-string">"내가 바꾸었다!!!"</span>; <span class="hljs-comment">// 반응형 o</span>
-<span class="hljs-variable language_">this</span>.<span class="hljs-property">twoDimensionalArray</span>[<span class="hljs-number">2</span>][<span class="hljs-number">0</span>].<span class="hljs-property">cat</span> = <span class="hljs-string">"새로 넣은 오브젝트인데 바뀔까?"</span>; <span class="hljs-comment">// 반응형 x</span>
-<span class="hljs-variable language_">this</span>.$set(<span class="hljs-variable language_">this</span>.<span class="hljs-property">twoDimensionalArray</span>[<span class="hljs-number">3</span>][<span class="hljs-number">1</span>], <span class="hljs-string">'comments'</span>, <span class="hljs-string">"내가 바꾸었다!!!"</span>); <span class="hljs-comment">// 반응형 x</span>
-</code></pre>
-<p>기본적으로 배열의 인덱스에 직접 할당하는 것은 무조건 반응형이 아니다.</p>
-<p>2번 인덱스의 객체는, 처음에는 빈 배열이다가 인덱스에 직접 할당되었다. 그래서 반응형 설정이 되지 않았고, 다중배열 안의 객체 속성을 바꾸려고 했을 때 반응이 없다. 처음부터 할당이 되어 있거나, <code>push</code> 등으로 추가된 항목이 아니기 때문이다. 반대 상황으로 0번 인덱스와 1번 인덱스는 반응형으로 내부 속성을 변경하려고 할 때 반응형이다.</p>
-<p>3번 인덱스는 처음부터 객체에 없다가, 인덱스로 할당된 객체이다. 2번과 사실상 같은 유형이다. 이 경우 <code>$set</code> 함수로도 반응이 없다.</p>
-<p>3번 항목이야 <code>push</code> 를 통해 항목을 추가하면 된다곤 하지만, 2번 항목을 반응형으로 할당하려면 어떻게 해야할까?</p>
-<pre><code class="hljs language-jsx"><span class="hljs-variable language_">this</span>.<span class="hljs-property">twoDimensionalArray</span>[<span class="hljs-number">2</span>].<span class="hljs-title function_">push</span>(...[
-  {<span class="hljs-attr">id</span>: <span class="hljs-number">1</span>, <span class="hljs-attr">cat</span>: <span class="hljs-string">'third'</span>},
-  {<span class="hljs-attr">id</span>: <span class="hljs-number">2</span>, <span class="hljs-attr">cat</span>: <span class="hljs-string">'third'</span>},
-])
-<span class="hljs-variable language_">this</span>.<span class="hljs-property">twoDimensionalArray</span>.<span class="hljs-title function_">splice</span>(<span class="hljs-number">2</span>, <span class="hljs-number">1</span>, [
-  {<span class="hljs-attr">id</span>: <span class="hljs-number">1</span>, <span class="hljs-attr">cat</span>: <span class="hljs-string">'third'</span>},
-  {<span class="hljs-attr">id</span>: <span class="hljs-number">2</span>, <span class="hljs-attr">cat</span>: <span class="hljs-string">'third'</span>},
-]);
-</code></pre>
-<ul>
-<li>spread 문으로 내용물을 펼쳐서 push 를 하는 방법</li>
-<li><code>splice</code> 함수로 대상 교체하기</li>
-</ul>
-<p>배열은 간단하게 생각하면 꼭 함수를 거쳐야 한다고 보면 된다. 그럼 쉽게 반응형을 끌어낼 수 있다.</p>
-<h2 id="%EB%B9%84%EB%8F%99%EA%B8%B0-%EC%97%85%EB%8D%B0%EC%9D%B4%ED%8A%B8-%ED%81%90" tabindex="-1">비동기 업데이트 큐</h2>
-<p>이 부분은 딱히 문제는 아니지만 알아두면 좋은 Vue 의 특성이다. Vue 의 UI 업데이트를 위해 컴파일되는 Virtual DOM은 비동기로 생성되고 화면에 렌더링된다. 즉, queue 에 담긴 여러 변경사항들을 flush 하기 전까지는 바로 화면에 적용되지 않고, 한 번에 렌더링한다. 그 시점은 다음 <strong>tick</strong> 이 된다. 또, queue 에 담긴 Watcher 중 중복인 항목은 제거하고 최신으로 유지한다.</p>
-<pre><code class="hljs language-tsx"><span class="hljs-attr">template</span>: <span class="hljs-string">`&lt;span&gt;{{msg}}&lt;/span&gt;`</span>,
-<span class="hljs-attr">ata</span>: {
-	<span class="hljs-attr">msg</span>: <span class="hljs-string">"before update"</span>,
-}
-<span class="hljs-attr">methods</span>: {
-	<span class="hljs-attr">update</span>: <span class="hljs-function">() =&gt;</span> {
-		<span class="hljs-variable language_">this</span>.<span class="hljs-property">msg</span> = <span class="hljs-string">"updated"</span>;
-    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-variable language_">this</span>.<span class="hljs-property">$el</span>.<span class="hljs-property">textContent</span>) <span class="hljs-comment">// =&gt; 'not updated'</span>
-    <span class="hljs-variable language_">this</span>.$nextTick(<span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) {
-      <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-variable language_">this</span>.<span class="hljs-property">$el</span>.<span class="hljs-property">textContent</span>) <span class="hljs-comment">// =&gt; 'updated'</span>
-    })
+<p>이런 식으로 말이다. 이렇게 되면 코드를 분산시켰음에도 처음에 다 로드를 하게 된다. 의도한대로 작동하지 않는다.</p>
+<h1 id="vue-cli" tabindex="-1">Vue-Cli</h1>
+<pre><code class="hljs language-tsx"><span class="hljs-variable language_">module</span>.<span class="hljs-property">exports</span> = {
+	<span class="hljs-attr">chainWebpack</span>: <span class="hljs-function"><span class="hljs-params">config</span> =&gt;</span> {
+		config.<span class="hljs-property">plugins</span>.<span class="hljs-title function_">delete</span>(<span class="hljs-string">'prefetch'</span>);
 	}
 }
 </code></pre>
-<p>간단하게 update 함수를 통해 변경된 <code>msg</code> 는 실제 DOM에 적용되기 전이라서 함수 실행 중에는 이전 데이터로 여전히 남아 있다. 그러다 함수 호출이 끝나고, 다음 이벤트 루프가 발생할 때가 되어서야 갱신된 데이터가 화면에 보인다. 이를 추적할 수 있는 게 <code>this.$nextTick</code> 이다. 이는 함수의 호출을 다음 <strong>tick</strong> 으로 미루는 작업이다. tick 에 대해서는 추후에 이벤트 루프에 대해서 작성할 때 자세하게 다룰 것이다.</p>
-<h2 id="created-%EC%99%80-mounted" tabindex="-1">created 와 mounted</h2>
-<p>앞서 Vue 컴포넌트는 mount 시점에 렌더링을 한 번 실행한다는 것을 알았다. beforeMounted → 렌더링 → mounted 순서로 훅이 실행된다. 그렇기 때문에 발생하는 현상이 있다. created 훅과 mounted 훅에서 data 에 반응형이 아닌 데이터를 추가를 하면 UI에 표시가 될까 안될까?</p>
-<pre><code class="hljs language-tsx"><span class="hljs-attr">template</span>: <span class="hljs-string">`
-	&lt;div v-for="item of notReactive" :key="item.id"&gt;
-    {{item}}
-  &lt;/div&gt;
-`</span>,
-<span class="hljs-title function_">created</span>(<span class="hljs-params"></span>) {
-  <span class="hljs-variable language_">this</span>.<span class="hljs-property">notReactive</span>[<span class="hljs-number">1</span>] = {<span class="hljs-attr">id</span>: <span class="hljs-number">2</span>, <span class="hljs-attr">cat</span>: <span class="hljs-string">'reactive from created'</span>};
-},
-<span class="hljs-title function_">mounted</span>(<span class="hljs-params"></span>) {
-  <span class="hljs-variable language_">this</span>.<span class="hljs-property">notReactive</span>[<span class="hljs-number">2</span>] = {<span class="hljs-attr">id</span>: <span class="hljs-number">3</span>, <span class="hljs-attr">cat</span>: <span class="hljs-string">'not reactive from mounted'</span>};
-},
-<span class="hljs-attr">data</span>: <span class="hljs-function">() =&gt;</span> {
-  <span class="hljs-keyword">return</span> {
-    <span class="hljs-attr">notReactive</span>: [
-      {<span class="hljs-attr">id</span>: <span class="hljs-number">1</span>, <span class="hljs-attr">cat</span>: <span class="hljs-string">'reactive'</span>},
-    ]
-  }
+<p><strong>vue-cli</strong> 에서는 기본적으로 사용하게끔 웹팩 설정이 되어 있다. 하지만 끄게끔 권장한다. <code>vue.config.json</code> 에다가 <code>prefetch</code> 플러그인을 제거하면 간단하게 기능을 끌 수 있다.</p>
+<pre><code class="hljs language-tsx">{
+	<span class="hljs-attr">path</span>: <span class="hljs-string">'/page'</span>,
+	<span class="hljs-attr">name</span>: <span class="hljs-string">'SomePage'</span>,
+	<span class="hljs-attr">component</span>: <span class="hljs-function">() =&gt;</span> <span class="hljs-title function_">import</span>(<span class="hljs-comment">/* webpackPrefetch: true */</span> <span class="hljs-string">'@/src/SomePage.vue'</span>),
 }
 </code></pre>
-<p>말로는 헷갈릴 수 있으니 예시를 보자. 0번 인덱스는 데이터 초기화 시점에 이미 할당되어 있기 때문에 당연하게도 반응형이다. 그렇다면, 1번 인덱스와 2번 인덱스는 반응형일까? 우리가 테스트했을 때는 배열의 인덱스에 할당한 대상은 반응형이 아니다. 그렇기 때문에, UI에는 0번 인덱스 항목만 보일 거라고 예상한다. 결과는 0번 1번 인덱스 항목은 출력되고, 2번 인덱스 항목은 출력되지 않는다. 즉, created 에서 넣은 객체는 렌더가 되었고, mounted 에서 넣은 객체는 무시됐다. 렌더링과 훅의 순서 때문이다. created 시점에서는 렌더링 전이기 때문에, 렌더링 시점에 데이터는 인지되고 적용된다. 하지만 mounted 시점에는 이미 렌더링이 끝난 시점이라, 이때 추가된 데이터는 값만 바뀐 채 렌더링은 무시된다. 여담으로 mounted 에서 넣은 데이터는 <code>this.$forceUpdate</code> 를 호출하면 화면에 보인다. <code>watcher.update</code> 를 강제로 호출하기 때문이다.</p>
-<pre><code class="hljs language-tsx"><span class="hljs-attr">methods</span>: {
-  <span class="hljs-title function_">onClick</span>(<span class="hljs-params"></span>) {
-		<span class="hljs-comment">// 아래를 개별로 실행</span>
-		<span class="hljs-comment">// 한번에 실행하면 1번 행이 반응형이기 때문에, 모두 렌더링 된다.</span>
-    <span class="hljs-variable language_">this</span>.<span class="hljs-property">notReactive</span>[<span class="hljs-number">0</span>].<span class="hljs-property">cat</span> = <span class="hljs-string">'reactive from onClick'</span>; <span class="hljs-comment">// 반응형</span>
-		<span class="hljs-variable language_">this</span>.$set(<span class="hljs-variable language_">this</span>.<span class="hljs-property">notReactive</span>[<span class="hljs-number">1</span>], <span class="hljs-string">'cat'</span>, <span class="hljs-string">'reactive from onClick'</span>) <span class="hljs-comment">// 반응형 x</span>
-    <span class="hljs-variable language_">this</span>.<span class="hljs-property">notReactive</span>[<span class="hljs-number">1</span>].<span class="hljs-property">cat</span> = <span class="hljs-string">'reactive from onClick'</span>; <span class="hljs-comment">// 반응형 x</span>
-    <span class="hljs-variable language_">this</span>.<span class="hljs-property">notReactive</span>[<span class="hljs-number">2</span>].<span class="hljs-property">cat</span> = <span class="hljs-string">'reactive from onClick'</span>; <span class="hljs-comment">// 반응형 x</span>
-  }
-},
-</code></pre>
-<p>mount 시점에 렌더링되어 화면에 나타났다고 해서 반응형인 건 아니다. mount 이후 데이터를 바꾸려고 하면 반응형이 아니기 때문에 반응이 없다.</p>
-</div><div class="post-footer"> 포스팅은 여기까지입니다. <br> 의견은 <a href="mailto:iddms5446@gmail.com">iddms5446@gmail.com</a>으로 보내주시면 감사드리겠습니다! </div></div><div class="toc"><div class="toc-contents"><div class="toc-list"><div class="table-of-contents"><ul><li><a href="#%EB%B0%98%EC%9D%91%EC%84%B1%3F">반응성?</a></li><li><a href="#vue2%EC%97%90%EC%84%9C%EB%8A%94-%EB%B0%98%EC%9D%91%EC%84%B1%EC%9D%84-%EC%96%B4%EB%96%BB%EA%B2%8C-%EA%B5%AC%ED%98%84%ED%96%88%EB%82%98.">Vue2에서는 반응성을 어떻게 구현했나.</a><ul><li><a href="#getter%2Fsetter-%EC%A3%BC%EC%9E%85">Getter/Setter 주입</a></li><li><a href="#watcher">Watcher</a></li></ul></li><li><a href="#vue2%EC%9D%98-%EB%B0%98%EC%9D%91%EC%84%B1-%EB%AC%B8%EC%A0%9C-%EB%B0%8F-%ED%8A%B9%EC%A7%95">Vue2의 반응성 문제 및 특징</a><ul><li><a href="#data-option-%EC%97%90-%EB%8D%B0%EC%9D%B4%ED%84%B0-%EC%B6%94%EA%B0%80%ED%95%98%EA%B8%B0">data option 에 데이터 추가하기</a></li><li><a href="#object-%EC%97%90-assign-%EC%9C%BC%EB%A1%9C-%EC%83%88%EB%A1%9C%EC%9A%B4-%ED%94%84%EB%A1%9C%ED%8D%BC%ED%8B%B0-%EC%B6%94%EA%B0%80%ED%95%98%EA%B8%B0">object 에 assign 으로 새로운 프로퍼티 추가하기</a></li><li><a href="#%EB%B0%B0%EC%97%B4-%EB%AC%B8%EC%A0%9C">배열 문제</a></li><li><a href="#%EB%B9%84%EB%8F%99%EA%B8%B0-%EC%97%85%EB%8D%B0%EC%9D%B4%ED%8A%B8-%ED%81%90">비동기 업데이트 큐</a></li><li><a href="#created-%EC%99%80-mounted">created 와 mounted</a></li></ul></li></ul></div></div></div></div><div class="control-list"><div class="info-toggle control"><span>🧙‍♂️</span><span>정보</span></div><div class="toc-toggle control"><span>📚</span><span>목차</span></div></div></div></div></div></div><div id="modal-portal"><!----><!----></div></div></body></html>
+<p>단 전략에 따라서 미리 로드해야하는 코드에 대해서는 <strong>vue-router</strong> 의 주석으로 prefetch 를 적용할 수 있다.</p>
+<h1 id="vite" tabindex="-1">Vite</h1>
+<p>Vite 의 경우 Webpack 이 아닌 Rollup 을 사용한다. 기본적인 웹팩 설정들은 사용할 수 없고, 기본적으로 동적로딩을 하는 경우 모두 항상 코드는 분산되어 빌드된다.</p>
+<p>추가로 알아보아야 함!</p>
+</div><div class="post-footer"> 포스팅은 여기까지입니다. <br> 의견은 <a href="mailto:iddms5446@gmail.com">iddms5446@gmail.com</a>으로 보내주시면 감사드리겠습니다! </div></div><div class="toc"><div class="toc-contents"><div class="toc-list"><div class="table-of-contents"><ul><li><a href="#code-spliting">Code Spliting</a><ul><li><a href="#vue-%EC%97%90%EC%84%9C%EB%8A%94-%EC%96%B4%EB%96%BB%EA%B2%8C-%EA%B8%B0%EB%8A%A5%EC%9D%84-%EC%82%AC%EC%9A%A9%ED%95%98%EB%82%98">Vue 에서는 어떻게 기능을 사용하나</a></li></ul></li><li><a href="#prefetch%3F">Prefetch?</a></li><li><a href="#vue-cli">Vue-Cli</a></li><li><a href="#vite">Vite</a></li></ul></div></div></div></div><div class="control-list"><div class="info-toggle control"><span>🧙‍♂️</span><span>정보</span></div><div class="toc-toggle control"><span>📚</span><span>목차</span></div></div></div></div></div></div><div id="modal-portal"><!----><!----></div></div></body></html>
