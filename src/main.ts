@@ -1,24 +1,23 @@
-import { createApp } from 'vue'
+import './style.css'
 import App from './App.vue'
-import './registerServiceWorker'
-import router from './router'
-import store from './store'
+import { ViteSSG } from 'vite-ssg';
+// virtual:generated-layouts
+//   tsconfig.json-compilerOptions-types
+//   "vite-plugin-vue-layouts/client"
+import { setupLayouts } from 'virtual:generated-layouts'
+// virtual:generated-pages
+//   tsconfig.json-compilerOptions-types
+//   "vite-plugin-pages/client"
+import generatedRoutes from 'virtual:generated-pages'
 
-import VueGTag from "vue-gtag-next";
+const routes = setupLayouts(generatedRoutes)
 
-let GAID = "G-258YQYTM9J";  // dev
-if(process.env.NODE_ENV === "production") {
-    GAID = "G-SH1GZR1KME";  // prod
-}
-
-
-const app = createApp(App)
-.use(store)
-.use(router)
-.use(VueGTag, {
-    property: {
-        id: GAID, // prod
-        useDebugger: true,
-    }
-})
-.mount('#app')
+// createApp(App).mount('#app')
+export const createApp = ViteSSG(
+    // 루트 컴포넌트
+    App,
+    { routes },
+    ({ app, router, routes, isClient, initialState }) => {
+        // 플러그인 세팅
+    },
+)
