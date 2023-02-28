@@ -3,7 +3,6 @@
 
 <template>
   <div>
-    <div>asdf</div>
     <router-view />
   </div>
 </template>
