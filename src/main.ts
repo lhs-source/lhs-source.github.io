@@ -9,6 +9,8 @@ import { setupLayouts } from 'virtual:generated-layouts'
 //   tsconfig.json-compilerOptions-types
 //   "vite-plugin-pages/client"
 import generatedRoutes from 'virtual:generated-pages'
+import { createPinia } from 'pinia';
+
 
 const routes = setupLayouts(generatedRoutes)
 
@@ -19,5 +21,7 @@ export const createApp = ViteSSG(
     { routes },
     ({ app, router, routes, isClient, initialState }) => {
         // 플러그인 세팅
+        const pinia = createPinia()
+        app.use(pinia);
     },
 )
