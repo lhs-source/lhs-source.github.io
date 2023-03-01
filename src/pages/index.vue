@@ -1,4 +1,44 @@
-<script setup></script>
+<script setup lang="ts">
+import { onMounted } from 'vue';
+
+onMounted(() => {
+  let options = {
+    root: document.querySelector('main'),
+    rootMargin: '0px',
+    threshold: 1.0
+  }
+  let callback = (entries: any, observer: any) => {
+    console.log('callback observer', observer);
+    entries.forEach((entry: any) => {
+      console.log('callback entry', entry);
+      // Each entry describes an intersection change for one observed
+      // target element:
+      //   entry.boundingClientRect
+      //   entry.intersectionRatio
+      //   entry.intersectionRect
+      //   entry.isIntersecting
+      //   entry.rootBounds
+      //   entry.target
+      //   entry.time
+      if (entry.intersectionRatio > 0) {
+        entry.target.classList.add('up');
+      }
+      else {
+        entry.target.classList.remove('up');
+      }
+    });
+  };
+
+  let observer = new IntersectionObserver(callback);
+
+  observer.observe(document.querySelector('.dummy-text')!);
+  observer.observe(document.querySelector('.title')!);
+  observer.observe(document.querySelector('.description')!);
+  observer.observe(document.querySelector('.author')!);
+  observer.observe(document.querySelector('.line-area')!);
+})
+
+</script>
 
 <template>
   <div class="index-wrapper">
@@ -15,6 +55,7 @@
       </div>
     </header>
     <main>
+      <div style="margin-top: 60px"></div>
       <div class="dummy-text">
         All men are prepared to accomplish the incredible if their ideals are threatened. I have always believed,
         and I still believe, that whatever good or bad fortune may come our way we can always give it meaning and
@@ -61,9 +102,14 @@ header .image-area img {
   top: -50vh;
   right: 900px;
   height: 200vh;
-  width: 20rem;
+  width: 5rem;
   background-color: #303b45;
   mix-blend-mode: difference;
+  transform: rotate(15deg);
+  transition: transform 0.9s, width 0.9s ease-in;
+}
+.line-area.up {
+  width: 40rem;
   transform: rotate(45deg);
 }
 
@@ -85,6 +131,8 @@ header .image-area img {
   font-size: 10rem;
   line-height: 12rem;
   color: #516170;
+  opacity: 0;
+  transition: transform 0.5s, opacity 0.7s;
 }
 
 .description {
@@ -93,6 +141,8 @@ header .image-area img {
   line-height: 7rem;
   color: #384551;
   mix-blend-mode: difference;
+  opacity: 0;
+  transition: transform 1.5s, opacity 1.7s;
 }
 
 .author {
@@ -103,6 +153,8 @@ header .image-area img {
   line-height: 2rem;
   color: #516170;
   mix-blend-mode: difference;
+  opacity: 0;
+  transition: transform 2s, opacity 2.5s;
 }
 
 .text-line {
@@ -116,5 +168,11 @@ header .image-area img {
   word-break: break-all;
   font-size: 2rem;
   color: #000000;
+  opacity: 0;
+  transition: transform 0.5s, opacity 0.7s;
+}
+.up {
+  transform: translateY(-20px);
+  opacity: 1;
 }
 </style>
