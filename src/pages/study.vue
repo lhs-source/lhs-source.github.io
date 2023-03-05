@@ -1,31 +1,34 @@
 <script setup lang="ts">
-import { usePosts } from '../store/posts';
 
+const pageList = [
+  {
+    id: 1,
+    name: 'SVG Scroll Down',
+    path: 'ScrollDown'
+  }
+]
 
-const posts = usePosts();
-posts.fetchPostList();
 
 </script>
 
 <template>
-  <div class="post-index-wrapper">
+  <div class="page-index-wrapper">
     <header>TO BE HEADER</header>
     <nav>
       <ul>
-        <li v-for="post in posts.postList" :key="post.fileName">
-          <router-link :to="`/posts/${post.fileName}`">{{ post.title }}</router-link>
+        <li v-for="page in pageList" :key="page.path">
+          <router-link :to="`/pages/${page.path}`">{{ page.name }}</router-link>
         </li>
       </ul>
     </nav>
     <main>
       <router-view></router-view>
     </main>
-    <footer>TO BE FOOTER</footer>
   </div>
 </template>
 
-<style lang="scss" scoped>
-.post-index-wrapper {
+<style>
+.page-index-wrapper {
   min-height: 100vh;
   background-color: #242424;
   color: rgba(235, 235, 235, .6);
@@ -63,34 +66,33 @@ footer {
   border-top: 1px dotted rgba(84, 84, 84, .48);
 }
 
-:deep(.markdown-body) {
+.markdown-body {
   max-width: 688px;
-  .table-of-contents {
-    position: absolute;
-    right: 0;
-    padding-right: 36px;
-    width: 300px;
-  }
-  pre {
-    background-color: #404040;
-    padding: 8px;
-    overflow-x: auto;
-  }
-  code {
+}
+.table-of-contents {
+  position: absolute;
+  right: 0;
+  padding-right: 36px;
+  width: 300px;
+}
+pre {
+  background-color: #404040;
+  padding: 8px;
+}
+code {
 
-  }
-  a {
-    color: #42b883;
-    font-weight: 700;
-  }
-  div code {
-    background-color: #2f2f2f;
-    color: #33a06f;
-  }
-  ul {
-    padding: 16px;
-    padding-left: 32px;
-  }
+}
+a {
+  color: #42b883;
+  font-weight: 700;
+}
+div code {
+  background-color: #2f2f2f;
+  color: #33a06f;
+}
+ul {
+  padding: 16px;
+  padding-left: 32px;
 }
 
 </style>
