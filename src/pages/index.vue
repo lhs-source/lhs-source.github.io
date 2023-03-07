@@ -2,9 +2,11 @@
 import { onMounted } from 'vue';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { MotionPathPlugin } from 'gsap/MotionPathPlugin';
 import { usePosts } from '../store/posts';
 
 gsap.registerPlugin(ScrollTrigger);
+gsap.registerPlugin(MotionPathPlugin);
 
 const posts = usePosts();
 posts.fetchPostList();
@@ -13,17 +15,55 @@ onMounted(() => {
   const step = 5;
   const xStep = 32;
   const yHeight = 84;
-  const scrollStep = 300;
+  const scrollStep = 500;
 
-  gsap.set('#crow', {
-    // xStep = 32 일 때, 192px
-    x: (step + 2) * xStep,
-    y: -84,
-  })
+
+  // gsap.set('#crow', {
+  //   // xStep = 32 일 때, 192px
+  //   x: (step + 2) * xStep,
+  //   y: -84,
+  // })
 
   gsap.set('.crow-loading .screen', {
     position: 'fixed',
   }) 
+  // motionPath
+
+  const totalHeight = (6 * 2 + 1) * scrollStep;
+
+  // gsap.set(".astronaut", {scale: 1, autoAlpha: 1});
+  gsap.to(".crow-wrap", {
+    duration: 5, 
+    ease: "power1.inOut",
+    immediateRender: true,
+    motionPath: {
+      path: "#path",
+      align: "#path",
+      alignOrigin: [0.5, 0.5],
+      autoRotate: false,
+    },
+    scrollTrigger: {
+      trigger: '.crow-loading',
+      start: 0,
+      end: totalHeight,
+      scrub: 1,
+    }
+  });
+
+  gsap.to("#crow", {
+    rotate: -720,    
+    ease: "power1.OutIn",
+    immediateRender: true,
+    scrollTrigger: {
+      trigger: '.crow-loading',
+      start: totalHeight * 4 / 6,
+      end: totalHeight,
+      scrub: 1,
+    }
+  });
+
+  // MotionPathHelper.create(".astronaut");
+  
 
   // 5 걸음동안 위로 뒤어오르기 + 아래로 착지하기 반복
   // TODO 포물선으로 x, y 를 계산하도록
@@ -32,8 +72,6 @@ onMounted(() => {
     // console.log('step 1', i, -(i * 2 + 1) * xStep, -yHeight, i * 2 * scrollStep, (i + 1) * 2 * scrollStep)
     // console.log('step 2', i, -(i * 2 + 2) * xStep, 0, (i + 1) * scrollStep, (i + 1) * 2 * scrollStep)
     gsap.to('.crow-wrap', {
-      x: -(i * 2 + 1) * xStep,
-      y: -yHeight,
       rotate: 15,
       ease: 'Power0.easeOut',
       immediateRender: false,
@@ -48,8 +86,6 @@ onMounted(() => {
       }
     })
     gsap.to('.crow-wrap', {
-      x: -(i * 2 + 2) * xStep,
-      y: 0,
       rotate: 0,
       ease: 'Power0.easeOut',
       immediateRender: false,
@@ -64,66 +100,88 @@ onMounted(() => {
       }
     })
   }
-  const lastStep = step + 1;  // 마지막 스텝 수
-  // 마지막 덤블링
-  gsap.to('.crow-wrap', {
-    x: -(lastStep * 2 + 1) * xStep,
-    y: -yHeight * 3,
-    ease: 'Power0.easeOut',
-    immediateRender: false,
-    scrollTrigger: {
-      trigger: '.crow-loading',
-      start: (lastStep * 2 + 1) * scrollStep,
-      end: (lastStep * 2 + 2) * scrollStep * 1.5,
-      scrub: true,
-    }
-  })
-  // 덤블링 할 때 몸통 돌리기
-  gsap.to('#crow', {
-    rotate: 720,
-    ease: 'Power0.easeOut',
-    immediateRender: false,
-    scrollTrigger: {
-      trigger: '.crow-loading',
-      start: (lastStep * 2 + 1) * scrollStep,
-      end: (lastStep * 2 + 2) * scrollStep * 1.4,
-      scrub: true,
-    }
-  })
-  gsap.to('.crow-wrap', {
-    x: -(lastStep * 2 + 2) * xStep,
-    y: 0,
-    ease: 'Power0.easeOut',
-    immediateRender: false,
-    scrollTrigger: {
-      trigger: '.crow-loading',
-      start: (lastStep + 1) * 2 * scrollStep * 1.5,
-      end: ((lastStep + 1) * 2 + 1) * scrollStep * 1.5,
-      scrub: true,
-    }
-  })
 
-  const lastHeight = ((lastStep + 1) * 2 + 1) * scrollStep * 1.5;
-  console.log('last Height', lastHeight);
-  console.log('last crow position', -(lastStep * 2 + 2) * xStep, 0);
+  // gsap.to('.crow-wrap', {
+  //   x: -6 * xStep,
+  //   y: () => -yHeight,
+  //   rotate: 0,
+  //   ease: 'Power0.easeOut',
+  //   immediateRender: false,
+  //   scrollTrigger: {
+  //     trigger: '.crow-loading',
+  //     // 600, 900
+  //     // 1200, 1500
+  //     // 1800, 2100
+  //     start: (i + 1) * 2 * scrollStep,
+  //     end: ((i + 1) * 2 + 1) * scrollStep,
+  //     scrub: true,
+  //   }
+  // })
+  // const lastStep = step + 1;  // 마지막 스텝 수
+  // // 마지막 덤블링
+  // gsap.to('.crow-wrap', {
+  //   x: -(lastStep * 2 + 1) * xStep,
+  //   y: -yHeight * 3,
+  //   ease: 'Power0.easeOut',
+  //   immediateRender: false,
+  //   toggleActions: "play pause resume reset",
+  //   scrollTrigger: {
+  //     trigger: '.crow-loading',
+  //     start: (lastStep * 2 + 1) * scrollStep,
+  //     end: (lastStep * 2 + 2) * scrollStep * 1.5,
+  //     scrub: 0.5,
+  //     markers: true,
+  //   }
+  // })
+  // // 덤블링 할 때 몸통 돌리기
+  // gsap.to('#crow', {
+  //   rotate: 720,
+  //   ease: 'Power0.easeOut',
+  //   immediateRender: false,
+  //   toggleActions: "play pause resume reset",
+  //   scrollTrigger: {
+  //     trigger: '.crow-loading',
+  //     start: (lastStep * 2 + 1) * scrollStep,
+  //     end: (lastStep * 2 + 2) * scrollStep * 1.5,
+  //     scrub: 0.5,
+  //     markers: true,
+  //   }
+  // })
+  // gsap.to('.crow-wrap', {
+  //   x: -(lastStep * 2 + 2) * xStep,
+  //   y: 0,
+  //   ease: 'Power0.easeOut',
+  //   immediateRender: false,
+  //   scrollTrigger: {
+  //     trigger: '.crow-loading',
+  //     start: (lastStep + 1) * 2 * scrollStep * 1.5,
+  //     end: ((lastStep + 1) * 2 + 1) * scrollStep * 1.5,
+  //     scrub: 0.5,
+  //     markers: true,
+  //   }
+  // })
+
+  // const lastHeight = ((lastStep + 1) * 2 + 1) * scrollStep * 1.5;
+  // console.log('last Height', lastHeight);
+  // console.log('last crow position', -(lastStep * 2 + 2) * xStep, 0);
 
   // subtitle 표시
-  gsap.timeline({
-    scrollTrigger: {
-      trigger: '.crow-loading',
-      start: lastHeight + 1000,
-      end: lastHeight + 1800,
-      scrub: 2,
-    }
-  }).fromTo('.subtitle', {
-    y: 100,
-    opacity: 0,
-    ease: 'Power0.easeOut',
-  }, {
-    y: 0,
-    opacity: 1,
-    ease: 'Power0.easeOut',
-  })
+  // gsap.timeline({
+  //   scrollTrigger: {
+  //     trigger: '.crow-loading',
+  //     start: lastHeight + 1000,
+  //     end: lastHeight + 1800,
+  //     scrub: 2,
+  //   }
+  // }).fromTo('.subtitle', {
+  //   y: 100,
+  //   opacity: 0,
+  //   ease: 'Power0.easeOut',
+  // }, {
+  //   y: 0,
+  //   opacity: 1,
+  //   ease: 'Power0.easeOut',
+  // })
 
 
   gsap.timeline({
@@ -146,7 +204,6 @@ onMounted(() => {
       },
     }
   })
-
 })
 
 </script>
@@ -244,6 +301,14 @@ onMounted(() => {
             </g>
           </svg>
         </div>
+
+        <svg id="motionPath" style="width: 480px; height: 360px; transform: translateY(-75%);" viewBox="0 0 800 600">
+          <path 
+            id="path" 
+            fill="none" 
+            stroke="transparent"
+            d="M 700 550 Q 650 350 600 550 Q 550 350 500 550 Q 450 350 400 550 Q 350 350 300 550 Q 250 450 200 550 Q 150 0 100 550"/>
+        </svg>
       </div>
       <div class="title-area screen section">
         <div class="title">LEE HYUN SOO</div>
