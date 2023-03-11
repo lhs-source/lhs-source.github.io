@@ -2,7 +2,7 @@ name: Deployment to Github Pages
 on:
   push:
     branches:
-      - deploy
+      - vite-deploy
 
 jobs:
   update:
