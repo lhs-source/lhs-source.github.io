@@ -10,17 +10,17 @@
 
 # Github.io 페이지 만들기
 
-![Untitled](../img/making-blog-githubio-vue3-1/Untitled.png)
+![Untitled](../../img/making-blog-githubio-vue3-1/Untitled.png)
 
 당연히 Github 계정이 있어야한다. `[유저명.github.io](http://유저명.github.io)` 라고 프로젝트를 하나 만든다. 이렇게 프로젝트를 만들면 자동으로 Github Pages 를 사용하겠다고 알리는 격이다. 필수는 아니고, 나중에 Github Pages 를 사용하겠다고 따로 설정할 수도 있다. 
 
-![Untitled](../img/making-blog-githubio-vue3-1/Untitled1.png)
+![Untitled](../../img/making-blog-githubio-vue3-1/Untitled1.png)
 
 배포 대상 브랜치를 선택하고, 폴더를 선택하여 저장하면 끝이다. 하지만 이름을 짓기도 귀찮고, 굳이 따로 설정할 필요가 없으니 규칙을 따라서 진행한다.
 
 # Github Actions 로 Github Pages 배포
 
-![Untitled](../img/making-blog-githubio-vue3-1/Untitled2.png)
+![Untitled](../../img/making-blog-githubio-vue3-1/Untitled2.png)
 
 Github Pages 로 사용되는 레포는 대부분 결과물을 관리하는 레포이다. 레포에 푸시가 되면 Github 봇이 감지하여, 자동으로 Github Pages 배포를 실행한다. 
 
@@ -40,7 +40,7 @@ Github Pages 로 사용되는 레포는 대부분 결과물을 관리하는 레�
 
 **수동 빌드** 는 Github Pages 설정 페이지에서 호스팅할 폴더를 고를 수 있다. 기본적으로 root 폴더이며, `/docs` 폴더를 추가로 지정할 수 있다. 해당 레포 브랜치의 docs 폴더를 호스팅하겠다는 것이다. 
 
-![Untitled](../img/making-blog-githubio-vue3-1/Untitled3.png)
+![Untitled](../../img/making-blog-githubio-vue3-1/Untitled3.png)
 
 ```jsx
 // vue.config.js
@@ -83,7 +83,7 @@ jobs:
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v2.5.0
         env:
-          PERSONAL_TOKEN: ${{secrets.GH_TOKEN}}
+          PERSONAL_TOKEN: $\{\{secrets.GH_TOKEN\}\}
           PUBLISH_BRANCH: master
           PUBLISH_DIR: ./dist
           SCRIPT_MODE: true
@@ -95,22 +95,22 @@ jobs:
 
 위 코드를 간략히 보자면, “deploy 브랜치의 푸시가 감지되면, 코드를 체크아웃한 후에 `npm install` 로 종속성을 모두 다운로드 받고, `npm run build` 로 빌드를 한 후, `gh-pages` 아티팩트를 활용해서 master 브랜치에 dist 폴더에 담긴 결과물을 배포” 이다.
 
-![Untitled](../img/making-blog-githubio-vue3-1/Untitled4.png)
+![Untitled](../../img/making-blog-githubio-vue3-1/Untitled4.png)
 
-이 때 활용하게 되는 것이 Github Secrets 이다. Actions 실행할 때 필요한 암호키나 레포에 노출되지 말아야 하는 중요한 데이터의 경우 레포 설정에 저장해놓고 사용함으로써 외부로 노출시키지 않아도 된다. 간단하게 이름-값 으로 이루어져 있어서 대충봐도 키를 등록할 수 있을 것이다. 데이터를 사용할 때는 `PERSONAL_TOKEN: ${{secrets.GH_TOKEN}}` 이런 식으로 사용한다.
+이 때 활용하게 되는 것이 Github Secrets 이다. Actions 실행할 때 필요한 암호키나 레포에 노출되지 말아야 하는 중요한 데이터의 경우 레포 설정에 저장해놓고 사용함으로써 외부로 노출시키지 않아도 된다. 간단하게 이름-값 으로 이루어져 있어서 대충봐도 키를 등록할 수 있을 것이다. 데이터를 사용할 때는 `PERSONAL_TOKEN: $\{\{secrets.GH_TOKEN\}\}` 이런 식으로 사용한다.
 
-![Untitled](../img/making-blog-githubio-vue3-1/Untitled5.png)
+![Untitled](../../img/making-blog-githubio-vue3-1/Untitled5.png)
 
 master 브랜치에 결과물이 배포되기 때문에 Pages 설정을 알맞게 바꿔준다. 
 
-![Untitled](../img/making-blog-githubio-vue3-1/Untitled6.png)
+![Untitled](../../img/making-blog-githubio-vue3-1/Untitled6.png)
 
 Github Workflow 는 두 번 돌게 된다.
 
 1. deploy 브랜치에 배포를 하면 Github Actions 가 실행되어 빌드하고, `master` 브랜치에 결과물을 푸시한다.
 2. 그럼 Gihub 봇이 알아채고 페이지에 배포를 시작한다.
 
-![Untitled](../img/making-blog-githubio-vue3-1/Untitled7.png)
+![Untitled](../../img/making-blog-githubio-vue3-1/Untitled7.png)
 
 봇이 돌린 Workflow 에서 배포가 완료된 우리의 페이지도 확인할 수 있다. 아래 Artifacts 는 Jekyll 이 빌드한 결과물이다. 실제로 보면 npm build 결과를 그대로 래핑하는 것과 매한가지다.
 
@@ -232,7 +232,7 @@ const post = computed(() => {
 
 DetailView 가 포스트 내용을 보여줄 뷰인데, 포스트 url 을 확인한 후 해당하는 포스트 데이터를 가져오게 했다.
 
-![Untitled](../img/making-blog-githubio-vue3-1/Untitled8.png)
+![Untitled](../../img/making-blog-githubio-vue3-1/Untitled8.png)
 
 이걸 토대로 글 목록을 보여주니 잘 나온다.
 
@@ -362,7 +362,7 @@ module.exports = {
 
 위와 같이 Webpack 플러그인을 작성한 후 등록해주면 간단하게 끝난다.
 
-![Untitled](../img/making-blog-githubio-vue3-1/Untitled9.png)
+![Untitled](../../img/making-blog-githubio-vue3-1/Untitled9.png)
 
 빌드하면 결과물 폴더에, 변환한 URL에 해당하는 index.html 파일들이 우수수 빌드가 된 걸 확인할 수 있다. 그리고 포스팅 URL 로 바로 접속도 가능해졌다.
 
@@ -416,11 +416,11 @@ module.exports = [
 
 구글 검색 콘솔에 접속한다. 우선은 사이트를 생성하고, 그 사이트에 사이트맵을 등록할 것이다.
 
-![Untitled](../img/making-blog-githubio-vue3-1/Untitled10.png)
+![Untitled](../../img/making-blog-githubio-vue3-1/Untitled10.png)
 
 URL 을 입력하고 다음으로 넘어가자.
 
-![Untitled](../img/making-blog-githubio-vue3-1/Untitled11.png)
+![Untitled](../../img/making-blog-githubio-vue3-1/Untitled11.png)
 
 ```tsx
 <!DOCTYPE html>
@@ -433,19 +433,19 @@ URL 을 입력하고 다음으로 넘어가자.
 
 제일 간단한 메타태그 추가를 통해 사이트 인증을 진행한다. 사이트 루트에 메타태그가 있어야하기 때문에, public/index.html 에 메타태그를 추가해주자.
 
-![Untitled](../img/making-blog-githubio-vue3-1/Untitled12.png)
+![Untitled](../../img/making-blog-githubio-vue3-1/Untitled12.png)
 
 블로그 루트 페이지에 추가된 것을 확인하고 다시 콘솔로 간다.
 
-![Untitled](../img/making-blog-githubio-vue3-1/Untitled13.png)
+![Untitled](../../img/making-blog-githubio-vue3-1/Untitled13.png)
 
 소유권을 확인받았다.
 
-![Untitled](../img/making-blog-githubio-vue3-1/Untitled14.png)
+![Untitled](../../img/making-blog-githubio-vue3-1/Untitled14.png)
 
 사이트맵은 자동생성되었기 때문에, `/sitemap.xml` 를 통해 접속할 수 있다. URL로 한번 접속해보고 데이터가 잘 오는 걸 확인하고 제출하자.
 
-![Untitled](../img/making-blog-githubio-vue3-1/Untitled15.png)
+![Untitled](../../img/making-blog-githubio-vue3-1/Untitled15.png)
 
 성공!
 
@@ -503,11 +503,11 @@ module.exports = [
 
 [Redirecting...](https://analytics.google.com/)
 
-![Untitled](../img/making-blog-githubio-vue3-1/Untitled16.png)
+![Untitled](../../img/making-blog-githubio-vue3-1/Untitled16.png)
 
 GA 콘솔에 들어가서 계정과 속성을 차례대로 만들어준다. 속성 단위로 데이터를 종합하고 집계해서 대시보드를 작성한다고 보면 된다. 속성을 만들 때 시간대는 모두 대한민국으로 맞춰주면 된다. 
 
-![Untitled](../img/making-blog-githubio-vue3-1/Untitled17.png)
+![Untitled](../../img/making-blog-githubio-vue3-1/Untitled17.png)
 
 그 후 데이터스트림을 만들어준다. 스트림 이름은 적당히 알아볼 수 있게 하고, 중요한 것은 “측정 ID” 이다. 이것이 데이터를 전송하는 데 사용하는 키가 된다.
 
@@ -534,7 +534,7 @@ GA 콘솔에 들어가서 계정과 속성을 차례대로 만들어준다. 속�
 
 `hosts` 파일에 DNS 정보를 넣어서 가상의 URL을 만들어준 후에, 이 URL로 로컬 테스트를 진행하면 된다. 나는 단순하게 `blog.local` 이라고 정했다. 
 
-![Untitled](../img/making-blog-githubio-vue3-1/Untitled18.png)
+![Untitled](../../img/making-blog-githubio-vue3-1/Untitled18.png)
 
 나의 경우 실제 오픈한 블로그와 로컬 테스트 블로그 각각에서 잡히는 데이터를 분리하고 싶었다. 그래서 아예 속성 자체를 분리했다. 그래야 섞이지 않고 올바르게 데이터를 쌓을 수 있다.
 

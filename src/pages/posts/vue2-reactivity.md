@@ -10,7 +10,7 @@ Vue에서는 컴포넌트의 데이터 정보만 바꾸면 화면에 알아서 �
 
 # Vue2에서는 반응성을 어떻게 구현했나.
 
-![Untitled](../img/Vue2-Reactivity/Untitled.png)
+![Untitled](../../img/Vue2-Reactivity/Untitled.png)
 
 Vue의 모든 컴포넌트는 Watcher 를 갖고 있다. 또 data option에 등록한 데이터는 자동으로 `getter` 와 `setter` 를 주입받는다. 데이터의 `setter` 가 실행되는 순간, 컴포넌트의 Watcher 가 이를 감지하고, 렌더 함수를 발동시킨다. 그로 인해 Virtual DOM을 다시 구성하게 되고, 이것이 화면에 나타나는 것이다. data 뿐 아니라 computed 도 마찬가지다. data 의 변경 감지 → computed 로직 실행 → computed 변경 감지 → 렌더링의 순서로 이루어진다.
 
@@ -95,7 +95,7 @@ Object.defineProperty(obj, key, {
 6. Watcher 가 queue 에 추가하고, `flushSchedulerQueue` 를 통해 queue 를 플러시한다.
 7. queue 에 있는 모든 watcher의 `run` 함수를 호출하고 vue 인스턴스들의 `updated` 훅을 호출한다.
 
-![Untitled](../img/Vue2-Reactivity/Untitled1.png)
+![Untitled](../../img/Vue2-Reactivity/Untitled1.png)
 
 위 함수가 실행되는 부분은 다음과 같다.
 
@@ -426,15 +426,15 @@ this.animals[1].comments = "whale";
 
 배열 1번의 객체의 데이터를 바꾸려고 하니, 세상에나 반응한다! 배열 내부의 객체는 반응형이다. 
 
-![Untitled](../img/Vue2-Reactivity/Untitled2.png)
+![Untitled](../../img/Vue2-Reactivity/Untitled2.png)
 
 이는 콘솔에 데이터를 찍어보면 간단하게 알 수 있다. 배열의 경우 getter, setter 함수는 없지만 Observer 를 갖고 있다. 
 
-![Untitled](../img/Vue2-Reactivity/Untitled3.png)
+![Untitled](../../img/Vue2-Reactivity/Untitled3.png)
 
 다만 내부에 있는 객체 3개는 각각 속성에 대해서 getter, setter 를 갖고 있다. 그렇기 때문에 배열 내부의 객체에 대해서는 반응형이다.
 
-![Untitled](../img/Vue2-Reactivity/Untitled4.png)
+![Untitled](../../img/Vue2-Reactivity/Untitled4.png)
 
 단 `created` 에서 인덱스로 할당한 객체의 경우 Observer 할당이 안되어 있다. 또 getter, setter 역시 주입되지 않았기 때문에, `this.animals[3].comments = "some";` 코드는 반응형이 아니다.
 

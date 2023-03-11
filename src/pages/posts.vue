@@ -1,95 +1,192 @@
 <script setup lang="ts">
-import { usePosts } from '../store/posts';
+import { onMounted, ref } from 'vue';
+import Header from '../components/Header.vue';
+import HeaderSubPost from '../components/HeaderSubPost.vue';
+import LeftNavigation from '../components/LeftNavigation.vue';
 
 
-const posts = usePosts();
-posts.fetchPostList();
+const isOpenPostList = ref(false);
+const isOpenToc = ref(false);
 
+function onClickPostList(isOpen: boolean) {
+  isOpenPostList.value = isOpen;
+}
+function onClickToc(isOpen: boolean) {
+  isOpenToc.value = isOpen;
+}
+
+onMounted(() => {
+  // 목차를 markdown-body 내부에서 제거한 후, 
+  // 옆에 붙인다.
+  const mdBody = document.querySelector(".markdown-body");
+  const targetToc = document.querySelector(".new-table-of-contents");
+  const toc = document.querySelector(".markdown-body .table-of-contents");
+  const main = document.querySelector("main");
+
+  if(mdBody && targetToc && toc && main) {
+    targetToc.innerHTML = toc?.innerHTML!;
+    toc?.remove();
+  }
+})
 </script>
 
 <template>
   <div class="post-index-wrapper">
-    <header>TO BE HEADER</header>
-    <nav>
-      <ul>
-        <li v-for="post in posts.postList" :key="post.fileName">
-          <router-link :to="`/posts/${post.fileName}`">{{ post.title }}</router-link>
-        </li>
-      </ul>
-    </nav>
+    <Header>
+      <!-- 너비 좁을 때 보이는 서브 메뉴 -->
+      <HeaderSubPost 
+        class="header-sub-post"
+        :is-open-post-list="isOpenPostList"
+        :is-open-toc="isOpenToc"
+        @click-post-list="onClickPostList"
+        @click-toc="onClickToc">
+      </HeaderSubPost>
+    </Header>
+    <LeftNavigation :is-open="isOpenPostList"></LeftNavigation>
     <main>
+      <!-- 포스트 목록 -->
       <router-view></router-view>
+      <div 
+        class="new-table-of-contents"
+        :class="{'open' : isOpenToc}"></div>
     </main>
     <footer>TO BE FOOTER</footer>
   </div>
 </template>
 
 <style lang="scss" scoped>
+// variables 임시
+$color-text-lighter: rgba(255, 255, 255, .92);
+$color-text-normal: rgba(255, 255, 255, .87);
+$color-text-darker: rgba(235, 235, 235, .6);
+
+$vue-color-green: #42b883;
+$vue-color-blue: #35495e;
+$vue-background-color: #242424;
+
 .post-index-wrapper {
   min-height: 100vh;
-  background-color: #242424;
+  background-color: $vue-background-color;
   color: rgba(235, 235, 235, .6);
   color: rgba(255, 255, 255, .87);
 }
-header {
-  z-index: 10;
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 72px;
-  background-color: #242424;
-  border-bottom: 1px dotted rgba(84, 84, 84, .48);
-}
-nav {
-  z-index: 5;
-  position: fixed;
-  top: 72px;
-  left: 0;
-  width: 20%;
-  height: 100%;
-  background-color: #242424;
-  border-right: 1px dotted rgba(84, 84, 84, .48);
-}
 main {
+  width: 100%;
   padding-top: 84px;
-  padding-left: 24%;
+  padding-left: 28%;
+  display: flex;
+  align-items: stretch;
+  box-sizing: border-box;
 }
 footer {
   z-index: 7;
   position: relative;
   height: 72px;
-  background-color: #242424;
+  background-color: $vue-background-color;
   border-top: 1px dotted rgba(84, 84, 84, .48);
 }
+// 목차
+:deep(.new-table-of-contents) {
+  flex: 1;
+  position: relative;
+  padding: 22px 36px;
+  width: 240px;
+  min-width: 240px;
+  height: 100%;
+  box-sizing: border-box;
+  background-color: $vue-background-color;
+  transition: right 0.3s;
 
+  ul {
+    list-style: none;
+    padding-inline-start: 16px;
+    li {
+      padding-top: 8px;
+      a {
+        font-size: 0.75rem;
+        text-decoration: none;
+        color: $color-text-darker;
+        font-weight: 600;
+        line-height: 0.75rem;
+        transition: color 0.2s;
+        &:hover {
+          color: $color-text-lighter;
+        }
+      }
+      &.position {
+        color: $vue-color-green;
+      }
+    }
+  }
+}
+
+// 마크다운
 :deep(.markdown-body) {
   max-width: 688px;
-  .table-of-contents {
-    position: absolute;
-    right: 0;
-    padding-right: 36px;
-    width: 300px;
+  width: 100%;
+  min-width: 240px;
+  font-size: 0.875rem;
+  color: $color-text-lighter;
+  // 텍스트
+  h1 {
+    font-weight: 700;
+    text-decoration-style:double;
+    text-decoration-line: underline;
+    text-decoration-thickness: 3px;
+    text-decoration-color: $vue-color-green;
   }
+  // 링크
+  a {
+    color: #42b883;
+    text-decoration-style:dashed ;
+    text-decoration-thickness: 3px;
+    font-weight: 700;
+  }
+  // 목록
+  ul {
+    padding: 16px;
+    padding-left: 32px;
+  }
+  // 코드
   pre {
     background-color: #404040;
     padding: 8px;
     overflow-x: auto;
   }
   code {
+    background-color: #3b3b3b;
+    padding: 2px 4px;
+    color: $vue-color-green;
+  }
+  pre code {
+    background-color: unset;
+    color: unset;
+  }
+  // 이미지
+  img {
+    width: 100%;
+    outline: 1px solid $color-text-darker;
+  }
+}
 
+
+
+
+@media screen and (max-width: 1280px) {
+  .new-table-of-contents {
+    position: fixed;
+    right: -240px;
+    width: 240px;
+    &.open {
+      right: 0;
+    }
   }
-  a {
-    color: #42b883;
-    font-weight: 700;
-  }
-  div code {
-    background-color: #2f2f2f;
-    color: #33a06f;
-  }
-  ul {
-    padding: 16px;
-    padding-left: 32px;
+}
+@media screen and (max-width: 960px) {
+  main {
+    padding-left: 24px;
+    padding-right: 24px;
+    justify-content: center;
   }
 }
 

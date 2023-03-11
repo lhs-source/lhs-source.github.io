@@ -404,6 +404,15 @@ onMounted(() => {
 </template>
 
 <style lang="scss">
+// variables 임시
+$color-text-lighter: rgba(255, 255, 255, .92);
+$color-text-normal: rgba(255, 255, 255, .87);
+$color-text-darker: rgba(235, 235, 235, .6);
+
+$vue-color-green: #42b883;
+$vue-color-blue: #35495e;
+
+
 section {
   position: relative;
 }
@@ -512,7 +521,7 @@ section {
     gap: 24px;
     .post {
       a {
-        color: rgba(235, 235, 235, .6);
+        color: $color-text-darker;
         text-decoration: unset;
 
         &:hover {
@@ -520,7 +529,7 @@ section {
         }
       }
       .post-title {
-        color: rgba(255, 255, 255, .87);
+        color: $color-text-normal;
         text-decoration-style: dashed;
         text-decoration-line: underline;
         text-decoration-thickness: 3px;
