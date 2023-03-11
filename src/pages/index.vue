@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { onMounted } from 'vue';
+import { nextTick, onMounted } from 'vue';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { MotionPathPlugin } from 'gsap/MotionPathPlugin';
@@ -11,37 +11,29 @@ gsap.registerPlugin(MotionPathPlugin);
 const posts = usePosts();
 posts.fetchPostList();
 
-onMounted(() => {
+function animCrowPart() {
   const step = 5;
-  const xStep = 32;
-  const yHeight = 84;
   const scrollStep = 500;
-
-
-  // gsap.set('#crow', {
-  //   // xStep = 32 일 때, 192px
-  //   x: (step + 2) * xStep,
-  //   y: -84,
-  // })
 
   gsap.set('.crow-loading .screen', {
     position: 'fixed',
   }) 
+
   // motionPath
-
   const totalHeight = (6 * 2 + 1) * scrollStep;
-
-  // gsap.set(".astronaut", {scale: 1, autoAlpha: 1});
   gsap.to(".crow-wrap", {
     duration: 5, 
     ease: "power1.inOut",
     immediateRender: true,
+    // svg#path 경로를 따라서 까마귀가 이동
     motionPath: {
       path: "#path",
       align: "#path",
       alignOrigin: [0.5, 0.5],
       autoRotate: false,
     },
+    // 이동을 한번에 하는 게 아니라 
+    // scrollTrigger의 scrub 으로 이동
     scrollTrigger: {
       trigger: '.crow-loading',
       start: 0,
@@ -49,7 +41,7 @@ onMounted(() => {
       scrub: 1,
     }
   });
-
+  // 마지막 덤블링
   gsap.to("#crow", {
     rotate: -720,    
     ease: "power1.OutIn",
@@ -61,16 +53,8 @@ onMounted(() => {
       scrub: 1,
     }
   });
-
-  // MotionPathHelper.create(".astronaut");
-  
-
   // 5 걸음동안 위로 뒤어오르기 + 아래로 착지하기 반복
-  // TODO 포물선으로 x, y 를 계산하도록
-  // TODO 혹은 경로이동 플로그인 사용
   for(let i = 0; i < step; ++ i) {
-    // console.log('step 1', i, -(i * 2 + 1) * xStep, -yHeight, i * 2 * scrollStep, (i + 1) * 2 * scrollStep)
-    // console.log('step 2', i, -(i * 2 + 2) * xStep, 0, (i + 1) * scrollStep, (i + 1) * 2 * scrollStep)
     gsap.to('.crow-wrap', {
       rotate: 15,
       ease: 'Power0.easeOut',
@@ -100,110 +84,149 @@ onMounted(() => {
       }
     })
   }
-
-  // gsap.to('.crow-wrap', {
-  //   x: -6 * xStep,
-  //   y: () => -yHeight,
-  //   rotate: 0,
-  //   ease: 'Power0.easeOut',
-  //   immediateRender: false,
-  //   scrollTrigger: {
-  //     trigger: '.crow-loading',
-  //     // 600, 900
-  //     // 1200, 1500
-  //     // 1800, 2100
-  //     start: (i + 1) * 2 * scrollStep,
-  //     end: ((i + 1) * 2 + 1) * scrollStep,
-  //     scrub: true,
-  //   }
-  // })
-  // const lastStep = step + 1;  // 마지막 스텝 수
-  // // 마지막 덤블링
-  // gsap.to('.crow-wrap', {
-  //   x: -(lastStep * 2 + 1) * xStep,
-  //   y: -yHeight * 3,
-  //   ease: 'Power0.easeOut',
-  //   immediateRender: false,
-  //   toggleActions: "play pause resume reset",
-  //   scrollTrigger: {
-  //     trigger: '.crow-loading',
-  //     start: (lastStep * 2 + 1) * scrollStep,
-  //     end: (lastStep * 2 + 2) * scrollStep * 1.5,
-  //     scrub: 0.5,
-  //     markers: true,
-  //   }
-  // })
-  // // 덤블링 할 때 몸통 돌리기
-  // gsap.to('#crow', {
-  //   rotate: 720,
-  //   ease: 'Power0.easeOut',
-  //   immediateRender: false,
-  //   toggleActions: "play pause resume reset",
-  //   scrollTrigger: {
-  //     trigger: '.crow-loading',
-  //     start: (lastStep * 2 + 1) * scrollStep,
-  //     end: (lastStep * 2 + 2) * scrollStep * 1.5,
-  //     scrub: 0.5,
-  //     markers: true,
-  //   }
-  // })
-  // gsap.to('.crow-wrap', {
-  //   x: -(lastStep * 2 + 2) * xStep,
-  //   y: 0,
-  //   ease: 'Power0.easeOut',
-  //   immediateRender: false,
-  //   scrollTrigger: {
-  //     trigger: '.crow-loading',
-  //     start: (lastStep + 1) * 2 * scrollStep * 1.5,
-  //     end: ((lastStep + 1) * 2 + 1) * scrollStep * 1.5,
-  //     scrub: 0.5,
-  //     markers: true,
-  //   }
-  // })
-
-  // const lastHeight = ((lastStep + 1) * 2 + 1) * scrollStep * 1.5;
-  // console.log('last Height', lastHeight);
-  // console.log('last crow position', -(lastStep * 2 + 2) * xStep, 0);
-
-  // subtitle 표시
-  // gsap.timeline({
-  //   scrollTrigger: {
-  //     trigger: '.crow-loading',
-  //     start: lastHeight + 1000,
-  //     end: lastHeight + 1800,
-  //     scrub: 2,
-  //   }
-  // }).fromTo('.subtitle', {
-  //   y: 100,
-  //   opacity: 0,
-  //   ease: 'Power0.easeOut',
-  // }, {
-  //   y: 0,
-  //   opacity: 1,
-  //   ease: 'Power0.easeOut',
-  // })
-
-
   gsap.timeline({
     scrollTrigger: {
-      trigger: '.post-list',
+      trigger: '.portfolio',
       start: 'top 50%',
       end: 'bottom',
       scrub: 2,
-      onEnter: () => {
-        // crow-loading position 을 block 으로
+      onEnter: () => {  // 스크롤이 시작점을 지남
         gsap.to('.crow-loading .screen', {
           opacity: 0,
         }) 
       },
-      onEnterBack: () => {
-        // crow-loading position 을 fixed 로
+      onLeaveBack: () => {  // 스크롤이 시작점을 지나서 뒤로 이동
         gsap.to('.crow-loading .screen', {
           opacity: 1,
         }) 
-      },
+      }
     }
   })
+}
+function animFeatherPart() {
+  // 깃털
+  const featherLength = 10;  //
+  const featherGap = screen.availWidth / (10 - 2);   // 깃털 사이의 너비 갭
+  for(let i = 0; i < featherLength; ++i) {
+    gsap.set(`.feather${i + 1}`, {
+      x: featherGap * (i + 1) - (featherLength / 2 * featherGap),
+      y: Math.random() + 400,
+      width: Math.random() * 500 + 900,
+    });
+    // 깃털 이동
+    gsap.to(`.feather${i + 1}`, {
+      x: Math.random() * 600 - 300,
+      y: -(Math.random() * 1500 + 1000),
+      rotate: Math.random() * 540 - 180,
+      scrollTrigger: {
+        trigger: '.black-full',
+        start: 'top bottom',
+        end: 'bottom bottom',
+        scrub: 2,
+        onEnter: () => {
+          gsap.set(`.feather${i + 1}`, {
+            position: 'fixed'
+          })
+        },
+        onLeaveBack: () => {
+          gsap.set(`.feather${i + 1}`, {
+            position: 'absolute'
+          })
+        }
+      }
+    });
+  }
+  // 아래에서 차오르는 검정 동그라미
+  gsap.to(".black-area", {
+    width: 5000,
+    height: 5000,
+    y: 2500,  // 여기가 커질 수록 동그라미가 늦게 올라옴
+    position: 'fixed',
+    scrollTrigger: {
+      trigger: '.black-full',
+      start: 'top bottom',
+      end: 'bottom bottom',
+      scrub: 2,
+      // 배경을 까맣게 바꿈
+      onEnterBack: () => {
+        gsap.set(".index-wrapper", {
+          backgroundColor: 'transparent'
+        })
+      },
+      onLeave: () => {
+        gsap.set(".index-wrapper", {
+          backgroundColor: 'black'
+        })
+      }
+    }
+  })
+}
+function animPortfolio() {
+
+  gsap.to(".portfolio h1", {
+    y: 1000,
+    scrollTrigger: {
+      start: "top",
+      end: "top",
+      trigger: ".portfolio h1",
+      pin: true,
+      markers: true,
+    }
+  })
+}
+function animPostList() {
+  // 포스트 목록의 제목
+  gsap.timeline({
+    scrollTrigger: {
+      trigger: ".post-list",
+      start: '-500',
+      end: 'top',
+      // pin: true,
+      toggleActions: "restart none none reverse",
+    }
+  }).set(".post-list .title-area .title-bg", {
+    right: 0,
+    left: 'unset',
+  }).from(".post-list .title-area .title", {
+    yPercent: 10,
+    opacity: 0,
+  }).to(".post-list .title-area .title-bg", {
+    width: '100%',
+  }).set(".post-list .title-area .title-bg", {
+    right: 'unset',
+    left: 0,
+  }).to(".post-list .title-area .title-bg", {
+    width: 0,
+    delay: 0.5,
+  })
+
+  // 포스트 개별 애니메이션
+  // 각 행의 첫번째 포스트에 스크롤이 닿으면 순서대로 재생한다.
+  setTimeout(() => {
+    gsap.timeline({
+      scrollTrigger: {
+        trigger: `.post-area .post:nth-child(${1})`,
+        start: 'top center',
+        end: 'top center',
+        toggleActions: "restart none none reverse",
+      }
+    }).from(".post-area .post:nth-child(1)", {
+      y: -32,
+      duration: 0.2,
+    }).from(".post-area .post:nth-child(2)", {
+      y: -32,
+      duration: 0.2,
+    }).from(".post-area .post:nth-child(3)", {
+      y: -32,
+      duration: 0.2,
+    })
+  }, 100)
+}
+
+onMounted(() => {
+  animCrowPart();
+  animFeatherPart();
+  animPostList();
 })
 
 </script>
@@ -315,11 +338,65 @@ onMounted(() => {
         <div class="subtitle">ASDFQWER1234</div>
       </div>
     </section>
-    <section class="post-list">
+    <section class="black-full">
       <div class="screen section">
-        <div class="title">POST LIST</div>
-        <div v-for="post in posts.postList" :key="post.fileName">
-          <router-link :to="`/posts/${post.fileName}`">{{ post.title }}</router-link>
+        <img class="feather1" src="../assets/feather.svg"/>
+        <img class="feather2" src="../assets/feather.svg"/>
+        <img class="feather3" src="../assets/feather.svg"/>
+        <img class="feather4" src="../assets/feather.svg"/>
+        <img class="feather5" src="../assets/feather.svg"/>
+        <img class="feather6" src="../assets/feather.svg"/>
+        <img class="feather7" src="../assets/feather.svg"/>
+        <img class="feather8" src="../assets/feather.svg"/>
+        <img class="feather9" src="../assets/feather.svg"/>
+        <img class="feather10" src="../assets/feather.svg"/>
+      </div>
+      <div class="screen section">
+        <div class="black-area"></div>
+      </div>
+    </section>
+    <section class="portfolio">
+      <div class="section">
+        <h1>TMXKorea</h1>
+      </div>
+      <div class="section">
+        <h1>플라이하이</h1>
+      </div>
+      <div class="section">
+        <h1>뱅크비</h1>
+      </div>
+      <div class="section">
+        <h1>리코</h1>
+      </div>
+      <div class="section padding">
+        <h1>TO BE..</h1>
+      </div>
+    </section>
+    <section class="post-list">
+      <div class="section" style="justify-content: flex-start;">
+        <div class="title-area">
+          <div class="title">POST LIST</div>
+          <div class="title-bg top"></div>
+          <div class="title-bg bottom"></div>
+        </div>
+        <div class="post-area">
+          <div 
+            class="post"
+            v-for="post in posts.postList" 
+            :key="post.fileName">
+            <router-link :to="`/posts/${post.fileName}`">
+              <div class="post-title">{{ post.title }}</div>
+              <div class="tag-list">
+                <div 
+                  class="tag"
+                  v-for="tag of post.tags"
+                  :key="tag">
+                  {{ tag }}
+                </div>
+              </div>
+              <div class="description">{{ post.description }}</div>
+            </router-link>
+          </div>
         </div>
       </div>
     </section>
@@ -343,6 +420,7 @@ section {
   top: 0;
   left: 0;
 }
+// 까마귀 로딩 섹션
 .crow-loading {
   min-height: 1000vh;
 
@@ -363,9 +441,112 @@ section {
     }
   }
 }
+.black-full {
+  z-index: 0;
+  position: relative;
+  min-height: 1000vh;
+  img {
+    bottom: -110vh;
+    position: absolute;
+  }
+  .black-area {
+    width: 0;
+    height: 0;
+    bottom: -100%;
+    border-radius: 50%;
+    background-color: black;
+    mix-blend-mode: difference;
+  }
+}
+.portfolio {
+  color: rgba(235, 235, 235, .6);
+  h1 {
+    font-size: 6rem;
+  }
+  .padding {
+    height: 400vh;
+  }
+}
 .post-list {
-  .title {
-    font-size: 2rem;
+  z-index: 2;
+  .title-area {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    padding: 2rem 0 6rem;
+    .title {
+      font-weight: 600;
+      font-size: 5rem;
+      line-height: 6rem;
+      color: white;
+      // 배경의 그라데이션을 텍스트에 맞게 클립한다.
+      background: -webkit-linear-gradient(315deg,#42d392 25%,#647eff);
+      background-clip: text;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    // 제목 훑고 지나가는 막대
+    .title-bg {
+      position: absolute;
+      right: 0;
+      width: 0;
+      height: 3.5rem;
+      mix-blend-mode: exclusion;
+
+      &.top {
+        top: 2rem;
+        background: -webkit-linear-gradient(315deg,#42b883 25%,#42b883);
+      }
+      &.bottom {
+        bottom: 5rem;
+        background: -webkit-linear-gradient(315deg,#35495e 25%,#35495e);
+      }
+    }
+  }
+  .post-area {
+    padding: 32px;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+    gap: 24px;
+    .post {
+      a {
+        color: rgba(235, 235, 235, .6);
+        text-decoration: unset;
+
+        &:hover {
+          filter: brightness(1.2);
+        }
+      }
+      .post-title {
+        color: rgba(255, 255, 255, .87);
+        text-decoration-style: dashed;
+        text-decoration-line: underline;
+        text-decoration-thickness: 3px;
+        text-decoration-color: #42d392aa;
+        font-size: 1.125rem;
+      }
+      .tag-list {
+        margin-top: 16px;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px 8px;
+        .tag {
+          background-color: #2f2f2f;
+          padding: 4px 6px;
+          border-radius: 4px;
+          color: #42d392;
+          font-weight: 400;
+          font-size: 0.875rem;
+        }
+      }
+      .description {
+        margin-top: 8px;
+        font-weight: 400;
+        font-size: 0.875rem;
+      }
+    }
   }
 }
 </style>
