@@ -6,6 +6,7 @@ import Layouts from 'vite-plugin-vue-layouts';
 import MDAnchor from "markdown-it-anchor";
 import MDToc from "markdown-it-table-of-contents";
 import MDPrism from "markdown-it-prism";
+import generateSitemap from 'vite-plugin-pages-sitemap'
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -43,7 +44,11 @@ export default defineConfig({
       extendRoute(route) {
         console.log('route', route);
         return route;
-      }
+      },
+      onRoutesGenerated: routes => (generateSitemap({ 
+        routes: routes,
+        hostname: 'https://lhs-source.github.io/',
+      })),
     }),
   ],
 })
