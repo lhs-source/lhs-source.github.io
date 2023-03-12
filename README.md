@@ -16,3 +16,15 @@ If the standalone TypeScript plugin doesn't feel fast enough to you, Volar has a
    1. Run `Extensions: Show Built-in Extensions` from VSCode's command palette
    2. Find `TypeScript and JavaScript Language Features`, right click and select `Disable (Workspace)`
 2. Reload the VSCode window by running `Developer: Reload Window` from the command palette.
+
+## TODO
+
+* 사이트맵 파일에 posts, index 경로만 포함하고 나머지 제외하기
+* meta 태그 추가
+* 메인 페이지
+   * 경력 기술
+   * 모바일 스타일 적용
+* 포스트 페이지
+   * PC 버전에서 main 의 배치를 중앙으로 맞추기
+   * 마크다운 코드 하이라이팅
+   * 모바일에서 
