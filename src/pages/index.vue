@@ -86,7 +86,7 @@ function animCrowPart() {
   }
   gsap.timeline({
     scrollTrigger: {
-      trigger: '.portfolio',
+      trigger: '.crow-group',
       start: 'top 50%',
       end: 'bottom',
       scrub: 2,
@@ -109,14 +109,15 @@ function animFeatherPart() {
   const featherGap = screen.availWidth / (10 - 2);   // 깃털 사이의 너비 갭
   for(let i = 0; i < featherLength; ++i) {
     gsap.set(`.feather${i + 1}`, {
-      x: featherGap * (i + 1) - (featherLength / 2 * featherGap),
-      y: Math.random() + 400,
+      x: () => featherGap * (i + 1) - (featherLength / 2 * featherGap),
+      y: () => Math.max(screen.availHeight, screen.availWidth) * Math.random() / 2,
       width: Math.random() * 500 + 900,
     });
     // 깃털 이동
     gsap.to(`.feather${i + 1}`, {
-      x: Math.random() * 600 - 300,
-      y: -(Math.random() * 1500 + 1000),
+      x: () => Math.random() * screen.availWidth - screen.availWidth / 2,
+      y: () => -(Math.random() * Math.max(screen.availHeight, screen.availWidth) 
+              + Math.max(screen.availHeight, screen.availWidth) / 2),
       rotate: Math.random() * 540 - 180,
       scrollTrigger: {
         trigger: '.black-full',
@@ -136,11 +137,12 @@ function animFeatherPart() {
       }
     });
   }
+  console.log(Math.max(screen.availHeight, screen.availWidth));
   // 아래에서 차오르는 검정 동그라미
   gsap.to(".black-area", {
-    width: 5000,
-    height: 5000,
-    y: 2500,  // 여기가 커질 수록 동그라미가 늦게 올라옴
+    width: () => Math.max(screen.availHeight, screen.availWidth) * 2,
+    height: () => Math.max(screen.availHeight, screen.availWidth) * 2,
+    y: () => Math.max(screen.availHeight, screen.availWidth) * 2 / 3,  // 여기가 커질 수록 동그라미가 늦게 올라옴
     position: 'fixed',
     scrollTrigger: {
       trigger: '.black-full',
@@ -148,18 +150,41 @@ function animFeatherPart() {
       end: 'bottom bottom',
       scrub: 2,
       // 배경을 까맣게 바꿈
-      onEnterBack: () => {
-        gsap.set(".index-wrapper", {
-          backgroundColor: 'transparent'
+      // onEnterBack: () => {
+      //   gsap.set(".index-wrapper", {
+      //     backgroundColor: ''
+      //   })
+      // },
+      // onLeave: () => {
+      //   gsap.set(".index-wrapper", {
+      //     backgroundColor: 'white'
+      //   })
+      // }
+    }
+  })
+}
+function animDoor() {
+  // .first-crow 는 .crow-group 에 닿았을 때 fixed 로 고정함
+  gsap.to(".first-crow", {
+    scrollTrigger: {
+      trigger: '.crow-group',
+      start: 'top top',
+      end: 'bottom bottom',
+      onEnter: () => {
+        gsap.set(".first-crow", {
+          position: 'fixed',
+          top: 0,
+          left: 0,
         })
       },
-      onLeave: () => {
-        gsap.set(".index-wrapper", {
-          backgroundColor: 'black'
+      onLeaveBack: () => {
+        gsap.set(".first-crow", {
+          position: 'absolute'
         })
       }
     }
   })
+
 }
 function animPortfolio() {
 
@@ -226,6 +251,8 @@ function animPostList() {
 onMounted(() => {
   animCrowPart();
   animFeatherPart();
+  // animPortfolio();
+  animDoor();
   animPostList();
 })
 
@@ -246,7 +273,7 @@ onMounted(() => {
             preserveAspectRatio="xMidYMid meet">
             <g 
               transform="translate(0.000000,1151.000000) scale(0.100000,-0.100000)"
-              fill="#000000" stroke="none">
+              fill="#fff" stroke="none">
               <path d="M2316 11499 c-176 -26 -356 -97 -581 -229 -143 -85 -157 -90 -275
               -90 -168 0 -355 -39 -640 -132 -447 -146 -681 -303 -799 -536 -12 -24 -21 -45
               -19 -47 12 -11 239 -39 488 -60 574 -48 783 -75 851 -110 66 -35 147 -158 193
@@ -335,7 +362,7 @@ onMounted(() => {
       </div>
       <div class="title-area screen section">
         <div class="title">LEE HYUN SOO</div>
-        <div class="subtitle">ASDFQWER1234</div>
+        <div class="subtitle">ASDFQWER1234!@#$</div>
       </div>
     </section>
     <section class="black-full">
@@ -355,6 +382,15 @@ onMounted(() => {
         <div class="black-area"></div>
       </div>
     </section>
+    <section class="crow-group">
+      <div class="screen section">
+        <img class="first-crow" src="https://www.pngkey.com/png/full/396-3961106_free-png-black-crow-standing-png-images-transparent.png" />
+      </div>
+      <div class="screen section">
+        <div class="talk">hey!</div>
+      </div>
+    </section>
+
     <section class="portfolio">
       <div class="section">
         <h1>TMXKorea</h1>
@@ -412,9 +448,13 @@ $color-text-darker: rgba(235, 235, 235, .6);
 $vue-color-green: #42b883;
 $vue-color-blue: #35495e;
 
+.index-wrapper {
+  background-color: white;
+}
 
 section {
   position: relative;
+  isolation: auto;
 }
 .section {
   width: 100%;
@@ -431,7 +471,10 @@ section {
 }
 // 까마귀 로딩 섹션
 .crow-loading {
+  z-index: 1;
   min-height: 1000vh;
+  mix-blend-mode: difference;
+  // background-color: rgb(255, 255, 255);
 
   .crow-wrap {
     width: 64px;
@@ -442,6 +485,7 @@ section {
     }
   }
   .title-area {
+    color: rgb(228, 228, 228);
     .title {
       font-size: 5rem;
     }
@@ -451,9 +495,12 @@ section {
   }
 }
 .black-full {
-  z-index: 0;
   position: relative;
   min-height: 1000vh;
+  mix-blend-mode: difference;
+  // background-color: #2f2f2f;
+  // background-color: rgb(255, 255, 255);
+
   img {
     bottom: -110vh;
     position: absolute;
@@ -463,8 +510,21 @@ section {
     height: 0;
     bottom: -100%;
     border-radius: 50%;
-    background-color: black;
-    mix-blend-mode: difference;
+    background-color: rgb(255, 255, 255);
+  }
+}
+.crow-group {
+  background-color: black;
+  height: 1000vh;
+  .first-crow {
+    width: 100vw;
+    // 가장자리를 어둡게
+    // mix-blend-mode: darken;
+    filter: grayscale(0.8) opacity(0.5);
+  }
+  .talk {
+    font-size: 3rem;
+    color: white;
   }
 }
 .portfolio {
