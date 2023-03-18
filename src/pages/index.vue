@@ -93,11 +93,13 @@ function animCrowPart() {
       onEnter: () => {  // 스크롤이 시작점을 지남
         gsap.to('.crow-loading .screen', {
           opacity: 0,
+          zIndex: -1,
         }) 
       },
       onLeaveBack: () => {  // 스크롤이 시작점을 지나서 뒤로 이동
         gsap.to('.crow-loading .screen', {
           opacity: 1,
+          zIndex: 1,
         }) 
       }
     }
@@ -164,27 +166,65 @@ function animFeatherPart() {
   })
 }
 function animDoor() {
-  // .first-crow 는 .crow-group 에 닿았을 때 fixed 로 고정함
-  gsap.to(".first-crow", {
+  gsap.timeline({
     scrollTrigger: {
-      trigger: '.crow-group',
+      trigger: '#pied-crow',
       start: 'top top',
-      end: 'bottom bottom',
-      onEnter: () => {
-        gsap.set(".first-crow", {
-          position: 'fixed',
-          top: 0,
-          left: 0,
-        })
-      },
-      onLeaveBack: () => {
-        gsap.set(".first-crow", {
-          position: 'absolute'
-        })
-      }
+      end: '400% bottom',
+      pin: true,
+      scrub: 2,
+      markers: true,
     }
   })
-
+  .from("#pied-crow .info", {
+    opacity: 0,
+    y: 64,
+  }, 0)
+  .to("#pied-crow .info", {
+    opacity: 0,
+    y: -64,
+    immediateRender: true,
+  }, 0.66)
+  gsap.timeline({
+    scrollTrigger: {
+      trigger: '#pied-crow',
+      start: 'top top',
+      end: '400% bottom',
+      scrub: 2,
+      markers: true,
+    }
+  })
+  .from("#pied-crow .image-frame", {
+    // opacity: 0.3,
+    backgroundPositionY: `75%`,
+    y: 32,
+  }, 0)
+  .to("#pied-crow .image-frame", {
+    // opacity: 0.3,
+    immediateRender: true,
+    backgroundPositionY: `25%`,
+    y: -32,
+  }, 0.25)
+  // gsap.from(".back2 .talk", {
+  //   opacity: 0,
+  //   scrollTrigger: {
+  //     trigger: '.back2',
+  //     start: 'top top',
+  //     end: '400% bottom',
+  //     pin: true,
+  //     markers: true,
+  //   }
+  // })
+  // gsap.from(".back3 .talk", {
+  //   opacity: 0,
+  //   scrollTrigger: {
+  //     trigger: '.back3',
+  //     start: 'top top',
+  //     end: '400% bottom',
+  //     pin: true,
+  //     markers: true,
+  //   }
+  // })
 }
 function animPortfolio() {
 
@@ -383,11 +423,25 @@ onMounted(() => {
       </div>
     </section>
     <section class="crow-group">
-      <div class="screen section">
-        <img class="first-crow" src="https://www.pngkey.com/png/full/396-3961106_free-png-black-crow-standing-png-images-transparent.png" />
+      <div id="pied-crow" class="section">
+        <div class="item">
+          <div class="image-area">
+            <div class="image-frame">
+              <!-- <img src="../assets/crow/pied-crow1.jpg.jpg"/> -->
+            </div>
+          </div>
+          <div class="info">
+            <div class="eng-name">PIED CROW</div>
+            <div class="eng-family">CORVUS ALBUS</div>
+            <div class="kor-name">얼룩무늬 까마귀</div>
+          </div>
+        </div>
       </div>
-      <div class="screen section">
+      <div class="section back2">
         <div class="talk">hey!</div>
+      </div>
+      <div class="section back3">
+        <div class="talk">hey2!</div>
       </div>
     </section>
 
@@ -522,9 +576,76 @@ section {
     // mix-blend-mode: darken;
     filter: grayscale(0.8) opacity(0.5);
   }
+
+  .item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    color: white;
+
+    .image-area {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex: 2;
+      .image-frame {
+        width: 50%;
+        min-width: 10vmin; 
+        max-width: 50vmin;
+        height: 80vmin;
+        overflow: hidden;
+        background-size: cover;
+        background-position: 20% 70%;
+        mix-blend-mode: darken;
+      }
+    }
+    .info {
+      flex: 3;
+      .eng-name {
+        font-size: 8rem;
+      }
+      .eng-family {
+        font-size: 4rem;
+      }
+      .kor-name {
+        font-size: 4rem;
+      }
+    }
+  }
+  #pied-crow {
+    .image-area {
+      .image-frame {
+        background-size: 500%;
+        background-image: url("../assets/crow/pied-crow1.jpg.jpg");
+      }
+    }
+    .info {
+      background: -webkit-linear-gradient(
+        315deg, 
+        #666666 33%, 
+        #c7c7c7 36%,
+        #c7c7c7 50%,
+        #666666);
+      background-clip: text;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+  }
+
   .talk {
     font-size: 3rem;
     color: white;
+  }
+  .back1 {
+    // background-color: red;
+  }
+  .back2 {
+    // background-color: green;
+  }
+  .back3 {
+    // background-color: blue;
   }
 }
 .portfolio {
