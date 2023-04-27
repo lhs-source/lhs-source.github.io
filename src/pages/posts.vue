@@ -1,9 +1,11 @@
 <script setup lang="ts">
-import { onMounted, ref } from 'vue';
+import { nextTick, onMounted, ref, watch } from 'vue';
 import Header from '../components/Header.vue';
 import HeaderSubPost from '../components/HeaderSubPost.vue';
 import LeftNavigation from '../components/LeftNavigation.vue';
+import { onBeforeRouteUpdate, useRoute } from 'vue-router';
 
+const route = useRoute();
 
 const isOpenPostList = ref(false);
 const isOpenToc = ref(false);
@@ -15,18 +17,31 @@ function onClickToc(isOpen: boolean) {
   isOpenToc.value = isOpen;
 }
 
-onMounted(() => {
+function createToc() {
   // 목차를 markdown-body 내부에서 제거한 후, 
   // 옆에 붙인다.
   const mdBody = document.querySelector(".markdown-body");
   const targetToc = document.querySelector(".new-table-of-contents");
-  const toc = document.querySelector(".markdown-body .table-of-contents");
+  let toc = document.querySelector(".markdown-body .table-of-contents");
   const main = document.querySelector("main");
 
   if(mdBody && targetToc && toc && main) {
     targetToc.innerHTML = toc?.innerHTML!;
-    toc?.remove();
+    // 라우트 변경 시 `.table-of-contents` 의 innerHTML 이 한번 제거되고 undefined 로 뜨기 때문에
+    // display: none 만 붙여서 숨긴다.
+    (toc as HTMLElement)?.style.setProperty("display", "none");
   }
+}
+
+watch(() => route.fullPath, () => {
+  // SPA 라우트가 바뀔 때마다 toc 변경
+  nextTick(() => {
+    createToc();
+  });
+});
+
+onMounted(() => {
+  createToc();
 })
 </script>
 
