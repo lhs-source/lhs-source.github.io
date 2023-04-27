@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://lhs-source.github.io/sitemap.xml

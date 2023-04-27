@@ -48,6 +48,7 @@ export default defineConfig({
       onRoutesGenerated: routes => (generateSitemap({ 
         routes: routes,
         hostname: 'https://lhs-source.github.io/',
+        exclude: ["/study", "/study/scrolldown", "/gsap"]
       })),
     }),
   ],

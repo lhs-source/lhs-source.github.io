@@ -86,18 +86,20 @@ function animCrowPart() {
   }
   gsap.timeline({
     scrollTrigger: {
-      trigger: '.portfolio',
+      trigger: '.crow-group',
       start: 'top 50%',
       end: 'bottom',
       scrub: 2,
       onEnter: () => {  // 스크롤이 시작점을 지남
         gsap.to('.crow-loading .screen', {
           opacity: 0,
+          zIndex: -1,
         }) 
       },
       onLeaveBack: () => {  // 스크롤이 시작점을 지나서 뒤로 이동
         gsap.to('.crow-loading .screen', {
           opacity: 1,
+          zIndex: 1,
         }) 
       }
     }
@@ -109,14 +111,15 @@ function animFeatherPart() {
   const featherGap = screen.availWidth / (10 - 2);   // 깃털 사이의 너비 갭
   for(let i = 0; i < featherLength; ++i) {
     gsap.set(`.feather${i + 1}`, {
-      x: featherGap * (i + 1) - (featherLength / 2 * featherGap),
-      y: Math.random() + 400,
+      x: () => featherGap * (i + 1) - (featherLength / 2 * featherGap),
+      y: () => Math.max(screen.availHeight, screen.availWidth) * Math.random() / 2,
       width: Math.random() * 500 + 900,
     });
     // 깃털 이동
     gsap.to(`.feather${i + 1}`, {
-      x: Math.random() * 600 - 300,
-      y: -(Math.random() * 1500 + 1000),
+      x: () => Math.random() * screen.availWidth - screen.availWidth / 2,
+      y: () => -(Math.random() * Math.max(screen.availHeight, screen.availWidth) 
+              + Math.max(screen.availHeight, screen.availWidth) / 2),
       rotate: Math.random() * 540 - 180,
       scrollTrigger: {
         trigger: '.black-full',
@@ -136,11 +139,12 @@ function animFeatherPart() {
       }
     });
   }
+  console.log(Math.max(screen.availHeight, screen.availWidth));
   // 아래에서 차오르는 검정 동그라미
   gsap.to(".black-area", {
-    width: 5000,
-    height: 5000,
-    y: 2500,  // 여기가 커질 수록 동그라미가 늦게 올라옴
+    width: () => Math.max(screen.availHeight, screen.availWidth) * 2,
+    height: () => Math.max(screen.availHeight, screen.availWidth) * 2,
+    y: () => Math.max(screen.availHeight, screen.availWidth) * 2 / 3,  // 여기가 커질 수록 동그라미가 늦게 올라옴
     position: 'fixed',
     scrollTrigger: {
       trigger: '.black-full',
@@ -148,18 +152,79 @@ function animFeatherPart() {
       end: 'bottom bottom',
       scrub: 2,
       // 배경을 까맣게 바꿈
-      onEnterBack: () => {
-        gsap.set(".index-wrapper", {
-          backgroundColor: 'transparent'
-        })
-      },
-      onLeave: () => {
-        gsap.set(".index-wrapper", {
-          backgroundColor: 'black'
-        })
-      }
+      // onEnterBack: () => {
+      //   gsap.set(".index-wrapper", {
+      //     backgroundColor: ''
+      //   })
+      // },
+      // onLeave: () => {
+      //   gsap.set(".index-wrapper", {
+      //     backgroundColor: 'white'
+      //   })
+      // }
     }
   })
+}
+function animDoor() {
+  gsap.timeline({
+    scrollTrigger: {
+      trigger: '#pied-crow',
+      start: 'top top',
+      end: '400% bottom',
+      pin: true,
+      scrub: 2,
+      markers: true,
+    }
+  })
+  .from("#pied-crow .info", {
+    opacity: 0,
+    y: 64,
+  }, 0)
+  .to("#pied-crow .info", {
+    opacity: 0,
+    y: -64,
+    immediateRender: true,
+  }, 0.66)
+  gsap.timeline({
+    scrollTrigger: {
+      trigger: '#pied-crow',
+      start: 'top top',
+      end: '400% bottom',
+      scrub: 2,
+      markers: true,
+    }
+  })
+  .from("#pied-crow .image-frame", {
+    // opacity: 0.3,
+    backgroundPositionY: `75%`,
+    y: 32,
+  }, 0)
+  .to("#pied-crow .image-frame", {
+    // opacity: 0.3,
+    immediateRender: true,
+    backgroundPositionY: `25%`,
+    y: -32,
+  }, 0.25)
+  // gsap.from(".back2 .talk", {
+  //   opacity: 0,
+  //   scrollTrigger: {
+  //     trigger: '.back2',
+  //     start: 'top top',
+  //     end: '400% bottom',
+  //     pin: true,
+  //     markers: true,
+  //   }
+  // })
+  // gsap.from(".back3 .talk", {
+  //   opacity: 0,
+  //   scrollTrigger: {
+  //     trigger: '.back3',
+  //     start: 'top top',
+  //     end: '400% bottom',
+  //     pin: true,
+  //     markers: true,
+  //   }
+  // })
 }
 function animPortfolio() {
 
@@ -226,6 +291,8 @@ function animPostList() {
 onMounted(() => {
   animCrowPart();
   animFeatherPart();
+  // animPortfolio();
+  animDoor();
   animPostList();
 })
 
@@ -246,7 +313,7 @@ onMounted(() => {
             preserveAspectRatio="xMidYMid meet">
             <g 
               transform="translate(0.000000,1151.000000) scale(0.100000,-0.100000)"
-              fill="#000000" stroke="none">
+              fill="#fff" stroke="none">
               <path d="M2316 11499 c-176 -26 -356 -97 -581 -229 -143 -85 -157 -90 -275
               -90 -168 0 -355 -39 -640 -132 -447 -146 -681 -303 -799 -536 -12 -24 -21 -45
               -19 -47 12 -11 239 -39 488 -60 574 -48 783 -75 851 -110 66 -35 147 -158 193
@@ -335,7 +402,7 @@ onMounted(() => {
       </div>
       <div class="title-area screen section">
         <div class="title">LEE HYUN SOO</div>
-        <div class="subtitle">ASDFQWER1234</div>
+        <div class="subtitle">ASDFQWER1234!@#$</div>
       </div>
     </section>
     <section class="black-full">
@@ -355,6 +422,29 @@ onMounted(() => {
         <div class="black-area"></div>
       </div>
     </section>
+    <section class="crow-group">
+      <div id="pied-crow" class="section">
+        <div class="item">
+          <div class="image-area">
+            <div class="image-frame">
+              <!-- <img src="../assets/crow/pied-crow1.jpg.jpg"/> -->
+            </div>
+          </div>
+          <div class="info">
+            <div class="eng-name">PIED CROW</div>
+            <div class="eng-family">CORVUS ALBUS</div>
+            <div class="kor-name">얼룩무늬 까마귀</div>
+          </div>
+        </div>
+      </div>
+      <div class="section back2">
+        <div class="talk">hey!</div>
+      </div>
+      <div class="section back3">
+        <div class="talk">hey2!</div>
+      </div>
+    </section>
+
     <section class="portfolio">
       <div class="section">
         <h1>TMXKorea</h1>
@@ -412,9 +502,13 @@ $color-text-darker: rgba(235, 235, 235, .6);
 $vue-color-green: #42b883;
 $vue-color-blue: #35495e;
 
+.index-wrapper {
+  background-color: white;
+}
 
 section {
   position: relative;
+  isolation: auto;
 }
 .section {
   width: 100%;
@@ -431,7 +525,10 @@ section {
 }
 // 까마귀 로딩 섹션
 .crow-loading {
+  z-index: 1;
   min-height: 1000vh;
+  mix-blend-mode: difference;
+  // background-color: rgb(255, 255, 255);
 
   .crow-wrap {
     width: 64px;
@@ -442,6 +539,7 @@ section {
     }
   }
   .title-area {
+    color: rgb(228, 228, 228);
     .title {
       font-size: 5rem;
     }
@@ -451,9 +549,12 @@ section {
   }
 }
 .black-full {
-  z-index: 0;
   position: relative;
   min-height: 1000vh;
+  mix-blend-mode: difference;
+  // background-color: #2f2f2f;
+  // background-color: rgb(255, 255, 255);
+
   img {
     bottom: -110vh;
     position: absolute;
@@ -463,8 +564,88 @@ section {
     height: 0;
     bottom: -100%;
     border-radius: 50%;
-    background-color: black;
-    mix-blend-mode: difference;
+    background-color: rgb(255, 255, 255);
+  }
+}
+.crow-group {
+  background-color: black;
+  height: 1000vh;
+  .first-crow {
+    width: 100vw;
+    // 가장자리를 어둡게
+    // mix-blend-mode: darken;
+    filter: grayscale(0.8) opacity(0.5);
+  }
+
+  .item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    color: white;
+
+    .image-area {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex: 2;
+      .image-frame {
+        width: 50%;
+        min-width: 10vmin; 
+        max-width: 50vmin;
+        height: 80vmin;
+        overflow: hidden;
+        background-size: cover;
+        background-position: 20% 70%;
+        mix-blend-mode: darken;
+      }
+    }
+    .info {
+      flex: 3;
+      .eng-name {
+        font-size: 8rem;
+      }
+      .eng-family {
+        font-size: 4rem;
+      }
+      .kor-name {
+        font-size: 4rem;
+      }
+    }
+  }
+  #pied-crow {
+    .image-area {
+      .image-frame {
+        background-size: 500%;
+        background-image: url("../assets/crow/pied-crow1.jpg.jpg");
+      }
+    }
+    .info {
+      background: -webkit-linear-gradient(
+        315deg, 
+        #666666 33%, 
+        #c7c7c7 36%,
+        #c7c7c7 50%,
+        #666666);
+      background-clip: text;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+  }
+
+  .talk {
+    font-size: 3rem;
+    color: white;
+  }
+  .back1 {
+    // background-color: red;
+  }
+  .back2 {
+    // background-color: green;
+  }
+  .back3 {
+    // background-color: blue;
   }
 }
 .portfolio {
