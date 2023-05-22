@@ -70,28 +70,22 @@ onMounted(() => {
 </template>
 
 <style lang="scss" scoped>
-// variables 임시
-$color-text-lighter: rgba(255, 255, 255, .92);
-$color-text-normal: rgba(255, 255, 255, .87);
-$color-text-darker: rgba(235, 235, 235, .6);
-
-$vue-color-green: #42b883;
-$vue-color-blue: #35495e;
-$vue-background-color: #242424;
+@import '/src/pages/post.scss';
 
 .post-index-wrapper {
   min-height: 100vh;
   background-color: $vue-background-color;
-  color: rgba(235, 235, 235, .6);
-  color: rgba(255, 255, 255, .87);
+  color: $color-text-darker;
+  color: $color-text-normal;
 }
 main {
   width: 100%;
   padding-top: 84px;
-  padding-left: 28%;
+  padding-left: calc((100% - $post-width-max) / 2);
   display: flex;
   align-items: stretch;
   box-sizing: border-box;
+  transition: padding .2s;
 }
 footer {
   z-index: 7;
@@ -105,8 +99,8 @@ footer {
   flex: 1;
   position: relative;
   padding: 22px 36px;
-  width: 240px;
-  min-width: 240px;
+  width: $toc-width;
+  min-width: $toc-width;
   height: 100%;
   box-sizing: border-box;
   background-color: $vue-background-color;
@@ -137,9 +131,9 @@ footer {
 
 // 마크다운
 :deep(.markdown-body) {
-  max-width: 688px;
+  max-width: $post-width-max;
   width: 100%;
-  min-width: 240px;
+  min-width: $post-width-min;
   font-size: 0.875rem;
   color: $color-text-lighter;
   // 텍스트
@@ -190,11 +184,15 @@ footer {
 @media screen and (max-width: 1280px) {
   .new-table-of-contents {
     position: fixed;
-    right: -240px;
-    width: 240px;
+    right: -$toc-width;
+    width: $toc-width;
     &.open {
       right: 0;
     }
+  }
+  main {
+    // 원래 왼쪽 패딩에서 toc-width 의 2/3만큼 오른쪽으로 더 이동
+    padding-left: calc((100% - $post-width-max) / 2 + $toc-width * 2 / 3);
   }
 }
 @media screen and (max-width: 960px) {

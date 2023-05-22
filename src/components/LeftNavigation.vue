@@ -24,23 +24,17 @@ posts.fetchPostList();
 </template>
 
 <style lang="scss" scoped>
-// variables 임시
-$color-text-lighter: rgba(255, 255, 255, .92);
-$color-text-normal: rgba(255, 255, 255, .87);
-$color-text-darker: rgba(235, 235, 235, .6);
-
-$vue-color-green: #42b883;
-$vue-color-blue: #35495e;
+@import '/src/pages/post.scss';
 
 aside {
   z-index: 5;
   position: fixed;
-  top: 55px;
+  top: $header-height;
   left: 0;
   display: flex;
   justify-content: flex-end;
-  width: 24%;
-  min-width: 270px;
+  width: calc((100% - $post-width-max) / 2 - 64px);
+  min-width: $post-list-frame-width-min;
   height: 100%;
   background-color: #242424;
   border-right: 1px dotted rgba(84, 84, 84, .48);
@@ -50,7 +44,7 @@ aside {
   .post-list {
     display: flex;
     flex-direction: column;
-    width: 240px;
+    width: $post-list-width;
     padding-top: 72px;
     .post {
       padding: 4px 32px;
@@ -73,7 +67,7 @@ aside {
 
 @media screen and (max-width: 960px) {
   aside {
-    left: -270px;
+    left: -$post-list-frame-width-min;
     &.open {
       left: 0;
     }
