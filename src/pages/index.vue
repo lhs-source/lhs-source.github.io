@@ -13,7 +13,7 @@ posts.fetchPostList();
 
 function animCrowPart() {
   const step = 5;
-  const scrollStep = 500;
+  const scrollStep = screen.availHeight / 10; // 500;
 
   gsap.set('.crow-loading .screen', {
     position: 'fixed',
@@ -86,7 +86,7 @@ function animCrowPart() {
   }
   gsap.timeline({
     scrollTrigger: {
-      trigger: '.crow-group',
+      trigger: '.skill-set',
       start: 'top 50%',
       end: 'bottom',
       scrub: 2,
@@ -112,14 +112,14 @@ function animFeatherPart() {
   for(let i = 0; i < featherLength; ++i) {
     gsap.set(`.feather${i + 1}`, {
       x: () => featherGap * (i + 1) - (featherLength / 2 * featherGap),
-      y: () => Math.max(screen.availHeight, screen.availWidth) * Math.random() / 2,
+      y: () => Math.max(screen.availHeight, screen.availWidth) * Math.random() / 3,
       width: Math.random() * 500 + 900,
     });
     // 깃털 이동
     gsap.to(`.feather${i + 1}`, {
       x: () => Math.random() * screen.availWidth - screen.availWidth / 2,
       y: () => -(Math.random() * Math.max(screen.availHeight, screen.availWidth) 
-              + Math.max(screen.availHeight, screen.availWidth) / 2),
+              + Math.max(screen.availHeight, screen.availWidth)),
       rotate: Math.random() * 540 - 180,
       scrollTrigger: {
         trigger: '.black-full',
@@ -163,6 +163,29 @@ function animFeatherPart() {
       //   })
       // }
     }
+  })
+}
+function animSkillSet() {
+  gsap.timeline({
+    scrollTrigger: {
+      trigger: '.skill-set',
+      start: 'top top',
+      end: 'bottom',
+      pin: true,
+      markers: true,
+    }
+  })
+  // vue pin
+  gsap.timeline({
+    scrollTrigger: {
+      trigger: '.vue',
+      start: 'top top',
+      end: 'bottom',
+      pin: true,
+      markers: true,
+    }
+  }).to('.vue', {
+    backgroundColor: 'rgb(22, 67, 40)',
   })
 }
 function animDoor() {
@@ -291,8 +314,9 @@ function animPostList() {
 onMounted(() => {
   animCrowPart();
   animFeatherPart();
+  // animSkillSet();
   // animPortfolio();
-  animDoor();
+  // animDoor();
   animPostList();
 })
 
@@ -422,26 +446,52 @@ onMounted(() => {
         <div class="black-area"></div>
       </div>
     </section>
-    <section class="crow-group">
-      <div id="pied-crow" class="section">
-        <div class="item">
-          <div class="image-area">
-            <div class="image-frame">
-              <!-- <img src="../assets/crow/pied-crow1.jpg.jpg"/> -->
-            </div>
-          </div>
-          <div class="info">
-            <div class="eng-name">PIED CROW</div>
-            <div class="eng-family">CORVUS ALBUS</div>
-            <div class="kor-name">얼룩무늬 까마귀</div>
-          </div>
-        </div>
+    <section class="skill-set">
+      <div class="motor">
+        <svg class="svg-circle" viewBox="0 0 120 120" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+          <circle class="circle" cx="60" cy="60" r="29" fill="none" stroke="white"></circle>
+          <defs>
+            <path id="circle"
+              d="
+                M 50, 50
+                m -37, 0
+                a 37,37 0 1,1 74,0
+                a 37,37 0 1,1 -74,0"/>
+          </defs>
+          <text font-size="17">
+            <textPath xlink:href="#circle">
+              You spin me right round, baby...
+            </textPath>
+          </text>
+        </svg>
       </div>
-      <div class="section back2">
-        <div class="talk">hey!</div>
+      <div class="vue">
+        <h1>vue</h1>
       </div>
-      <div class="section back3">
-        <div class="talk">hey2!</div>
+      <div class="cpp">
+        <h1>C++</h1>
+      </div>
+      <div class="sub-lang">
+        <h1>Angular</h1>
+        <h1>Java</h1>
+        <h1>Spring</h1>
+        <h1>Python</h1>
+        <h1>Android</h1>
+      </div>
+      <div class="tool">
+        <h1>AWS</h1>
+        <h1>Git</h1>
+        <h1>Spring</h1>
+      </div>
+      <div class="task-tool">
+        <h1>Slack</h1>
+        <h1>Atlassian</h1>
+        <h1>Notion</h1>
+      </div>
+      <div class="etc">
+        <h1>Lua</h1>
+        <h1>Java</h1>
+        <h1>Spring</h1>
       </div>
     </section>
 
@@ -526,7 +576,7 @@ section {
 // 까마귀 로딩 섹션
 .crow-loading {
   z-index: 1;
-  min-height: 1000vh;
+  min-height: 400vh;
   mix-blend-mode: difference;
   // background-color: rgb(255, 255, 255);
 
@@ -550,7 +600,7 @@ section {
 }
 .black-full {
   position: relative;
-  min-height: 1000vh;
+  min-height: 400vh;
   mix-blend-mode: difference;
   // background-color: #2f2f2f;
   // background-color: rgb(255, 255, 255);
@@ -567,85 +617,19 @@ section {
     background-color: rgb(255, 255, 255);
   }
 }
-.crow-group {
+.skill-set {
   background-color: black;
   height: 1000vh;
-  .first-crow {
-    width: 100vw;
-    // 가장자리를 어둡게
-    // mix-blend-mode: darken;
-    filter: grayscale(0.8) opacity(0.5);
-  }
+  .motor {
+    position: sticky;
+    .svg-circle {
 
-  .item {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-    height: 100%;
-    color: white;
 
-    .image-area {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex: 2;
-      .image-frame {
-        width: 50%;
-        min-width: 10vmin; 
-        max-width: 50vmin;
-        height: 80vmin;
-        overflow: hidden;
-        background-size: cover;
-        background-position: 20% 70%;
-        mix-blend-mode: darken;
-      }
-    }
-    .info {
-      flex: 3;
-      .eng-name {
-        font-size: 8rem;
-      }
-      .eng-family {
-        font-size: 4rem;
-      }
-      .kor-name {
-        font-size: 4rem;
-      }
     }
   }
-  #pied-crow {
-    .image-area {
-      .image-frame {
-        background-size: 500%;
-        background-image: url("../assets/crow/pied-crow1.jpg.jpg");
-      }
-    }
-    .info {
-      background: -webkit-linear-gradient(
-        315deg, 
-        #666666 33%, 
-        #c7c7c7 36%,
-        #c7c7c7 50%,
-        #666666);
-      background-clip: text;
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
-  }
-
-  .talk {
-    font-size: 3rem;
-    color: white;
-  }
-  .back1 {
-    // background-color: red;
-  }
-  .back2 {
-    // background-color: green;
-  }
-  .back3 {
-    // background-color: blue;
+  .vue {
+    height: 200vh;
+    background-color: black;
   }
 }
 .portfolio {
