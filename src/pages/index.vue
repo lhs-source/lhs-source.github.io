@@ -157,22 +157,43 @@ function animSkillSet() {
   gsap.to('.svg-circle', {
     rotate: 540,
     scrollTrigger: {
-      trigger: '.skill-set',
+      trigger: '.motor',
       start: 'top top',
-      end: 'bottom',
+      end: `${screen.availHeight * 15}px top`,
       scrub: 1,
-      pin: true,
     }
   })
-  // vue pin
-  gsap.timeline({
-    scrollTrigger: {
-      trigger: '.vue',
-      start: 'top top',
-      end: 'bottom',
-    }
-  }).to('.vue', {
-    backgroundColor: 'rgb(22, 67, 40)',
+
+  const skillSet = [
+    { selector: '.vue', bgColor: 'rgb(22, 67, 40)' },
+    { selector: '.cpp', bgColor: 'rgb(22, 67, 140)' },
+  ]
+  skillSet.forEach((set) => {
+    // pin
+    gsap.timeline({
+      scrollTrigger: {
+        trigger: set.selector,
+        start: 'top top',
+        end: `${screen.availHeight * 4}px bottom`,
+        toggleActions: "restart none none reverse",
+        pin: true,
+      }
+    }).to('.skill-set', {
+      backgroundColor: set.bgColor,
+    });
+    // text
+    gsap.timeline({
+      scrollTrigger: {
+        trigger: set.selector,
+        start: 'top top',
+        end: `${screen.availHeight * 4}px bottom`,
+        toggleActions: "restart reverse restart reverse",
+      }
+    }).to(`${set.selector} .bg-title`, {
+      opacity: 1,
+    }).to(`${set.selector} .bg-title`, {
+      position: 'fixed',
+    })
   })
 }
 function animPostList() {
@@ -380,10 +401,14 @@ onMounted(() => {
         </svg>
       </div>
       <div class="section vue">
-        <h1>vue</h1>
+        <div class="section">
+          <div class="bg-title">vue</div>
+        </div>
       </div>
-      <div class="cpp">
-        <h1>C++</h1>
+      <div class="section cpp">
+        <div class="section">
+          <div class="bg-title">C++</div>
+        </div>
       </div>
       <div class="sub-lang">
         <h1>Angular</h1>
@@ -474,6 +499,7 @@ section {
   position: relative;
   // isolation: auto;
 }
+
 .section {
   width: 100%;
   height: 100vh;
@@ -536,16 +562,32 @@ section {
   }
 }
 .skill-set {
+  position: relative;
   background-color: black;
-  height: 1000vh;
+  height: 3000vh;
   .motor {
+    position: sticky;
+    top: 0;
+    left: 0;
     .svg-circle {
       transform: translateX(-50%);
     }
   }
-  .vue {
-    height: 200vh;
-    background-color: black;
+  .vue, .cpp {
+    z-index: 1;
+    height: 100vh;
+    justify-content: flex-start;
+    .bg-title {
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      opacity: 0;
+      color: $color-text-darker;
+      font-size: 24rem;
+      line-height: 24rem;
+      font-weight: 700;
+      vertical-align: bottom;
+    }
   }
 }
 .portfolio {
