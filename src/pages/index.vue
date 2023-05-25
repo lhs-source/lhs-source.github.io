@@ -380,6 +380,34 @@ onMounted(() => {
         <div class="black-area"></div>
       </div>
     </section>
+    <section class="skill-set2">
+      
+      <div class="skill-list main">
+        <div class="skill vue">VUE</div>
+        <div class="skill cpp">C++</div>
+      </div>
+      <div class="skill-list sub">
+        <div class="skill angular">ANGULAR</div>
+        <div class="skill java">JAVA</div>
+        <div class="skill spring">SPRING</div>
+        <div class="skill python">PYTHON</div>
+        <div class="skill android">ANDROID</div>
+      </div>
+      <div class="skill-list tool">
+        <div class="skill aws">AWS</div>
+        <div class="skill git">GIT</div>
+      </div>
+      <div class="skill-list task-tool">
+        <div class="skill slack">SLACK</div>
+        <div class="skill atlassian">ATLASSIAN</div>
+        <div class="skill notion">NOTION</div>
+      </div>
+      <div class="sill-list etc">
+        <div class="skill lua">LUA</div>
+        <div class="skill javacos">JAVACOS</div>
+        <div class="skill compiler">COMPILER</div>
+      </div>
+    </section>
     <section class="skill-set">
       <div class="section motor">
         <svg class="svg-circle" viewBox="0 0 120 120" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
@@ -560,6 +588,9 @@ section {
     border-radius: 50%;
     background-color: rgb(255, 255, 255);
   }
+}
+.skill-set2 {
+  
 }
 .skill-set {
   position: relative;
