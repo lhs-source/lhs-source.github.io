@@ -158,11 +158,10 @@ footer {
   }
   // 코드
   pre {
-    background-color: #404040;
     padding: 8px;
     overflow-x: auto;
   }
-  code {
+  p code {
     background-color: #3b3b3b;
     padding: 2px 4px;
     color: $vue-color-green;
@@ -203,4 +202,8 @@ footer {
   }
 }
 
+</style>
+
+<style>
+@import "../assets/scss/prism-vscode.scss"; 
 </style>
