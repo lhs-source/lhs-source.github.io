@@ -8,10 +8,11 @@ export const usePosts = defineStore('post', () => {
   const currentUrl = ref<string>('');
 
   async function fetchPostList() {
-    axios.get<Post[]>(`/postlist.json`).then(res => {
-      postList.value = res.data;
-      return res.data;
-    });
+    // axios.get<Post[]>(`/postlist.json`).then(res => {
+    //   postList.value = res.data;
+    //   return res.data;
+    // });
+    return [];
   }
 
   return {
