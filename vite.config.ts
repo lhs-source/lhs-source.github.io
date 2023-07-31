@@ -21,7 +21,7 @@ export default defineConfig({
         typographer: true,
       },
       markdownItUses: [
-        MDPrism,
+        // MDPrism,
       ],
       markdownItSetup(md) {
         // H 태그에 anchor 추가

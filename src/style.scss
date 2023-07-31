@@ -28,6 +28,35 @@ body {
   font-family: "Inter", 'Pretendard', 'Courier New', Courier, sans-serif, monospace;
 }
 
+:root {
+  --typo-title-font-size: 4rem;
+  --typo-h1-font-size: 2.5rem;
+  --typo-h2-font-size: 2rem;
+  --typo-h3-font-size: 1.75rem;
+  --typo-h4-font-size: 1.5rem;
+  --typo-h5-font-size: 1.25rem;
+  --typo-h6-font-size: 1rem;
+  --typo-body-font-size: 1rem;
+  --typo-small-font-size: 0.875rem;
+  --typo-tiny-font-size: 0.75rem;
+  --typo-category-font-size: 1.5rem;
+}
+
+@media (max-width: 768px) {
+  :root {
+    --typo-title-font-size: 3rem;
+    --typo-h1-font-size: 2rem;
+    --typo-h2-font-size: 1.75rem;
+    --typo-h3-font-size: 1.5rem;
+    --typo-h4-font-size: 1.25rem;
+    --typo-h5-font-size: 1rem;
+    --typo-h6-font-size: 0.875rem;
+    --typo-body-font-size: 0.875rem;
+    --typo-small-font-size: 0.75rem;
+    --typo-tiny-font-size: 0.625rem;
+    --typo-category-font-size: 1.25rem;
+  }
+}
 
 // variables
 $color-text-lighter: rgba(255, 255, 255, .92);

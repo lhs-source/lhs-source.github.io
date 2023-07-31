@@ -4,7 +4,12 @@ const pageList = [
   {
     id: 1,
     name: 'SVG Scroll Down',
-    path: 'ScrollDown'
+    path: 'scrolldown'
+  },
+  {
+    id: 2,
+    name: 'Stacking Context',
+    path: 'stackingcontext'
   }
 ]
 
@@ -17,7 +22,7 @@ const pageList = [
     <nav>
       <ul>
         <li v-for="page in pageList" :key="page.path">
-          <router-link :to="`/pages/${page.path}`">{{ page.name }}</router-link>
+          <router-link :to="`/study/${page.path}`">{{ page.name }}</router-link>
         </li>
       </ul>
     </nav>
