@@ -11,7 +11,6 @@ const emits = defineEmits<{
 }>();
 
 const posts = usePosts();
-posts.fetchPostList();
 
 function animPostList() {
   // 포스트 목록의 제목
@@ -64,6 +63,7 @@ function animPostList() {
 
 onMounted(() => {
   animPostList();
+  posts.fetchPostList();
 })
 
 </script>

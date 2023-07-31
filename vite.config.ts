@@ -31,6 +31,8 @@ export default defineConfig({
         // prism 코드 하이라이터
         md.use(MDPrism)
       },
+      // 마크다운 파일의 헤더를 읽어서 <head>에 추가한다.
+      headEnabled: true,  
     }),
     Layouts(),
     Pages({
