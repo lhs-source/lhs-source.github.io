@@ -62,8 +62,10 @@ function animPostList() {
 }
 
 onMounted(() => {
-  animPostList();
-  posts.fetchPostList();
+  posts.fetchPostList().then(() => {
+    // 포스트 목록을 가져온 후 애니메이션을 등록한다.
+    animPostList();
+  })
 })
 
 </script>

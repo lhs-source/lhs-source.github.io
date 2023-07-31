@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { onMounted } from 'vue';
 import { usePosts } from '../store/posts';
 
 const props = defineProps<{
@@ -6,7 +7,10 @@ const props = defineProps<{
 }>();
 
 const posts = usePosts();
-posts.fetchPostList();
+
+onMounted(() => {
+  posts.fetchPostList();
+});
 
 </script>
 
