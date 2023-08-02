@@ -1,0 +1,1 @@
+import{d as e,c as a,f as t,F as s,a as n,o}from"./app-af943e29.js";const r=n("canvas",{id:"three"},null,-1),m=e({__name:"ThreeJS",setup(c){return(_,d)=>(o(),a(s,null,[t(" asdfsd "),r],64))}});export{m as default};
