@@ -44,7 +44,7 @@ export default defineConfig({
        * @returns 
        */
       extendRoute(route) {
-        console.log('route', route);
+        // console.log('route', route);
         return route;
       },
       onRoutesGenerated: routes => (generateSitemap({ 
