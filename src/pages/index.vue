@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { gsap } from 'gsap';
-import MPP from 'gsap/dist/MotionPathPlugin';
-import ScrollTrigger from 'gsap/dist/ScrollTrigger';
+import {MotionPathPlugin} from 'gsap/dist/MotionPathPlugin';
+import {ScrollTrigger} from 'gsap/dist/ScrollTrigger';
 import { onMounted } from 'vue';
 import BlackFethers from '../components/Main/BlackFethers.vue';
 import LhsMain from '../components/Main/LhsMain.vue';
@@ -9,7 +9,6 @@ import Portfolio from '../components/Main/Portfolio.vue';
 import PostList from '../components/Main/PostList.vue';
 import SkillSet from '../components/Main/SkillSet.vue';
 
-const { MotionPathPlugin } = MPP;
 gsap.registerPlugin(ScrollTrigger);
 gsap.registerPlugin(MotionPathPlugin);
 
