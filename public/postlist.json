@@ -1,29 +1,63 @@
 [
   {
-      "url": "Vue-Prefetch",
-      "fileName": "vue-prefetch",
-      "title": "Vue Code Spliting 간단히 알아보기 (+ Prefetch)",
-      "description": "Vue 프로젝트의 Code Spliting 이 어떻게 작동하는지와 webpack prefetch 옵션 에 대해서 간략한 설명.",
-      "createdAt": "2022-08-05",
-      "updatedAt": "2022-08-05",
-      "tags": ["Vue", "Vue2", "Vue3", "Code Spliting", "코드분산", "Prefecth", "Webpack"]
+    "url": "Android-Noti-Bundle",
+    "fileName": "android-noti-bundle",
+    "title": "안드로이드 노티피케이션 번들 데이터 최신화 Android Notification Bundle Data",
+    "description": "안드로이드 노티피케이션을 터치해 액티비티를 진입할 때 onCreate 에서 전달받는 데이터가 원치 않는 값으로 들어온다. 해결 방법을 찾아보자.",
+    "createdAt": "2023-09-07",
+    "updatedAt": "2023-09-07",
+    "tags": [
+      "Android",
+      "Android Notification"
+    ]
   },
   {
-      "url": "Vue2-Reactivity",
-      "fileName": "vue2-reactivity",
-      "title": "Vue2, Vue3 Reactivity 비교 - Vue2 편",
-      "description": "Vue2 Vue3 의 Reactivity 비교. Vue2 Reactive에 대한 설명. VNODE, Watcher, Dependency, ref, reactive, update, vue hook 에 대해서 전반적인 설명.",
-      "createdAt": "2022-07-12",
-      "updatedAt": "2022-07-12",
-      "tags": ["Vue", "Vue2", "Vue Reactivity", "반응성", "Vue Rendering"]
+    "url": "Vue-Prefetch",
+    "fileName": "vue-prefetch",
+    "title": "Vue Code Spliting 간단히 알아보기 (+ Prefetch)",
+    "description": "Vue 프로젝트의 Code Spliting 이 어떻게 작동하는지와 webpack prefetch 옵션 에 대해서 간략한 설명.",
+    "createdAt": "2022-08-05",
+    "updatedAt": "2022-08-05",
+    "tags": [
+      "Vue",
+      "Vue2",
+      "Vue3",
+      "Code Spliting",
+      "코드분산",
+      "Prefecth",
+      "Webpack"
+    ]
   },
   {
-      "url": "making-blog-githubio-vue3-1",
-      "fileName": "making-blog-githubio-vue3-1",
-      "title": "Github.io + Vue3 로 블로그 만들기",
-      "description": "Github.io 와 Vue3 를 활용해서 블로그를 시작. SPA를 prerendering 하여 개별 페이지를 생성하고, 메타태그를 추가. 구글 검색 엔진에 등록할 사이트맵 자동 생성. 마크다운을 html 로 변환. Google Analytics 도입으로 방문자 수 체크.",
-      "createdAt": "2022-06-24",
-      "updatedAt": "2022-06-26",
-      "tags": ["Vue", "Vue3", "Github", "Blog", "Markdown", "SEO", "GoogleAnalytics"]
+    "url": "Vue2-Reactivity",
+    "fileName": "vue2-reactivity",
+    "title": "Vue2, Vue3 Reactivity 비교 - Vue2 편",
+    "description": "Vue2 Vue3 의 Reactivity 비교. Vue2 Reactive에 대한 설명. VNODE, Watcher, Dependency, ref, reactive, update, vue hook 에 대해서 전반적인 설명.",
+    "createdAt": "2022-07-12",
+    "updatedAt": "2022-07-12",
+    "tags": [
+      "Vue",
+      "Vue2",
+      "Vue Reactivity",
+      "반응성",
+      "Vue Rendering"
+    ]
+  },
+  {
+    "url": "making-blog-githubio-vue3-1",
+    "fileName": "making-blog-githubio-vue3-1",
+    "title": "Github.io + Vue3 로 블로그 만들기",
+    "description": "Github.io 와 Vue3 를 활용해서 블로그를 시작. SPA를 prerendering 하여 개별 페이지를 생성하고, 메타태그를 추가. 구글 검색 엔진에 등록할 사이트맵 자동 생성. 마크다운을 html 로 변환. Google Analytics 도입으로 방문자 수 체크.",
+    "createdAt": "2022-06-24",
+    "updatedAt": "2022-06-26",
+    "tags": [
+      "Vue",
+      "Vue3",
+      "Github",
+      "Blog",
+      "Markdown",
+      "SEO",
+      "GoogleAnalytics"
+    ]
   }
 ]
