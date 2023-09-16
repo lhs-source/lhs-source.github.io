@@ -58,7 +58,31 @@ function animPostList() {
     }).from(".post-area .post:nth-child(3)", {
       y: -32,
       duration: 0.2,
+    }).from(".post-area .post:nth-child(4)", {
+      y: -32,
+      duration: 0.2,
     })
+    gsap.timeline({
+      scrollTrigger: {
+        trigger: `.post-area .post:nth-child(${5})`,
+        start: 'top center',
+        end: 'top center',
+        toggleActions: "restart none none reverse",
+      }
+    }).from(".post-area .post:nth-child(5)", {
+      y: -32,
+      duration: 0.2,
+    })
+    // .from(".post-area .post:nth-child(2)", {
+    //   y: -32,
+    //   duration: 0.2,
+    // }).from(".post-area .post:nth-child(3)", {
+    //   y: -32,
+    //   duration: 0.2,
+    // }).from(".post-area .post:nth-child(4)", {
+    //   y: -32,
+    //   duration: 0.2,
+    // })
   }, 100)
 }
 

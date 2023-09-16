@@ -1,5 +1,18 @@
 [
   {
+    "url": "postman-fcm-test",
+    "fileName": "postman-fcm-test",
+    "title": "Postman 으로 FCM 알림 테스트하기 Postman FCM test",
+    "description": "FCM 알림을 테스트하는 간단한 방법. Postman 을 비롯한 curl 기반 HTTP 요청 프로그램으로 테스트하기.",
+    "createdAt": "2023-09-16",
+    "updatedAt": "2023-09-16",
+    "tags": [
+      "Android",
+      "Firebase",
+      "FCM"
+    ]
+  },
+  {
     "url": "Android-Noti-Bundle",
     "fileName": "android-noti-bundle",
     "title": "안드로이드 노티피케이션 번들 데이터 최신화 Android Notification Bundle Data",
