@@ -2,6 +2,7 @@
 import { defineEmits, defineProps, onMounted, withDefaults } from "vue";
 import { gsap } from 'gsap';
 import { usePosts } from "../../store/posts";
+import dayjs from 'dayjs';
 
 const props = withDefaults(defineProps<{
   modelValue?: any;
@@ -57,7 +58,31 @@ function animPostList() {
     }).from(".post-area .post:nth-child(3)", {
       y: -32,
       duration: 0.2,
+    }).from(".post-area .post:nth-child(4)", {
+      y: -32,
+      duration: 0.2,
     })
+    gsap.timeline({
+      scrollTrigger: {
+        trigger: `.post-area .post:nth-child(${5})`,
+        start: 'top center',
+        end: 'top center',
+        toggleActions: "restart none none reverse",
+      }
+    }).from(".post-area .post:nth-child(5)", {
+      y: -32,
+      duration: 0.2,
+    })
+    // .from(".post-area .post:nth-child(2)", {
+    //   y: -32,
+    //   duration: 0.2,
+    // }).from(".post-area .post:nth-child(3)", {
+    //   y: -32,
+    //   duration: 0.2,
+    // }).from(".post-area .post:nth-child(4)", {
+    //   y: -32,
+    //   duration: 0.2,
+    // })
   }, 100)
 }
 
@@ -85,6 +110,7 @@ onMounted(() => {
           :key="post.fileName">
           <router-link :to="`/posts/${post.fileName}`">
             <div class="post-title">{{ post.title }}</div>
+            <div class="date">최종 : {{ post.updatedAt }}, {{ dayjs().diff(post.updatedAt, 'd') }}일 전 (최초 : {{ post.createdAt }})</div>
             <div class="tag-list">
               <div 
                 class="tag"
@@ -162,6 +188,11 @@ onMounted(() => {
         text-decoration-thickness: 3px;
         text-decoration-color: #42d392aa;
         font-size: 1.125rem;
+      }
+      .date {
+        margin-top: 4px;
+        font-size: 0.875rem;
+        font-weight: 500;
       }
       .tag-list {
         margin-top: 16px;

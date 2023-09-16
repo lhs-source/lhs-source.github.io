@@ -21,6 +21,10 @@ If the standalone TypeScript plugin doesn't feel fast enough to you, Volar has a
 
 * 사이트맵 파일에 posts, index 경로만 포함하고 나머지 제외하기
 * meta 태그 추가
+   * 자동으로...
+   * 동적으로
+      * https://github.com/antfu/vite-ssg/issues/337
+      * https://github.com/antfu/vite-ssg/issues/79
 * 메인 페이지
    * 경력 기술
    * 모바일 스타일 적용

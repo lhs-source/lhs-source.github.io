@@ -10,12 +10,9 @@ import { setupLayouts } from 'virtual:generated-layouts'
 //   "vite-plugin-pages/client"
 import generatedRoutes from 'virtual:generated-pages'
 import { createPinia } from 'pinia';
-import { createHead } from '@vueuse/head';
-
 
 const routes = setupLayouts(generatedRoutes)
 const pinia = createPinia();
-const head = createHead();
 
 // createApp(App).mount('#app')
 export const createApp = ViteSSG(
@@ -29,7 +26,5 @@ export const createApp = ViteSSG(
           pinia.state.value = (initialState.pinia) || {}
         else
           initialState.pinia = pinia.state.value
-        // 메타태그 세팅
-        app.use(head);
     },
 )

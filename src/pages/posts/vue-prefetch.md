@@ -1,3 +1,10 @@
+---
+title: Vue Code Spliting 간단히 알아보기 (+ Prefetch)
+meta:
+  - name: description
+    content: Vue 프로젝트의 Code Spliting 이 어떻게 작동하는지와 webpack prefetch 옵션 에 대해서 간략한 설명.
+---
+
 [[toc]]
 
 # Code Spliting

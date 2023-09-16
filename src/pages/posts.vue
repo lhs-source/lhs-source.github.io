@@ -136,6 +136,7 @@ footer {
   min-width: $post-width-min;
   font-size: 0.875rem;
   color: $color-text-lighter;
+  line-height: 1.4rem;
   // 텍스트
   h1 {
     font-weight: 700;
@@ -143,12 +144,13 @@ footer {
     text-decoration-line: underline;
     text-decoration-thickness: 3px;
     text-decoration-color: $vue-color-green;
+    line-height: 2.4rem;
   }
   // 링크
   a {
     color: #42b883;
     text-decoration-style:dashed ;
-    text-decoration-thickness: 3px;
+    text-decoration-thickness: 1px;
     font-weight: 700;
   }
   // 목록

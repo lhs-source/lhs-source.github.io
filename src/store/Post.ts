@@ -6,4 +6,6 @@ export interface Post {
   tags: string[];       // 태그
   data?: string;        // 포스트 내용
   thumbnail?: string;   // 섬네일 URL
+  createdAt: string;   // 생성일
+  updatedAt: string;   // 수정일
 }
