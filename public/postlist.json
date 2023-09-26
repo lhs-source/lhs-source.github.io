@@ -1,5 +1,21 @@
 [
   {
+    "url": "vite-vue-and-github-pages",
+    "fileName": "vite-vue-and-github-pages",
+    "title": "Vite vue + Github Pages 페이지 구축",
+    "description": "기존 vue-cli 를 사용한 vue 프로젝트로 github pages 를 구축했는데, 대세에 따라 vite 로 변경하기로 했다.",
+    "createdAt": "2023-09-26",
+    "updatedAt": "2023-09-26",
+    "tags": [
+      "Vite",
+      "Vue",
+      "Vue3",
+      "Github",
+      "Blog",
+      "Markdown"
+    ]
+  },
+  {
     "url": "postman-fcm-test",
     "fileName": "postman-fcm-test",
     "title": "Postman 으로 FCM 알림 테스트하기 Postman FCM test",
