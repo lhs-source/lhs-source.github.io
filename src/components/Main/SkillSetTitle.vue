@@ -1,21 +1,14 @@
 
 <script setup lang="ts">
-import { defineEmits, defineProps, onMounted, ref, withDefaults } from "vue";
 import { gsap } from 'gsap';
-import {Flip} from 'gsap/dist/Flip';
+import { Flip } from 'gsap/dist/Flip';
+import { onMounted, ref } from "vue";
 
 gsap.registerPlugin(Flip);
 
-const props = withDefaults(defineProps<{
-  modelValue?: any;
-}>(), { });
-const emits = defineEmits<{
-  (e: 'update:modelValue', value: any): void,
-}>();
-
-const curLayout = ref<number>(0);
-const container = ref<HTMLElement | null>(null);
-const layouts = ["final", "plain", "columns", "grid"];
+const curLayout = ref<number>(0); // 클래스 이름을 바꿔주기 위한 변수
+const container = ref<HTMLElement | null>(null);  // 컨테이너를 참조하기 위한 변수
+const layouts = ["final", "plain", "columns", "grid"];  // 단계별 클래스 이름
 
 function animSkillSet() {
   const state = Flip.getState(".letter, .for, .gsap", {props: "color,backgroundColor", simple: true}); // capture current state
@@ -46,13 +39,15 @@ onMounted(() => {
 
 <template>
   <section class="skill-set">
-    <div class="container final">
-      <div class="letter F">F</div>
-      <div class="letter l">L</div>
-      <div class="letter i">I</div>
-      <div class="letter p">P</div>
-      <div class="for">for</div>
-      <div class="gsap">GSAP</div>
+    <div class="container final" ref="container">
+      <div class="letter l1">S</div>
+      <div class="letter l2">K</div>
+      <div class="letter l3">I</div>
+      <div class="letter l4">L</div>
+      <div class="letter l5">L</div>
+      <div class="letter l6">S</div>
+      <div class="for">of</div>
+      <div class="gsap">LHS</div>
     </div>
   </section>
 </template>
@@ -72,7 +67,7 @@ section {
 .container {
   display: flex;
   height: 100%;
-  width: 100%;
+  width: 100vh;
   justify-content: center;
   align-items: center;
   overflow: hidden;
@@ -97,7 +92,7 @@ section {
   flex-basis: 50%;
 }
 .container.columns .letter {
-  flex-basis: 25%;
+  flex-basis: calc((100% / 7) - 6px);
 }
 .for, .gsap {
   font-size: 5vmax;
@@ -116,17 +111,26 @@ section {
 .container.final .for, .container.final .gsap {
   display: block;
 }
-.F {
-  background: green;
+// https://colorhunt.co/palette/faf1e4cedebd9eb384435334
+// https://colorhunt.co/palette/040d12183d3d5c837493b1a6
+// https://colorhunt.co/palette/12486b41919778d6c6f5fccd
+.letter:nth-child(1) {
+  background: #435334;
 }
-.l {
-  background: blue;
+.letter:nth-child(2) {
+  background: #FAF1E4;
 }
-.i {
-   background: red;
+.letter:nth-child(3) {
+   background: #9EB384;
 }
-.p {
-  background: lightcoral;
+.letter:nth-child(4) {
+  background: #5C8374;
+}
+.letter:nth-child(5) {
+  background: #CEDEBD;
+}
+.letter:nth-child(6) {
+  background: #F5FCCD;
 }
 .container.plain .letter {
   background: transparent;

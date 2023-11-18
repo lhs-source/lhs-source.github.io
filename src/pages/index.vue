@@ -10,6 +10,7 @@ import PostList from '../components/Main/PostList.vue';
 import SkillSet from '../components/Main/SkillSet.vue';
 import SkillSetTitle from '../components/Main/SkillSetTitle.vue';
 import GoPostList from '../components/Main/GoPostList.vue';
+import Whoisme from '../components/Main/Whoisme.vue';
 
 gsap.registerPlugin(ScrollTrigger);
 gsap.registerPlugin(MotionPathPlugin);
@@ -29,13 +30,7 @@ onMounted(() => {
   <div class="index-wrapper">
     <LhsMain></LhsMain>
     <BlackFethers></BlackFethers>
-    <section class="skill-set-summary">
-      <div class="slogun top"></div>
-      <img src="https://drivecapital.com/_next/image?url=https%3A%2F%2Fimages.ctfassets.net%2Fmq81gy7w2znw%2F1281LzhN8WMxYV63YHlU6q%2F662ce8f633d90de49acb9bbff0f1069d%2FDrive_Home_04b.jpg&w=640&q=90"/>
-      <div class="slogun mid"></div>
-      <img src="https://drivecapital.com/_next/image?url=https%3A%2F%2Fimages.ctfassets.net%2Fmq81gy7w2znw%2F2tO6ZX8Vl98q0Ai6N1QaRz%2Fc2446edd0ec7cc7fcc7c5a44286c7c44%2FDrive_Home_04a.jpg&w=640&q=90"/>
-      <div class="slogun bot"></div>
-    </section>
+    <Whoisme></Whoisme>
     <SkillSetTitle></SkillSetTitle>
     <SkillSet></SkillSet>
     <Portfolio></Portfolio>
