@@ -57,20 +57,23 @@ onMounted(() => {
 
 section {
   width: 100%;
-  height: 100vh;
+  height: 110vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  background-color: white;
+  background-color: transparent;
 }
 .container {
+  position: relative;
   display: flex;
   height: 100%;
-  width: 100vh;
+  width: 110vh;
   justify-content: center;
   align-items: center;
   overflow: hidden;
+  mix-blend-mode: difference;
+
 }
 .container.grid, .container.columns {
   align-content: stretch;
@@ -102,11 +105,13 @@ section {
   padding: 2px 1.6vmax;
   font-weight: 300;
   display: none;
+  color: white;
 }
 .gsap {
   padding: 2px 0;
   font-weight: 600;
   display: none;
+  color: white;
 }
 .container.final .for, .container.final .gsap {
   display: block;
