@@ -9,12 +9,11 @@ const emits = defineEmits<{
   (e: 'update:modelValue', value: any): void,
 }>();
 
+const CROW_STEP = 5;
 
 function animCrowPart() {
-  const step = 5;
   const scrollStep = screen.availHeight / 5; // 500;
-
-  const motionTotalHeight = (6 * 2 + 1) * scrollStep; // motionPath 길이
+  const motionTotalHeight = (6 * 2 + 1) * scrollStep; // motionPath 길이 6번 * 위아래 2번 + 버퍼 1번
   // 총 길이
   // screen.availHeight * n 를 더안 히유 : 색 반전이 일어날 때까지 남아 있어야 함.
   const totalHeight = motionTotalHeight + screen.availHeight * 2;
@@ -72,7 +71,7 @@ function animCrowPart() {
     }
   });
   // 5 걸음동안 위로 뒤어오르기 + 아래로 착지하기 반복
-  for(let i = 0; i < step; ++ i) {
+  for(let i = 0; i < CROW_STEP; ++ i) {
     gsap.to('.crow-wrap', {
       rotate: 15,
       ease: 'Power0.easeOut',
@@ -214,7 +213,7 @@ onMounted(() => {
       </div>
       <div class="title-area layer full-center">
         <div class="title">LEE HYUN SOO</div>
-        <div class="subtitle">ASDFQWER1234!@#$</div>
+        <div class="subtitle">Blog. ASDFQWER1234!@#$</div>
       </div>
     </div>
   </section>
