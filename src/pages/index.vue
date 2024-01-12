@@ -11,6 +11,7 @@ import SkillSet from '../components/Main/SkillSet.vue';
 import SkillSetTitle from '../components/Main/SkillSetTitle.vue';
 import GoPostList from '../components/Main/GoPostList.vue';
 import Whoisme from '../components/Main/Whoisme.vue';
+import TextShowHide from '../components/Main/TextShowHide.vue';
 
 gsap.registerPlugin(ScrollTrigger);
 gsap.registerPlugin(MotionPathPlugin);
@@ -31,7 +32,8 @@ onMounted(() => {
     <LhsMain></LhsMain>
     <BlackFethers></BlackFethers>
     <Whoisme></Whoisme>
-    <SkillSetTitle></SkillSetTitle>
+    <TextShowHide></TextShowHide>
+    <!-- <SkillSetTitle></SkillSetTitle> -->
     <SkillSet></SkillSet>
     <Portfolio></Portfolio>
     <PostList></PostList>
@@ -44,6 +46,7 @@ onMounted(() => {
 
 .index-wrapper {
   background-color: white;
+  position: relative;
 }
 
 section {

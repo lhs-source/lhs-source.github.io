@@ -1,21 +1,21 @@
 <script setup lang="ts">
-import { onMounted } from 'vue';
+import { onMounted, ref } from 'vue';
 
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/dist/ScrollTrigger';
 
 gsap.registerPlugin(ScrollTrigger);
 
-const whoismeCount = 10;
+const whoismeCount = ref(Math.ceil(screen.availHeight / 65));
 
 function animWhoIsMeTitle() {
-  for(let i = 0; i < whoismeCount * 2; i++) {
+  for(let i = 0; i < whoismeCount.value + 3; i++) {
     gsap.to(`.who-is-me-row:nth-child(${i + 1})`, {
       scrollTrigger: {
         trigger: `.who-is-me-row:nth-child(${i + 1})`,
-        start: '-100px bottom',
-        end: '500px bottom',
-        scrub: 5,
+        start: '-150px bottom',
+        end: '450px bottom',
+        scrub: 3.5,
       },
       opacity: 1,
       rotateX: 30,
@@ -41,6 +41,7 @@ function animIntroducement() {
 }
 
 onMounted(() => {
+  whoismeCount.value = Math.ceil(screen.availHeight / 65);
   animWhoIsMeTitle();
   animIntroducement();
 })
@@ -48,15 +49,15 @@ onMounted(() => {
 
 <template>
   <section class="who-is-me-wrapper">
-    <div class="who-is-me-title">
+    <div v-if="whoismeCount > 0" class="who-is-me-title">
       <template v-for="i in whoismeCount">
         <div class="who-is-me-row">
-          Who is <span class="font-brown">LEE HYUNSOO</span> 
-          Who is <span class="font-brown">LEE HYUNSOO</span> 
-          Who is <span class="font-brown">LEE HYUNSOO</span> 
-          Who is <span class="font-brown">LEE HYUNSOO</span>
+          WHO IS <span class="font-brown">LEE HYUNSOO</span> 
+          WHO IS <span class="font-brown">LEE HYUNSOO</span> 
+          WHO IS <span class="font-brown">LEE HYUNSOO</span> 
+          WHO IS <span class="font-brown">LEE HYUNSOO</span>
         </div>
-        <div class="who-is-me-row">Do you wanna know Do you wanna know Do you wanna know Do you wanna know</div>
+        <div class="who-is-me-row">DO YOU WANNA KNOW DO YOU WANNA KNOW DO YOU WANNA KNOW DO YOU WANNA KNOW</div>
       </template>
     </div>
     <div class="introducement">
@@ -116,7 +117,7 @@ $font-color-brown: #B8621B;
     z-index: 1;
     margin-top: 300vh;
     width: 100%;
-    height: 100vh;
+    min-height: 100vh;
     background-color: black;
     
     color: white;
