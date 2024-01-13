@@ -61,7 +61,7 @@ onMounted(() => {
       </template>
     </div>
     <div class="introducement">
-      <div class="introducement-row introducement-title" data-text="소개합니다"><span>소개합니다</span></div>
+      <div class="introducement-row introducement-title noise-cyber" data-text="소개합니다"><span>소개합니다</span></div>
       <div class="introducement-row"><span>이현수 LEE HYUNSOO</span></div>
       <div class="introducement-row"><span>프론트엔드 개발자</span></div>
       <div class="introducement-row"><span>책임감 몰입도 감각</span></div>
@@ -74,6 +74,7 @@ onMounted(() => {
 
 <style scoped lang="scss">
 @import "./main.scss";
+@import "../../assets/scss/text-noise-animation.scss";
 $font-color-brown: #B8621B;
 
 .who-is-me-wrapper {
@@ -147,201 +148,8 @@ $font-color-brown: #B8621B;
         display: block;
         transform: translateY(100px);
       }
-
-      &::before {
-        content: attr(data-text);
-        position: absolute;
-        top: 0px;
-        left: 0px;
-        width: 100%;
-        height: 100%;
-        left: 2px;
-        text-shadow: rgb(0, 255, 255) -1px 0px;
-        animation: 15s linear 0s infinite alternate-reverse none running noise-anim-2;
-      }
-      &::after {
-        content: attr(data-text);
-        position: absolute;
-        top: 0px;
-        left: 0px;
-        width: 100%;
-        height: 100%;
-        left: -2px;
-        text-shadow: rgb(255, 105, 180) 3px 0px;
-        animation: 2s linear 0s infinite alternate-reverse none running noise-anim;
-      }
     }
   }
 }
-
-@keyframes noise-anim {
-  0% {
-    clip-path: inset(29% 0px 25%);
-}
-5% {
-    clip-path: inset(9% 0px 38%);
-}
-10% {
-    clip-path: inset(96% 0px 1%);
-}
-
-15% {
-    clip-path: inset(75% 0px 23%);
-}
-
-20% {
-    clip-path: inset(46% 0px 50%);
-}
-
-25% {
-    clip-path: inset(3% 0px 46%);
-}
-
-30% {
-    clip-path: inset(82% 0px 2%);
-}
-
-35% {
-    clip-path: inset(88% 0px 1%);
-}
-
-40% {
-    clip-path: inset(91% 0px 8%);
-}
-
-45% {
-    clip-path: inset(96% 0px 2%);
-}
-
-50% {
-    clip-path: inset(59% 0px 38%);
-}
-
-55% {
-    clip-path: inset(41% 0px 53%);
-}
-
-60% {
-    clip-path: inset(21% 0px 47%);
-}
-
-65% {
-    clip-path: inset(89% 0px 4%);
-}
-
-70% {
-    clip-path: inset(1% 0px 95%);
-}
-
-75% {
-    clip-path: inset(86% 0px 4%);
-}
-
-80% {
-    clip-path: inset(95% 0px 5%);
-}
-
-85% {
-    clip-path: inset(54% 0px 36%);
-}
-
-90% {
-    clip-path: inset(70% 0px 27%);
-}
-
-95% {
-    clip-path: inset(6% 0px 16%);
-}
-
-100% {
-    clip-path: inset(95% 0px 2%);
-}
-}
-@keyframes noise-anim-2 {
-  0% {
-    clip-path: inset(76% 0px 21%);
-}
-
-5% {
-    clip-path: inset(54% 0px 7%);
-}
-
-10% {
-    clip-path: inset(55% 0px 29%);
-}
-
-15% {
-    clip-path: inset(89% 0px 3%);
-}
-
-20% {
-    clip-path: inset(33% 0px 40%);
-}
-
-25% {
-    clip-path: inset(17% 0px 56%);
-}
-
-30% {
-    clip-path: inset(37% 0px 51%);
-}
-
-35% {
-    clip-path: inset(38% 0px 19%);
-}
-
-40% {
-    clip-path: inset(93% 0px 4%);
-}
-
-45% {
-    clip-path: inset(44% 0px 14%);
-}
-
-50% {
-    clip-path: inset(53% 0px 26%);
-}
-
-55% {
-    clip-path: inset(67% 0px 11%);
-}
-
-60% {
-    clip-path: inset(85% 0px 13%);
-}
-
-65% {
-    clip-path: inset(27% 0px 37%);
-}
-
-70% {
-    clip-path: inset(87% 0px 4%);
-}
-
-75% {
-    clip-path: inset(10% 0px 8%);
-}
-
-80% {
-    clip-path: inset(51% 0px 27%);
-}
-
-85% {
-    clip-path: inset(10% 0px 60%);
-}
-
-90% {
-    clip-path: inset(83% 0px 3%);
-}
-
-95% {
-    clip-path: inset(23% 0px 55%);
-}
-
-100% {
-    clip-path: inset(1% 0px 81%);
-}
-}
-
 
 </style>

@@ -1,6 +1,12 @@
-@import url('https://fonts.googleapis.com/css2?family=Jura:wght@300..700&display=swap');
+// 'Oswald', 제목용
 @import url('https://fonts.googleapis.com/css2?family=Jura:wght@300..700&family=Oswald:wght@200..700&display=swap');
-
+// 'Indie Flower', 대화체용. 러스티레이크같음
+@import url('https://fonts.googleapis.com/css2?family=Indie+Flower&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+// 'Black Ops One', 던전 제목느낌
+// 'Russo One' 완전 제목. 조금 가로로 넓음
+// 'Orbitron, 사이버 느낌
+// 'Amatic SC', 대화체
+@import url('https://fonts.googleapis.com/css2?family=Amatic+SC:wght@400;700&family=Black+Ops+One&family=Exo:ital,wght@0,100..900;1,100..900&family=Indie+Flower&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Orbitron:wght@400..900&family=Russo+One&display=swap');
 
 $color-text-lighter: rgba(255, 255, 255, .92);
 $color-text-normal: rgba(255, 255, 255, .87);
@@ -54,19 +60,16 @@ section {
 .bottom-left { bottom: 0; left: 0; }
 .bottom-right { bottom: 0; right: 0; }
 
-.dummy-100vh {
-  height: 100vh;
+// 100 ~ 2000vh, 100단위
+@for $i from 1 through 50 {
+  .h-#{$i}00vh {
+    height: #{$i}00vh;
+  }
 }
-.dummy-200vh {
-  height: 100vh;
-}
-.dummy-300vh {
-  height: 100vh;
-}
+
 .full-screen {
   width: 100%;
   height: 100vh;
 }
-
 
 

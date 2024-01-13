@@ -1,14 +1,6 @@
 <script setup lang="ts">
 import { gsap } from 'gsap';
-import { defineEmits, defineProps, onMounted, withDefaults } from "vue";
-
-const props = withDefaults(defineProps<{
-  modelValue?: any;
-}>(), { });
-const emits = defineEmits<{
-  (e: 'update:modelValue', value: any): void,
-}>();
-
+import { onMounted } from "vue";
 
 const motionPathEndHeight = 1/2;
 
@@ -284,7 +276,16 @@ onMounted(() => {
       .title {
         font-size: calc(2 * var(--typo-title-font-size));
         font-weight: normal;
-        font-family: 'Oswald', sans-serif;
+        font-family: 
+          // 'Russo One', 
+          // 'Exo',
+          // 'Urbanist',
+          // 'Orbitron',
+          // 'Indie Flower',
+          'Amatic SC',
+          'Oswald', 
+          sans-serif;
+        
 
         .char {
           display: inline-block;

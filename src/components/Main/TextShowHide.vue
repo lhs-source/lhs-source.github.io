@@ -48,8 +48,8 @@ onMounted(() => {
 
 <template>
   <section class="background-temp">
-    <!-- <div class="dummy-100vh"></div> -->
-    <div class="dummy-100vh sticky">
+    <!-- <div class="h-100vh"></div> -->
+    <div class="h-100vh sticky">
       <div class="full-screen">
         <h1 ref="h1">TEST1</h1>
         <h4>ROBOTO IS A BOUTIQUE GAME ART WHO WE ARE OUTSOURCING STUDIO 〔SPECIALIZING〕 Based in Hong Kong and Mainland China, Roboto crafts premium background art assets for game developers worldwide. We are a small team of multi-talented artists bringing each game’s story to life with cohesive, immersive design. IN MOBILE AND CONSOLE/PC PLATFORMS</h4>
