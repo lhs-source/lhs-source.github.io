@@ -31,13 +31,13 @@ onMounted(() => {
   <div class="index-wrapper">
     <LhsMain></LhsMain>
     <BlackFethers></BlackFethers>
-    <Whoisme></Whoisme>
+    <!-- <Whoisme></Whoisme> -->
     <TextShowHide></TextShowHide>
     <!-- <SkillSetTitle></SkillSetTitle> -->
-    <SkillSet></SkillSet>
-    <Portfolio></Portfolio>
-    <PostList></PostList>
-    <GoPostList></GoPostList>
+    <!-- <SkillSet></SkillSet> -->
+    <!-- <Portfolio></Portfolio> -->
+    <!-- <PostList></PostList> -->
+    <!-- <GoPostList></GoPostList> -->
   </div>
 </template>
 

@@ -9,17 +9,39 @@ const emits = defineEmits<{
   (e: 'update:modelValue', value: any): void,
 }>();
 
+const CROW_STEP = 5;
 
-const motionPathEndHeight = 1/2;
-
-function animMotionPath(totalHeight: number) {
-// 모션패스
-const motionPathHeight = totalHeight * motionPathEndHeight;
-  // 스크롤 절반을 모션패스로 이동
-  gsap.to(".crow-image", {
+function animCrowPart() {
+  const scrollStep = screen.availHeight / 5; // 500;
+  const motionTotalHeight = (6 * 2 + 1) * scrollStep; // motionPath 길이 6번 * 위아래 2번 + 버퍼 1번
+  // 총 길이
+  // screen.availHeight * n 를 더안 히유 : 색 반전이 일어날 때까지 남아 있어야 함.
+  const totalHeight = motionTotalHeight + screen.availHeight * 2;
+  // totalHeight 만큼 핀
+  gsap.timeline({
+    scrollTrigger: {
+      trigger: '.crow-loading',
+      start: 0,
+      end: totalHeight,
+      pin: true,
+      scrub: 1,
+    }
+  })
+  // 타이틀 사라짐
+  gsap.to('.crow-loading .screen', {
+    opacity: 0,
+    scrollTrigger: {
+      trigger: '.crow-loading',
+      start: totalHeight - screen.availHeight / 2,
+      end: totalHeight,
+      scrub: 1,
+    }
+  })
+  // 모션 패스
+  gsap.to(".crow-wrap", {
     duration: 5, 
     ease: "power1.inOut",
-    // immediateRender: true,
+    immediateRender: true,
     // svg#path 경로를 따라서 까마귀가 이동
     motionPath: {
       path: "#path",
@@ -31,105 +53,67 @@ const motionPathHeight = totalHeight * motionPathEndHeight;
     // scrollTrigger의 scrub 으로 이동
     scrollTrigger: {
       trigger: '.crow-loading',
-      start: 'start start',
-      end: () => motionPathHeight,
+      start: 0,
+      end: motionTotalHeight,
       scrub: 1,
     }
   });
-  // 마지막 덤블링 
+  // 마지막 덤블링
   gsap.to("#crow", {
     rotate: -720,    
     ease: "power1.OutIn",
     immediateRender: true,
     scrollTrigger: {
       trigger: '.crow-loading',
-      start: () => motionPathHeight * 4 / 6,
-      end: () => motionPathHeight,
+      start: motionTotalHeight * 4 / 6,
+      end: motionTotalHeight,
       scrub: 1,
     }
   });
-  const upStep = {
-    rotate: 15,
-    ease: 'Power0.easeOut',
-    duration: 3,
+  // 5 걸음동안 위로 뒤어오르기 + 아래로 착지하기 반복
+  for(let i = 0; i < CROW_STEP; ++ i) {
+    gsap.to('.crow-wrap', {
+      rotate: 15,
+      ease: 'Power0.easeOut',
+      immediateRender: false,
+      scrollTrigger: {
+        trigger: '.crow-loading',
+        // 300, 600
+        // 900, 1200
+        // 1500, 1800
+        start: (i * 2 + 1) * scrollStep,
+        end: (i * 2 + 2) * scrollStep,
+        scrub: true,
+      }
+    })
+    gsap.to('.crow-wrap', {
+      rotate: 0,
+      ease: 'Power0.easeOut',
+      immediateRender: false,
+      scrollTrigger: {
+        trigger: '.crow-loading',
+        // 600, 900
+        // 1200, 1500
+        // 1800, 2100
+        start: (i + 1) * 2 * scrollStep,
+        end: ((i + 1) * 2 + 1) * scrollStep,
+        scrub: true,
+      }
+    })
   }
-  const downStep = {
-    rotate: 0,
-    ease: 'Power0.easeOut',
-    duration: 3,
-  }
-  gsap.timeline({
-    scrollTrigger: {
-      trigger: '.crow-loading',
-      start: 'start start',
-      end: () => motionPathHeight * 4 / 6,  // 텀블링 시작 전까지
-      scrub: 1,
-    }
-  })
-  .to('.crow-image', upStep, 0)
-  .to('.crow-image', downStep, 10)
-  .to('.crow-image', upStep, 20)
-  .to('.crow-image', downStep, 30)
-  .to('.crow-image', upStep, 40)
-  .to('.crow-image', downStep, 50)
-  .to('.crow-image', upStep, 60)
-  .to('.crow-image', downStep, 70)
-}
-
-function animTitleDisappear(totalHeight: number) {
-  const charList = gsap.utils.toArray('.title .char');
-  // 원을 중심으로 글자들이 퍼져나가는 위치
-  
-  const vectorList = charList.map((char, index) => {
-    // -120 ~ -60도까지
-    const degree = -120 + 60 / charList.length * (index + 1);
-    const distance = Math.max(screen.availHeight, screen.availWidth);
-    const rotateMax = 120;
-    return [
-      Math.cos(degree * Math.PI / 180) * distance,
-      Math.sin(degree * Math.PI / 180) * distance,
-      Math.random() * rotateMax - rotateMax / 2,
-    ];
-  })
-  gsap.timeline({
-    scrollTrigger: {
-      trigger: '.crow-loading',
-      start: () => totalHeight * motionPathEndHeight,
-      end: () => totalHeight,
-      scrub: 3,
-    }
-  }).to(charList, {
-    duration: 1,
-    // stagger: 0.1,
-    ease: 'Power0.easeOut',
-    opacity: 0,
-    y: (i) => vectorList[i][1],
-    x: (i) => vectorList[i][0],
-    rotate: (i) => vectorList[i][2],
-  }, 1)
-  .to('.crow-image', {
-    duration: 1,
-    ease: 'Power0.easeOut',
-    opacity: 0,
-    y: -screen.availHeight * 2,
-    x: -screen.availWidth / 2,
-    rotate: 60,
-  }, 1)
 }
 
 onMounted(() => {
-  const sectionTotalHeight = screen.availHeight * 10;
-  animMotionPath(sectionTotalHeight);
-  animTitleDisappear(sectionTotalHeight);
+  animCrowPart();
 })
 
 </script>
 
 <template>
-  <section class="crow-wrapper">
-    <div class="crow-loading pos-sticky top-left">
+  <section class="crow-pin">
+    <div class="crow-loading">
       <div class="crow-motion layer full-center">
-        <div class="crow-image">
+        <div class="crow-wrap">
           <svg 
             id="crow"
             version="1.0" 
@@ -231,20 +215,7 @@ onMounted(() => {
         </svg>
       </div>
       <div class="title-area layer full-center">
-        <div class="title">
-          <span class="char">L</span>
-          <span class="char">E</span>
-          <span class="char">E</span>
-          <span class="char">+</span>
-          <span class="char">H</span>
-          <span class="char">Y</span>
-          <span class="char">U</span>
-          <span class="char">N</span>
-          <span class="char">+</span>
-          <span class="char">S</span>
-          <span class="char">O</span>
-          <span class="char">O</span>
-        </div>
+        <div class="title">LEE HYUN SOO</div>
         <!-- <div class="subtitle">Blog. ASDFQWER1234!@#$</div> -->
       </div>
     </div>
@@ -255,10 +226,7 @@ onMounted(() => {
 @import "./main.scss";
 
 // 까마귀 로딩 섹션
-.crow-wrapper {
-  position: relative;
-  min-height: 100vh;
-  height: 1000vh;
+.crow-pin {
   mix-blend-mode: difference;
   .crow-loading {
     z-index: 1;
@@ -270,7 +238,7 @@ onMounted(() => {
       width: 400px;
       transform: translateY(-75%);
     }
-    .crow-image {
+    .crow-wrap {
       width: 64px;
       height: 64px;
       #crow {
@@ -285,10 +253,6 @@ onMounted(() => {
         font-size: calc(2 * var(--typo-title-font-size));
         font-weight: normal;
         font-family: 'Oswald', sans-serif;
-
-        .char {
-          display: inline-block;
-        }
       }
       .subtitle {
         font-size: 2rem;
@@ -296,13 +260,12 @@ onMounted(() => {
       }
     }
   }
-
 }
 
 @media screen and (max-width: 480px) {
   .crow-pin {
     .crow-loading {
-      .crow-image {
+      .crow-wrap {
         width: 64px;
         height: 64px;
       }

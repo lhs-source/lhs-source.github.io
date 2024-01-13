@@ -1,3 +1,6 @@
+@import url('https://fonts.googleapis.com/css2?family=Jura:wght@300..700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Jura:wght@300..700&family=Oswald:wght@200..700&display=swap');
+
 
 $color-text-lighter: rgba(255, 255, 255, .92);
 $color-text-normal: rgba(255, 255, 255, .87);
@@ -28,11 +31,42 @@ section {
   left: 0;
 }
 
+// position
+.pos-relative {
+  position: relative;
+}
+.pos-absolute {
+  position: absolute;
+}
+.pos-fixed {
+  position: fixed;
+}
+.pos-sticky {
+  position: sticky;
+}
+// position point
+.top-left { top: 0; left: 0; }
+.top-center { top: 0; left: 50%; transform: translateX(-50%); }
+.top-right { top: 0; right: 0; }
+.center-left { top: 50%; left: 0; transform: translateY(-50%); }
+.center-center { top: 50%; left: 50%; transform: translate(-50%, -50%); }
+.center-right { top: 50%; right: 0; transform: translateY(-50%); }
+.bottom-left { bottom: 0; left: 0; }
+.bottom-right { bottom: 0; right: 0; }
 
 .dummy-100vh {
+  height: 100vh;
+}
+.dummy-200vh {
+  height: 100vh;
+}
+.dummy-300vh {
   height: 100vh;
 }
 .full-screen {
   width: 100%;
   height: 100vh;
 }
+
+
+
