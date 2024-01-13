@@ -24,21 +24,21 @@ function animExploreTitle(totalHeight: number) {
   }, 0)
   .from('.title.reflect', {
     y: 132,
-    duration: 2,
+    duration: 3,
     opacity: 1,
     ease: 'power2.inOut',
     // 이거 하면 clip 이 안됨
     // background: 'linear-gradient(to bottom, #eeeeee04 30%, #eeeeee44 80%, #eeeeeeb1)',
     // backgroundClip: 'text',
   }, 0)
-  .from('.inspired', { opacity: 0, duration: 4 }, 4)
-  .from('.subtitle', { opacity: 0, duration: 4 }, 6)
+  .from('.inspired', { opacity: 0, duration: 8 }, 6)
+  .from('.subtitle', { opacity: 0, duration: 8 }, 10)
   .to('.title-center', {
     y: -164,
     opacity: 0.1,
     duration: 20,
     ease: 'power2.out',
-  }, 20)
+  }, 30)
 
 }
 
@@ -94,26 +94,27 @@ function animMrCrow(totalHeight: number) {
     duration: talkTransitionTime,
   }, talkTime)
   .to('#mrcrow', {
-    width: '120%',
+    height: '150%',
     yPercent: 50,
     opacity: 1,
-    duration: 0.2,
+    duration: 0.1,
   }, talkTime+=0.2)
   .to('#brain', {
     visibility: 'visible',
     opacity: 1,
-    // width: '60%',
     ease: 'power2.inOut',
     duration: talkTransitionTime,
   }, talkTime+=0.2)
   .to('#brain', {
     y: -screen.availHeight * 0.2,
+    rotate: 15,
     ease: 'power2.inOut',
     duration: talkTransitionTime,
   }, talkTime+=0.2)
   .to('#brain', {
     scale: 10,
     yPercent: -10,
+    rotate: -5,
     opacity: 0,
     ease: 'power2.inOut',
     duration: talkTransitionTime * 3,
@@ -133,10 +134,10 @@ onMounted(() => {
 </script>
 
 <template>
-  <section class="crow-brain-wrapper h-4800vh">
+  <section class="crow-brain-wrapper h-4000vh">
     <div class="h-100vh"></div>
     <!-- <div class="sticky-height pos-relative h-300vh"> -->
-      <div class="title-sticky pos-sticky top-left h-500vh">
+      <div class="title-sticky pos-sticky top-left h-1000vh">
         <div class="title-center">
 
           <h4 class="inspired">Inspired by RustyLake</h4>
@@ -150,7 +151,7 @@ onMounted(() => {
         </div>
       </div>
     <!-- </div> -->
-    <div class="crow-brain-sticky-wrapper sticky-height pos-relative h-4000vh">
+    <div class="crow-brain-sticky-wrapper sticky-height pos-relative h-3000vh">
       <div class="crow-brain-sticky pos-sticky top-left">
         <div class="full-center">
           <img id="mrcrow" src="../../assets/crow/mr-crow.webp" />
@@ -235,7 +236,7 @@ onMounted(() => {
       // mrcrow 이미지
       #mrcrow {
         opacity: 0;
-        width: 40%;
+        height: 50%;
       }
       .talk-area {
         display: flex;
@@ -257,7 +258,7 @@ onMounted(() => {
         width: 20%;
         position: absolute;
         bottom: 30%;
-        left: 50%;
+        // left: 50%;
         visibility: hidden;
         opacity: 0;
       }
