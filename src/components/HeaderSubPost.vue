@@ -28,13 +28,14 @@ function onClickTOC() {
 </script>
 
 <template>
-    <div class="header-sub-post">
-      <div class="menu" @click="onClickPostList">📻포스팅 목록</div>
-      <div class="menu" @click="onClickTOC">📚목차</div>
-    </div>
+  <div class="header-sub-post">
+    <div class="menu" @click="onClickPostList">📻포스팅 목록</div>
+    <div class="menu" @click="onClickTOC">📚목차</div>
+  </div>
 </template>
 
 <style lang="scss" scoped>
+@import '/src/pages/post.scss';
 // variables 임시
 $color-text-lighter: rgba(255, 255, 255, .92);
 $color-text-normal: rgba(255, 255, 255, .87);

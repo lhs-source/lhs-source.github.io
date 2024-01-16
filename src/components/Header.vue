@@ -32,6 +32,7 @@ const menuList = [{
 </template>
 
 <style lang="scss" scoped>
+@import '/src/pages/post.scss';
 // variables 임시
 $color-text-lighter: rgba(255, 255, 255, .92);
 $color-text-normal: rgba(255, 255, 255, .87);
@@ -116,7 +117,7 @@ header {
 .header-row.slot {
   display: none;
 }
-@media screen and (max-width: 1280px) {
+@media screen and (max-width: $media-toc) {
   .header-row.slot {
     display: block;
   }

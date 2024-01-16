@@ -69,7 +69,7 @@ aside {
   }
 }
 
-@media screen and (max-width: 960px) {
+@media screen and (max-width: $media-posts) {
   aside {
     left: -$post-list-frame-width-min;
     &.open {
