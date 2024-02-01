@@ -12,7 +12,7 @@ const emits = defineEmits<{
 const h1 = ref<HTMLElement | null>(null);
 
 function animCrowPart() {
-  const screenList = gsap.utils.toArray('.full-screen');
+  const screenList: any[] = gsap.utils.toArray('.full-screen');
   // duration 은 scrub 할 scroll 의 길이이다.
   const stepShow = { opacity: 1, duration: 5 };
   const stepHide = { opacity: 0, duration: 5 };

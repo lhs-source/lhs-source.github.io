@@ -24,7 +24,7 @@ function animSkillSet() {
     ease: "power2.inOut",
     spin: curLayout.value === 0, // only spin when going to the "final" layout
     simple: true,
-    onEnter: (elements: any, animation: any) => gsap.fromTo(elements, {opacity: 0}, {opacity: 1, delay: animation.duration() - 0.1}),
+    // onEnter: (elements: any, animation: any) => {gsap.fromTo(elements, {opacity: 0}, {opacity: 1, delay: animation.duration() - 0.1}),
     onLeave: elements => gsap.to(elements, {opacity: 0})
   });
 

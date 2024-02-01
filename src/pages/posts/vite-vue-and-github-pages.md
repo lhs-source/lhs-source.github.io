@@ -82,7 +82,7 @@ export default {
 
 ```
 
-![](Files/git_blog.png)  
+![](../../img/vite-vue-and-github-pages/git_blog.png)  
 
 `npm run build`  를 하면 바로 사이트맵과 로보츠 파일이 만들어진다. 기본 사용법대로 사이트맵 파일을 만들면 주소가 `localhost`  로 되는데, `hostname`  을 변경해서 내 사이트 주소를 설정해주어야 한다.
 
@@ -141,7 +141,7 @@ export default defineConfig({
 
 메인 페이지와 포스트 페이지의 디자인을 완전히 분리하고 nested routes 로 관리할 것이다.
 
-![](Files/git_blog%202.png)  
+![](../../img/vite-vue-and-github-pages/git_blog%202.png)  
 
 ```ts
 route {

@@ -13,6 +13,7 @@ import GoPostList from '../components/Main/GoPostList.vue';
 import Whoisme from '../components/Main/Whoisme.vue';
 import TextShowHide from '../components/Main/TextShowHide.vue';
 import CrowBrain from '../components/Main/CrowBrain.vue';
+import Mirror from '../components/Main/Mirror.vue';
 
 gsap.registerPlugin(ScrollTrigger);
 gsap.registerPlugin(MotionPathPlugin);
@@ -32,8 +33,8 @@ onMounted(() => {
   <div class="index-wrapper">
     <LhsMain></LhsMain>
     <BlackFethers></BlackFethers>
-    <!-- <Whoisme></Whoisme> -->
     <CrowBrain></CrowBrain>
+    <Mirror></Mirror>
     <TextShowHide></TextShowHide>
     <!-- <SkillSetTitle></SkillSetTitle> -->
     <!-- <SkillSet></SkillSet> -->

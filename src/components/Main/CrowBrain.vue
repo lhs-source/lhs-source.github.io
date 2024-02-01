@@ -8,37 +8,37 @@ function animExploreTitle(totalHeight: number) {
   // title 나타나기
   gsap.timeline({
     scrollTrigger: {
-      trigger: ".title-sticky",
-      start: "start start",
+      trigger: ".title-sticky", // 1000vh
+      start: "10% start",
       end: `100% start`,
       // markers: true,
       toggleActions: "play none none reverse",
-      scrub: 1,
+      scrub: 1.5,
     },
   })
   .to('.title-center', { opacity: 1, }, 0)
   .from('.title.origin', {
     y: -164,
-    duration: 2,
+    duration: 15,
     ease: 'power2.inOut',
   }, 0)
   .from('.title.reflect', {
     y: 132,
-    duration: 3,
+    duration: 20,
     opacity: 1,
     ease: 'power2.inOut',
     // 이거 하면 clip 이 안됨
     // background: 'linear-gradient(to bottom, #eeeeee04 30%, #eeeeee44 80%, #eeeeeeb1)',
     // backgroundClip: 'text',
   }, 0)
-  .from('.inspired', { opacity: 0, duration: 8 }, 6)
-  .from('.subtitle', { opacity: 0, duration: 8 }, 10)
+  .from('.inspired', { opacity: 0, duration: 12 }, 45)
+  .from('.subtitle', { opacity: 0, duration: 12 }, 50)
   .to('.title-center', {
     y: -164,
     opacity: 0.1,
-    duration: 20,
+    duration: 30,
     ease: 'power2.out',
-  }, 30)
+  }, 100)
 
 }
 
@@ -62,7 +62,7 @@ function animMrCrow(totalHeight: number) {
   .to('#mrcrow', {
     opacity: 0.7,
     width: '50vm',
-    duration: 0.5,
+    duration: 0.4,
   }, 0.2)
   .to('#talk-1', {
     opacity: 1,
