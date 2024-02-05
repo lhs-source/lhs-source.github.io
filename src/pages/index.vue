@@ -14,6 +14,7 @@ import Whoisme from '../components/Main/Whoisme.vue';
 import TextShowHide from '../components/Main/TextShowHide.vue';
 import CrowBrain from '../components/Main/CrowBrain.vue';
 import Mirror from '../components/Main/Mirror.vue';
+import Introducement from '../components/Main/Introducement.vue';
 
 gsap.registerPlugin(ScrollTrigger);
 gsap.registerPlugin(MotionPathPlugin);
@@ -35,6 +36,7 @@ onMounted(() => {
     <BlackFethers></BlackFethers>
     <CrowBrain></CrowBrain>
     <Mirror></Mirror>
+    <Introducement></Introducement>
     <TextShowHide></TextShowHide>
     <!-- <SkillSetTitle></SkillSetTitle> -->
     <!-- <SkillSet></SkillSet> -->

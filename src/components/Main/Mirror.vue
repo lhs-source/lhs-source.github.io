@@ -43,7 +43,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <section class="mirror-wrapper h-2000vh">
+  <section class="mirror-wrapper h-1000vh">
     <div class="full-img pos-sticky">
       <img id="me" src="../../assets/crow/mr-crow.webp" />  
     </div>
