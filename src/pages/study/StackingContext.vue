@@ -10,6 +10,11 @@ const emits = defineEmits<{
   (e: 'update:modelValue', value: any): void,
 }>();
 
+export interface TestType {
+  name: string;
+  age: number;
+}
+
 const router = useRouter();
 const route = useRoute();
 

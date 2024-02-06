@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { defineEmits, defineProps, onMounted, withDefaults } from "vue";
 import { gsap } from 'gsap';
+import { onMounted } from "vue";
 
 const props = withDefaults(defineProps<{
   modelValue?: any;

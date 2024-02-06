@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { defineEmits, defineProps, onMounted, withDefaults } from "vue";
+import { onMounted } from "vue";
 import { gsap } from 'gsap';
 import { usePosts } from "../../store/posts";
 import dayjs from 'dayjs';
