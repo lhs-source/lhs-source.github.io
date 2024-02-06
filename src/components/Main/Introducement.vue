@@ -7,7 +7,7 @@ import { ScrollTrigger } from 'gsap/dist/ScrollTrigger';
 gsap.registerPlugin(ScrollTrigger);
 
 function animIntroducement() {
-  for(let i = 0; i < 9; i++) {
+  for(let i = 0; i < 4; i++) {
     gsap.to(`.introducement-row:nth-child(${i + 1}) span`, {
       scrollTrigger: {
         trigger: `.introducement-row:nth-child(${i + 1})`,
@@ -54,10 +54,10 @@ function animIntroducement() {
       end: 'bottom bottom',
       scrub: 1,
     },
-  }).to('.introducement-move', {
-    y: '-300vh',
-    duration: 1,
-    ease: 'none',
+  // }).to('.introducement-move', {
+  //   y: '-300vh',
+  //   duration: 1,
+  //   ease: 'none',
   }).to('.introducement-main-title .introducement-title', {
     y: '50vh',
     duration: 1,
@@ -123,9 +123,9 @@ onMounted(() => {
 $font-color-brown: #B8621B;
 
 .introducement-wrapper {
-  position: sticky;
-  top: 0;
-  left: 0;
+  // position: sticky;
+  // top: 0;
+  // left: 0;
   width: 100%;
   overflow-y: hidden;
 
@@ -151,25 +151,37 @@ $font-color-brown: #B8621B;
     .introducement-section {
       .introducement-title {
         margin-top: 10vh;
-        font-size: var(--typo-h1-font-size);
-        font-weight: 600;
+        font-size: calc(var(--typo-h1-font-size) * 1.6);
+        font-weight: 400;
         line-height: 1.2;
+
+        // text background 
+        color: transparent;
+        // https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQfuVOA4cAYeVDL1nViIY7cU_i2TdAz1dFe2QWxTqRIGw&s
+        background: linear-gradient(to bottom, #9f9f9f50 30%, #89898927 80%, #5e5e5e67),
+          url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQfuVOA4cAYeVDL1nViIY7cU_i2TdAz1dFe2QWxTqRIGw&s') 
+          no-repeat center bottom / cover;
+        background-clip: text;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
       }
       .introducement-subtitle {
+        margin-top: 2vh;
         width: 32%;
         min-width: 320px;
-        font-size: var(--typo-h3-font-size);
+        font-size: var(--typo-tiny-font-size);
         font-weight: 400;
-        line-height: 0.9;
+        line-height: 1;
       }
       .introducement-text {
+        margin-top: 2vh;
         width: 32%;
         min-width: 320px;
-        font-size: var(--typo-h5-font-size);
+        font-size: var(--typo-body-font-size);
         font-weight: 400;
-        line-height: 0.9;
-
+        line-height: 1;
       }
+
     }
     .introducement-main-title {
       width: 100%;

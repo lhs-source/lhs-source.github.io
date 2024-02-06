@@ -9,7 +9,7 @@ gsap.registerPlugin(ScrollTrigger);
 const whoismeCount = ref(Math.ceil(screen.availHeight / 65));
 
 function animWhoIsMeTitle() {
-  for(let i = 0; i < whoismeCount.value * 4 + 3; i++) {
+  for(let i = 0; i < whoismeCount.value * 2 + 3; i++) {
     gsap.to(`.who-is-me-row:nth-child(${i + 1})`, {
       scrollTrigger: {
         trigger: `.who-is-me-row:nth-child(${i + 1})`,
@@ -28,7 +28,7 @@ function animWhoIsMeTitle() {
 
 
 onMounted(() => {
-  whoismeCount.value = Math.ceil(screen.availHeight / 65);
+  whoismeCount.value = Math.ceil(screen.availHeight / 65) * 2;
   animWhoIsMeTitle();
 })
 </script>

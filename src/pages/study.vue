@@ -10,7 +10,17 @@ const pageList = [
     id: 2,
     name: 'Stacking Context',
     path: 'stackingcontext'
-  }
+  },
+  {
+    id: 3,
+    name: 'ThreeJS',
+    path: 'threejs'
+  },
+  {
+    id: 4,
+    name: 'VueStudy',
+    path: 'vuestudy'
+  },
 ]
 
 
