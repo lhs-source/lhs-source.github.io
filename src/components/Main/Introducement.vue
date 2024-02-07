@@ -133,7 +133,14 @@ $font-color-brown: #B8621B;
     z-index: 1;
     // margin-top: 300vh;
     width: 100%;
-    background-color: black;
+
+    // 아래로 어두워지는 그라데이션
+    background: linear-gradient(180deg, rgba(0,0,0,1) 5%, rgba(0,0,0,0.5) 15%, rgba(0,0,0,1) 50%)
+      , url('https://www.junggi.co.kr/data/article/20190228/5c778a3aeec6d.jpg')
+      ;
+    background-size: 200%;
+    // no repeat
+    background-repeat: no-repeat;
     
     color: white;
 
@@ -190,11 +197,6 @@ $font-color-brown: #B8621B;
       flex-direction: column;
       justify-content: center;
       line-height: 0.9;
-      // 아래로 어두워지는 그라데이션
-      background: linear-gradient(180deg, rgba(0,0,0,1) 25%, rgba(0,0,0,0.3) 50%, rgba(0,0,0,1) 100%)
-        , url('https://i.namu.wiki/i/lL5w9sLPxxkRW64h-Wqn9xPpV4BcqaVscC4BApysH5Da1OpoRrpS_r2stMIWlix7bQ0cOBvGEV8raEo_PhZvMA.webp')
-        ;
-      background-size: cover;
       .introducement-row {
         color: rgb(216, 216, 216);
         font-size: calc(var(--typo-title-font-size) * 1.5);
