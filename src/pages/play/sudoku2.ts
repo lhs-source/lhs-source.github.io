@@ -310,6 +310,7 @@ import {
         for (let houseIndex = 0; houseIndex < BOARD_SIZE; houseIndex++) {
           const house = GROUP_OF_HOUSES[houseType][houseIndex];
           const candidatesToRemove = getUsedNumbers(house);
+          // console.log('func', 'updateCandidatesBasedOnCellsValue > candidatesToRemove', candidatesToRemove);
   
           for (let cellIndex = 0; cellIndex < BOARD_SIZE; cellIndex++) {
             const cell = board[house[cellIndex]];
@@ -828,8 +829,8 @@ import {
       if (effectedCells === -1) {
         return false;
       }
-      console.log('strategyIndex', strategyIndex);
-      console.log('strategies[strategyIndex]', strategies[strategyIndex]);
+      // console.log('strategyIndex', strategyIndex);
+      // console.log('strategies[strategyIndex]', strategies[strategyIndex]);
 
       if (!analyzeMode) {
         onUpdate?.({
@@ -857,6 +858,8 @@ import {
         return false;
       }
       const value = getRandomCandidateOfCell(candidates);
+      // console.log('func', 'getRandomCandidateOfCell > candidates', candidates);
+      // console.log('func', 'getRandomCandidateOfCell > value', value);
       addValueToCellIndex(board, cellIndex, value);
       return true;
     };
@@ -879,6 +882,7 @@ import {
         return true;
       }
       if (setBoardCellWithRandomCandidate(cellIndex)) {
+        // console.log('cellIndex', cellIndex);
         generateBoardAnswerRecursively(cellIndex + 1);
       } else {
         invalidPreviousCandidateAndStartOver(cellIndex);
@@ -1024,7 +1028,7 @@ import {
       const boardNotChanged =
         initialBoard.filter(Boolean).length ===
         stepSolvedBoard.filter(Boolean).length;
-      console.log('boardNotChanged', boardNotChanged);
+      // console.log('boardNotChanged', boardNotChanged);
       if (!isBoardFinished(board) && boardNotChanged) {
         return solveStep({ analyzeMode, iterationCount: iterationCount + 1 });
       }

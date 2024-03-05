@@ -138,6 +138,7 @@
 import { candidateAll, generate, generateWithCandidate, hint2, solve } from './sudoku2index';
 import { computed, nextTick, onMounted, onUnmounted, ref } from 'vue';
 import { CellValue, InternalBoard, SolvingResult } from './sudoku2types';
+import { Sudoku } from './sudokuClass';
 
 interface Solve {
   value: number | null;   // 초기값
@@ -151,6 +152,9 @@ const selectedCell = ref<number | null>(null);  // 선택한 셀 인덱스
 const solveTable = ref<Solve[]>([]);
 const resultTable = ref<SolvingResult | null>(null);
 const selectedMode = ref<'number' | 'candidate'>('number');
+
+const sudoku = new Sudoku('easy');
+console.log('sudoku', sudoku);
 
 const displayTable = computed(() => {
   return solveTable.value.map((cell) => {
