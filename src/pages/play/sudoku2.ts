@@ -403,7 +403,10 @@ import {
             break; // can't find answer here
           }
         }
-  
+        // if(possibleCandidates.length > 0) {
+        //   console.debug('possibleCandidates', cellIndex, possibleCandidates);
+        // }
+        
         if (possibleCandidates.length === 1) {
           const digit = possibleCandidates[0];
   
@@ -825,7 +828,9 @@ import {
       if (effectedCells === -1) {
         return false;
       }
-  
+      console.log('strategyIndex', strategyIndex);
+      console.log('strategies[strategyIndex]', strategies[strategyIndex]);
+
       if (!analyzeMode) {
         onUpdate?.({
           strategy: strategies[strategyIndex].title,
@@ -1019,6 +1024,7 @@ import {
       const boardNotChanged =
         initialBoard.filter(Boolean).length ===
         stepSolvedBoard.filter(Boolean).length;
+      console.log('boardNotChanged', boardNotChanged);
       if (!isBoardFinished(board) && boardNotChanged) {
         return solveStep({ analyzeMode, iterationCount: iterationCount + 1 });
       }
@@ -1038,6 +1044,7 @@ import {
     };
   
     const getBoard = (): Board => board.map((cell) => cell.value);
+    const getInternalBoard = (): InternalBoard => board;
   
     if (!initBoard) {
       initializeBoard();
@@ -1054,5 +1061,7 @@ import {
       analyzeBoard,
       getBoard,
       generateBoard,
+      getRemainingCandidates,
+      getInternalBoard,
     };
   }

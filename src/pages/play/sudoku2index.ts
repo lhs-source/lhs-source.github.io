@@ -5,6 +5,7 @@ import {
   type Difficulty,
   type SolvingStep,
   type SolvingResult,
+  InternalBoard,
 } from "./sudoku2types";
 
 export { type AnalyzeData, type Board, type Difficulty, type SolvingStep };
@@ -19,6 +20,14 @@ export function analyze(Board: Board): AnalyzeData {
 export function generate(difficulty: Difficulty): Board {
   const { getBoard } = createSudokuInstance({ difficulty });
   return getBoard();
+}
+export function candidateAll(board: Board): InternalBoard {
+  const { getInternalBoard } = createSudokuInstance({ initBoard: board});
+  return getInternalBoard();
+}
+export function generateWithCandidate(difficulty: Difficulty): InternalBoard {
+  const { getInternalBoard } = createSudokuInstance({ difficulty });
+  return getInternalBoard();
 }
 
 export function solve(Board: Board): SolvingResult {
@@ -79,3 +88,8 @@ export function hint2(Board: Board): SolvingResult {
 
   return { solved: true, board, steps: solvingSteps, analysis };
 }
+
+// export function candidates(Board: Board): Board {
+//   const { getRemainingCandidates } = createSudokuInstance({ initBoard: Board });
+//   return getRemainingCandidates();
+// }
