@@ -73,7 +73,7 @@
           v-if="index === 0"
           class="sudoku-table hint">
           <div
-            v-for="(num, index) of hint.board" 
+            v-for="(cell, index) of hintSudoku.board" 
             :key="index" 
             class="cell-frame"
             :class="{
@@ -84,7 +84,8 @@
               // 모든 steps 의 updates 의 index 를 배열로 펼쳐서 index 와 비교
               'hint-target': hintTarget.includes(index),
             }">
-            <span v-if="num">{{ num }}</span>
+            <span class="index">{{ index }}</span>
+            <span v-if="cell.value">{{ cell.value }}</span>
             <div v-else class="candidate-list remove-candidate">
               <div class="candidate" 
                 v-for="i in 9" 
@@ -92,16 +93,12 @@
                 :class="{
                 }">
                 <span v-if="hintFlat.find((update) => update.index === index)?.eliminatedCandidate.includes(i)"
-                  style="color: gold;">
+                  style="color:chartreuse;">
                   {{ i }}
                 </span>
                 <span v-else >
-                  <!-- {{ hintFlat.findIndex((update) => update.index === index) }} -->
-                  <!-- {{ hintFlat.findIndex((update) => update.index === index) >= 0 ? i : ''}} -->
+                  {{ cell.candidates.indexOf(i) >= 0 ? i : '' }}
                 </span>
-                <!-- {{ hint.steps.reduce((acc, step) => {
-                  return acc.concat(step.updates.map((update) => update.index));
-                }, []).includes(index) ? '!' : '' }} -->
               </div>
             </div>
           </div>
@@ -135,9 +132,9 @@
 </template>
 
 <script setup lang="ts">
-import { candidateAll, generate, generateWithCandidate, hint2, solve } from './sudoku2index';
 import { computed, nextTick, onMounted, onUnmounted, ref } from 'vue';
-import { CellValue, InternalBoard, SolvingResult } from './sudoku2types';
+import { CellValue, SolvingResult } from './sudoku2types';
+import { Sudoku } from './sudokuClass';
 
 interface Solve {
   value: number | null;   // 초기값
@@ -145,12 +142,21 @@ interface Solve {
   error: boolean; // 오답 표시
   candidateList: CellValue[]; // 후보자 리스트
 }
-const sudokuTable = ref<InternalBoard>([]); // 초기 문제 테이블
 const hintList = ref<SolvingResult[]>([]);
 const selectedCell = ref<number | null>(null);  // 선택한 셀 인덱스
 const solveTable = ref<Solve[]>([]);
-const resultTable = ref<SolvingResult | null>(null);
 const selectedMode = ref<'number' | 'candidate'>('number');
+
+// console.log off
+const originalConsoleLog = console.log;
+// console.log = () => {};
+const sudoku = ref<Sudoku>(new Sudoku('easy'));
+const resultSudoku = ref<Sudoku>(new Sudoku('easy', sudoku.value.board.map((cell) => cell.value)));
+const hintSudoku = ref<Sudoku>(new Sudoku('easy', sudoku.value.board.map((cell) => cell.value)));
+console.log = originalConsoleLog;
+console.log('sudoku', sudoku);
+console.log('resultSudoku', resultSudoku);
+console.log('hintSudoku', hintSudoku);
 
 const displayTable = computed(() => {
   return solveTable.value.map((cell) => {
@@ -217,7 +223,8 @@ const candidateList = computed(() => {
  * # 힌트를 클릭
  */
 function onClickHint() {
-  const hint = hint2(displayTable.value.map((cell) => cell));
+  const hint = hintSudoku.value.nextHint();
+  console.log('hint', hint);
   hintList.value.unshift(hint);
 }
 /**
@@ -254,7 +261,7 @@ function removeCandidate(index: number, filledValue: number) {
 function onClickNumber(numberPad: number) {
   // 초기 셀은 변경할 수 없음
   // TODO 클릭 시 같은 숫자의 셀에 표시
-  if(sudokuTable.value[selectedCell.value!].value !== null) return;
+  if(sudoku.value.board[selectedCell.value!].value !== null) return;
   if(selectedMode.value === 'candidate') {
     // 후보자 모드일 경우 후보자 리스트를 추가하거나 제거
     const cell = solveTable.value[selectedCell.value!];
@@ -269,17 +276,20 @@ function onClickNumber(numberPad: number) {
     cell.input = numberPad;
     nextTick(() => {
       // 입력한 값이 정답이 아닐 경우 에러로 표시
-      if(cell.input !== resultTable.value!.board![selectedCell.value!]) {
+      if(cell.input !== resultSudoku.value.board![selectedCell.value!].value) {
         cell.error = true;
       } else {
         // 정답
         cell.error = false;
         // 가로줄, 세로줄, 3x3 블록에 후보자를 제거
         removeCandidate(selectedCell.value!, numberPad);
+        sudoku.value.setNumber(selectedCell.value!, numberPad);
+        hintSudoku.value.setNumber(selectedCell.value!, numberPad);
+        
       }
       // 힌트를 계산
       console.log('displayTable.value', displayTable.value);
-      const hint = hint2(displayTable.value);
+      const hint = hintSudoku.value.nextHint();
       hintList.value.unshift(hint);
     });
   }
@@ -325,14 +335,14 @@ function onClickNextStep() {
 }
 
 function onClickCandidate() {
-  console.log('candidateAll', candidateAll(displayTable.value));
+  console.log('candidateAll', sudoku.value.board);
 }
 
-sudokuTable.value = generateWithCandidate('expert');
-solveTable.value = sudokuTable.value.map((num) => {
+solveTable.value = sudoku.value.board.map((num) => {
   return { value: num.value, input: null, error: false, candidateList: num.candidates };
 });
-resultTable.value = solve(sudokuTable.value.map((cell) => cell.value));
+
+// resultSudoku.value.solve();
 onClickHint();
 
 onMounted(() => {
@@ -365,6 +375,7 @@ $cell-size: 36px;
   height: calc($cell-size * 9 * 1.5);
 
   .cell-frame {
+    position: relative;
     border: 1px solid $border-color;
     display: flex;
     align-items: center;
@@ -452,6 +463,9 @@ $cell-size: 36px;
       &.hint-target {
         background-color: rgb(39, 121, 146);
         color: white;
+        .candidate {
+          color: white;
+        }
       }
     }
 
@@ -496,6 +510,27 @@ $cell-size: 36px;
     margin-top: 12px;
     padding: 12px;
     border: 1px solid rgb(74, 74, 74);
+    .cell-frame{
+      .index {
+        visibility: hidden;
+        position:absolute; 
+        top:0; 
+        left:0; 
+        display: block;
+        width: 1.2rem;
+        height: 1.2rem;
+        border-radius: 50%; 
+        background-color: blue;
+        color: white;
+        font-size: 0.6em;
+        text-align: center;
+      }
+      &:hover {
+        .index {
+          visibility: visible;
+        }
+      }
+    }
     
     // 다음 전략 추천
     .step-list{

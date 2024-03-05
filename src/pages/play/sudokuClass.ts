@@ -1,4 +1,5 @@
 // Importing necessary constants
+import { createSudokuInstance } from "./sudoku2";
 import {
   DIFFICULTY_MEDIUM,
   BOARD_SIZE,
@@ -23,6 +24,8 @@ import type {
   Difficulty,
   Update,
   Houses,
+  SolvingResult,
+  SolvingStep,
 } from "./sudoku2types";
 
 // Importing utility functions
@@ -46,6 +49,8 @@ export class Sudoku {
   board: InternalBoard = [];
   usedStrategies: Array<number> = [];
   difficulty: Difficulty = DIFFICULTY_MEDIUM;
+  initialBoard: Board = [];
+  // solvedBoard: SolvingResult = { solved: false, error: "No solution for provided board!" };
 
   constructor(difficulty: Difficulty, initBoard?: Board) {
     this.difficulty = difficulty;
@@ -53,14 +58,52 @@ export class Sudoku {
     if (!initBoard) {
       this.initializeBoard(initBoard);
       this.generateBoard();
+      this.initialBoard = [...this.numberBoard];
+      // this.solvedBoard = this.solve(this.initialBoard);
     } else {
-      // board = convertInitialBoardToSerializedBoard(initBoard);
-      // updateCandidatesBasedOnCellsValue();
-      // analyzeBoard();
+      this.board = this.convertInitialBoardToSerializedBoard(initBoard);
+      this.updateCandidatesBasedOnCellsValue();
+      // this.analyzeBoard();
     }
   }
   get numberBoard() {
     return this.board.map((cell) => cell.value);
+  }
+
+  setNumber(index: number, value: number) {
+    addValueToCellIndex(this.board, index, value);
+  }
+  nextHint(): SolvingResult {
+    const solvingSteps: SolvingStep[] = [];
+    // const analysis = this.analyzeBoard();
+    // const analysis = this.analyzeBoard();
+  
+    // if (!analysis.hasSolution) {
+    //   return { solved: false, error: "No solution for provided board!" };
+    // }
+    // const tempBoard = this.solveStepSimulate();
+    // const board = tempBoard === false ? [] : tempBoard.map((cell) => cell.value);
+    const stepUpdate = (solvingStep:any) => {
+      solvingSteps.push(solvingStep)
+      // console.log('solvingSteps', solvingSteps);
+    }
+    const board = this.solveStep({onUpdate: stepUpdate});
+  
+    if (!board) {
+      return { solved: false, error: "No solution for provided board!" };
+    }
+  
+    // if (!analysis.hasUniqueSolution) {
+      return {
+        solved: true,
+        board,
+        steps: solvingSteps,
+        // analysis,
+        error: "No unique solution for provided board!",
+      };
+    // }
+  
+    return { solved: true, board, steps: solvingSteps, analysis };
   }
   
   /**
@@ -85,17 +128,18 @@ export class Sudoku {
     this.generateBoardAnswerRecursively(0);
     const slicedBoard = JSON.parse(JSON.stringify(this.board));
 
-    function isBoardTooEasy(sudoku: Sudoku) {
-      sudoku.prepareGameBoard();
-      const data = sudoku.analyzeBoard();
-      if (data.hasSolution && data.difficulty) {
-        return !isHardEnough(sudoku.difficulty, data.difficulty);
-      }
-      return true;
-    }
-    while (isBoardTooEasy(this)) {
-      this.board = slicedBoard.slice();
-    }
+    this.prepareGameBoard();
+    // function isBoardTooEasy(sudoku: Sudoku) {
+    //   sudoku.prepareGameBoard();
+    //   const data = sudoku.analyzeBoard();
+    //   if (data.hasSolution && data.difficulty) {
+    //     return !isHardEnough(sudoku.difficulty, data.difficulty);
+    //   }
+    //   return true;
+    // }
+    // while (isBoardTooEasy(this)) {
+    //   this.board = slicedBoard.slice();
+    // }
 
     this.updateCandidatesBasedOnCellsValue();
     return this.board;
@@ -112,16 +156,17 @@ export class Sudoku {
       addValueToCellIndex(this.board, cellIndex, null);
       // Reset candidates, only in model.
       this.resetCandidates();
-      const boardAnalysis = this.analyzeBoard();
+      // const boardAnalysis = this.analyzeBoard();
       // console.log('addValueToCellIndex', removalCount, cellIndex, null);
       // console.log('boardAnalysis', boardAnalysis);
 
-      if (this.isValidAndEasyEnough(boardAnalysis, this.difficulty)) {
-        removalCount--;
-      } else {
-        // Reset - don't dig this cell
-        addValueToCellIndex(this.board, cellIndex, cellValue);
-      }
+      removalCount--;
+      // if (this.isValidAndEasyEnough(boardAnalysis, this.difficulty)) {
+      //   removalCount--;
+      // } else {
+      //   // Reset - don't dig this cell
+      //   addValueToCellIndex(this.board, cellIndex, cellValue);
+      // }
     }
   };
   isValidAndEasyEnough(analysis: AnalyzeData, difficulty: Difficulty) {
@@ -197,7 +242,7 @@ export class Sudoku {
     this.board[cellIndex].invalidCandidates = [];
     this.generateBoardAnswerRecursively(previousIndex);
   };
-  analyzeBoard() {
+  analyzeBoard(onUpdate?: () => void) {
     let usedStrategiesClone = this.usedStrategies.slice();
     let boardClone = JSON.parse(JSON.stringify(this.board));
 
@@ -206,6 +251,7 @@ export class Sudoku {
       Continue = this.applySolvingStrategies({
         strategyIndex: Continue === "elimination" ? 1 : 0,
         analyzeMode: true,
+        onUpdate,
       });
     }
     const data: AnalyzeData = {
@@ -245,9 +291,11 @@ export class Sudoku {
   solveStep ({
     analyzeMode = false,
     iterationCount = 0,
+    onUpdate,
   }: {
     analyzeMode?: boolean;
     iterationCount?: number;
+    onUpdate?: (param: { strategy: string; updates: Update[]; type: "value" | "elimination" }) => void;
   } = {}): Board | false {
     const MAX_ITERATIONS = 30;
     if (iterationCount >= MAX_ITERATIONS) {
@@ -255,14 +303,27 @@ export class Sudoku {
     }
 
     const initialBoard = this.board.map(cell => cell.value).slice();
-    this.applySolvingStrategies({ analyzeMode });
+    const initialBoardCandidates = this.board.map(cell => cell.candidates).slice();
+    this.applySolvingStrategies({ analyzeMode, onUpdate });
     const stepSolvedBoard = this.board.map(cell => cell.value).slice();
+    const stepSolvedBoardCandidates = this.board.map(cell => cell.candidates).slice();
+    // console.log('stepSolvedBoardCandidates', stepSolvedBoardCandidates);
+    initialBoardCandidates.forEach((cell, i) => {
+      const candidateIndex = stepSolvedBoardCandidates[i];
+      const initialCandidates = cell;
+      // diff 숫자 배열끼리 비교해서 달라진 것 찾기
+      const diff: CellValue[] = initialCandidates.filter((x) => !candidateIndex.includes(x));
+      if(diff.length > 0) {
+        console.log('diff', i, diff);
+      }
+    });
 
     const boardNotChanged =
       initialBoard.filter(Boolean).length ===
       stepSolvedBoard.filter(Boolean).length;
+    // console.log('solveStep > boardNotChanged', boardNotChanged);
     if (!isBoardFinished(this.board) && boardNotChanged) {
-      return this.solveStep({ analyzeMode, iterationCount: iterationCount + 1 });
+      return this.solveStep({ analyzeMode, iterationCount: iterationCount + 1, onUpdate });
     }
     this.board = this.convertInitialBoardToSerializedBoard(stepSolvedBoard);
     this.updateCandidatesBasedOnCellsValue();
@@ -282,9 +343,11 @@ export class Sudoku {
   applySolvingStrategies({
     strategyIndex = 0,
     analyzeMode = false,
+    onUpdate,
   }: {
     strategyIndex?: number;
     analyzeMode?: boolean;
+    onUpdate?: (param: { strategy: string; updates: Update[]; type: "value" | "elimination" }) => void;
   } = {}): false | "elimination" | "value" {
     if (isBoardFinished(this.board)) {
       if (!analyzeMode) {
@@ -296,12 +359,14 @@ export class Sudoku {
       this.strategies[strategyIndex].fn();
 
     this.strategies[strategyIndex].postFn?.();
+    // console.log('effectedCells', effectedCells);
 
     if (effectedCells === false) {
       if (this.strategies.length > strategyIndex + 1) {
         return this.applySolvingStrategies({
           strategyIndex: strategyIndex + 1,
           analyzeMode,
+          onUpdate,
         });
       } else {
         this.onError?.({ message: "No More Strategies To Solve The Board" });
@@ -311,11 +376,10 @@ export class Sudoku {
     if (effectedCells === -1) {
       return false;
     }
-    // console.log('strategyIndex', strategyIndex);
-    // console.log('strategies[strategyIndex]', this.strategies[strategyIndex]);
+    console.log('strategies[strategyIndex]', strategyIndex, this.strategies[strategyIndex].title);
 
     if (!analyzeMode) {
-      this.onUpdate?.({
+      onUpdate?.({
         strategy: this.strategies[strategyIndex].title,
         updates: effectedCells as Update[],
         type: this.strategies[strategyIndex].type,
@@ -492,25 +556,26 @@ export class Sudoku {
       const cell = this.board[cellIndex];
       const candidates = cell.candidates;
 
-      const possibleCandidates: CellValue[] = [];
-      for (
-        let candidateIndex = 0;
-        candidateIndex < candidates.length;
-        candidateIndex++
-      ) {
-        if (candidates[candidateIndex] !== null) {
-          possibleCandidates.push(candidates[candidateIndex]);
-        }
+      const possibleCandidates: CellValue[] = candidates.filter((candidate) => candidate !== null);
+      // for (
+      //   let candidateIndex = 0;
+      //   candidateIndex < candidates.length;
+      //   candidateIndex++
+      // ) {
+      //   if (candidates[candidateIndex] !== null) {
+      //     possibleCandidates.push(candidates[candidateIndex]);
+      //   }
 
-        if (possibleCandidates.length > 1) {
-          break; // can't find answer here
-        }
-      }
+      //   if (possibleCandidates.length > 1) {
+      //     break; // can't find answer here
+      //   }
+      // }
       // if(possibleCandidates.length > 0) {
       //   console.debug('possibleCandidates', cellIndex, possibleCandidates);
       // }
       
       if (possibleCandidates.length === 1) {
+        console.log('visualEliminationStrategy > candidate', this.board.map(cell => cell.candidates.join(',')));
         const digit = possibleCandidates[0];
 
         addValueToCellIndex(this.board, cellIndex, digit);
@@ -547,6 +612,7 @@ export class Sudoku {
           }
 
           if (possibleCells.length === 1) {
+            console.log('singleCandidateStrategy > candidate', this.board.map(cell => cell.candidates.join(',')));
             const cellIndex = possibleCells[0];
             addValueToCellIndex(this.board, cellIndex, digit);
 
@@ -701,6 +767,7 @@ export class Sudoku {
   }
 
   pointingEliminationStrategy(): ReturnType<StrategyFn> | false {
+    console.log('pointingEliminationStrategy --------------------');
     const groupOfHousesLength = Sudoku.GROUP_OF_HOUSES.length;
 
     for (let houseType = 0; houseType < groupOfHousesLength; houseType++) {
@@ -708,6 +775,7 @@ export class Sudoku {
         const house = Sudoku.GROUP_OF_HOUSES[houseType][houseIndex];
         const digits = this.getRemainingNumbers(house);
 
+        console.log(`[${houseType}/${houseIndex}]house, digits`, house, digits);
         for (let digitIndex = 0; digitIndex < digits.length; digitIndex++) {
           const digit = digits[digitIndex];
 
@@ -744,6 +812,7 @@ export class Sudoku {
               cellsWithCandidate.push(cell);
             }
           }
+          console.log('digit, cellsWithCandidate', digit, cellsWithCandidate);
 
           if (
             (sameAltHouse || sameAltTwoHouse) &&
@@ -762,6 +831,7 @@ export class Sudoku {
               }
             }
 
+            console.log('pointingEliminationStrategy > candidate', cellsEffected, digit);
             const cellsUpdated = this.removeCandidatesFromMultipleCells(
               cellsEffected,
               [digit],
@@ -957,7 +1027,7 @@ export class Sudoku {
       this.onError?.({ message: "Board Incorrect" });
       return -1;
     }
-
+    // console.log('fillSingleEmptyCell > candidate', this.board.map(cell => cell.candidates.join(',')));
     addValueToCellIndex(this.board, emptyCell.cellIndex, value[0]); //does not update UI
     return [{ index: emptyCell.cellIndex, filledValue: value[0] }];
   }
@@ -977,12 +1047,19 @@ export class Sudoku {
   ): Array<{ index: number; eliminatedCandidate: number }> {
     const cellsUpdated = [];
     for (let i = 0; i < cells.length; i++) {
-      const cellCandidates = this.board[cells[i]].candidates;
+      const cellCandidates = this.board[cells[i]].candidates; // 셀의 후보군 숫자 배열, ex) [2, 3, 4]
+      console.log('removeCandidatesFromMultipleCells', cells, i, candidates);
+      console.log('removeCandidatesFromMultipleCells > cellCandidates', cellCandidates);
 
       for (let j = 0; j < candidates.length; j++) {
-        const candidate = candidates[j];
+        const candidate = candidates[j];  // 삭제 대상 후보 숫자 ex) 2
         //-1 because candidate '1' is at index 0 etc.
-        if (candidate && cellCandidates[candidate - 1] !== null) {
+        // 숫자이고, 후보군에 포함되어 있으면
+        if(candidate && cellCandidates.includes(candidate)){
+          console.log('cellCandidates 에 candidate 포함', candidate);
+        }
+        // if (candidate && cellCandidates[candidate - 1] !== null) {
+        if (candidate && cellCandidates.includes(candidate) === true) {
           cellCandidates[candidate - 1] = null; //NOTE: also deletes them from board variable
           cellsUpdated.push({
             index: cells[i],
@@ -991,6 +1068,7 @@ export class Sudoku {
         }
       }
     }
+    console.log('removeCandidatesFromMultipleCells > cellsUpdated', cells, candidates, cellsUpdated);
     return cellsUpdated;
   };
   getPossibleCellsForCandidate (candidate: number, house: House) {
@@ -1015,4 +1093,35 @@ export class Sudoku {
 
     return groupOfHouses;
   };
+  solveAll(): Board {
+    let Continue: boolean | "value" | "elimination" = true;
+    while (Continue) {
+      Continue = this.applySolvingStrategies({
+        strategyIndex: Continue === "elimination" ? 1 : 0,
+      });
+    }
+    return this.numberBoard;
+  }
+  solve(): SolvingResult {
+    const solvingSteps: SolvingStep[] = [];
+    const analysis = this.analyzeBoard();
+  
+    if (!analysis.hasSolution) {
+      return { solved: false, error: "No solution for provided board!" };
+    }
+  
+    const board = this.solveAll();
+  
+    if (!analysis.hasUniqueSolution) {
+      return {
+        solved: true,
+        board,
+        steps: solvingSteps,
+        analysis,
+        error: "No unique solution for provided board!",
+      };
+    }
+  
+    return { solved: true, board, steps: solvingSteps, analysis };
+  }
 }
