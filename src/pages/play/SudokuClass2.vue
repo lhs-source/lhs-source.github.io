@@ -7,6 +7,9 @@
         :key="index" 
         class="cell-frame"
         :class="{
+          'selected': selectedCell === index,
+          'same-number': selectedCellValue != null && (selectedCellValue === (num.digit ?? num.input)),
+
         }"
         @click="onClickCell(index)">
         <span v-if="num.digit !== 0" class="initial-number">
@@ -46,6 +49,9 @@
       <button @click="onClickGenerateCR">generate candidate random(fail)</button>
       <button @click="onClickFirstBoxMatrix">first box matrix</button>
       <button @click="onClickRemoveDigit">remove digit</button>
+      <button @click="onClickMixVerticalRow">mix vertical row</button>
+      <button @click="onClickMixHorizontalRow">mix horizontal row</button>
+      <button @click="onClickRecursive">recursive</button>
       <div class="number-pad">
         <div 
           class="num" 
@@ -79,14 +85,26 @@ function onClickNumber(index: number) {
   
 }
 function onClickGenerateCR() {
-  sudoku.value.generateOneCellCandidateRandom();
+  selectedCell.value = sudoku.value.generateOneCellCandidateRandom();
 }
 const matrixStep = ref(0);
 function onClickFirstBoxMatrix() {
-  sudoku.value.generateMatrixMultiple(matrixStep.value++);
+  for(let i = 0; i < 9; i++) {
+    sudoku.value.generateMatrixMultiple(matrixStep.value++);
+  }
+  // sudoku.value.generateMatrixMultiple(matrixStep.value++);
 }
 function onClickRemoveDigit() {
   sudoku.value.removeDigitRandom(5);
+}
+function onClickMixVerticalRow() {
+  sudoku.value.mixVerticalRow();
+}
+function onClickMixHorizontalRow() {
+  sudoku.value.mixHorizontalColumn();
+}
+function onClickRecursive() {
+  sudoku.value.generateOneRandomSafe(0);
 }
 
 

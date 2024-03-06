@@ -3,16 +3,15 @@
 interface Cell {
   digit: number;  // 채워진 값. 0-9
   candidateList: number[];  // 후보 값. 0-9
-  
+  invalidCandidateList: number[];  // 불가능한 후보값
   index: number;  // 0-80
   row: number;  // 0-8
   col: number;  // 0-8
+  box: number;  // 0-8
 }
 interface Board {
   cells: Cell[];
 }
-
-
 const boxIndexList = [
   [0, 1, 2, 9, 10, 11, 18, 19, 20], // 1, 1
   [3, 4, 5, 12, 13, 14, 21, 22, 23],  // 1, 2
@@ -23,7 +22,29 @@ const boxIndexList = [
   [54, 55, 56, 63, 64, 65, 72, 73, 74],  // 3, 1
   [57, 58, 59, 66, 67, 68, 75, 76, 77],  // 3, 2
   [60, 61, 62, 69, 70, 71, 78, 79, 80],  // 3, 3
-]
+];
+const rowIndexList = [
+  [0, 1, 2, 3, 4, 5, 6, 7, 8],  // 1
+  [9, 10, 11, 12, 13, 14, 15, 16, 17],  // 2
+  [18, 19, 20, 21, 22, 23, 24, 25, 26],  // 3
+  [27, 28, 29, 30, 31, 32, 33, 34, 35],  // 4
+  [36, 37, 38, 39, 40, 41, 42, 43, 44],  // 5
+  [45, 46, 47, 48, 49, 50, 51, 52, 53],  // 6
+  [54, 55, 56, 57, 58, 59, 60, 61, 62],  // 7
+  [63, 64, 65, 66, 67, 68, 69, 70, 71],  // 8
+  [72, 73, 74, 75, 76, 77, 78, 79, 80],  // 9
+];
+const colIndexList = [
+  [0, 9, 18, 27, 36, 45, 54, 63, 72],  // 1
+  [1, 10, 19, 28, 37, 46, 55, 64, 73],  // 2
+  [2, 11, 20, 29, 38, 47, 56, 65, 74],  // 3
+  [3, 12, 21, 30, 39, 48, 57, 66, 75],  // 4
+  [4, 13, 22, 31, 40, 49, 58, 67, 76],  // 5
+  [5, 14, 23, 32, 41, 50, 59, 68, 77],  // 6
+  [6, 15, 24, 33, 42, 51, 60, 69, 78],  // 7
+  [7, 16, 25, 34, 43, 52, 61, 70, 79],  // 8
+  [8, 17, 26, 35, 44, 53, 62, 71, 80],  // 9
+];
 
 /**
  * # LHS Sudoku
@@ -47,9 +68,11 @@ export class LHSSudoku {
         return {
           digit: 0,
           candidateList: [1, 2, 3, 4, 5, 6, 7, 8, 9],
+          invalidCandidateList: [],
           index,
           row: Math.floor(index / 9),
-          col: index % 9
+          col: index % 9,
+          box: Math.floor(Math.floor(index / 9) / 3) * 3 + Math.floor(index % 9 / 3),
         }
       })
     }
@@ -69,7 +92,7 @@ export class LHSSudoku {
     });
   }
   /**
-   * # 0 ~ 8 박스의 행렬을 차례대로 채운다.
+   * # 1 ~ 8 박스의 행렬을 차례대로 채운다.
    * @param boxIndex 생성할 박스 인덱스 (0 ~ 8)
    * @returns 
    */
@@ -176,21 +199,145 @@ export class LHSSudoku {
     const boxCellList = box.map((index) => this.board.cells[index]);
     return boxCellList;
   }
+  /**
+   * # 1~3, 4~6, 7~9 행의 순서를 섞는다.
+   */
+  public mixVerticalRow() {
+    // 1~3, 4~6, 7~9 행을 랜덤으로 뽑는다
+    const randomIndex = Math.floor(Math.random() * 3);
+    
+    // n~n+2 에서 두 행을 골른다. 0~2 중 두개를 랜덤하게 고른다.
+    const selectedRowIndex = [0, 1, 2].sort(() => Math.random() - 0.5).slice(0, 2);
+    const row1 = rowIndexList[randomIndex * 3 + selectedRowIndex[0]];
+    const row2 = rowIndexList[randomIndex * 3 + selectedRowIndex[1]];
+    // 두 행의 digit을 평행하게 서로 바꾼다. swap
+    for(let i = 0; i < row1.length; i++) {
+      const temp = this.board.cells[row1[i]].digit;
+      this.board.cells[row1[i]].digit = this.board.cells[row2[i]].digit;
+      this.board.cells[row2[i]].digit = temp;
+    }
+  }
+  /**
+   * # 1~3, 4~6, 7~9 열의 순서를 섞는다.
+   */
+  public mixHorizontalColumn() {
+    // 1~3, 4~6, 7~9 열을 랜덤으로 뽑는다
+    const randomIndex = Math.floor(Math.random() * 3);
+    
+    // n~n+2 에서 두 열을 골른다. 0~2 중 두개를 랜덤하게 고른다.
+    const selectedColIndex = [0, 1, 2].sort(() => Math.random() - 0.5).slice(0, 2);
+    const col1 = colIndexList[randomIndex * 3 + selectedColIndex[0]];
+    const col2 = colIndexList[randomIndex * 3 + selectedColIndex[1]];
+    // 두 열의 digit을 수직하게 서로 바꾼다. swap
+    for(let i = 0; i < col1.length; i++) {
+      const temp = this.board.cells[col1[i]].digit;
+      this.board.cells[col1[i]].digit = this.board.cells[col2[i]].digit;
+      this.board.cells[col2[i]].digit = temp;
+    }
+  }
+  public mixVerticalBox() {
+  }
+  public mixHorizontalBox() {
+  }
+  /**
+   * # 숫자 두개를 골라, 서로 치환한다.
+   * - 예를들어 1과 9를 골라 서로 바꾼다.
+   */
+  public mixReplaceDigit() {
+    // 1~9 중 2개를 랜덤하게 고른다.
+    const randomList = [1, 2, 3, 4, 5, 6, 7, 8, 9].sort(() => Math.random() - 0.5).slice(0, 2);
+    const digit1 = randomList[0];
+    const digit2 = randomList[1];
+    // digit1 인 cell, digit2 인 cell을 가져온다.
+    const digit1CellList = this.board.cells.filter((cell) => cell.digit === digit1);
+    const digit2CellList = this.board.cells.filter((cell) => cell.digit === digit2);
+    // digit1 cell에는 digit2를, digit2 cell에는 digit1을 넣는다.
+    digit1CellList.forEach((cell) => {
+      cell.digit = digit2;
+    });
+    digit2CellList.forEach((cell) => {
+      cell.digit = digit1;
+    });
+  }
+  /**
+   * # 후보군이 하나인 셀을 찾아서 숫자를 채운다.
+   */
+  public onlyOneCandidate() {
+    for(let i = 0; i < 81; i++) {
+      const cell = this.board.cells[i];
+      if(cell.digit === 0 && cell.candidateList.length === 1) {
+        this.setNumberCell(cell, cell.candidateList[0]);
+        return { index: cell.index, digit: cell.candidateList[0] };
+      }
+    }
+    return null;
+  }
 
   /**
    * # 후보군 랜덤 방식으로 숫자를 채운다.
    * - 랜덤으로 후보군을 선택한다.
    * @fail => 후보군이 아예 없어지는 케이스가 생긴다..
+   * @return {number} cell index
    */
-  public generateOneCellCandidateRandom() {
+  public generateOneCellCandidateRandom(): number {
+    const one = this.onlyOneCandidate();
+    if(one !== null) {
+      // 후보군이 하나인 경우
+      return one.index;
+    }
+    const emptyCellList = this.board.cells.filter((cell) => cell.digit === 0)
     // 랜덤으로 후보군을 선택한다.
-    const randomIndex = Math.floor(Math.random() * 81);
+    const randomIndex = Math.floor(Math.random() * emptyCellList.length);
     // 해당 셀의 후보군 중 랜덤으로 선택한다.
-    const cell = this.board.cells[randomIndex];
+    const cell = emptyCellList[randomIndex];
     const randomCandidateIndex = Math.floor(Math.random() * cell.candidateList.length);
     // 셀에 값을 채운다.
     const randomCandidate = cell.candidateList[randomCandidateIndex];
     this.setNumberCell(cell, randomCandidate);
+    return cell.index;
+  }
+  /**
+   * # 안전한 숫자를 recursive하게 채운다.
+   */
+  public generateOneRandomSafe(index: number): boolean {
+    if(index == null) {
+      return false;
+    }
+    const cell = this.board.cells[index];
+    console.log('generateOneRandomSafe > cell', index, cell);
+    if(!cell) {
+      return true;
+    }
+    if(cell.digit !== 0) {
+      console.log('generateOneRandomSafe > cell.digit !== 0');
+      cell.digit = 0;
+      const adjacentCellList = this.getAllAdjacentCell(cell);
+      adjacentCellList.forEach((cell) => {
+        this.calculateCellCandidate(cell);
+      });
+      // return false;
+    }
+    // invalidCandidateList 에 있는 후보군을 제거한다.
+    const availableCandidateList = cell.candidateList.filter((c) => !cell.invalidCandidateList.includes(c));
+    // 탈출 로직
+    // 후보군이 없는 경우 이전셀을 초기화하고, 불가능한 후보군을 추가한다.
+    if(availableCandidateList.length === 0) {
+      const previousIndex = index - 1;
+      const previouseCell = this.board.cells[previousIndex];
+      previouseCell.invalidCandidateList.push(previouseCell.digit);
+      previouseCell.digit = 0;
+      cell.invalidCandidateList = [];
+      console.log('generateOneRandomSafe > no candidate', previouseCell.invalidCandidateList);
+      const adjacentCellList = this.getAllAdjacentCell(previouseCell);
+      adjacentCellList.forEach((ajcell) => {
+        this.calculateCellCandidate(ajcell);
+      });
+      return this.generateOneRandomSafe(previousIndex);;
+    }
+    const randomCandidateIndex = Math.floor(Math.random() * availableCandidateList.length);
+    const randomCandidate = availableCandidateList[randomCandidateIndex];
+    this.setNumberCell(cell, randomCandidate);
+    return this.generateOneRandomSafe(index + 1);
   }
 
   /**
@@ -217,15 +364,18 @@ export class LHSSudoku {
     const block = Math.floor(row / 3) * 3 + Math.floor(col / 3);
     console.log('removeCandidate', row, col, block, digit);
     // 가로줄, 세로줄, 3x3 블록에 후보자를 제거
-    for (let i = 0; i < 9; i++) {
-      const cell = this.board.cells[row * 9 + i];
-      this.removeCandidateCell(cell, digit);
-      const cell2 = this.board.cells[i * 9 + col];
-      this.removeCandidateCell(cell2, digit);
-      const cell3 = this.board.cells[Math.floor(block / 3) * 27 + (block % 3) * 3 + Math.floor(i / 3) * 9 + i % 3];
-      this.removeCandidateCell(cell3, digit);
-      console.log('removeCandidate', row * 9 + i, i * 9 + col, Math.floor(block / 3) * 27 + (block % 3) * 3 + Math.floor(i / 3) * 9 + i % 3);
-    }
+    const rowList = rowIndexList[row];
+    const colList = colIndexList[col];
+    const boxList = boxIndexList[block];
+    rowList.forEach((index) => {
+      this.removeCandidateCell(this.board.cells[index], digit);
+    });
+    colList.forEach((index) => {
+      this.removeCandidateCell(this.board.cells[index], digit);
+    });
+    boxList.forEach((index) => {
+      this.removeCandidateCell(this.board.cells[index], digit);
+    });
   }
   /**
    * # 해당 셀의 후보군에서 특정 숫자를 제거
@@ -249,15 +399,19 @@ export class LHSSudoku {
     cell.candidateList = [1, 2, 3, 4, 5, 6, 7, 8, 9];
     const row = cell.row;
     const col = cell.col;
-    for (let i = 0; i < 9; i++) {
-      const cell2 = this.board.cells[row * 9 + i];
-      this.removeCandidateCell(cell, cell2.digit);
-      const cell3 = this.board.cells[i * 9 + col];
-      this.removeCandidateCell(cell, cell3.digit);
-      const block = Math.floor(row / 3) * 3 + Math.floor(col / 3);
-      const cell4 = this.board.cells[Math.floor(block / 3) * 27 + (block % 3) * 3 + Math.floor(i / 3) * 9 + i % 3];
-      this.removeCandidateCell(cell, cell4.digit);
-    }
+    const block = cell.box;
+    const rowList = rowIndexList[row];
+    const colList = colIndexList[col];
+    const boxList = boxIndexList[block];
+    rowList.forEach((index) => {
+      this.removeCandidateCell(cell, this.board.cells[index].digit);
+    });
+    colList.forEach((index) => {
+      this.removeCandidateCell(cell, this.board.cells[index].digit);
+    });
+    boxList.forEach((index) => {
+      this.removeCandidateCell(cell, this.board.cells[index].digit);
+    });
   }
   /**
    * # 모든 빈 셀의 후보군을 다시 계산한다.
@@ -268,7 +422,17 @@ export class LHSSudoku {
       this.calculateCellCandidate(cell);
     });
   }
-
+  /**
+   * # 가로, 세로, 3x3 블록의 cell을 가져온다.
+   * @param cell 
+   */
+  getAllAdjacentCell(cell: Cell): Cell[] {
+    const rowList = rowIndexList[cell.row];
+    const colList = colIndexList[cell.col];
+    const boxList = boxIndexList[cell.box];
+    const adjacentCellList = rowList.concat(colList, boxList).map((index) => this.board.cells[index]);
+    return adjacentCellList;
+  }
   /**
    * # 숫자 기입
    * - 관련 후보군 제거
