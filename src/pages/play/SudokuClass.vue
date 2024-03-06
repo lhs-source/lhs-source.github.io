@@ -342,7 +342,7 @@ solveTable.value = sudoku.value.board.map((num) => {
   return { value: num.value, input: null, error: false, candidateList: num.candidates };
 });
 
-// resultSudoku.value.solve();
+resultSudoku.value.solve();
 onClickHint();
 
 onMounted(() => {

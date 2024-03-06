@@ -8,11 +8,19 @@
         class="cell-frame"
         :class="{
           'selected': selectedCell === index,
-          'same-number': selectedCellValue != null && (selectedCellValue === (num.digit ?? num.input)),
+          'same-number': selectedCellValue != 0 && (selectedCellValue === (num.digit)),
 
+          
+          'left-border': index % 3 === 0,
+          'top-border': Math.floor(index / 9) % 3 === 0,
+          'right-border': index % 3 === 2,
+          'bottom-border': Math.floor(index / 9) % 3 === 2,
         }"
         @click="onClickCell(index)">
-        <span v-if="num.digit !== 0" class="initial-number">
+        <span v-if="num.input" class="input-number">
+          {{ num.digit }}
+        </span>
+        <span v-else-if="num.digit !== 0" class="initial-number">
           {{ num.digit }}
         </span>
         <!-- <span v-else-if="num.input !== null" class="input-number">
@@ -81,8 +89,9 @@ const selectedCellValue = computed(() => {
 function onClickCell(index: number) {
   selectedCell.value = index;
 }
-function onClickNumber(index: number) {
-  
+function onClickNumber(number: number) {
+  if(selectedCell.value)
+    sudoku.value.setNumberIndex(selectedCell.value, number, true);
 }
 function onClickGenerateCR() {
   selectedCell.value = sudoku.value.generateOneCellCandidateRandom();

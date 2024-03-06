@@ -1059,8 +1059,8 @@ export class Sudoku {
         if(candidate && cellCandidates.includes(candidate)){
           console.log('cellCandidates 에 candidate 포함', candidate);
         }
-        // if (candidate && cellCandidates[candidate - 1] !== null) {
-        if (candidate && cellCandidates.includes(candidate) === true) {
+        if (candidate && cellCandidates[candidate - 1] !== null) {
+        // if (candidate && cellCandidates.includes(candidate) === true) {
           cellCandidates[candidate - 1] = null; //NOTE: also deletes them from board variable
           cellsUpdated.push({
             index: cells[i],
@@ -1105,6 +1105,7 @@ export class Sudoku {
   }
   solve(): SolvingResult {
     const solvingSteps: SolvingStep[] = [];
+    
     const analysis = this.analyzeBoard();
   
     if (!analysis.hasSolution) {

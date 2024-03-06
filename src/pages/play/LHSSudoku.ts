@@ -2,6 +2,7 @@
 
 interface Cell {
   digit: number;  // 채워진 값. 0-9
+  input: boolean;  // 사용자 입력 여부
   candidateList: number[];  // 후보 값. 0-9
   invalidCandidateList: number[];  // 불가능한 후보값
   index: number;  // 0-80
@@ -304,12 +305,12 @@ export class LHSSudoku {
       return false;
     }
     const cell = this.board.cells[index];
-    console.log('generateOneRandomSafe > cell', index, cell);
+    // console.log('generateOneRandomSafe > cell', index, cell);
     if(!cell) {
       return true;
     }
     if(cell.digit !== 0) {
-      console.log('generateOneRandomSafe > cell.digit !== 0');
+      // console.log('generateOneRandomSafe > cell.digit !== 0');
       cell.digit = 0;
       const adjacentCellList = this.getAllAdjacentCell(cell);
       adjacentCellList.forEach((cell) => {
@@ -327,7 +328,7 @@ export class LHSSudoku {
       previouseCell.invalidCandidateList.push(previouseCell.digit);
       previouseCell.digit = 0;
       cell.invalidCandidateList = [];
-      console.log('generateOneRandomSafe > no candidate', previouseCell.invalidCandidateList);
+      // console.log('generateOneRandomSafe > no candidate', previouseCell.invalidCandidateList);
       const adjacentCellList = this.getAllAdjacentCell(previouseCell);
       adjacentCellList.forEach((ajcell) => {
         this.calculateCellCandidate(ajcell);
@@ -439,10 +440,11 @@ export class LHSSudoku {
    * @param index 
    * @param digit 
    */
-  setNumberIndex(index: number, digit: number) {
+  setNumberIndex(index: number, digit: number, input: boolean = false) {
     const cell = this.board.cells[index];
     // 셀에 숫자 기입
     cell.digit = digit;
+    cell.input = input;
     this.removeCandidate(cell.row, cell.col, digit);
   }
   /**
