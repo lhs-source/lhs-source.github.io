@@ -632,6 +632,7 @@ export class Sudoku {
       cell: number;
       candidates: Array<CellValue>;
     };
+    console.log('nakedCandidatesStrategy ---------------------', number);
 
     let combineInfo: Array<CombineInfo> = [];
     let minIndexes = [-1];

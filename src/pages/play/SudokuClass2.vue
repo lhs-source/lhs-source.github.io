@@ -3,26 +3,18 @@
   <div class="flex" style="display: flex;">
     <div class="sudoku-table">
       <div
-        v-for="(num, index) of solveTable" 
+        v-for="(num, index) of sudoku.board.cells" 
         :key="index" 
         class="cell-frame"
         :class="{
-          'selected': selectedCell === index,
-          'left-border': index % 3 === 0,
-          'top-border': Math.floor(index / 9) % 3 === 0,
-          'right-border': index % 3 === 2,
-          'bottom-border': Math.floor(index / 9) % 3 === 2,
-          'error': num.error === true,
-          'same-number': selectedCellValue != null && (selectedCellValue === (num.value ?? num.input))
         }"
-        @click="onClickCell(index)"
-        @keyup="onKeyupNumber(index, $event)">
-        <span v-if="num.value !== null" class="initial-number">
-          {{ num.value }}
+        @click="onClickCell(index)">
+        <span v-if="num.digit !== 0" class="initial-number">
+          {{ num.digit }}
         </span>
-        <span v-else-if="num.input !== null" class="input-number">
+        <!-- <span v-else-if="num.input !== null" class="input-number">
           {{ num.input }}
-        </span>
+        </span> -->
         <div v-else class="candidate-list">
           <div class="candidate" 
             v-for="i in 9" 
@@ -36,7 +28,7 @@
       </div>
     </div>
     <div>
-      <div class="mode-list">
+      <!-- <div class="mode-list">
         <div 
           :class="{'selected': selectedMode === 'number'}"
           @click="onClickMode('number')">
@@ -50,7 +42,10 @@
       </div>
       <button @click="onClickNextStep">next step</button>
       <button @click="onClickCandidate">candidate</button>
-      <button @click="onClickHint">regen hint</button>
+      <button @click="onClickHint">regen hint</button> -->
+      <button @click="onClickGenerateCR">generate candidate random(fail)</button>
+      <button @click="onClickFirstBoxMatrix">first box matrix</button>
+      <button @click="onClickRemoveDigit">remove digit</button>
       <div class="number-pad">
         <div 
           class="num" 
@@ -65,235 +60,50 @@
 </template>
 
 <script setup lang="ts">
-import { computed, nextTick, onMounted, onUnmounted, ref } from 'vue';
-import { CellValue, SolvingResult } from './sudoku2types';
-import { Sudoku } from './sudokuClass';
+import { computed, onMounted, onUnmounted, ref } from 'vue';
+import { LHSSudoku } from './LHSSudoku';
 
-interface Solve {
-  value: number | null;   // 초기값
-  input: number | null;   // 입력한 값
-  error: boolean; // 오답 표시
-  candidateList: CellValue[]; // 후보자 리스트
-}
-const hintList = ref<SolvingResult[]>([]);
-const selectedCell = ref<number | null>(null);  // 선택한 셀 인덱스
-const solveTable = ref<Solve[]>([]);
-const selectedMode = ref<'number' | 'candidate'>('number');
-
-// console.log off
-const originalConsoleLog = console.log;
-// console.log = () => {};
-const sudoku = ref<Sudoku>(new Sudoku('easy'));
-console.log = originalConsoleLog;
-console.log('sudoku', sudoku);
-
-const displayTable = computed(() => {
-  return solveTable.value.map((cell) => {
-    return cell.input ?? cell.value;
-  });
-});
+const sudoku = ref<LHSSudoku>(new LHSSudoku());
+const selectedCell = ref<number | null>(null);
 const selectedCellValue = computed(() => {
-  if(selectedCell.value === null) return null;
-  const cell = solveTable.value[selectedCell.value!];
-  return cell.input ?? cell.value;
-});
-/**
- * ## 힌트 대상 셀
- * @returns number[]
- */
-const hintTarget = computed(() => {
-  if(hintList.value.length === 0) return [];
-  const extractUpdateIndex = (step: {strategy: string, updates: any[]}) => {
-    return step.updates.map((update: any) => update.index);
+  if(selectedCell.value !== null) {
+    return sudoku.value.board.cells[selectedCell.value].digit;
   }
-  const extractList = hintList.value[0].steps?.reduce((acc: number[], step: {strategy: string, updates: any[]}) => {
-    return acc.concat(extractUpdateIndex(step));
-  }, []) ?? []
-  const setList = new Set(extractList);
-  return Array.from(setList);
-})
-/**
- * ## 힌트 대상 셀의 후보자 삭제 리스트
- */
-const hintFlat = computed(() => {
-  if(hintList.value.length === 0) return [];
-  return hintList.value[0].steps?.reduce((acc: any[], step: {strategy: string, updates: any[]}) => {
-    step.updates.map((update: any) => {
-      const found = acc.find((item) => item.index === update.index);
-      if(found) {
-        // 이미 있는 경우
-        // eliminatedCandidate 가 있으면 배열로 추가
-        // filledValue 가 있으면 추가
-        if(update.eliminatedCandidate && found.eliminatedCandidate.includes(update.eliminatedCandidate) === false) {
-          found.eliminatedCandidate.push(update.eliminatedCandidate);
-        } else {
-          found.filledValue = update.filledValue;
-        }
-      } else {
-        // 없는 경우
-        // eliminatedCandidate 가 있으면 배열로 추가
-        // filledValue 가 있으면 그냥
-        acc.push({
-          index: update.index, 
-          eliminatedCandidate: [update.eliminatedCandidate],
-          filledValue: update.filledValue,
-        });
-      }
-    })
-    return acc;
-  }, [] as {index: number, eliminatedCandidate?: number[], filledValue: number}[]) ?? [];
+  return null;
 })
 
-const candidateList = computed(() => {
-  return solveTable.value.map((cell) => cell.candidateList);
-});
-
-/**
- * # 셀을 클릭한다.
- * - 클릭하고 숫자를 입력할 때 선행
- */
-function onClickCell(cellIndex: number) {
-  selectedCell.value = cellIndex;
+function onClickCell(index: number) {
+  selectedCell.value = index;
 }
-
-function removeCandidate(index: number, filledValue: number) {
-  const row = Math.floor(index / 9);
-  const col = index % 9;
-  const block = Math.floor(row / 3) * 3 + Math.floor(col / 3);
+function onClickNumber(index: number) {
   
-  for(let i = 0; i < 9; i++) {
-    const rowCell = solveTable.value[row * 9 + i];
-    const colCell = solveTable.value[col + i * 9];
-    const blockCell = solveTable.value[Math.floor(block / 3) * 27 + (block % 3) * 3 + Math.floor(i / 3) * 9 + i % 3];
-    if(rowCell.value === null) {
-      rowCell.candidateList = rowCell.candidateList.filter((num) => num !== filledValue);
-    }
-    if(colCell.value === null) {
-      colCell.candidateList = colCell.candidateList.filter((num) => num !== filledValue);
-    }
-    if(blockCell.value === null) {
-      blockCell.candidateList = blockCell.candidateList.filter((num) => num !== filledValue);
-    }
-  }
 }
-/**
- * # 숫자를 선택한다.
- */
-function onClickNumber(numberPad: number) {
-  console.log('onClickNumber', sudoku.value.board[selectedCell.value!].value)
-  // 초기 셀은 변경할 수 없음
-  // TODO 클릭 시 같은 숫자의 셀에 표시
-  // if(sudoku.value.board[selectedCell.value!].value !== null) return;
-  if(selectedMode.value === 'candidate') {
-    // 후보자 모드일 경우 후보자 리스트를 추가하거나 제거
-    const cell = solveTable.value[selectedCell.value!];
-    if(cell.candidateList.indexOf(numberPad) >= 0) {
-      cell.candidateList = cell.candidateList.filter((num) => num !== numberPad);
-    } else {
-      cell.candidateList.push(numberPad);
-    }
-  } else {
-    // 빈칸에 정답 입력
-  console.log('onClickNumber here')
-    const cell = solveTable.value[selectedCell.value!];
-    cell.input = numberPad;
-      sudoku.value.setNumber(selectedCell.value!, numberPad);
-      hintList.value.unshift(sudoku.value.nextHint());
-    nextTick(() => {
-      // 입력한 값이 정답이 아닐 경우 에러로 표시
-      // if(cell.input !== resultSudoku.value.board![selectedCell.value!].value) {
-      //   cell.error = true;
-      // } else {
-      //   // 정답
-      //   cell.error = false;
-      //   // 가로줄, 세로줄, 3x3 블록에 후보자를 제거
-      //   removeCandidate(selectedCell.value!, numberPad);
-      //   sudoku.value.setNumber(selectedCell.value!, numberPad);
-      //   hintSudoku.value.setNumber(selectedCell.value!, numberPad);
-      //   // 힌트를 계산
-      //   console.log('displayTable.value', displayTable.value);
-      //   const hint = hintSudoku.value.nextHint();
-      //   hintList.value.unshift(hint);
-      // }
-      
-    });
-  }
+function onClickGenerateCR() {
+  sudoku.value.generateOneCellCandidateRandom();
 }
-/**
- * # 키보드로 숫자를 입력한다.
- * - 숫자를 가져와서 onClickNumber 함수를 호출
- */
-function onKeyupNumber(cellIndex: number, event: Event) {
-  const key = (event as KeyboardEvent).key;
-  if(key === 'Backspace') {
-    solveTable.value[cellIndex].input = null;
-  } else {
-    const num = parseInt(key);
-    if(num >= 1 && num <= 9) {
-      onClickNumber(num);
-    }
-  }
+const matrixStep = ref(0);
+function onClickFirstBoxMatrix() {
+  sudoku.value.generateMatrixMultiple(matrixStep.value++);
 }
-/**
- * # 모드를 선택한다.
- * - 숫자 모드, 후보자 모드
- */
-function onClickMode(mode: 'number' | 'candidate') {
-  selectedMode.value = mode;
+function onClickRemoveDigit() {
+  sudoku.value.removeDigitRandom(5);
 }
 
-function onClickNextStep() {
-  const hint = hintList.value[0];
-  hint.steps?.forEach((step) => {
-    step.updates.forEach((update) => {
-      if(update.filledValue) {
-        solveTable.value[update.index].input = update.filledValue;
-        onClickCell(update.index);
-        onClickNumber(update.filledValue);
-      }
-      if(update.eliminatedCandidate) {
-        solveTable.value[update.index].candidateList = solveTable.value[update.index].candidateList.filter((num) => num !== update.eliminatedCandidate);
-      }
-    });
-
-  });
-}
-
-function onClickCandidate() {
-  console.log('candidateAll', sudoku.value.board);
-}
-/**
- * # 힌트를 클릭
- */
-function onClickHint() {
-  const hint = sudoku.value.nextHint();
-  console.log('hint', hint);
-  hintList.value.unshift(hint);
-}
-
-solveTable.value = sudoku.value.board.map((num) => {
-  return { value: num.value, input: null, error: false, candidateList: num.candidates };
-});
-
-// resultSudoku.value.solve();
-// onClickHint();
-
-hintList.value.unshift(sudoku.value.nextHint());
 
 onMounted(() => {
   // keyup 이벤트를 사용하기 위해 window에 이벤트를 등록
-  window.addEventListener('keyup', (event) => {
-    if(selectedCell.value !== null) {
-      onKeyupNumber(selectedCell.value, event);
-    }
-  });
+  // window.addEventListener('keyup', (event) => {
+  //   if(selectedCell.value !== null) {
+  //     onKeyupNumber(selectedCell.value, event);
+  //   }
+  // });
 });
 onUnmounted(() => {
-  window.removeEventListener('keyup', (event) => {
-    if(selectedCell.value !== null) {
-      onKeyupNumber(selectedCell.value, event);
-    }
-  });
+  // window.removeEventListener('keyup', (event) => {
+  //   if(selectedCell.value !== null) {
+  //     onKeyupNumber(selectedCell.value, event);
+  //   }
+  // });
 });
 
 </script>
@@ -486,3 +296,4 @@ $cell-size: 36px;
 }
 </style>
   
+import { onMounted, onUnmounted } from 'vue';
