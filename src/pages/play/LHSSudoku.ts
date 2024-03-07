@@ -452,6 +452,7 @@ export class LHSSudoku {
     // 셀에 숫자 기입
     cell.digit = digit;
     cell.input = input;
+    cell.candidateList = [];
     this.removeCandidate(cell.row, cell.col, digit);
   }
   /**
@@ -460,9 +461,11 @@ export class LHSSudoku {
    * @param cell 
    * @param digit 
    */
-  setNumberCell(cell: Cell, digit: number) {
+  setNumberCell(cell: Cell, digit: number, input: boolean = false) {
     // 셀에 숫자 기입
     cell.digit = digit;
+    cell.input = input;
+    cell.candidateList = [];
     this.removeCandidate(cell.row, cell.col, digit);
   }
 
@@ -474,7 +477,7 @@ export class LHSSudoku {
    * @hint 
    * @returns 
    */
-  hintOnlyOneCandidate(): Hint | null {
+  hintNakedSingleCandidate(): Hint | null {
     for(let i = 0; i < 81; i++) {
       const cell = this.board.cells[i];
       if(cell.digit === 0 && cell.candidateList.length === 1) {
@@ -489,19 +492,15 @@ export class LHSSudoku {
    * - 모든 후보군을 가져와서, 세로줄에서 후보군이 하나만 있는 셀을 찾는다.
    */
   hintSingleVerticalCandidate(): Hint | null {
-    for(let i = 0; i < 81; i++) {
-      const cell = this.board.cells[i];
-      if(cell.digit === 0) {
-        const colList = colIndexList[cell.col];
-        const colCandidateList = colList.map((index) => this.board.cells[index].candidateList).flat();
-        const cellCandidateList = cell.candidateList;
-        const singleCandidateList = cellCandidateList.filter((c) => {
-          return colCandidateList.filter((cc) => cc === c).length === 1;
-        });
-        console.log('singleCandidateList', singleCandidateList);
-        if(singleCandidateList.length > 0) {
-          return { index: cell.index, candidateList: singleCandidateList };
-        }
+    for(let i = 0; i < 9; i++) {
+      const colList = colIndexList[i];
+      const colCandidateList = colList.map((index) => this.board.cells[index].candidateList).flat();
+      // flat 후보군 중에서 숫자 하나만 있는 목록
+      const singleCandidateList = colCandidateList.filter((c) => colCandidateList.filter((cc) => cc === c).length === 1);
+      if(singleCandidateList.length > 0) {
+        const singleCandidate = singleCandidateList[0]; // 단일 후보 숫자
+        const singleCell = colList.find((index) => this.board.cells[index].candidateList.includes(singleCandidate));
+        return { index: singleCell!, digit: singleCandidate };
       }
     }
     return null;
@@ -511,19 +510,15 @@ export class LHSSudoku {
    * - 모든 후보군을 가져와서, 가로줄에서 후보군이 하나만 있는 셀을 찾는다.
    */
   hintSingleHorizontalCandidate(): Hint | null {
-    for(let i = 0; i < 81; i++) {
-      const cell = this.board.cells[i];
-      if(cell.digit === 0) {
-        const rowList = rowIndexList[cell.row];
-        const rowCandidateList = rowList.map((index) => this.board.cells[index].candidateList).flat();
-        const cellCandidateList = cell.candidateList;
-        const singleCandidateList = cellCandidateList.filter((c) => {
-          return rowCandidateList.filter((cc) => cc === c).length === 1;
-        });
-        console.log('singleCandidateList', singleCandidateList);
-        if(singleCandidateList.length > 0) {
-          return { index: cell.index, candidateList: singleCandidateList };
-        }
+    for(let i = 0; i < 9; i++) {
+      const rowList = rowIndexList[i];
+      const rowCandidateList = rowList.map((index) => this.board.cells[index].candidateList).flat();
+      // flat 후보군 중에서 숫자 하나만 있는 목록
+      const singleCandidateList = rowCandidateList.filter((c) => rowCandidateList.filter((cc) => cc === c).length === 1);
+      if(singleCandidateList.length > 0) {
+        const singleCandidate = singleCandidateList[0]; // 단일 후보 숫자
+        const singleCell = rowList.find((index) => this.board.cells[index].candidateList.includes(singleCandidate));
+        return { index: singleCell!, digit: singleCandidate };
       }
     }
     return null;
@@ -533,36 +528,232 @@ export class LHSSudoku {
    * - 모든 후보군을 가져와서, 3x3 블록에서 후보군이 하나만 있는 셀을 찾는다.
    */
   hintSingleBoxCandidate(): Hint | null {
-    for(let i = 0; i < 81; i++) {
-      const cell = this.board.cells[i];
-      if(cell.digit === 0) {
-        const boxList = boxIndexList[cell.box];
-        const boxCandidateList = boxList.map((index) => this.board.cells[index].candidateList).flat();
-        const cellCandidateList = cell.candidateList;
-        const singleCandidateList = cellCandidateList.filter((c) => {
-          return boxCandidateList.filter((cc) => cc === c).length === 1;
-        });
-        console.log('singleCandidateList', singleCandidateList);
-        if(singleCandidateList.length > 0) {
-          return { index: cell.index, candidateList: singleCandidateList };
-        }
+    for(let i = 0; i < 9; i++) {
+      const boxList = boxIndexList[i];
+      const boxCandidateList = boxList.map((index) => this.board.cells[index].candidateList).flat();
+      // flat 후보군 중에서 숫자 하나만 있는 목록
+      const singleCandidateList = boxCandidateList.filter((c) => boxCandidateList.filter((cc) => cc === c).length === 1);
+      if(singleCandidateList.length > 0) {
+        const singleCandidate = singleCandidateList[0]; // 단일 후보 숫자
+        const singleCell = boxList.find((index) => this.board.cells[index].candidateList.includes(singleCandidate));
+        return { index: singleCell!, digit: singleCandidate };
       }
     }
     return null;
   }
   /**
-   * # 셀의 세로줄에서 두개 후보군 쌍을 찾는다.
+   * # 셀의 세로줄에서 후보군 쌍이 같은 두 셀을 찾는다.
    * [7,9,6],[],[],[7,9],[],[4,7,9],[],[],[7,9] 인 경우 [7,9]를 찾는다.
-   * 나머지 후보군에서 7, 9가 제거대상이다. 
-   * 제거 대상을 힌트로 반환한다.
+   * 다른 셀에서 7, 9가 제거대상이다. 
+   * 다른 셀에서의 7,9 를 힌트로 반환한다.
    */
-  hint2PairVerticalCandidate(): Hint[] | null {
+  hintLockEliminate2PairVertical(): Hint[] | null {
     const hintList: Hint[] = [];
     for(let i = 0; i < 9; ++i) {
       const colList = colIndexList[i];
-      
+      const colCellList = colList.map((index) => this.board.cells[index]).filter((cell) => cell.digit === 0);
+      const isOnlyTwoCell = colCellList.length === 2;
+      // 빈 셀이 2개일 때
+      if(isOnlyTwoCell) {
+        continue;
+      }
+      const twoPairList: Cell[] = colCellList
+        .map((colCell) => this.board.cells[colCell.index])
+        .filter((c) => c.candidateList.length === 2);
+      const twoPairIndexList = twoPairList.map((c) => c.index);
+      // 두 후보군 배열이 같은 경우
+      console.log('twoPairList', twoPairList);
+      // 2개 이상일 때
+      if(twoPairList.length > 1) {
+        for(let j = 0; j < twoPairList.length; ++j) {
+          for(let k = j + 1; k < twoPairList.length; ++k) {
+            if(twoPairList[j].candidateList.join('') === twoPairList[k].candidateList.join('')) {
+              // 같은 쌍을 찾았다
+              const pairCandidateList = twoPairList[j].candidateList; // 같은 후보군 숫자
+              // 두쌍 제외 빈 셀
+              const otherCellList = colCellList.filter((colCell) => {
+                return ![twoPairList[j].index, twoPairList[k].index].includes(colCell.index)
+              });
+              console.log('pairCandidateList', pairCandidateList);
+              console.log('otherCellList', otherCellList);
+              if(otherCellList.length > 0) {
+                // 나머지 셀들 중 후보군에서 제거할 숫자를 찾아서 hint 에 넣는다.
+                otherCellList.forEach((cell) => {
+                  const hint: Hint = { index: cell.index, candidateList: [] };
+                  // 교집합만 힌트에 추가한다.
+                  const intersection = Helper.intersectionArray(cell.candidateList, pairCandidateList);
+                  hint.candidateList = intersection;
+                  // 제거할 후보군이 있을 때만 힌트에 추가한다.
+                  if(hint.candidateList!.length > 0) {
+                    hintList.push(hint);
+                  }
+                });
+              }
+            }
+          }
+        }
+      }
     }
     return hintList.length > 0 ? hintList : null;
+  }
+  /**
+   * # 셀의 가로줄에서 후보군 쌍이 같은 두 셀을 찾는다.
+   * [7,9,6],[],[],[7,9],[],[4,7,9],[],[],[7,9] 인 경우 [7,9]를 찾는다.
+   * 다른 셀에서 7, 9가 제거대상이다. 
+   * 다른 셀에서의 7,9 를 힌트로 반환한다.
+   */
+  hintLockEliminate2PairHorizontal(): Hint[] | null {
+    const hintList: Hint[] = [];
+    for(let i = 0; i < 9; ++i) {
+      const rowList = rowIndexList[i];
+      const rowCellList = rowList.map((index) => this.board.cells[index]).filter((cell) => cell.digit === 0);
+      const isOnlyTwoCell = rowCellList.length === 2;
+      // 빈 셀이 2개일 때
+      if(isOnlyTwoCell) {
+        continue;
+      }
+      const twoPairList: Cell[] = rowCellList
+        .map((rowCell) => this.board.cells[rowCell.index])
+        .filter((c) => c.candidateList.length === 2);
+      const twoPairIndexList = twoPairList.map((c) => c.index);
+      // 두 후보군 배열이 같은 경우
+      console.log('twoPairList', twoPairList);
+      // 2개 이상일 때
+      if(twoPairList.length > 1) {
+        for(let j = 0; j < twoPairList.length; ++j) {
+          for(let k = j + 1; k < twoPairList.length; ++k) {
+            if(twoPairList[j].candidateList.join('') === twoPairList[k].candidateList.join('')) {
+              // 같은 쌍을 찾았다
+              const pairCandidateList = twoPairList[j].candidateList; // 같은 후보군 숫자
+              // 두쌍 제외 빈 셀
+              const otherCellList = rowCellList.filter((rowCell) => {
+                return ![twoPairList[j].index, twoPairList[k].index].includes(rowCell.index)
+              });
+              console.log('pairCandidateList', pairCandidateList);
+              console.log('otherCellList', otherCellList);
+              if(otherCellList.length > 0) {
+                // 나머지 셀들 중 후보군에서 제거할 숫자를 찾아서 hint 에 넣는다.
+                otherCellList.forEach((cell) => {
+                  const hint: Hint = { index: cell.index, candidateList: [] };
+                  // 교집합만 힌트에 추가한다.
+                  const intersection = Helper.intersectionArray(cell.candidateList, pairCandidateList);
+                  hint.candidateList = intersection;
+                  // 제거할 후보군이 있을 때만 힌트에 추가한다.
+                  if(hint.candidateList!.length > 0) {
+                    hintList.push(hint);
+                  }
+                });
+              }
+            }
+          }
+        }
+      }
+    }
+    return hintList.length > 0 ? hintList : null;
+  }
+  /**
+   * # 셀의 3x3 블록에서 후보군 쌍이 같은 두 셀을 찾는다.
+   * [7,9,6],[],[],[7,9],[],[4,7,9],[],[],[7,9] 인 경우 [7,9]를 찾는다.
+   * 다른 셀에서 7, 9가 제거대상이다. 
+   * 다른 셀에서의 7,9 를 힌트로 반환한다.
+   */
+  hintLockEliminate2PairBox(): Hint[] | null {
+    const hintList: Hint[] = [];
+    for(let i = 0; i < 9; ++i) {
+      const boxList = boxIndexList[i];
+      const boxCellList = boxList.map((index) => this.board.cells[index]).filter((cell) => cell.digit === 0);
+      const isOnlyTwoCell = boxCellList.length === 2;
+      // 빈 셀이 2개일 때
+      if(isOnlyTwoCell) {
+        continue;
+      }
+      const twoPairList: Cell[] = boxCellList
+        .map((boxCell) => this.board.cells[boxCell.index])
+        .filter((c) => c.candidateList.length === 2);
+      const twoPairIndexList = twoPairList.map((c) => c.index);
+      // 두 후보군 배열이 같은 경우
+      console.log('twoPairList', twoPairList);
+      // 2개 이상일 때
+      if(twoPairList.length > 1) {
+        for(let j = 0; j < twoPairList.length; ++j) {
+          for(let k = j + 1; k < twoPairList.length; ++k) {
+            if(twoPairList[j].candidateList.join('') === twoPairList[k].candidateList.join('')) {
+              // 같은 쌍을 찾았다
+              const pairCandidateList = twoPairList[j].candidateList; // 같은 후보군 숫자
+              // 두쌍 제외 빈 셀
+              const otherCellList = boxCellList.filter((boxCell) => {
+                return ![twoPairList[j].index, twoPairList[k].index].includes(boxCell.index)
+              });
+              console.log('pairCandidateList', pairCandidateList);
+              console.log('otherCellList', otherCellList);
+              if(otherCellList.length > 0) {
+                // 나머지 셀들 중 후보군에서 제거할 숫자를 찾아서 hint 에 넣는다.
+                otherCellList.forEach((cell) => {
+                  const hint: Hint = { index: cell.index, candidateList: [] };
+                  // 교집합만 힌트에 추가한다.
+                  const intersection = Helper.intersectionArray(cell.candidateList, pairCandidateList);
+                  hint.candidateList = intersection;
+                  // 제거할 후보군이 있을 때만 힌트에 추가한다.
+                  if(hint.candidateList!.length > 0) {
+                    hintList.push(hint);
+                  }
+                });
+              }
+            }
+          }
+        }
+      }
+    }
+    return hintList.length > 0 ? hintList : null;
+  }
+  hintLockEliminate3PairHorizontal() {
+    
+  }
+  hintLockEliminate3PairVertical() {
+  
+  }
+  hintLockEliminate3PairBox() {
+  
+  }
+  hintHidden2PairHorizontal() {
+  
+  }
+  hintHidden2PairVertical() {
+  
+  }
+  hintHidden2PairBox() {
+  
+  }
+  hintHidden3PairHorizontal() {
+  
+  }
+  hintHidden3PairVertical() {
+  
+  }
+  hintHidden3PairBox() {
+  
+  }
+  hintPointingPair() {
+  }
+  /**
+   * # x-wing 힌트
+   * - 가로줄, 세로줄에서 같은 후보군이 있는 두 셀이 같은 가로줄, 세로줄에 있는 경우
+   * - 같은 후보군을 가진 두 셀이 같은 가로줄, 세로줄에 있는 경우
+   */
+  hintXWing() {
+    const hintList: Hint[] = [];
+    for(let i = 0; i < 9; i++) {
+      const colList = colIndexList[i];
+
+    }
+  }
+  hintSwordFish() {
+  }
+  hintJellyFish() {
+  }
+  hintXYWing() {
+  }
+  hintXYZWing() {
   }
 }
 
@@ -571,6 +762,13 @@ namespace Helper {
   export function extractCellDigit(cellList: Cell[]): number[] {
     return cellList.map((cell) => cell.digit);
   }
+  /**
+   * # 숫자 배열을 행렬로 변환
+   * @param numberArray 대상 숫자 배열
+   * @param row 행 수
+   * @param col 열 수
+   * @returns {number[][]}
+   */
   export function numberArrayToMatrix(
     numberArray: number[], 
     row: number, 
@@ -582,6 +780,14 @@ namespace Helper {
     }
     return matrix;
   }
+  /**
+   * # 행렬 곱셈
+   * @param a 행렬
+   * @param b 행렬
+   * @param row 행 수
+   * @param col 열 수
+   * @returns {number[][]}
+   */
   export function matrixMultiply(
     a: number[][], 
     b: number[][], 
@@ -600,6 +806,40 @@ namespace Helper {
       }
     }
     return result;
+  }
+  /**
+   * # 배열 내용이 같은지 확인
+   * @param a 
+   * @param b 
+   * @returns 
+   */
+  export function isArraysEqual(a: number[], b: number[]): boolean {
+    return a.length === b.length && a.every((v, i) => v === b[i]);
+  }
+  /**
+   * a 배열이 b 배열을 포함되는지 확인
+   * @param a 
+   * @param b 
+   * @returns 
+   */
+  export function isArraysInclude(a: number[], b: number[]): boolean {
+    return a.every((v) => b.includes(v));
+  }
+  /**
+   * # 배열의 교집합 구하기
+   * @param a
+   */
+  export function intersectionArray(a: number[], b: number[]): number[] {
+    return a.filter((v) => b.includes(v));
+  }
+  /**
+   * # 배열의 차집합 구하기
+   * @param a 배열에서
+   * @param b 배열에 없는 것만 
+   * @returns 
+   */
+  export function excludeArray(a: number[], b: number[]): number[] {
+    return a.filter((v) => !b.includes(v));
   }
 }
 

@@ -61,11 +61,13 @@
       <button @click="onClickMixHorizontalRow">mix horizontal row</button> -->
       <button @click="onClickRecursive">recursive</button>
       <hr>
-      <button @click="onClickOneCandidate">OnlyOneCandidate</button>
+      <button @click="onClickOneCandidate">NakedSingle</button>
       <button @click="onClickSingleVertical">SingleVertical</button>
       <button @click="onClickSingleHorizontal">SingleHorizontal</button>
       <button @click="onClickSingleBox">SingleBox</button>
-      <button @click="onClick2Pair">2Pair</button>
+      <button @click="onClick2PairVertical">Lock 2Pair Vertical</button>
+      <button @click="onClick2PairHorizontal">Lock 2Pair Horizontal</button>
+      <button @click="onClick2PairBox">Lock 2Pair Box</button>
       <div class="number-pad">
         <div 
           class="num" 
@@ -129,35 +131,54 @@ function onClickRecursive() {
 }
 // hint
 function onClickOneCandidate() {
-  const hint = sudoku.value.hintOnlyOneCandidate();
+  const hint = sudoku.value.hintNakedSingleCandidate();
   if(hint) {
     hintList.value.push(hint);
+    sudoku.value.setNumberIndex(hint.index, hint.digit!, true);
+    selectedCell.value = hint.index;
   }
 }
 function onClickSingleVertical() {
   const hint = sudoku.value.hintSingleVerticalCandidate();
   if(hint) {
     hintList.value.push(hint);
+    sudoku.value.setNumberIndex(hint.index, hint.digit!, true);
+    selectedCell.value = hint.index;
   }
 }
 function onClickSingleHorizontal() {
   const hint = sudoku.value.hintSingleHorizontalCandidate();
   if(hint) {
     hintList.value.push(hint);
+    sudoku.value.setNumberIndex(hint.index, hint.digit!, true);
+    selectedCell.value = hint.index;
   }
 }
 function onClickSingleBox() {
   const hint = sudoku.value.hintSingleBoxCandidate();
   if(hint) {
     hintList.value.push(hint);
+    sudoku.value.setNumberIndex(hint.index, hint.digit!, true);
+    selectedCell.value = hint.index;
   }
 }
-function onClick2Pair() {
-  const hint = sudoku.value.hint2PairVerticalCandidate();
+function onClick2PairVertical() {
+  const hint = sudoku.value.hintLockEliminate2PairVertical();
   if(hint) {
     hintList.value.push(hint);
   }
-
+}
+function onClick2PairHorizontal() {
+  const hint = sudoku.value.hintLockEliminate2PairHorizontal();
+  if(hint) {
+    hintList.value.push(hint);
+  }
+}
+function onClick2PairBox() {
+  const hint = sudoku.value.hintLockEliminate2PairBox();
+  if(hint) {
+    hintList.value.push(hint);
+  }
 }
 
 
