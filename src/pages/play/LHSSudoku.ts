@@ -13,6 +13,13 @@ interface Cell {
 interface Board {
   cells: Cell[];
 }
+
+interface Hint {
+  index: number;
+  digit?: number;
+  candidateList?: number[];
+}
+
 const boxIndexList = [
   [0, 1, 2, 9, 10, 11, 18, 19, 20], // 1, 1
   [3, 4, 5, 12, 13, 14, 21, 22, 23],  // 1, 2
@@ -294,7 +301,7 @@ export class LHSSudoku {
     const randomCandidateIndex = Math.floor(Math.random() * cell.candidateList.length);
     // 셀에 값을 채운다.
     const randomCandidate = cell.candidateList[randomCandidateIndex];
-    this.setNumberCell(cell, randomCandidate);
+    // this.setNumberCell(cell, randomCandidate);
     return cell.index;
   }
   /**
@@ -363,7 +370,7 @@ export class LHSSudoku {
    */
   removeCandidate(row: number, col: number, digit: number): void {
     const block = Math.floor(row / 3) * 3 + Math.floor(col / 3);
-    console.log('removeCandidate', row, col, block, digit);
+    // console.log('removeCandidate', row, col, block, digit);
     // 가로줄, 세로줄, 3x3 블록에 후보자를 제거
     const rowList = rowIndexList[row];
     const colList = colIndexList[col];
@@ -457,6 +464,105 @@ export class LHSSudoku {
     // 셀에 숫자 기입
     cell.digit = digit;
     this.removeCandidate(cell.row, cell.col, digit);
+  }
+
+
+  //==============================================================
+
+  /**
+   * # 후보군이 하나만 있는 셀을 찾는다.
+   * @hint 
+   * @returns 
+   */
+  hintOnlyOneCandidate(): Hint | null {
+    for(let i = 0; i < 81; i++) {
+      const cell = this.board.cells[i];
+      if(cell.digit === 0 && cell.candidateList.length === 1) {
+        return { index: cell.index, digit: cell.candidateList[0] };
+      }
+    }
+    return null;
+  }
+
+  /**
+   * # 셀의 세로줄에서 후보군이 하나만 있는 셀을 찾는다.
+   * - 모든 후보군을 가져와서, 세로줄에서 후보군이 하나만 있는 셀을 찾는다.
+   */
+  hintSingleVerticalCandidate(): Hint | null {
+    for(let i = 0; i < 81; i++) {
+      const cell = this.board.cells[i];
+      if(cell.digit === 0) {
+        const colList = colIndexList[cell.col];
+        const colCandidateList = colList.map((index) => this.board.cells[index].candidateList).flat();
+        const cellCandidateList = cell.candidateList;
+        const singleCandidateList = cellCandidateList.filter((c) => {
+          return colCandidateList.filter((cc) => cc === c).length === 1;
+        });
+        console.log('singleCandidateList', singleCandidateList);
+        if(singleCandidateList.length > 0) {
+          return { index: cell.index, candidateList: singleCandidateList };
+        }
+      }
+    }
+    return null;
+  }
+  /**
+   * # 셀의 가로줄에서 후보군이 하나만 있는 셀을 찾는다.
+   * - 모든 후보군을 가져와서, 가로줄에서 후보군이 하나만 있는 셀을 찾는다.
+   */
+  hintSingleHorizontalCandidate(): Hint | null {
+    for(let i = 0; i < 81; i++) {
+      const cell = this.board.cells[i];
+      if(cell.digit === 0) {
+        const rowList = rowIndexList[cell.row];
+        const rowCandidateList = rowList.map((index) => this.board.cells[index].candidateList).flat();
+        const cellCandidateList = cell.candidateList;
+        const singleCandidateList = cellCandidateList.filter((c) => {
+          return rowCandidateList.filter((cc) => cc === c).length === 1;
+        });
+        console.log('singleCandidateList', singleCandidateList);
+        if(singleCandidateList.length > 0) {
+          return { index: cell.index, candidateList: singleCandidateList };
+        }
+      }
+    }
+    return null;
+  }
+  /**
+   * # 셀의 3x3 블록에서 후보군이 하나만 있는 셀을 찾는다.
+   * - 모든 후보군을 가져와서, 3x3 블록에서 후보군이 하나만 있는 셀을 찾는다.
+   */
+  hintSingleBoxCandidate(): Hint | null {
+    for(let i = 0; i < 81; i++) {
+      const cell = this.board.cells[i];
+      if(cell.digit === 0) {
+        const boxList = boxIndexList[cell.box];
+        const boxCandidateList = boxList.map((index) => this.board.cells[index].candidateList).flat();
+        const cellCandidateList = cell.candidateList;
+        const singleCandidateList = cellCandidateList.filter((c) => {
+          return boxCandidateList.filter((cc) => cc === c).length === 1;
+        });
+        console.log('singleCandidateList', singleCandidateList);
+        if(singleCandidateList.length > 0) {
+          return { index: cell.index, candidateList: singleCandidateList };
+        }
+      }
+    }
+    return null;
+  }
+  /**
+   * # 셀의 세로줄에서 두개 후보군 쌍을 찾는다.
+   * [7,9,6],[],[],[7,9],[],[4,7,9],[],[],[7,9] 인 경우 [7,9]를 찾는다.
+   * 나머지 후보군에서 7, 9가 제거대상이다. 
+   * 제거 대상을 힌트로 반환한다.
+   */
+  hint2PairVerticalCandidate(): Hint[] | null {
+    const hintList: Hint[] = [];
+    for(let i = 0; i < 9; ++i) {
+      const colList = colIndexList[i];
+      
+    }
+    return hintList.length > 0 ? hintList : null;
   }
 }
 

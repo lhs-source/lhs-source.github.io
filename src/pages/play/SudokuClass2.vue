@@ -54,12 +54,18 @@
       <button @click="onClickNextStep">next step</button>
       <button @click="onClickCandidate">candidate</button>
       <button @click="onClickHint">regen hint</button> -->
-      <button @click="onClickGenerateCR">generate candidate random(fail)</button>
-      <button @click="onClickFirstBoxMatrix">first box matrix</button>
+      <!-- <button @click="onClickGenerateCR">generate candidate random(fail)</button>
+      <button @click="onClickFirstBoxMatrix">first box matrix</button> -->
       <button @click="onClickRemoveDigit">remove digit</button>
-      <button @click="onClickMixVerticalRow">mix vertical row</button>
-      <button @click="onClickMixHorizontalRow">mix horizontal row</button>
+      <!-- <button @click="onClickMixVerticalRow">mix vertical row</button>
+      <button @click="onClickMixHorizontalRow">mix horizontal row</button> -->
       <button @click="onClickRecursive">recursive</button>
+      <hr>
+      <button @click="onClickOneCandidate">OnlyOneCandidate</button>
+      <button @click="onClickSingleVertical">SingleVertical</button>
+      <button @click="onClickSingleHorizontal">SingleHorizontal</button>
+      <button @click="onClickSingleBox">SingleBox</button>
+      <button @click="onClick2Pair">2Pair</button>
       <div class="number-pad">
         <div 
           class="num" 
@@ -69,6 +75,11 @@
           {{ i }}
         </div>
       </div>
+    </div>
+  </div>
+  <div>
+    <div v-for="hint of hintList">
+      {{ hint }}
     </div>
   </div>
 </template>
@@ -85,6 +96,7 @@ const selectedCellValue = computed(() => {
   }
   return null;
 })
+const hintList = ref<any[]>([]);
 
 function onClickCell(index: number) {
   selectedCell.value = index;
@@ -115,9 +127,46 @@ function onClickMixHorizontalRow() {
 function onClickRecursive() {
   sudoku.value.generateOneRandomSafe(0);
 }
+// hint
+function onClickOneCandidate() {
+  const hint = sudoku.value.hintOnlyOneCandidate();
+  if(hint) {
+    hintList.value.push(hint);
+  }
+}
+function onClickSingleVertical() {
+  const hint = sudoku.value.hintSingleVerticalCandidate();
+  if(hint) {
+    hintList.value.push(hint);
+  }
+}
+function onClickSingleHorizontal() {
+  const hint = sudoku.value.hintSingleHorizontalCandidate();
+  if(hint) {
+    hintList.value.push(hint);
+  }
+}
+function onClickSingleBox() {
+  const hint = sudoku.value.hintSingleBoxCandidate();
+  if(hint) {
+    hintList.value.push(hint);
+  }
+}
+function onClick2Pair() {
+  const hint = sudoku.value.hint2PairVerticalCandidate();
+  if(hint) {
+    hintList.value.push(hint);
+  }
+
+}
+
 
 
 onMounted(() => {
+  onClickRecursive();
+  for(let i = 0 ; i < 15; i++) {
+    onClickRemoveDigit();
+  }
   // keyup 이벤트를 사용하기 위해 window에 이벤트를 등록
   // window.addEventListener('keyup', (event) => {
   //   if(selectedCell.value !== null) {
