@@ -18,6 +18,7 @@ interface Hint {
   index: number;
   digit?: number;
   candidateList?: number[];
+  influentCellList?: number[];
 }
 
 const boxIndexList = [
@@ -67,15 +68,15 @@ export class LHSSudoku {
     this.board = this.initializeBoard();
   }
 
-  initializeBoard(): Board {
+  initializeBoard(initialBoard?: number[]): Board {
     // 81개 셀을 가진 보드를 생성한다.
     // 후보군은 1-9로 초기화한다.
     // row, col, index 는 index 에 따라서 초기화한다.
     const newBoard = {
       cells: Array.from({length: 81}, (_, index) => {
         return {
-          digit: 0,
-          candidateList: [1, 2, 3, 4, 5, 6, 7, 8, 9],
+          digit: initialBoard?.[index] || 0,
+          candidateList: initialBoard?.[index] ? [] : [1, 2, 3, 4, 5, 6, 7, 8, 9],
           invalidCandidateList: [],
           index,
           row: Math.floor(index / 9),
@@ -85,6 +86,14 @@ export class LHSSudoku {
       })
     }
     return newBoard;
+  }
+  generate(initialBoard: number[]) {
+    this.board = this.initializeBoard(initialBoard);
+    // 후보군을 다시 계산한다.
+    this.calculateAllEmptyCellCandidate();
+  }
+  extract(): number[] {
+    return this.board.cells.map((cell) => cell.digit);
   }
   /**
    * # 첫번째 박스의 행렬을 1~9로 랜덤하게 채운다.
@@ -319,7 +328,7 @@ export class LHSSudoku {
     if(cell.digit !== 0) {
       // console.log('generateOneRandomSafe > cell.digit !== 0');
       cell.digit = 0;
-      const adjacentCellList = this.getAllAdjacentCell(cell);
+      const adjacentCellList = this.getNeighborCell(cell);
       adjacentCellList.forEach((cell) => {
         this.calculateCellCandidate(cell);
       });
@@ -336,7 +345,7 @@ export class LHSSudoku {
       previouseCell.digit = 0;
       cell.invalidCandidateList = [];
       // console.log('generateOneRandomSafe > no candidate', previouseCell.invalidCandidateList);
-      const adjacentCellList = this.getAllAdjacentCell(previouseCell);
+      const adjacentCellList = this.getNeighborCell(previouseCell);
       adjacentCellList.forEach((ajcell) => {
         this.calculateCellCandidate(ajcell);
       });
@@ -431,19 +440,20 @@ export class LHSSudoku {
     });
   }
   /**
-   * # 가로, 세로, 3x3 블록의 cell을 가져온다.
+   * # 가로, 세로, 3x3 블록의 cell을 가져온다. (이웃셀)
    * @param cell 
    */
-  getAllAdjacentCell(cell: Cell): Cell[] {
+  getNeighborCell(cell: Cell): Cell[] {
     const rowList = rowIndexList[cell.row];
     const colList = colIndexList[cell.col];
     const boxList = boxIndexList[cell.box];
     const adjacentCellList = rowList.concat(colList, boxList).map((index) => this.board.cells[index]);
+    const excludeCellList = adjacentCellList.filter((c) => c.index !== cell.index);
     return adjacentCellList;
   }
   /**
    * # 숫자 기입
-   * - 관련 후보군 제거
+   * - 이웃셀의 후보군 제거
    * @param index 
    * @param digit 
    */
@@ -457,7 +467,7 @@ export class LHSSudoku {
   }
   /**
    * # 숫자 기입
-   * - 관련 후보군 제거
+   * - 이웃셀의 후보군 제거
    * @param cell 
    * @param digit 
    */
@@ -467,6 +477,92 @@ export class LHSSudoku {
     cell.input = input;
     cell.candidateList = [];
     this.removeCandidate(cell.row, cell.col, digit);
+  }
+
+  /**
+   * 핀서셀을 찾는다.
+   */
+  getPincerCellList(pivotCell: Cell): Hint[] {
+    if(pivotCell.candidateList.length !== 2) {
+      return [];
+    }
+    const pivotCandidateList = pivotCell.candidateList;
+    const rowList = rowIndexList[pivotCell.row];
+    const colList = colIndexList[pivotCell.col];
+    const boxList = boxIndexList[pivotCell.box];
+    const neighborSet = new Set(this.getNeighborCell(pivotCell)
+      .filter((cell) => cell.candidateList.length === 2 && cell.index !== pivotCell.index)
+      .map((cell) => cell.index));
+      // set 으로 변환
+    const neighborList = Array.from(neighborSet);
+    if(neighborList.length <= 1) {
+      // 인접 개수가 2개가 안넘으면 핀서셀이 없다.
+      return [];
+    }
+    console.log('neighborList', neighborList);
+    // colBoxDiff rowBoxDiff 끼리 핀서셀 탐색
+    const pincerCell = {
+      sourceCellList: [] as number[],
+      targetCellList: [] as number[],
+      removeNumber: 0,
+    }
+    for(let i = 0; i < neighborList.length; ++i) {
+      const sourceCell = this.board.cells[neighborList[i]];
+      for(let j = i + 1; j < neighborList.length; ++j) {
+        const targetCell = this.board.cells[neighborList[j]];
+        console.log('sourceCell', sourceCell, 'targetCell', targetCell);
+        if(sourceCell.row === targetCell.row || sourceCell.col === targetCell.col || sourceCell.box === targetCell.box) {
+          // 같은 이웃 타입에 있다면 무시한다.
+          continue;
+        }
+        // pivot 과 겹친 숫자가 1개이고 달라야 한다.
+        const yz = Helper.intersectionArray(pivotCandidateList, sourceCell.candidateList);
+        const xz = Helper.intersectionArray(pivotCandidateList, targetCell.candidateList);
+        console.log('yz xz', yz, xz);
+        if(yz.length === 1 && xz.length === 1 && yz[0] !== xz[0]) {
+          const yExclude = Helper.excludeArray(sourceCell.candidateList, yz);
+          const zExclude = Helper.excludeArray(targetCell.candidateList, xz);
+          console.log('yExclude', yExclude, 'zExclude', zExclude);
+          // 각각 나머지 숫자는 같아야 한다. -> 제거 숫자
+          if(yExclude[0] !== zExclude[0]) {
+            continue;
+          }
+          console.log('pincerCell found', sourceCell, targetCell);
+          // 찾았다
+          // 겹치는 이웃셀을 구한다.
+          const sourceNeighborList = this.getNeighborCell(sourceCell).map((cell) => cell.index);
+          const targetNeighborList = this.getNeighborCell(targetCell).map((cell) => cell.index);
+          const intersectionCellList = Array.from(new Set(Helper.intersectionArray(sourceNeighborList, targetNeighborList)));
+          const removeNumber = yExclude[0];
+          pincerCell.sourceCellList.push(sourceCell.index);
+          pincerCell.sourceCellList.push(targetCell.index);
+          pincerCell.targetCellList.push(...intersectionCellList);
+          pincerCell.removeNumber = removeNumber!;
+          console.log('pincerCell', pincerCell);
+          if(intersectionCellList.length <= 0) {
+            continue;
+          }
+          const hintList: Hint[] = [];
+          intersectionCellList.forEach((index) => {
+            // 제거 후보군을 후보군에 갖고 있는 셀을 찾는다.
+            const cell = this.board.cells[index];
+            if(cell.candidateList.includes(pincerCell.removeNumber)) {
+              console.log('pincerCell to HintList', cell, pincerCell.removeNumber);
+              // pincerCell to HintList
+                hintList.push({ 
+                  index, 
+                  candidateList: [pincerCell.removeNumber], 
+                  influentCellList: pincerCell.sourceCellList 
+                });
+            }
+          });
+          if(hintList.length > 0) {
+            return hintList;
+          }
+        }
+      }
+    }
+    return [];
   }
 
 
@@ -699,7 +795,23 @@ export class LHSSudoku {
   }
   hintJellyFish() {
   }
+  /**
+   * # xy wing 힌트
+   * 후보군이 두개인 셀(x,y)의 핀서셀을 찾아 x,y y,z x,z 조합을 찾는다.
+   * 나머지 두 셀(y,z/x,z)의 이웃셀에서 z를 후보군에서 제거한다.
+   */
   hintXYWing() {
+    const hintList: Hint[] = [];
+    // 후보군이 두개인 셀을 찾는다.
+    const twoCandidateCellList = this.board.cells.filter((cell) => cell.candidateList.length === 2);
+    twoCandidateCellList.forEach((cell) => {
+      console.log('loop twoCandidateCellList', cell.candidateList);
+      const pincerList = this.getPincerCellList(cell);
+      if(pincerList.length > 0) {
+        return hintList.push(...pincerList);
+      }
+    });
+    return hintList.length > 0 ? hintList : null;
   }
   hintXYZWing() {
   }

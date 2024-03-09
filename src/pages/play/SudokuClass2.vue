@@ -68,6 +68,12 @@
       <button @click="onClick2PairVertical">Lock 2Pair Vertical</button>
       <button @click="onClick2PairHorizontal">Lock 2Pair Horizontal</button>
       <button @click="onClick2PairBox">Lock 2Pair Box</button>
+      <hr>
+      <button @click="onClickXYWing">XYWing</button>
+      <hr>
+      <button @click="onClickGenerate">generate</button>
+      <button @click="onClickExtract">Extract</button>
+      <textarea :model-value="extractedNumberList.join(',')"></textarea>
       <div class="number-pad">
         <div 
           class="num" 
@@ -99,6 +105,7 @@ const selectedCellValue = computed(() => {
   return null;
 })
 const hintList = ref<any[]>([]);
+const extractedNumberList = ref<number[]>([]);
 
 function onClickCell(index: number) {
   selectedCell.value = index;
@@ -180,7 +187,21 @@ function onClick2PairBox() {
     hintList.value.push(hint);
   }
 }
+function onClickXYWing() {
+  const hint = sudoku.value.hintXYWing();
+  if(hint) {
+    hintList.value.push(hint);
+  }
+}
 
+function onClickGenerate() {
+  const numList = [3,8,1,5,4,7,0,0,0,6,0,0,9,2,1,0,0,0,2,7,9,8,6,3,1,5,4,9,0,0,6,0,4,0,0,1,4,0,6,0,0,9,8,3,0,7,1,8,3,5,2,0,4,0,5,9,7,0,3,6,0,0,0,8,6,0,0,0,5,0,0,2,1,0,0,0,9,8,5,6,0];
+  sudoku.value.generate(numList);
+}
+function onClickExtract() {
+  extractedNumberList.value = sudoku.value.extract();
+  console.log('extractedNumberList', extractedNumberList.value.join(','));
+}
 
 
 onMounted(() => {
