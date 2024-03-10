@@ -15,16 +15,39 @@ import TextShowHide from '../components/Main/TextShowHide.vue';
 import CrowBrain from '../components/Main/CrowBrain.vue';
 import Mirror from '../components/Main/Mirror.vue';
 import Introducement from '../components/Main/Introducement.vue';
+import { ScrollSmoother } from 'gsap-trial/all';
+import Lenis from '@studio-freight/lenis';
 
 gsap.registerPlugin(ScrollTrigger);
 gsap.registerPlugin(MotionPathPlugin);
-
 
 function animSkillSummary() {
 
 }
 
+const lenis = new Lenis({
+  lerp: 0.05, 
+})
+
+// lenis.on('scroll', (e) => {
+//   console.log(e)
+// })
+
+lenis.on('scroll', ScrollTrigger.update)
+
+gsap.ticker.add((time)=>{
+  lenis.raf(time * 1000)
+})
+
+gsap.ticker.lagSmoothing(0)
+
 onMounted(() => {
+  // ScrollSmoother.create({
+  //   smooth: 1,
+  //   effects: true, // looks for data-speed and data-lag attributes on elements
+  // smoothTouch: 0.1, // much shorter smoothing time on touch devices (default is NO smoothing on touch devices)
+  // });
+
 
 })
 
@@ -33,7 +56,7 @@ onMounted(() => {
 <template>
   <div class="index-wrapper">
     <LhsMain></LhsMain>
-    <BlackFethers></BlackFethers>
+    <!-- <BlackFethers></BlackFethers> -->
     <CrowBrain></CrowBrain>
     <Mirror></Mirror>
     <Introducement></Introducement>
