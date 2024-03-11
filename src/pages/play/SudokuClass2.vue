@@ -56,15 +56,15 @@
       <button @click="onClickHint">regen hint</button> -->
       <!-- <button @click="onClickGenerateCR">generate candidate random(fail)</button>
       <button @click="onClickFirstBoxMatrix">first box matrix</button> -->
-      <button @click="onClickRemoveDigit">remove digit</button>
+      <!-- <button @click="onClickRemoveDigit">remove digit</button> -->
       <!-- <button @click="onClickMixVerticalRow">mix vertical row</button>
       <button @click="onClickMixHorizontalRow">mix horizontal row</button> -->
-      <button @click="onClickRecursive">recursive</button>
-      <hr>
+      <!-- <button @click="onClickRecursive">recursive</button> -->
       <button @click="onClickOneCandidate">NakedSingle</button>
       <button @click="onClickSingleVertical">SingleVertical</button>
       <button @click="onClickSingleHorizontal">SingleHorizontal</button>
       <button @click="onClickSingleBox">SingleBox</button>
+      <hr>
       <button @click="onClick2PairVertical">Lock 2Pair Vertical</button>
       <button @click="onClick2PairHorizontal">Lock 2Pair Horizontal</button>
       <button @click="onClick2PairBox">Lock 2Pair Box</button>
@@ -74,6 +74,17 @@
       <button @click="onClickGenerate">generate</button>
       <button @click="onClickExtract">Extract</button>
       <textarea :model-value="extractedNumberList.join(',')"></textarea>
+      <button @click="onClickXWing">XWing</button>
+      <hr>
+      input
+      <textarea style="width: 100%; height: 120px;" v-model="initialString" />
+      <hr>
+      extract
+      <textarea style="width: 100%; height: 120px;" v-model="extractedString" />
+      <hr>
+      <button @click="onClickGenerate">Generate</button>
+      <button @click="onClickExtract">Extract</button>
+      <hr>
       <div class="number-pad">
         <div 
           class="num" 
@@ -106,6 +117,8 @@ const selectedCellValue = computed(() => {
 })
 const hintList = ref<any[]>([]);
 const extractedNumberList = ref<number[]>([]);
+const initialString = ref('');
+const extractedString = ref('');
 
 function onClickCell(index: number) {
   selectedCell.value = index;
@@ -136,7 +149,12 @@ function onClickMixHorizontalRow() {
 function onClickRecursive() {
   sudoku.value.generateOneRandomSafe(0);
 }
-// hint
+// function onClickGenerate() {
+//   sudoku.value.fromString(initialString.value);
+// }
+function onClickExtract() {
+  extractedString.value = sudoku.value.extractToString();
+}
 function onClickOneCandidate() {
   const hint = sudoku.value.hintNakedSingleCandidate();
   if(hint) {
@@ -193,14 +211,17 @@ function onClickXYWing() {
     hintList.value.push(hint);
   }
 }
+function onClickXWing() {
+  const hint = sudoku.value.hintXWing();
+  if(hint) {
+    hintList.value.push(hint);
+  }
+
+}
 
 function onClickGenerate() {
   const numList = [3,8,1,5,4,7,0,0,0,6,0,0,9,2,1,0,0,0,2,7,9,8,6,3,1,5,4,9,0,0,6,0,4,0,0,1,4,0,6,0,0,9,8,3,0,7,1,8,3,5,2,0,4,0,5,9,7,0,3,6,0,0,0,8,6,0,0,0,5,0,0,2,1,0,0,0,9,8,5,6,0];
   sudoku.value.generate(numList);
-}
-function onClickExtract() {
-  extractedNumberList.value = sudoku.value.extract();
-  console.log('extractedNumberList', extractedNumberList.value.join(','));
 }
 
 

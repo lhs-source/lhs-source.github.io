@@ -64,19 +64,22 @@ const colIndexList = [
 export class LHSSudoku {
   board: Board;
   
-  constructor() {
-    this.board = this.initializeBoard();
+  constructor(initialNumber?: number[]) {
+    this.board = this.initializeBoard(initialNumber);
+    if(initialNumber) {
+      this.calculateAllEmptyCellCandidate();
+    }
   }
 
-  initializeBoard(initialBoard?: number[]): Board {
+  initializeBoard(initialNumber?: number[]): Board {
     // 81개 셀을 가진 보드를 생성한다.
     // 후보군은 1-9로 초기화한다.
     // row, col, index 는 index 에 따라서 초기화한다.
     const newBoard = {
       cells: Array.from({length: 81}, (_, index) => {
         return {
-          digit: initialBoard?.[index] || 0,
-          candidateList: initialBoard?.[index] ? [] : [1, 2, 3, 4, 5, 6, 7, 8, 9],
+          digit: initialNumber?.[index] ?? 0,
+          candidateList: [1, 2, 3, 4, 5, 6, 7, 8, 9],
           invalidCandidateList: [],
           index,
           row: Math.floor(index / 9),
@@ -87,13 +90,20 @@ export class LHSSudoku {
     }
     return newBoard;
   }
-  generate(initialBoard: number[]) {
-    this.board = this.initializeBoard(initialBoard);
-    // 후보군을 다시 계산한다.
+  generate(initialNumber: number[]) {
+    this.initializeBoard(initialNumber);
     this.calculateAllEmptyCellCandidate();
   }
-  extract(): number[] {
-    return this.board.cells.map((cell) => cell.digit);
+  extractToString() {
+    return this.board.cells.map((cell) => cell.digit).join(',');
+  }
+  fromString(initialString: string) {  
+    const splited = initialString.split(',');
+    const initialNumber = splited.map((s) => parseInt(s));
+    this.initializeBoard(initialNumber);
+    if(initialNumber) {
+      this.calculateAllEmptyCellCandidate();
+    }
   }
   /**
    * # 첫번째 박스의 행렬을 1~9로 랜덤하게 채운다.
@@ -769,7 +779,9 @@ export class LHSSudoku {
    * - 같은 후보군을 가진 두 셀이 같은 가로줄, 세로줄에 있는 경우
    */
   hintXWing() {
+    type IndexGroupByCandidate = {candidate: number, indexList: number[]};
     const hintList: Hint[] = [];
+    const pairCount = 2;
     /**
      * [
      *  [
@@ -783,13 +795,67 @@ export class LHSSudoku {
      *  ]
      * ]
      */
-    const colNumberIndexList = [
-
-    ]
+    const colNumberIndexList: IndexGroupByCandidate[][] = Array.from({ length: 9 }, () => [
+      { candidate: 1, indexList: [] },
+      { candidate: 2, indexList: [] },
+      { candidate: 3, indexList: [] },
+      { candidate: 4, indexList: [] },
+      { candidate: 5, indexList: [] },
+      { candidate: 6, indexList: [] },
+      { candidate: 7, indexList: [] },
+      { candidate: 8, indexList: [] },
+      { candidate: 9, indexList: [] },
+    ]);
     for(let i = 0; i < 9; i++) {
-      const colList = colIndexList[i];
+      const sourceList = colIndexList[i];
+      const sourceIndexListByDigit = colNumberIndexList[i];
+      if(i === 0) {
+        // colNumberIndexList 에 추가
+        sourceList.forEach((index, inIndex) => {
+          const cell = this.board.cells[index];
+          cell.candidateList.forEach((digit) => {
+            const target = sourceIndexListByDigit.find((target) => target.candidate === digit);
+            target!.indexList.push(inIndex);
+          });
+        });
+      }
+      console.log('sourceIndexListByDigit', i, sourceIndexListByDigit);
+      // const validSourceIndexListByDigit = sourceIndexListByDigit.filter((source) => source.indexList.length > 0); // 없는 후보군은 제외
+      for(let j = i + 1; j < 9; j++) {
+        const targetList = colIndexList[j];
+        const targetIndexListByDigit = colNumberIndexList[j];
+        if(i === 0) {
+          // colNumberIndexList 에 추가
+          targetList.forEach((index, inIndex) => {
+            const cell = this.board.cells[index];
+            cell.candidateList.forEach((digit) => {
+              const target = targetIndexListByDigit.find((target) => target.candidate === digit);
+              target!.indexList.push(inIndex);
+            });
+          });
+        }
+        console.log('targetIndexListByDigit', i, j, targetIndexListByDigit);
+        // const validTargetIndexListByDigit = targetIndexListByDigit.filter((target) => target.indexList.length > 0); // 없는 후보군은 제외
+        const extractSameIndexList = sourceIndexListByDigit.reduce((acc: IndexGroupByCandidate[], source: IndexGroupByCandidate, index: number) => {
+          // 인덱스 개수가 2개 아니면 건너뛰기 (2쌍만 계산)
+          if(source.indexList.length != pairCount) {
+            return acc;
+          }
+          const target = targetIndexListByDigit[index];
+          if(Helper.isArraysEqual(source.indexList, target.indexList)) {
+            acc.push(source);
+          }
+          return acc;
+        }, [] as any[]);
+        console.log('extractSameIndexList', extractSameIndexList, extractSameIndexList.length);
+        if(extractSameIndexList.length === pairCount) {
+          // 열 -> 행의 숫자들 제거
+          // 행 -> 열의 숫자들 제거
 
+        }
+      }
     }
+    return hintList;
   }
   hintSwordFish() {
   }
