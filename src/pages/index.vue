@@ -29,7 +29,7 @@ interface TitleMenu {
   path: string;
   content: string;
 }
-const titleMenu = ref<interface[]>([
+const titleMenu = ref<TitleMenu[]>([
   {title: '포트폴리오', path: 'portfolio', content: '본격적인 포트폴리오?'},
   {title: '스도쿠', path: 'play/sudoku', content: '스도쿠 게임입니다. 플레이해보세요!'},
   {title: '스터디', path: 'study', content: '공부한 내용을 테스트해보는 공간'},
@@ -40,7 +40,7 @@ const titleMenu = ref<interface[]>([
   {title: '앵커4', path: '#', content: '앵커4'},
 ]);
 
-function onClickMenu(menu: interface) {
+function onClickMenu(menu: TitleMenu) {
   router.push(menu.path);
 }
 

@@ -79,6 +79,7 @@ export class LHSSudoku {
       cells: Array.from({length: 81}, (_, index) => {
         return {
           digit: initialNumber?.[index] ?? 0,
+          input: false,
           candidateList: [1, 2, 3, 4, 5, 6, 7, 8, 9],
           invalidCandidateList: [],
           index,

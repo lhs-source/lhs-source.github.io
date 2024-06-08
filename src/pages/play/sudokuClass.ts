@@ -103,7 +103,7 @@ export class Sudoku {
       };
     // }
   
-    return { solved: true, board, steps: solvingSteps, analysis };
+    // return { solved: true, board, steps: solvingSteps, analysis };
   }
   
   /**
