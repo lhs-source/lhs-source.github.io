@@ -35,7 +35,7 @@ function getImageUrl(path: string){
  */
 const skillRailCount = computed(() => {
   const totalWidth = screen.availWidth * 1;
-  return Math.round(totalWidth / 360);
+  return Math.round(totalWidth / 280);
 })
 
 function animSkillSet() {
