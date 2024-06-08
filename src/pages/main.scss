@@ -1,0 +1,51 @@
+
+// position
+.pos-relative {
+  position: relative;
+}
+.pos-absolute {
+  position: absolute;
+}
+.pos-fixed {
+  position: fixed;
+}
+.pos-sticky {
+  position: sticky;
+}
+// position point
+.top-left { top: 0; left: 0; }
+.top-center { top: 0; left: 50%; transform: translateX(-50%); }
+.top-right { top: 0; right: 0; }
+.center-left { top: 50%; left: 0; transform: translateY(-50%); }
+.center-center { top: 50%; left: 50%; transform: translate(-50%, -50%); }
+.center-right { top: 50%; right: 0; transform: translateY(-50%); }
+.bottom-left { bottom: 0; left: 0; }
+.bottom-right { bottom: 0; right: 0; }
+
+// 100 ~ 2000vh, 100단위
+@for $i from 1 through 50 {
+  .h-#{$i}00vh {
+    height: #{$i}00vh;
+  }
+}
+.flex { display: flex; }
+.flex-col { flex-direction: column; }
+.grow { flex-grow: 1; }
+.justify-center { justify-content: center; }
+.justify-between { justify-content: space-between; }
+.justify-around { justify-content: space-around; }
+.justify-start { justify-content: flex-start; }
+.justify-end { justify-content: flex-end; }
+.item-center { align-items: center; }
+.item-start { align-items: flex-start; }
+.item-end { align-items: flex-end; }
+
+.self-center { align-self: center; }
+.self-start { align-self: flex-start; }
+.self-end { align-self: flex-end; }
+
+.grid { display: grid; }
+
+.text-center { text-align: center; }
+.text-left { text-align: left; }
+.text-right { text-align: right; }
