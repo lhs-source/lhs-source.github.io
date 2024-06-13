@@ -2,7 +2,7 @@ import axios from 'axios';
 import { defineStore } from 'pinia'
 import { ref } from 'vue';
 import { Post } from './Post';
-import postlist from '../../public/postlist.json'
+import postlist from '../public/postlist.json'
 
 export const usePosts = defineStore('post', () => {
   const postList = ref<Post[]>([]);
