@@ -1,8 +1,9 @@
 ---
 title: Vite vue + Github Pages 페이지 구축 
-meta:
-  - name: description
-    content: 기존 vue-cli 를 사용한 vue 프로젝트로 github pages 를 구축했는데, 대세에 따라 vite 로 변경하기로 했다.
+description: 기존 vue-cli 를 사용한 vue 프로젝트로 github pages 를 구축했는데, 대세에 따라 vite 로 변경하기로 했다.
+tags: Vite, Vue, Vue3, Github, Blog, Markdown
+created: 2023-09-26
+updated: 2023-09-26
 ---
 
 # Vite vue + Github Pages 페이지 구축
@@ -82,7 +83,7 @@ export default {
 
 ```
 
-![](../../img/vite-vue-and-github-pages/git_blog.png)  
+![](img/vite-vue-and-github-pages/git_blog.png)  
 
 `npm run build`  를 하면 바로 사이트맵과 로보츠 파일이 만들어진다. 기본 사용법대로 사이트맵 파일을 만들면 주소가 `localhost`  로 되는데, `hostname`  을 변경해서 내 사이트 주소를 설정해주어야 한다.
 
@@ -141,7 +142,7 @@ export default defineConfig({
 
 메인 페이지와 포스트 페이지의 디자인을 완전히 분리하고 nested routes 로 관리할 것이다.
 
-![](../../img/vite-vue-and-github-pages/git_blog%202.png)  
+![](img/vite-vue-and-github-pages/git_blog%202.png)  
 
 ```ts
 route {

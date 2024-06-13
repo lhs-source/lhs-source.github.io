@@ -1,8 +1,9 @@
 ---
 title: 안드로이드 노티피케이션 번들 데이터 최신화 Android Notification Bundle Data
-meta:
-  - name: description
-    content: 안드로이드 노티피케이션을 터치해 액티비티를 진입할 때 onCreate 에서 전달받는 데이터가 원치 않는 값으로 들어온다. 해결 방법을 찾아보자.
+description: 안드로이드 노티피케이션을 터치해 액티비티를 진입할 때 onCreate 에서 전달받는 데이터가 원치 않는 값으로 들어온다. 해결 방법을 찾아보자.
+tags: Android, Android Notification
+created: 2023-09-07
+modified: 2023-09-07
 ---
 
 [[toc]]
