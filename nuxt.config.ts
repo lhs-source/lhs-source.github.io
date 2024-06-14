@@ -10,9 +10,17 @@ export default defineNuxtConfig({
     },
   },
 
-  modules: ["@nuxt/content", "shadcn-nuxt"],
+  modules: [
+    "@nuxt/content",
+    "shadcn-nuxt",
+    '@nuxtjs/color-mode',
+    "@nuxtjs/tailwindcss"
+  ],
   content: {
     markdown: {
     }
+  },
+  colorMode: {
+    classSuffix: ''
   }
 })

@@ -19,13 +19,21 @@ const { data: article } = await useAsyncData("article", () =>
 </template>
 
 <style>
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@200..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,100..900;1,100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Libre+Barcode+128+Text&display=swap');
+main {
+  font-family: 
+    'Noto Serif',
+    'Noto Serif KR',
+    sans-serif;
+}
 h1 {
-  font-size: 2em;
-  color: #333;
+  font-size: 1.4em;
 }
 h2 {
   font-size: 1.5em;
-  color: #333;
 }
 p {
   padding-top: 4px;
@@ -36,7 +44,7 @@ a {
   text-decoration: underline;
 }
 pre {
-  background-color: #bdd4c5;
+  background-color: var(--secondary-foreground);
   padding: 8px;
   overflow-x: auto;
 }

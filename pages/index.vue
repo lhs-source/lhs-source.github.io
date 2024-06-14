@@ -145,6 +145,7 @@ function updateMessage() {
     </div>
   </div>
 </template>
+
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@200..900&display=swap');
@@ -153,6 +154,7 @@ function updateMessage() {
 
 .index-wrapper {
   background-color:#ebebe0;
+  color: #1f1f14;
   font-family: 
     'Noto Serif',
     'Noto Serif KR',
