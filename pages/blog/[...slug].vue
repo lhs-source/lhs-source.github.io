@@ -5,12 +5,16 @@ const { data: article } = await useAsyncData("article", () =>
   // 파일 이름을 [...slug].vue 로 하면 route.params.slug 로 접근 가능
   queryContent(`/blog/${route.params.slug}`).findOne()
 );
-
 </script>
 
 <template>
   <main class="p-4">
     <ContentRenderer :value="article">
+      <h1>{{ article.title }}</h1>
+      <h3>{{ article.tags }}</h3>
+      <h3>{{ article.created }}</h3>
+      <h3>{{ article.updated }}</h3>
+      <ContentRendererMarkdown :value="article" class="text-stone-300"/>
       <template #empty>
         <p>No content found.</p>
       </template>
@@ -42,18 +46,5 @@ p {
 a {
   color: #0070f3;
   text-decoration: underline;
-}
-pre {
-  background-color: var(--secondary-foreground);
-  padding: 8px;
-  overflow-x: auto;
-}
-p code {
-  background-color: #bdd4c5;
-  padding: 2px 4px;
-}
-pre code {
-  background-color: unset;
-  color: unset;
 }
 </style>

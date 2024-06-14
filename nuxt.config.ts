@@ -14,11 +14,19 @@ export default defineNuxtConfig({
     "@nuxt/content",
     "shadcn-nuxt",
     '@nuxtjs/color-mode',
-    "@nuxtjs/tailwindcss"
+    "@nuxtjs/tailwindcss",
+    "@nuxt/image"
   ],
   content: {
     markdown: {
-    }
+      toc: {
+        depth: 2,
+        searchDepth: 2
+      },
+    },
+    highlight: {
+      theme: 'github-dark',
+    },
   },
   colorMode: {
     classSuffix: ''
