@@ -1,4 +1,14 @@
 <script setup lang="ts">
+import {
+  NavigationMenu,
+  NavigationMenuContent,
+  NavigationMenuItem,
+  NavigationMenuLink,
+  NavigationMenuList,
+  NavigationMenuTrigger,
+  navigationMenuTriggerStyle,
+} from '@/components/ui/navigation-menu'
+
 // 헤더 메뉴 목록
 const menuList = [{
     label: '더미 메뉴1',
@@ -20,15 +30,22 @@ const menuList = [{
             src="../assets/Dream_Background.jpg" />
         </div>
       </div>
-      <div class="menu-list flex items-center gap-4">
-        <div 
-          class="menu cursor-pointer select-none" 
-          v-for="menu of menuList" 
-          :key="menu.label">
-          {{ menu.label }}
-        </div>
-        <DarkMode />
-      </div>
+      <NavigationMenu class="menu-list flex items-center gap-4">
+        <NavigationMenuList>
+          <NavigationMenuItem>
+            <NavigationMenuLink href="/"
+              class="menu cursor-pointer select-none text-stone-200 no-underline" 
+              :class="navigationMenuTriggerStyle()"
+              v-for="menu of menuList" 
+              :key="menu.label">
+              {{ menu.label }}
+            </NavigationMenuLink>
+          </NavigationMenuItem>
+          <NavigationMenuItem>
+            <DarkMode />
+          </NavigationMenuItem>
+        </NavigationMenuList>
+      </NavigationMenu>
     </div>
     <div class="header-row slot">
       <slot></slot>
