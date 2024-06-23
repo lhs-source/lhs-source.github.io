@@ -9,12 +9,14 @@ const { data: article } = await useAsyncData("article", () =>
 
 <template>
   <main class="p-4">
-    <ContentRenderer :value="article">
+    <ContentRenderer v-if="article" :value="article">
       <h1>{{ article.title }}</h1>
-      <h3>{{ article.tags }}</h3>
-      <h3>{{ article.created }}</h3>
-      <h3>{{ article.updated }}</h3>
-      <ContentRendererMarkdown :value="article" class="text-stone-300"/>
+      <Badge v-for="tag in article.tags.split(', ')" :key="tag">
+        {{ tag }}
+      </Badge>
+      <h3 class="text-muted-foreground">{{ article.created }}</h3>
+      <h3 class="text-muted-foreground">{{ article.updated }}</h3>
+      <ContentRendererMarkdown :value="article" class="text-stone-300 mt-8"/>
       <template #empty>
         <p>No content found.</p>
       </template>

@@ -6,8 +6,6 @@ created: 2023-09-16
 updated: 2023-09-16
 ---
 
-# Postman 으로 FCM 알림 테스트하기
-
 ```
 POST https://fcm.googleapis.com/fcm/send
 ```

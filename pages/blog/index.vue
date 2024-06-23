@@ -13,7 +13,7 @@ import {
 
 const { data: blog } = await useAsyncData("blog", () => queryContent("/blog").find());
 const { data: tags } = await useAsyncData("tags", () => queryContent("/blog").only(['tags']).find());
-const allTagList = [];
+const allTagList: any[] = [];
 // 태그마다 개수를 세서 내림차순으로 정렬
 if(tags.value) {
   const tagList = tags.value.map(tag => tag.tags.split(', ')).flat();
@@ -28,7 +28,7 @@ if(tags.value) {
     });
   }
 }
-const selectedTag = ref(null);
+const selectedTag = ref<string | null>(null);
 async function onClickTag(tag: { tagName: string, count: number } | null) {
   if(tag === null) {
     selectedTag.value = null;
@@ -47,10 +47,10 @@ async function onClickTag(tag: { tagName: string, count: number } | null) {
     <div class="w-full py-4 px-4">
       <h1 class="text-5xl text-center font-bold">이현수 책장</h1>
     </div>
-    <div class="w-full py-4 px-4">
+    <div class="w-full py-4 px-10">
       <div>
         <Badge 
-          :variant="selectedTag === null ? '' : 'secondary'"
+          :variant="selectedTag === null ? 'default' : 'secondary'"
           class="cursor-pointer hover:underline hover:font-bold"
           @click="onClickTag(null)">
           전체보기
@@ -59,7 +59,7 @@ async function onClickTag(tag: { tagName: string, count: number } | null) {
           v-for="tag of allTagList" 
           :key="tag"
           class="cursor-pointer hover:underline hover:font-bold"
-          :variant="selectedTag === tag.tagName ? '' : 'secondary'"
+          :variant="selectedTag === tag.tagName ? 'default' : 'secondary'"
           @click="onClickTag(tag)">
           {{ tag.tagName }}({{ tag.count }})
         </Badge>

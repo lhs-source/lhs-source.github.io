@@ -6,11 +6,6 @@ created: 2023-09-26
 updated: 2023-09-26
 ---
 
-# Vite vue + Github Pages 페이지 구축
-
-
-
-
 기존 vue-cli 를 사용한 vue 프로젝트로 github pages 를 구축했는데, 대세에 따라 vite 로 변경하기로 했다. 말이 변경이지 새로 만들었다. 
 
 기존 vue-cli 로 했던 것에서 vite 로 변경하며 필요한 부분만 작성하였고, github actions 등의 기능은 [Github.io + Vue3 로 블로그 만들기](https://lhs-source.github.io/posts/making-blog-githubio-vue3-1#github-actions-%EB%A1%9C-github-pages-%EB%B0%B0%ED%8F%AC) 를 참고하면 된다.
@@ -45,8 +40,7 @@ npm i -D vite-ssg vue-router @vueuse/head
 
 빌드 커맨드를 대체 혹은 추가해준다.
 
-```ts
-// main.ts
+```ts [main.ts]
 export const createApp = ViteSSG(
     // 루트 컴포넌트
     App,

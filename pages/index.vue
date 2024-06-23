@@ -95,6 +95,20 @@ function updateMessage() {
                 우리는 이 세상에 존재하는 전부를 인정하고 존중해야해. 인위적으로 분리한 절반만 인정할 게 아니라. 그저 진리의 아주 작은 한 조각을 탐지했을 뿐이야. 게으르고 생각하기 싫어하고 스스로 판단하지 못하는 사람들이 그냥 복종해 버려. 그 편이 쉬우니까. 내면에서 자기만의 법을 느끼는 사람들은 더 어려워. 사람은 각자 독자적으로 판단해야 해. 우린 너무 말을 많이 하고 있어. 말분인 이야기는 아무런 가치가 없어. 자기 자신에게서 멀어질 뿐이지. 자기 자신한테 멀어진다는 건 죄악이야. 사람은 거북이 처럼 제 안으로 완전히 들어가지 않으면 안돼. 
               </div>
             </div>
+            <div class="border border-stone-700 mt-2 p-2">
+              <div class="text-3xl">CODER</div>
+              <div class="text-5xl">ENGINEER</div>
+              <div class="text-7xl">DEVELOPER</div>
+              <div class="text-9xl">OWNER</div>
+              <div>
+                개발자를 나타낼 수 있는 다양한 단어들이 있다. 
+                Coder 는 그저 코드를 작성하는 사람을 의미한다. 
+                Engineer 는 코드를 작성하는 사람이지만, 그 코드가 어떻게 동작하는지, 
+                어떻게 최적화할지에 대해 고민하는 사람을 의미한다. 내가 관리하는 기능을 만들어내는 사람이다.
+                Developer 는 내가 만든 기능으로 사용자들이 어떤 경험을 하는지, 어떤 문제를 해결해주는지에 대해 고민하는 사람을 의미한다.
+                Owner 는 내가 만든 제품에 대해 책임감과 자부심을 가지는 사람을 의미한다.
+              </div>
+            </div>
           </div>
         </div>
         <div class="hor-part grow-[2]" style="flex: 1;">
@@ -109,6 +123,10 @@ function updateMessage() {
                 사방을 헤매고 다니며 세상을 얕본 자여! 자만심으로 가득 차 데미안의 사상에 기댄자여! 우리들 마음속에 모든 것을 알고 모든 것을 원하고 모든 것을 우리 자신들보다 더 잘 해내는 누군가가 있음을 깨달으면 도움이 될 거야. 새는 알에서 나오려고 투쟁한다. 알은 세계다. 태어나려는 자는 한 세계를 깨뜨려야 한다. 새는 신에게 날아간다. 신의 이름은 아브락사스다. 
               </div>
             </div>
+            <div class="border-t-2 border-stone-700 mt-2 pt-2">
+              <img src="https://qph.cf2.quoracdn.net/main-qimg-9593454d6def03281102ffde42777271-lq"/>
+              크로우 : 아 저거 까마귀인가? <br/>레이븐 : 아 저거 독수리인가?
+            </div>
           </div>
         </div>
       </div>
@@ -116,24 +134,30 @@ function updateMessage() {
     <div class="who-section">
 
     </div>
-    <div class="skill-section">
-      <h2>주 사용 스택</h2>
+    <div class="skill-section relative mt-4 pt-8">
+      <img 
+        class="absolute -top-2 right-8 w-2/3 -z-1"
+        src="https://static-00.iconduck.com/assets.00/vue-icon-2048x1766-ntogpmti.png" />
+      <h2 class="text-4xl font-bold">주 사용 스택</h2>
       <ul>
-        <li>Vue2 + vue cli + Typescript</li>
-        <li>Vue3 + vite + Typescript</li>
-        <li>NextJS + Typescript</li>
-        <li>C++</li>
+        <li>Vue3</li>
+        <li>Typescript</li>
+        <li>Android</li>
       </ul>
-      <h2>사용할줄 아는 스택</h2>
+      <h2 class="text-4xl font-bold">사용할 가능 스택</h2>
       <ul>
+        <li>NextJS</li>
+        <li>NuxtJS</li>
+        <li>C++</li>
         <li>Python</li>
         <li>Java</li>
       </ul>
-      <h2>유경험</h2>
+      <h2 class="text-4xl font-bold">유경험</h2>
       <ul>
         <li>lua</li>
+        <li>Angular</li>
       </ul>
-      <h2>도구</h2>
+      <h2 class="text-4xl font-bold">도구</h2>
       <ul>
         <li>Git/Github</li>
         <li>VSCode</li>
@@ -142,6 +166,52 @@ function updateMessage() {
         <li>Obsidian</li>
         <li>Notion</li>
       </ul>
+    </div>
+    <div class="career-wrapper mt-4">
+      <div class="border border-stone-700 p-4">
+        <div class="company-info columns-3">
+          <img 
+            src="https://cdn.jebowang.com/news/photo/202111/4427_12628_5145.png" />
+          <h2 class="text-4xl font-bold">리코</h2>
+          This post is based on an interview with June Hunter, a Vancouver-based photographer whose art features crows, ravens, and many other birds of the West Coast.
+          In this post, we're going to boost your bird identification skills and compare common ravens (Corvus corax) with common crows (Corvus brachyrhynchos). We'll go over how you can tell the difference between these two black birds and what makes each bird uniquely wonderful.
+          <img
+            class="p-2"
+            src="https://lh4.googleusercontent.com/proxy/FzctGmacmVXJ0QYGfEnnZTFtBIUxZAh1ZjmVM1H1Z83lyJAp-ujEkZQTkDxyqYqXIEHwJlxHU-ScmLCWAvCpHf1329YKxmc7MSIN0lDiFCUlmHavGQyh_KCj9rOr" />
+          For simplicity, we'll compare the American crow to the common raven in this post. While crows around the world are similar, the size and vocalizations of crows in Europe, the Middle East, Africa and Asia are not identical to those of American crows.
+
+        </div>
+        <div class="what-did-i">
+          <h3 class="text-2xl font-bold">내가 한 것들</h3>
+          <ul>
+            <li>업박스 1.0 > 프론트 개발(vue2)</li>
+            <li>업박스 2.0 > 프론트 개발(vue3)</li>
+            <li>업박스 1.0 > 안드로이드 개발</li>
+            <li>업박스 2.0 > 안드로이드 개발</li>
+            <li>업박스 홈페이지</li>
+            <li>업박스 관리페이지</li>
+            <li>리코 홈페이지</li>
+          </ul>
+        </div>
+      </div>
+      <div>
+        <div class="company-info columns-3 mt-4">
+          <img src="https://static.wixstatic.com/media/030690_c0dbf404c6894e83846454dfbe372c87~mv2.png" />
+          <h2 class="text-xl">뱅크비</h2>
+          This post is based on an interview with June Hunter, a Vancouver-based photographer whose art features crows, ravens, and many other birds of the West Coast.
+          In this post, we're going to boost your bird identification skills and compare common ravens (Corvus corax) with common crows (Corvus brachyrhynchos). We'll go over how you can tell the difference between these two black birds and what makes each bird uniquely wonderful.
+          For simplicity, we'll compare the American crow to the common raven in this post. While crows around the world are similar, the size and vocalizations of crows in Europe, the Middle East, Africa and Asia are not identical to those of American crows.
+        </div>
+        <div class="what-did-i">
+          <h3 class="text-2xl font-bold">내가 한 것들</h3>
+          <ul>
+            <li>하나카드 앱카드 앱 > WhiteBox 모듈 난독화</li>
+            <li>TaSIM > e2e 암호화 칩 개발 및 설치지원</li>
+            <li>OmniDoc > 스크래핑 모듈 개발</li>
+            <li>Bankbe > 베트남 은행사 스크래핑</li>
+          </ul>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -153,6 +223,7 @@ function updateMessage() {
 @import url('https://fonts.googleapis.com/css2?family=Libre+Barcode+128+Text&display=swap');
 
 .index-wrapper {
+  min-width: 920px;
   background-color:#ebebe0;
   color: #1f1f14;
   font-family: 
@@ -182,6 +253,6 @@ function updateMessage() {
 .headline-section {
 }
 .headline {
-  height: 56vh;
+  min-height: 56vh;
 }
 </style>

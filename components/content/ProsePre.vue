@@ -1,7 +1,7 @@
 <template>
   <div v-if="props.filename || props.language" class="bg-stone-300 font-mono text-sm border
            border-slate-300 py-1 px-2 rounded-t-md text-black">
-    {{ props.filename }} {{ props.language }}
+    {{ props.filename ? props.filename : props.language }}
   </div>
   <pre 
     :class="props.class" class="bg-stone-800 p-2 text-sm"><slot /></pre>
