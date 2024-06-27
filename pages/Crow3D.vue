@@ -36,14 +36,14 @@ onMounted(() => {
   }
 
   const glbLoader = new GLTFLoader();
-  glbLoader.load('/assets/3dmodels/Fox.gltf', (gltf) => {
+  glbLoader.load('/assets/3dmodels/crow.glb', (gltf) => {
     // texture 
-    const texture = new THREE.TextureLoader().load('/assets/3dmodels/Texture.png');
-    gltf.scene.traverse((child) => {
-      if(child instanceof THREE.Mesh) {
-        child.material = new THREE.MeshBasicMaterial({ map: texture });
-      }
-    });
+    // const texture = new THREE.TextureLoader().load('/assets/3dmodels/Texture.png');
+    // gltf.scene.traverse((child) => {
+    //   if(child instanceof THREE.Mesh) {
+    //     child.material = new THREE.MeshBasicMaterial({ map: texture });
+    //   }
+    // });
 
     mirror = gltf.scene;
     mirror.scale.set( 2, 2, 2 );			   
@@ -75,7 +75,6 @@ onMounted(() => {
 </script>
 
 <template>
-  asdfsd
   <div id="three" ref="three"></div>
 </template>
 

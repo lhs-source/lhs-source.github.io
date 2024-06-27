@@ -2,6 +2,7 @@
 // Import any necessary dependencies
 import { ref } from 'vue';
 import dayjs from 'dayjs';
+import Crow3D from './Crow3D.vue';
 
 const router = useRouter();
 
@@ -108,6 +109,9 @@ function updateMessage() {
                 Developer 는 내가 만든 기능으로 사용자들이 어떤 경험을 하는지, 어떤 문제를 해결해주는지에 대해 고민하는 사람을 의미한다.
                 Owner 는 내가 만든 제품에 대해 책임감과 자부심을 가지는 사람을 의미한다.
               </div>
+            </div>
+            <div>
+              <Crow3D />
             </div>
           </div>
         </div>
