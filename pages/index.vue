@@ -5,6 +5,7 @@ import dayjs from 'dayjs';
 import Crow3D from './Crow3D.vue';
 
 const router = useRouter();
+// test
 
 // Define your reactive variables
 const message = ref('Hello, world!');
@@ -57,7 +58,7 @@ function updateMessage() {
         <div class="title-area flex justify-center">
           <div class="title-text">
             <h1 class="text-6xl font-bold m-0 text-center leading-none">
-              이현수
+              History of Lee Hyunsoo
             </h1>
             <h2 class="text-2xl font-normal m-0 text-right leading-tight">
               프론트엔드
@@ -88,6 +89,9 @@ function updateMessage() {
       <div class="flex gap-6">
         <div class="hor-part grow-[2]" style="flex: 2;">
           <h1 class="text-3xl font-bold">이현수, 사지멀쩡하고 멘탈 정상인 개발자로 밝혀져</h1>
+          <div class="bg-stone-700 w-full h-40">
+            이미지
+          </div>
           <div class="headline">
             <div class="content">
               <!-- <h2 class="content-title">이현수는 까마귀를 좋아한다</h2> -->

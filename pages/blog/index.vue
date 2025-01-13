@@ -9,6 +9,7 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card'
+import PostCard from './PostCard.vue';
 // import { Header } from '@/components'
 
 const { data: blog } = await useAsyncData("blog", () => queryContent("/blog").find());
@@ -65,37 +66,10 @@ async function onClickTag(tag: { tagName: string, count: number } | null) {
         </Badge>
       </div>
     </div>
-    <div class="max-w-7xl mx-auto px-10 grid grid-cols-1 gap-4">
-      <Card v-for="item in blog">
-        <CardHeader>
-          <h2 class="text-xl">{{ item.title }}</h2>
-          <div v-if="item.tags" class="flex flex-wrap gap-1">
-            <span v-for="tag of item.tags.split(', ')" :key="tag">
-              <Badge>
-                {{ tag }}
-              </Badge>
-            </span>
-          </div>
-          <div class="text-sm text-muted-foreground">
-            최초 작성 {{ dayjs(item.created).format('YYYY-MM-DD') }}
-          </div>
-          <div class="text-sm text-muted-foreground">
-            최종 업뎃 {{ dayjs(item.updated).format('YYYY-MM-DD') }}
-          </div>
-        </CardHeader>
-        <CardContent>
-          <img 
-            v-if="item.image" 
-            class="w-full" 
-            :src="`/images/${item.image}`" 
-            :alt="`image for ${item.title} article`" />
-          <p class="mt-4 font-medium text-stone-300">{{ item.description }}</p>
-        </CardContent>
-        <CardFooter>
-          <a :href="item._path" class="hover:underline hover:text-blue-500">Read More </a>
-        </CardFooter>
-      </Card>
-
+    <div class="max-w-7xl mx-auto px-10 grid grid-cols-3 gap-12">
+      <PostCard 
+        v-for="item in blog"
+        :post="item" />
     </div>
   </div>
 </template>
