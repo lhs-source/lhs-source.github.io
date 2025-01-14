@@ -235,8 +235,8 @@ function updateMessage() {
   background-color:#ebebe0;
   color: #1f1f14;
   font-family: 
-    'Noto Serif',
     'Noto Serif KR',
+    'Noto Serif',
     sans-serif;
   white-space: pre-line;
   word-break: break-all;

@@ -45,10 +45,10 @@ async function onClickTag(tag: { tagName: string, count: number } | null) {
 <template>
   <div class="wrapper w-full">
     <Header />
-    <div class="w-full py-4 px-4">
-      <h1 class="text-5xl text-center font-bold">이현수 책장</h1>
+    <div class="w-full py-8 px-4">
+      <h1 class="text-5xl text-center font-bold">글 목록</h1>
     </div>
-    <div class="w-full py-4 px-10">
+    <div class="w-full max-w-7xl  mx-auto py-8 px-10">
       <div>
         <Badge 
           :variant="selectedTag === null ? 'default' : 'secondary'"
@@ -66,7 +66,7 @@ async function onClickTag(tag: { tagName: string, count: number } | null) {
         </Badge>
       </div>
     </div>
-    <div class="max-w-7xl mx-auto px-10 grid grid-cols-3 gap-12">
+    <div class="max-w-7xl mx-auto px-10 grid grid-cols-3 gap-12 mt-4">
       <PostCard 
         v-for="item in blog"
         :post="item" />
@@ -80,11 +80,21 @@ async function onClickTag(tag: { tagName: string, count: number } | null) {
 @import url('https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,100..900;1,100..900&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Libre+Barcode+128+Text&display=swap');
 
+@import url('https://fonts.googleapis.com/css2?family=Gowun+Dodum&family=Jua&display=swap');
+
+
 .wrapper {
-  font-family: 
+  /* font-family: 
     'Noto Serif',
     'Noto Serif KR',
-    sans-serif;
+    sans-serif; */
+  
+  /* font-family: "Jua", serif;
+  font-weight: 400;
+  font-style: normal; */
+  font-family: "Gowun Dodum", serif;
+  font-weight: 400;
+  font-style: normal;
 }
 
 a {

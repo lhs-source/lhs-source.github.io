@@ -25,9 +25,11 @@ const menuList = [{
     <div class="header-row flex items-center justify-between px-3 py-2">
       <div class="to-home flex items-center gap-3 cursor-pointer select-none">
         <div class="profile-frame w-6 h-6 rounded-full">
-          <img 
-            class="crow-profile w-6 h-6" 
-            src="../assets/Dream_Background.jpg" />
+          <a href="/">
+            <img 
+              class="crow-profile w-6 h-6" 
+              src="../assets/Dream_Background.jpg" />
+          </a>
         </div>
       </div>
       <NavigationMenu class="menu-list flex items-center gap-4">
