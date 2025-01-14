@@ -12,7 +12,14 @@ import {
 import PostCard from './PostCard.vue';
 // import { Header } from '@/components'
 
-const { data: blog } = await useAsyncData("blog", () => queryContent("/blog").find());
+// updated 기준으로 내림차순 정렬
+const blog = ref<any[]>([]);
+const { data: blogData } = await useAsyncData("blog", () => queryContent("/blog").find());
+if(blogData.value) {
+  blog.value = blogData.value.sort((a, b) => {
+    return dayjs(b.updated).unix() - dayjs(a.updated).unix();
+  });
+}
 const { data: tags } = await useAsyncData("tags", () => queryContent("/blog").only(['tags']).find());
 const allTagList: any[] = [];
 // 태그마다 개수를 세서 내림차순으로 정렬

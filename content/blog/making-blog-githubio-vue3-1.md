@@ -1,6 +1,8 @@
 ---
 title: Github.io + Vue3 로 블로그 만들기
 description: Github.io 와 Vue3 를 활용해서 블로그를 시작. SPA를 prerendering 하여 개별 페이지를 생성하고, 메타태그를 추가. 구글 검색 엔진에 등록할 사이트맵 자동 생성. 마크다운을 html 로 변환. Google Analytics 도입으로 방문자 수 체크.
+subject: Vue
+volumne: long
 tags: Vue, Vue3, Github, Blog, Markdown, SEO, GoogleAnalytics
 created: 2022-06-24
 updated: 2022-06-25

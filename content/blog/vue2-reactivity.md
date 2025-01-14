@@ -1,6 +1,8 @@
 ---
 title: Vue2, Vue3 Reactivity 비교 - Vue2 편
 description: Vue2 Vue3 의 Reactivity 비교. Vue2 Reactive에 대한 설명. VNODE, Watcher, Dependency, ref, reactive, update, vue hook 에 대해서 전반적인 설명.
+subject: Vue
+volumne: long
 tags: Vue, Vue2, Vue Reactivity, 반응성, Vue Rendering
 created: 2022-07-12
 updated: 2022-07-12

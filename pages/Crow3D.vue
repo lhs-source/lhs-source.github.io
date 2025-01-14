@@ -16,7 +16,7 @@ onMounted(() => {
   const renderer = new THREE.WebGLRenderer();
   renderer.setSize( window.innerWidth / 2, window.innerHeight / 2 );
   three.value?.appendChild( renderer.domElement );
-  camera.position.set(0,0,250);
+  camera.position.set(0,0,10);
 
   scene.background = new THREE.Color('white');
 
@@ -25,31 +25,26 @@ onMounted(() => {
   controls.rotateSpeed = 1.0; // 마우스로 카메라를 회전시킬 속도입니다. 기본값(Float)은 1입니다.        
   controls.zoomSpeed = 1.2;    // 마우스 휠로 카메라를 줌 시키는 속도 입니다. 기본값(Float)은 1입니다.
 
-  const geometry = new THREE.BoxGeometry( 1, 1, 1 );
-  const material = new THREE.MeshBasicMaterial( { color: 0xffffff } );
+  // const geometry = new THREE.BoxGeometry( 1, 1, 1 );
+  // const material = new THREE.MeshBasicMaterial( { color: 0xffffff } );
 
-  for(let i = 0; i < 5; ++i) {
-    const cube = new THREE.Mesh( geometry, material );
-    cube.position.x = Math.random() * 10 - 5;
-    cube.position.y = Math.random() * 10 - 5;
-    scene.add( cube );
-  }
+  // for(let i = 0; i < 5; ++i) {
+  //   const cube = new THREE.Mesh( geometry, material );
+  //   cube.position.x = Math.random() * 10 - 5;
+  //   cube.position.y = Math.random() * 10 - 5;
+  //   scene.add( cube );
+  // }
 
   const glbLoader = new GLTFLoader();
   glbLoader.load('/assets/3dmodels/crow.glb', (gltf) => {
-    // texture 
-    // const texture = new THREE.TextureLoader().load('/assets/3dmodels/Texture.png');
-    // gltf.scene.traverse((child) => {
-    //   if(child instanceof THREE.Mesh) {
-    //     child.material = new THREE.MeshBasicMaterial({ map: texture });
-    //   }
-    // });
-
     mirror = gltf.scene;
-    mirror.scale.set( 2, 2, 2 );			   
+    mirror.scale.set( 4, 4, 4 );			   
 	  mirror.position.x = 0;				    //Position (x = right+ left-) 
     mirror.position.y = 0;				    //Position (y = up+, down-)
 	  mirror.position.z = 0;				    //Position (z = front +, back-)
+    // 살짝 왼쪽 아래로 회전
+    mirror.rotation.x = -0.7;
+    mirror.rotation.y = 0.5;
 	
     scene.add(gltf.scene);
   });

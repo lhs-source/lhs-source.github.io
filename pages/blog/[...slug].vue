@@ -12,24 +12,20 @@ const { data: article } = await useAsyncData("article", () =>
 <template>
   <main class="p-4 pb-24">
     <ContentRenderer v-if="article" :value="article">
-      <div class="max-w-2xl mx-auto">
-        <h1 class="py-4">{{ article.title }}</h1>
-        <div class="flex flex-wrap gap-1">
+      <div class="max-w-2xl mx-auto mt-12">
+        <div class="text-sm text-stone-600 dark:text-stone-400 mt-2">
+          {{ dayjs(article.created).format('YYYY-MM-DD') }} 
+          <template v-if="article.updated !== article.created">[수정: {{ dayjs(article.updated).format('YYYY-MM-DD') }}]</template>
+        </div>
+        <h1 class="title">{{ article.title }}</h1>
+        <div class="flex flex-wrap gap-1 mt-4">
           <Badge v-for="tag in article.tags.split(', ')" :key="tag">
             {{ tag }}
           </Badge>
         </div>
-        <div class="mt-2">
-          <h3 class="text-sm text-stone-600 dark:text-stone-400">
-            최초 작성 {{ dayjs(article.created).format('YYYY-MM-DD') }}
-          </h3>
-          <h3 class="text-sm text-stone-600 dark:text-stone-400">
-            최종 업뎃 {{ dayjs(article.updated).format('YYYY-MM-DD') }}
-          </h3>
-        </div>
         <ContentRendererMarkdown 
           :value="article" 
-          class="text-stone-300 mt-8" />
+          class="text-stone-300 mt-16" />
       </div>
       <template #empty>
         <p>No content found.</p>
@@ -39,6 +35,7 @@ const { data: article } = await useAsyncData("article", () =>
 </template>
 
 <style>
+@import url('https://fonts.googleapis.com/css2?family=Gowun+Dodum&family=Jua&display=swap');
 @font-face {
   font-family: 'Pretendard-Regular';
   src: url('https://fastly.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff') format('woff');
@@ -46,20 +43,34 @@ const { data: article } = await useAsyncData("article", () =>
   font-style: normal;
 }
 main {
-  font-family: "Pretendard-Regular", serif;
+  font-family: 
+  /* "Gowun Dodum", */
+    "Pretendard-Regular",
+    serif;
   font-weight: 400;
   font-style: normal;
   line-height: 1.4;
 }
 h1 {
   font-size: 1.4em;
+  padding-top: 16px;
+  padding-bottom: 8px;
+}
+h1.title {
+  font-size: 2em;
 }
 h2 {
   font-size: 1.5em;
+  padding-top: 16px;
+  padding-bottom: 8px;
+}
+h3 {
+  padding-top: 16px;
+  padding-bottom: 8px;
 }
 p {
-  padding-top: 0.4em;
-  padding-bottom: 0.4em;
+  padding-top: 0.6em;
+  padding-bottom: 0.6em;
 }
 a {
   color: #42b883;
@@ -81,5 +92,8 @@ li {
   padding: 0.1em 0.3em;
   border-radius: 0.2em;
   font-size: 0.85em;
+}
+pre {
+  font-size: 0.8rem;
 }
 </style>

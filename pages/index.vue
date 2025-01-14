@@ -35,7 +35,7 @@ function updateMessage() {
 }
 </script>
 <template>
-  <div class="index-wrapper p-8 min-h-screen">
+  <div class="index-wrapper p-8 min-h-screen mx-auto max-w-7xl my-24">
     <div class="post-title-section">
       <div class="barcode mt-8">
         <div class="barcode-font self-end text-right text-3xl">
@@ -87,31 +87,37 @@ function updateMessage() {
     </div>
     <div class="headline-section">
       <div class="flex gap-6">
-        <div class="hor-part grow-[2]" style="flex: 2;">
+        <div class="hor-part" style="flex: 2;">
           <h1 class="text-3xl font-bold">이현수, 사지멀쩡하고 멘탈 정상인 개발자로 밝혀져</h1>
-          <div class="bg-stone-700 w-full h-40">
-            이미지
+          <div class="bg-stone-700 w-full h-0 gradient-to-t from-stone-700 to-stone-500">
           </div>
           <div class="headline">
             <div class="content">
+              <div class="border border-stone-700 mt-2 p-2 overflow-hidden relative">
+                <img src="/assets/img/gretcheno_A_red_winged_blackbird_sitting_on_a_dried_cornstalk_i_33de99df-bb91-48c8-b143-3916d1296d17.png" />
+                <div class="text-3xl">CODER</div>
+                <div class="text-5xl">ENGINEER</div>
+                <div class="text-7xl">DEVELOPER</div>
+                <div class="text-9xl">OWNER</div>
+              </div>
               <!-- <h2 class="content-title">이현수는 까마귀를 좋아한다</h2> -->
               <div class="content-description" style="column-count: 2;">
-                누구나 이런 위기를 겪는다. 평범한 사람에게 이것은 인생의 분기점이다. 자기 삶의 욕구가 주변 세계와 가장 극심하게 부딛치고, 혼심의 힘을 다해 싸워야만 앞으로 나갈 수 있다. 많은 이들이 이때, 전 생애에서 딱 한 번, 죽음과 새로운 탄생을(그러니까 바로 우리의 운명을) 경험한다. 정말 많은 사람들이 이러한 막다른 골목에서 빠져나오지 못해서 돌이킬수 없는 과거, 잃어버린 낙원의 꿈에 필사적으로 매달리며 여생을 보낸다. 자신의 모든 의지력을 하나의 목표에 모으면 성취해 낼 수 있어. 인간은 짐승보다는 활동 영역이 넓고 관심사가 다양하지만, 역시나 꽤나 좁은 범위에 묶여 있어. 
-                우리는 이 세상에 존재하는 전부를 인정하고 존중해야해. 인위적으로 분리한 절반만 인정할 게 아니라. 그저 진리의 아주 작은 한 조각을 탐지했을 뿐이야. 게으르고 생각하기 싫어하고 스스로 판단하지 못하는 사람들이 그냥 복종해 버려. 그 편이 쉬우니까. 내면에서 자기만의 법을 느끼는 사람들은 더 어려워. 사람은 각자 독자적으로 판단해야 해. 우린 너무 말을 많이 하고 있어. 말분인 이야기는 아무런 가치가 없어. 자기 자신에게서 멀어질 뿐이지. 자기 자신한테 멀어진다는 건 죄악이야. 사람은 거북이 처럼 제 안으로 완전히 들어가지 않으면 안돼. 
-              </div>
-            </div>
-            <div class="border border-stone-700 mt-2 p-2">
-              <div class="text-3xl">CODER</div>
-              <div class="text-5xl">ENGINEER</div>
-              <div class="text-7xl">DEVELOPER</div>
-              <div class="text-9xl">OWNER</div>
-              <div>
+
                 개발자를 나타낼 수 있는 다양한 단어들이 있다. 
                 Coder 는 그저 코드를 작성하는 사람을 의미한다. 
                 Engineer 는 코드를 작성하는 사람이지만, 그 코드가 어떻게 동작하는지, 
                 어떻게 최적화할지에 대해 고민하는 사람을 의미한다. 내가 관리하는 기능을 만들어내는 사람이다.
                 Developer 는 내가 만든 기능으로 사용자들이 어떤 경험을 하는지, 어떤 문제를 해결해주는지에 대해 고민하는 사람을 의미한다.
                 Owner 는 내가 만든 제품에 대해 책임감과 자부심을 가지는 사람을 의미한다.
+
+                <!-- 누구나 이런 위기를 겪는다. 평범한 사람에게 이것은 인생의 분기점이다. 자기 삶의 욕구가 주변 세계와 가장 극심하게 부딛치고, 혼심의 힘을 다해 싸워야만 앞으로 나갈 수 있다. 
+                많은 이들이 이때, 전 생애에서 딱 한 번, 죽음과 새로운 탄생을(그러니까 바로 우리의 운명을) 경험한다. 
+                정말 많은 사람들이 이러한 막다른 골목에서 빠져나오지 못해서 돌이킬수 없는 과거, 잃어버린 낙원의 꿈에 필사적으로 매달리며 여생을 보낸다. 
+                자신의 모든 의지력을 하나의 목표에 모으면 성취해 낼 수 있어. 인간은 짐승보다는 활동 영역이 넓고 관심사가 다양하지만, 역시나 꽤나 좁은 범위에 묶여 있어. 
+                우리는 이 세상에 존재하는 전부를 인정하고 존중해야해. 인위적으로 분리한 절반만 인정할 게 아니라. 그저 진리의 아주 작은 한 조각을 탐지했을 뿐이야. 
+                게으르고 생각하기 싫어하고 스스로 판단하지 못하는 사람들이 그냥 복종해 버려. 그 편이 쉬우니까. 내면에서 자기만의 법을 느끼는 사람들은 더 어려워. 
+                사람은 각자 독자적으로 판단해야 해. 우린 너무 말을 많이 하고 있어. 말분인 이야기는 아무런 가치가 없어. 자기 자신에게서 멀어질 뿐이지. 
+                자기 자신한테 멀어진다는 건 죄악이야. 사람은 거북이 처럼 제 안으로 완전히 들어가지 않으면 안돼.  -->
               </div>
             </div>
             <div>
@@ -119,12 +125,9 @@ function updateMessage() {
             </div>
           </div>
         </div>
-        <div class="hor-part grow-[2]" style="flex: 1;">
+        <div class="hor-part" style="flex: 1;">
           <h2 class="text-xl font-bold">까마귀를 좋아하는</h2>
           <div class="headline gap-4">
-            <img 
-              class="w-full object-contain"
-              src="https://scontent-ssn1-1.xx.fbcdn.net/v/t1.6435-9/170545871_3943882802359463_1040772229033165132_n.jpg?_nc_cat=104&ccb=1-7&_nc_sid=5f2048&_nc_ohc=kSCwmHTEonIQ7kNvgGDJ8hQ&_nc_ht=scontent-ssn1-1.xx&oh=00_AYDOFngRx61W-TmI8HlAH50M6yRTZoQIIkfO0gdMe359Zw&oe=66913436" />
             <div class="content">
               <!-- <h2 class="content-title">이현수는 까마귀를 좋아한다</h2> -->
               <div class="content-description">
@@ -132,8 +135,11 @@ function updateMessage() {
               </div>
             </div>
             <div class="border-t-2 border-stone-700 mt-2 pt-2">
-              <img src="https://qph.cf2.quoracdn.net/main-qimg-9593454d6def03281102ffde42777271-lq"/>
-              크로우 : 아 저거 까마귀인가? <br/>레이븐 : 아 저거 독수리인가?
+              <img src="/assets/img/main-qimg-9593454d6def03281102ffde42777271-lq.jpeg" />
+              <blockquote class="px-4">
+                <p>까마귀 : 아 저거 까마귀인가?</p>
+                <p>레이븐 : 아 저거 독수리인가?</p>
+              </blockquote>
             </div>
           </div>
         </div>
@@ -143,37 +149,48 @@ function updateMessage() {
 
     </div>
     <div class="skill-section relative mt-4 pt-8">
-      <img 
-        class="absolute -top-2 right-8 w-2/3 -z-1"
-        src="https://static-00.iconduck.com/assets.00/vue-icon-2048x1766-ntogpmti.png" />
-      <h2 class="text-4xl font-bold">주 사용 스택</h2>
-      <ul>
-        <li>Vue3</li>
-        <li>Typescript</li>
-        <li>Android</li>
-      </ul>
-      <h2 class="text-4xl font-bold">사용할 가능 스택</h2>
-      <ul>
-        <li>NextJS</li>
-        <li>NuxtJS</li>
-        <li>C++</li>
-        <li>Python</li>
-        <li>Java</li>
-      </ul>
-      <h2 class="text-4xl font-bold">유경험</h2>
-      <ul>
-        <li>lua</li>
-        <li>Angular</li>
-      </ul>
-      <h2 class="text-4xl font-bold">도구</h2>
-      <ul>
-        <li>Git/Github</li>
-        <li>VSCode</li>
-        <li>Atlassian</li>
-        <li>Datadog</li>
-        <li>Obsidian</li>
-        <li>Notion</li>
-      </ul>
+      <div class="absolute -left-8 h-[500px]">
+        <svg width="500" height="500">
+          <path
+            d="M80,560 L260, -100"
+            stroke="#42b883"
+            stroke-width="100" />
+          <path
+            d="M180,560 L340, -20"
+            stroke="#35495e"
+            stroke-width="100" />
+        </svg>
+      </div>
+      <div class=" pl-[400px]">
+        <h2 class="text-4xl font-bold">주 사용 스택</h2>
+        <ul>
+          <li>Vue3</li>
+          <li>Typescript</li>
+          <li>Android</li>
+        </ul>
+        <h2 class="text-4xl font-bold">사용할 가능 스택</h2>
+        <ul>
+          <li>NextJS</li>
+          <li>NuxtJS</li>
+          <li>C++</li>
+          <li>Python</li>
+          <li>Java</li>
+        </ul>
+        <h2 class="text-4xl font-bold">유경험</h2>
+        <ul>
+          <li>lua</li>
+          <li>Angular</li>
+        </ul>
+        <h2 class="text-4xl font-bold">도구</h2>
+        <ul>
+          <li>Git/Github</li>
+          <li>VSCode</li>
+          <li>Atlassian</li>
+          <li>Datadog</li>
+          <li>Obsidian</li>
+          <li>Notion</li>
+        </ul>
+      </div>
     </div>
     <div class="career-wrapper mt-4">
       <div class="border border-stone-700 p-4">
@@ -230,8 +247,11 @@ function updateMessage() {
 @import url('https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,100..900;1,100..900&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Libre+Barcode+128+Text&display=swap');
 
+@import url('https://fonts.googleapis.com/css2?family=Anton&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Marcellus&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Prata&display=swap');
+
 .index-wrapper {
-  min-width: 920px;
   background-color:#ebebe0;
   color: #1f1f14;
   font-family: 
@@ -246,6 +266,12 @@ function updateMessage() {
 }
 .title-section {
   border-top: 1px solid #3d3d29;
+
+  font-family: "Marcellus", serif;
+  font-weight: 400;
+  font-style: normal;
+
+  letter-spacing: 2px;
 }
 .title-separate {
   grid-template-columns: 1fr 3fr 1fr;
@@ -261,6 +287,5 @@ function updateMessage() {
 .headline-section {
 }
 .headline {
-  min-height: 56vh;
 }
 </style>

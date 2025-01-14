@@ -3,6 +3,7 @@ import dayjs from 'dayjs';
 
 interface BlogPost {
   title: string;
+  subject: string;
   tags: string;
   created: string;
   updated: string;
@@ -18,6 +19,11 @@ const props = defineProps<{
 <template>
   <Card class="post-card-wrapper text-stone-700">
     <CardHeader class="min-h-[50%]">
+      <div class="mt-2">
+        <div class="text-sm text-stone-600 dark:text-stone-400 mt-2">
+          {{ dayjs(post.created).format('YYYY-MM-DD') }} <template v-if="post.updated !== post.created">[수정: {{ dayjs(post.updated).format('YYYY-MM-DD') }}]</template>
+        </div>
+      </div>
       <a 
         :href="post._path" 
         class="hover:underline text-stone-600 hover:text-blue-500 dark:text-stone-300 dark:hover:text-blue-300">
@@ -27,18 +33,10 @@ const props = defineProps<{
       </a>
       <div v-if="post.tags" class="flex flex-wrap gap-1 mt-2">
         <span v-for="tag of post.tags.split(', ')" :key="tag">
-          <Badge>
+          <Badge variant="secondary">
             {{ tag }}
           </Badge>
         </span>
-      </div>
-      <div class="mt-2">
-        <div class="text-sm text-stone-600 dark:text-stone-400 mt-2">
-          최초 작성 {{ dayjs(post.created).format('YYYY-MM-DD') }}
-        </div>
-        <div class="text-sm text-stone-600 dark:text-stone-400">
-          최종 업뎃 {{ dayjs(post.updated).format('YYYY-MM-DD') }}
-        </div>
       </div>
     </CardHeader>
     <CardContent class="post-card-description">
@@ -89,9 +87,9 @@ a {
   background-color: #35495e;
   font-weight: 400; */
 
-  font-family: "Pretendard-Regular", serif;
+  /* font-family: "Pretendard-Regular", serif;
   font-weight: 400;
-  font-style: normal;
+  font-style: normal; */
   
 }
 

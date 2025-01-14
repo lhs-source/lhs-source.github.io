@@ -1,6 +1,8 @@
 ---
 title: Vue Code Spliting 간단히 알아보기 (+ Prefetch)
 description: Vue 프로젝트의 Code Spliting 이 어떻게 작동하는지와 webpack prefetch 옵션 에 대해서 간략한 설명.
+subject: Vue
+volumne: short
 tags: Vue, Vue2, Vue3, Code Spliting, 코드분산, Prefetch, Webpack
 created: 2022-08-05
 updated: 2022-08-05
