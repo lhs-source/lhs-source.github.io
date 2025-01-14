@@ -6,6 +6,7 @@ volumne: long
 tags: Vue, Vue3, Github, Blog, Markdown, SEO, GoogleAnalytics
 created: 2022-06-24
 updated: 2022-06-25
+filename: making-blog-githubio-vue3-1
 ---
 
 개발 블로그를 작성하기 위해서 github.io 를 사용하기로 했다. velog나 tistory, medium 같은 것들도 있지만, 내가 완전히 커스터마이징 가능한 페이지를 갖고 싶었다. 그렇다고 서버를 돌리거나, AWS를 통해서 구축하는 수고까지는 하지 않으려 했다. 지금 와서 생각해보면 거의 비슷한 공수가 들었다. Notion도 고려했는데, 내 개인 노트로 아주 잘 활용하고 있으나 블로그로 사용하기에는 너무 에디터다. 이렇게 쓰니까 깃헙을 고른 이유는 그냥 해보고싶어서에 가까워 보인다.

@@ -6,6 +6,7 @@ volumne: short
 tags: Android, FCM, Postman
 created: 2023-09-16
 updated: 2023-09-16
+filename: postman-fcm-test
 ---
 
 ```

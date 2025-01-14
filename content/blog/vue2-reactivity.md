@@ -6,6 +6,7 @@ volumne: long
 tags: Vue, Vue2, Vue Reactivity, 반응성, Vue Rendering
 created: 2022-07-12
 updated: 2022-07-12
+filename: vue2-reactivity
 ---
 
 # 반응성?

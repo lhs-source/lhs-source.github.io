@@ -6,6 +6,7 @@ volumne: short
 tags: Vitest, Javscript, Jest, Async
 created: 2025-01-14
 updated: 2025-01-14
+filename: vitest-timer-flushpromise
 ---
 
 [vitest 공식 홈페이지 #fake-timers](https://vitest.dev/api/vi#fake-timers)

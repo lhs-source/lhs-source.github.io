@@ -6,6 +6,7 @@ volumne: short
 tags: Vue, Vue2, Vue3, Code Spliting, 코드분산, Prefetch, Webpack
 created: 2022-08-05
 updated: 2022-08-05
+filename: vue-prefetch
 ---
 
 # Code Spliting

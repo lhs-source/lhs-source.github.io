@@ -6,6 +6,7 @@ volumne: long
 tags: Vite, Vue, Vue3, Github, Blog, Markdown
 created: 2023-09-26
 updated: 2023-09-26
+filename: vite-vue-and-github-pages
 ---
 
 기존 vue-cli 를 사용한 vue 프로젝트로 github pages 를 구축했는데, 대세에 따라 vite 로 변경하기로 했다. 말이 변경이지 새로 만들었다. 
