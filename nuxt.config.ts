@@ -15,7 +15,8 @@ export default defineNuxtConfig({
     "shadcn-nuxt",
     '@nuxtjs/color-mode',
     "@nuxtjs/tailwindcss",
-    "@nuxt/image"
+    "@nuxt/image",
+    '@pinia/nuxt',
   ],
   content: {
     markdown: {
@@ -30,5 +31,8 @@ export default defineNuxtConfig({
   },
   colorMode: {
     classSuffix: ''
-  }
+  },
+  pinia: {
+    // autoImports: ['defineStore', 'acceptHMRUpdate'],
+  },
 })

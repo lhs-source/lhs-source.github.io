@@ -21,6 +21,11 @@ const pageList = [
     name: 'VueStudy',
     path: 'vuestudy'
   },
+  {
+    id: 5,
+    name: 'Vue3Reactivity',
+    path: 'Vue3Reactivity'
+  },
 ]
 
 
@@ -37,6 +42,7 @@ const pageList = [
       </ul>
     </nav>
     <main>
+      <!-- nested router -->
       <router-view></router-view>
     </main>
   </div>
