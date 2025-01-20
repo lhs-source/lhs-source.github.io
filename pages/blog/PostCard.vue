@@ -32,7 +32,7 @@ const props = defineProps<{
         </h2>
       </a>
       <div v-if="post.tags" class="flex flex-wrap gap-1 mt-2">
-        <span v-for="tag of post.tags.split(', ')" :key="tag">
+        <span v-for="tag of post.tags" :key="tag">
           <Badge variant="secondary">
             {{ tag }}
           </Badge>

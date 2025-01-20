@@ -3,7 +3,14 @@ title: Github.io + Vue3 로 블로그 만들기
 description: Github.io 와 Vue3 를 활용해서 블로그를 시작. SPA를 prerendering 하여 개별 페이지를 생성하고, 메타태그를 추가. 구글 검색 엔진에 등록할 사이트맵 자동 생성. 마크다운을 html 로 변환. Google Analytics 도입으로 방문자 수 체크.
 subject: Vue
 volumne: long
-tags: Vue, Vue3, Github, Blog, Markdown, SEO, GoogleAnalytics
+tags: 
+  - Vue
+  - Vue3
+  - Github
+  - Blog
+  - Markdown
+  - SEO
+  - GoogleAnalytics
 created: 2022-06-24
 updated: 2022-06-25
 filename: making-blog-githubio-vue3-1
@@ -17,7 +24,7 @@ filename: making-blog-githubio-vue3-1
 
 참고한 블로그는 위 블로그이다. 내가 하려던 것을 똑같이 이미 구현해서 사용하고 계셨기 때문에 참고하기에 너무 훌륭한 블로그였다. 직접 블로그에 포스팅도 해주셨는데, 중간중간 소스도 염탐했다.
 
-# Github.io 페이지 만들기
+## Github.io 페이지 만들기
 
 ![Untitled](img/making-blog-githubio-vue3-1/Untitled.png)
 
@@ -27,7 +34,7 @@ filename: making-blog-githubio-vue3-1
 
 배포 대상 브랜치를 선택하고, 폴더를 선택하여 저장하면 끝이다. 하지만 이름을 짓기도 귀찮고, 굳이 따로 설정할 필요가 없으니 규칙을 따라서 진행한다.
 
-# Github Actions 로 Github Pages 배포
+## Github Actions 로 Github Pages 배포
 
 ![Untitled](img/making-blog-githubio-vue3-1/Untitled2.png)
 
@@ -41,11 +48,11 @@ Github Pages 로 사용되는 레포는 대부분 결과물을 관리하는 레�
 
 내가 선택한 방법은 3번이고, 1번은 시도도 안해봤다. 하지만 gh-pages 를 많이들 사용한다. 간단하게 설명을 하자면, 
 
-## gh-pages
+### gh-pages
 
 **gh-pages** 라는 라이브러리를 가지고, 빌드 결과물을 `gh-pages 브랜치` 에 publish 하는 것이다. 기본적으로는 package.json 파일의 `homepage` 속성에 해당하는 url 로 배포를 하게 된다.
 
-## 수동 빌드
+### 수동 빌드
 
 **수동 빌드** 는 Github Pages 설정 페이지에서 호스팅할 폴더를 고를 수 있다. 기본적으로 root 폴더이며, `/docs` 폴더를 추가로 지정할 수 있다. 해당 레포 브랜치의 docs 폴더를 호스팅하겠다는 것이다. 
 
@@ -60,7 +67,7 @@ module.exports = {
 
 빌드의 결과물을 docs 폴더에 생성되게 하고, 레포에 올려주기면 하면 된다. vue 의 경우 `outputDir` 속성을 docs 로 변경해주면 간단하게 결과 폴더가 바뀐다. 추가로 `.gitignore` 에 docs 폴더가 있다면 항목을 제거해서 원격 레포에 푸시해주면 자동으로 봇이 실행되면서 페이지를 배포한다.
 
-## Github Actions
+### Github Actions
 
 Github Actions 는 간단하게 설명하면, CICD 툴이다. 젠킨스나, aws pipeline, circleCI 같은 역할을 한다. Gitlab 에도 비슷한 기능이 있는데, 이쪽은 아직 써보지 못했다. Github Actions 는 프로젝트에 포함된 yaml 파일을 기반으로 명령을 실행한다. 
 
@@ -123,7 +130,7 @@ Github Workflow 는 두 번 돌게 된다.
 
 봇이 돌린 Workflow 에서 배포가 완료된 우리의 페이지도 확인할 수 있다. 아래 Artifacts 는 Jekyll 이 빌드한 결과물이다. 실제로 보면 npm build 결과를 그대로 래핑하는 것과 매한가지다.
 
-# 블로그 포스트 목록 관리하기
+## 블로그 포스트 목록 관리하기
 
 따로 서버를 관리할 것이 아니라면 레포에 글 목록도 관리를 하는 게 맞다고 판단했다. 클라에서 모든 것을 해결하는 것은 어렵지 않다. 데이터를 직접 작성해서 갖고 있으면 된다. 
 
@@ -245,7 +252,7 @@ DetailView 가 포스트 내용을 보여줄 뷰인데, 포스트 url 을 확인
 
 이걸 토대로 글 목록을 보여주니 잘 나온다.
 
-# Markdown 적용하기
+## Markdown 적용하기
 
 나는 개발 노트를 2014년부터 사용했는데, 에버노트 - Typora - Joplin - 노션 순서로 넘어왔다. Typora 와 Joplin 은 사용기간이 매우 짧아서 에버노트 사용 후 노션으로 넘어왔다고 봐도 무방하다. 그 이유가 마크다운이었던 만큼, 개발 블로그는 무조건 마크다운이다 라고 생각했다.
 
@@ -288,7 +295,7 @@ onMounted(() => {
 
 DOM의 innerValue 로 넣어주면 간단하게 md 로 작성했던 포스팅이 html 이 렌더링된다. 간단-
 
-# Prerendering
+## Prerendering
 
 Github Pages 특성상 SPA 지원을 안하기 때문에, 홈이 아닌 다른 URL을 접속하려고 하면 404 페이지가 뜬다. 물론 SPA 사이트도 홈에서 라우팅을 한다면 작동은 하겠지만은 누가 블로그를 홈에서부터 여행을 하겠는가. 구글엔진은 SPA도 js를 실행해 크롤링한다고는 하는데, Github Pages는 홈을 제외한 페이지에 아예 접속조차 안되며, SEO도 신경써야하니 Prerendering 은 필수이다.
 
@@ -375,7 +382,7 @@ module.exports = {
 
 빌드하면 결과물 폴더에, 변환한 URL에 해당하는 index.html 파일들이 우수수 빌드가 된 걸 확인할 수 있다. 그리고 포스팅 URL 로 바로 접속도 가능해졌다.
 
-# Sitemap 자동 생성
+## Sitemap 자동 생성
 
 ```tsx
 npm i -D sitemap-webpack-plugin
@@ -419,7 +426,7 @@ module.exports = [
 
 이렇게 구글 엔진에 등록할 `sitemap.xml` 이 저절로 만들어진다. 결과물 폴더에 만들어지기 때문에, 브라우저에서도 바로 접속할 수 있다. 
 
-## 사이트맵 등록하기
+### 사이트맵 등록하기
 
 [Google Search Console](https://search.google.com/search-console/about)
 
@@ -458,7 +465,7 @@ URL 을 입력하고 다음으로 넘어가자.
 
 성공!
 
-# 메타태그 작성하기
+## 메타태그 작성하기
 
 블로그 내용에 대해서 잘 알려주기 위해 렌더링하는 포스팅 페이지에 메타태그를 추가하자. 누군가 링크를 퍼가거나, 검색엔진에서 긁어갈 때 메타태그가 아주 중요한 역할을 한다.
 
@@ -504,11 +511,11 @@ module.exports = [
 
 아까 사용했던 `PrerenderSpaPlugin` 을 활용한다. 훅 중 하나인 `postProcess` 에 메타 태그를 심어주는 코드를 작성한다. 필수로 들어가면 좋을 태그는 `title`, `description` , `keyword` 라고 한다. 
 
-# Google Analytics 추가
+## Google Analytics 추가
 
 네이버나 구글 블로그 같이 전용 플랫폼 위에서 돌아가는 블로그가 아니기 때문에 방문자 집계는 직접 해야한다. 그렇기 때문에 Google Analytics 4를 사용해서 방문자와 페이지뷰 수를 확인하는 간단한 기능을 추가할 것이다.
 
-## GA4 계정 생성하기
+### GA4 계정 생성하기
 
 [Redirecting...](https://analytics.google.com/)
 
@@ -520,25 +527,25 @@ GA 콘솔에 들어가서 계정과 속성을 차례대로 만들어준다. 속�
 
 그 후 데이터스트림을 만들어준다. 스트림 이름은 적당히 알아볼 수 있게 하고, 중요한 것은 “측정 ID” 이다. 이것이 데이터를 전송하는 데 사용하는 키가 된다.
 
-### 로컬 테스트용 데이터스트림 만들기
+#### 로컬 테스트용 데이터스트림 만들기
 
 스트림 URL 에는 `localhost` 혹은 `127.0.0.1` 같은 루프백 주소는 입력할 수 없다. 그렇다고 테스트할 때마다 매번 Github에 배포하는 것도 번거로운 일이다. 적어도 1분에서 3분정도 걸리는데 그 시간이 누적되면 손해가 이만저만이 아니다.
 
 ```tsx
 ##
-# Host Database
+## Host Database
 #
-# localhost is used to configure the loopback interface
-# when the system is booting.  Do not change this entry.
+## localhost is used to configure the loopback interface
+## when the system is booting.  Do not change this entry.
 ##
 127.0.0.1	localhost
 255.255.255.255	broadcasthost
 ::1             localhost
-# Added by Docker Desktop
-# To allow the same kube context to work on the host and the container:
+## Added by Docker Desktop
+## To allow the same kube context to work on the host and the container:
 127.0.0.1 kubernetes.docker.internal
 **127.0.0.1 blog.local**
-# End of section
+## End of section
 ```
 
 `hosts` 파일에 DNS 정보를 넣어서 가상의 URL을 만들어준 후에, 이 URL로 로컬 테스트를 진행하면 된다. 나는 단순하게 `blog.local` 이라고 정했다. 
@@ -562,7 +569,7 @@ module.exports = {
 
 vue.config.js 에다가 추가로 설정이 필요하다. Webpack4 를 사용 중이라면 `disableHostCheck` 속성을, Webpack5 사용 중이라면 `allowedHosts` 를 사용한다.
 
-## Vue에서 GA4로 데이터 전송하기
+### Vue에서 GA4로 데이터 전송하기
 
 ```tsx
 npm install vue-gtag-next

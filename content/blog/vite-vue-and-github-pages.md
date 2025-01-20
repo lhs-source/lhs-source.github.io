@@ -3,7 +3,13 @@ title: Vite vue + Github Pages 페이지 구축
 description: 기존 vue-cli 를 사용한 vue 프로젝트로 github pages 를 구축했는데, 대세에 따라 vite 로 변경하기로 했다.
 subject: Vue
 volumne: long
-tags: Vite, Vue, Vue3, Github, Blog, Markdown
+tags: 
+  - Vite
+  - Vue
+  - Vue3
+  - Github
+  - Blog
+  - Markdown
 created: 2023-09-26
 updated: 2023-09-26
 filename: vite-vue-and-github-pages
@@ -13,7 +19,7 @@ filename: vite-vue-and-github-pages
 
 기존 vue-cli 로 했던 것에서 vite 로 변경하며 필요한 부분만 작성하였고, github actions 등의 기능은 [Github.io + Vue3 로 블로그 만들기](https://lhs-source.github.io/posts/making-blog-githubio-vue3-1#github-actions-%EB%A1%9C-github-pages-%EB%B0%B0%ED%8F%AC) 를 참고하면 된다.
 
-# vite 프로젝트 생성
+## vite 프로젝트 생성
 
 ```
 npm create vite@latest
@@ -21,7 +27,7 @@ npm create vite@latest
 
 우선 빈 vite 프로젝트를 만들어준다. 우리는 vue3 와 typescript 를 활용해서 개발할 것이다.
 
-# vite-ssg
+## vite-ssg
 
 > Vite SSG  
 > [https://www.npmjs.com/package/vite-ssg](https://www.npmjs.com/package/vite-ssg)  
@@ -55,7 +61,7 @@ export const createApp = ViteSSG(
 ```
 
 `createApp`  을 `ViteSSG`  로 변경한다. 이러면 빌드했을 때, SPA 앱이 아니라, MPA로 빌드가 된다. 각 라우트마다 html 페이지가 따로 생성된다.
-# vite-plugin-pages-sitemap
+## vite-plugin-pages-sitemap
 
 > vite-plugin-pages-sitemap  
 > [https://github.com/jbaubree/vite-plugin-pages-sitemap](https://github.com/jbaubree/vite-plugin-pages-sitemap)  
@@ -84,7 +90,7 @@ export default {
 
 `npm run build`  를 하면 바로 사이트맵과 로보츠 파일이 만들어진다. 기본 사용법대로 사이트맵 파일을 만들면 주소가 `localhost`  로 되는데, `hostname`  을 변경해서 내 사이트 주소를 설정해주어야 한다.
 
-# vite-plugin-pages
+## vite-plugin-pages
 
 > vite-plugin-pages  
 > [https://www.npmjs.com/package/vite-plugin-pages](https://www.npmjs.com/package/vite-plugin-pages)  
@@ -123,7 +129,7 @@ export default defineConfig({
 
 `Pages`  플러그인을 설정파일에 추가하자. md 파일이 있는 경로와, 확장자를 추가해주면 된다.
 
-## 파일 추가하기
+### 파일 추가하기
 
 `Pages`  플러그인에 등록해둔 경로에 `.vue`  혹은 `.md`  파일을 만들면 자동으로 라우트로 인식한다. 기본적으로 만들어야 할 파일이 두가지 있다.
 
@@ -132,7 +138,7 @@ export default defineConfig({
 
 나머지는 파일을 만드는대로 라우트에 등록된다.
 
-## nested routes
+### nested routes
 
 > Nested Routes  
 > [https://github.com/hannoeru/vite-plugin-pages#nested-routes](https://github.com/hannoeru/vite-plugin-pages#nested-routes)  
@@ -178,7 +184,7 @@ route {
 
 `posts.vue`  파일에는 `router-view`  를 사용하면 끝!
 
-# vite-plugin-vue-layouts
+## vite-plugin-vue-layouts
 
 > vite-plugin-vue-layouts  
 > [https://www.npmjs.com/package/vite-plugin-vue-layouts](https://www.npmjs.com/package/vite-plugin-vue-layouts)  
@@ -240,7 +246,7 @@ export const createApp = ViteSSG(
 
 pages 플러그인이 셍성한 라우트를 main 에서 적용시킨다.
 
-# vite-plugin-md
+## vite-plugin-md
 
 > vite-plugin-md  
 > [https://github.com/antfu/vite-plugin-md](https://github.com/antfu/vite-plugin-md)  
@@ -268,7 +274,7 @@ export default defineConfig({
 
 기본적으로 있던 `vue`  플러그인에 `md`  파일도 인식할 수 있게 항목을 추가해주고, `Markdown`  플로그인을 추가한다.
 
-## 메타태그 추가
+### 메타태그 추가
 
 [GitHub - mdit-vue/vite-plugin-vue-markdown: Compile Markdown to Vue component](https://github.com/mdit-vue/vite-plugin-vue-markdown#document-head-and-meta)
 
@@ -303,23 +309,23 @@ content="Github.io 와 Vue3 를 활용해서 블로그를 시작. SPA를 prerend
 ```
 
 html 파일에 자동으로 `meta` 태그가 추가된다.
-# markdown-it 플러그인
+## markdown-it 플러그인
 
-## markdown-it-anchor
+### markdown-it-anchor
 
 > markdown-it-anchor  
 > [https://www.npmjs.com/package/markdown-it-anchor](https://www.npmjs.com/package/markdown-it-anchor)
 
 `H`  태그에 기본적으로 anchor 를 달아서 이동할 수 있게 한다.  한글도 지원한다.
 
-## markdown-it-table-of-contents
+### markdown-it-table-of-contents
 
 > markdown-it-table-of-contents  
 > [https://www.npmjs.com/package/markdown-it-table-of-contents](https://www.npmjs.com/package/markdown-it-table-of-contents)  
 
 `[[toc]]`  를 사용하면 목차를 만들 수 있다.
 
-### 목차 요소를 따로 떼서 다른 곳에 붙이기
+#### 목차 요소를 따로 떼서 다른 곳에 붙이기
 
 목차가 md 페이지 컴포넌트의 상단에 고정되어 있어서 원하는 곳에서 사용할 수 없다. 예를 들어, 오른쪽 부분에 고정을 시킨다던지.
 
@@ -357,7 +363,7 @@ watch(() => route.fullPath, () => {
 ```
 
 라우트가 변경될 때마다 TOC를 옮겨주기 위해서 `watch` 를 추가한다.
-## markdown-it-prism
+### markdown-it-prism
 
 > markdown-it-prism  
 > [https://www.npmjs.com/package/markdown-it-prism](https://www.npmjs.com/package/markdown-it-prism)  
@@ -387,12 +393,12 @@ export default defineConfig({
 
 우리의 경우 포스트가 `RouterView` 에서 자동으로 페이지화되어 보여지기 때문에, `scoped style` 로는 스타일을 적용할 수 없다. 그래서 전역 css 로 선언해주어야 한다. 
 
-### 테마
+#### 테마
 
 [GitHub - PrismJS/prism-themes: A wider selection of Prism themes](https://github.com/PrismJS/prism-themes)
 여러가지 테마를 모아둔 깃헙이다. 가장 익숙한 vscode 를 사용했다.
 
-# pinia
+## pinia
 
 > pinia  
 > [https://pinia.vuejs.org/getting-started.html#installation](https://pinia.vuejs.org/getting-started.html#installation)  
@@ -490,9 +496,9 @@ post 목록을 가져오는 store 를 하나 만든다. 포스트를 단순히 j
 
 public 폴더에 파일을 두면, 그 항목은 사이트의 루트에 포함되게 된다. 같은 호스트이기 때문에 cors 없이 axios 로 동적으로 조회할 수 있다.
 
-# 문제
+## 문제
 
-## vite-ssg + gsap
+### vite-ssg + gsap
 
 ```
 [vite-ssg] An internal error occurred.
@@ -529,7 +535,7 @@ gsap.registerPlugin(MotionPathPlugin);
 
 이런식으로 바꿔주었다. `vite-ssg` 로 사용할 때는 다른 빌드 방식을 사용하나보다. `esbuild` 라거나,, commonJS 라거나.. 그래서 `/dist` 폴더 안의 라이브러리를 사용해주었다.
 
-## axios
+### axios
 
 `vite-ssg` 는 정적 html 사이트를 생성하기 때문에 `setup` 안에 있는 함수를 무조건 실행한다. 그래서 최초에 데이터를 가져오는 axios 함수가 실행되면서 없는 서버로 데이터를 가져오려고 해서 에러가 발생한다.
 

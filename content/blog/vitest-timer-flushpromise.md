@@ -3,7 +3,11 @@ title: Vitest Fake Timer 로 setInterval 테스트 중 다음 루프가 실행 �
 description: setInterval 로 돌아가는 로직을 vitest 의 Fake Timer 를 사용해 테스트. fetch 함수가 포함된 interval 로직은 flushPromise 없이 다음 루프가 돌지 않음.
 subject: Vue
 volumne: short
-tags: Vitest, Javscript, Jest, Async
+tags: 
+  - Vitest
+  - Javscript
+  - Jest
+  - Async
 created: 2025-01-14
 updated: 2025-01-14
 filename: vitest-timer-flushpromise

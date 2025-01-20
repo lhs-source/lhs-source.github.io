@@ -18,6 +18,7 @@ export default defineNuxtConfig({
     "@nuxt/image",
     '@pinia/nuxt',
   ],
+
   content: {
     markdown: {
       toc: {
@@ -29,10 +30,14 @@ export default defineNuxtConfig({
       theme: 'github-dark',
     },
   },
+
   colorMode: {
     classSuffix: ''
   },
+
   pinia: {
     // autoImports: ['defineStore', 'acceptHMRUpdate'],
   },
+
+  compatibilityDate: '2025-01-20',
 })

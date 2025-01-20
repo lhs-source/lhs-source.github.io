@@ -7,6 +7,25 @@ const { data: article } = await useAsyncData("article", () =>
   // 파일 이름을 [...slug].vue 로 하면 route.params.slug 로 접근 가능
   queryContent(`/blog/${route.params.slug}`).findOne()
 );
+
+// {
+//    "toc": { 
+//     "title": "", 
+//     "searchDepth": 2, 
+//     "depth": 2, 
+//     "links": [ 
+//         { "id": "pinia-설치", "depth": 2, "text": "Pinia 설치" }, 
+//         { "id": "nuxt-설정-파일에-pinia-추가", "depth": 2, "text": "Nuxt 설정 파일에 Pinia 추가" }, 
+//         { "id": "스토어-생성", "depth": 2, "text": "스토어 생성" }, 
+//         { "id": "컴포넌트에서-사용하기", "depth": 2, "text": "컴포넌트에서 사용하기" }, 
+//         { "id": "선택-서버-사이드-렌더링ssr-설정", "depth": 2, "text": "(선택) 서버 사이드 렌더링(SSR) 설정", "children": [ 
+//             { "id": "캐시-및-라이브러리-다시-설치", "depth": 3, "text": "캐시 및 라이브러리 다시 설치" }, 
+//             { "id": "pinia-사용을-수동으로-등록", "depth": 3, "text": "Pinia 사용을 수동으로 등록" } 
+//         ] } 
+//     ] }
+// }
+const tableOfContents = article?.value?.body?.toc;
+
 </script>
 
 <template>
@@ -19,9 +38,22 @@ const { data: article } = await useAsyncData("article", () =>
         </div>
         <h1 class="title">{{ article.title }}</h1>
         <div class="flex flex-wrap gap-1 mt-4">
-          <Badge v-for="tag in article.tags.split(', ')" :key="tag">
+          <Badge v-for="tag in article.tags" :key="tag">
             {{ tag }}
           </Badge>
+        </div>
+        <div v-if="tableOfContents?.links" class="toc mt-16">
+          <h2>목차</h2>
+          <ul>
+            <li v-for="link in tableOfContents.links" :key="link.id">
+              <a :href="'#' + link.id">{{ link.text }}</a>
+              <ul v-if="link.children">
+                <li v-for="child in link.children" :key="child.id">
+                  <a :href="'#' + child.id">{{ child.text }}</a>
+                </li>
+              </ul>
+            </li>
+          </ul>
         </div>
         <ContentRendererMarkdown 
           :value="article" 
@@ -86,6 +118,13 @@ li {
   padding-left: 0.2em;
 }
 
+blockquote {
+  padding: 0.8em;
+  margin: 0.8em 0;
+  background-color: #0c2d20;
+  border-left: 0.25em solid #42b883;
+}
+
 /* pre 에 포함된 code 제외하고, 나머지 code 에 대해서 스타일을 적용 */
 :not(pre) > code {
   background-color: #1a5138;
@@ -96,4 +135,21 @@ li {
 pre {
   font-size: 0.8rem;
 }
+
+/* table */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1em;
+  margin-bottom: 1em;
+}
+table th {
+  border: 1px solid #0c2d20;
+  padding: 0.5em 1em;
+}
+table td {
+  border: 1px solid #0c2d20;
+  padding: 0.5em 1em;
+}
+
 </style>

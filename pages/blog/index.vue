@@ -24,7 +24,7 @@ const { data: tags } = await useAsyncData("tags", () => queryContent("/blog").on
 const allTagList: any[] = [];
 // 태그마다 개수를 세서 내림차순으로 정렬
 if(tags.value) {
-  const tagList = tags.value.map(tag => tag.tags.split(', ')).flat();
+  const tagList = tags.value.map(tag => tag.tags).flat();
   const tagCount = tagList.reduce((acc, tag) => {
     acc[tag] = (acc[tag] || 0) + 1;
     return acc;
@@ -35,6 +35,7 @@ if(tags.value) {
       count: tagCount[tagName]
     });
   }
+  allTagList.sort((a, b) => b.count - a.count);
 }
 const selectedTag = ref<string | null>(null);
 async function onClickTag(tag: { tagName: string, count: number } | null) {
