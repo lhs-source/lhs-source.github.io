@@ -3,6 +3,7 @@
 import { ref } from 'vue';
 import dayjs from 'dayjs';
 import Crow3D from './Crow3D.vue';
+import ScrollingText from '@/components/ScrollingText.vue';
 
 const router = useRouter();
 // test
@@ -60,7 +61,7 @@ function updateMessage() {
             <h1 class="text-6xl font-bold m-0 text-center leading-none">
               History of Lee Hyunsoo
             </h1>
-            <h2 class="text-2xl font-normal m-0 text-right leading-tight">
+            <h2 class="text-2xl font-bold m-0 text-right leading-tight">
               프론트엔드
             </h2>
           </div>
@@ -85,10 +86,17 @@ function updateMessage() {
         <div class="title-menu-content text-xs">{{ menu.content }}</div>
       </div>
     </div>
+
+    <div>
+      <ScrollingText />
+      <Crow3D />
+      <ScrollingText direction="right" />
+    </div>
+    
     <div class="headline-section">
       <div class="flex gap-6">
         <div class="hor-part" style="flex: 2;">
-          <h1 class="text-3xl font-bold">이현수, 사지멀쩡하고 멘탈 정상인 개발자로 밝혀져</h1>
+          <h1 class="text-4xl font-bold">이현수, 사지멀쩡하고 멘탈 정상인 개발자로 밝혀져</h1>
           <div class="bg-stone-700 w-full h-0 gradient-to-t from-stone-700 to-stone-500">
           </div>
           <div class="headline">
@@ -120,13 +128,10 @@ function updateMessage() {
                 자기 자신한테 멀어진다는 건 죄악이야. 사람은 거북이 처럼 제 안으로 완전히 들어가지 않으면 안돼.  -->
               </div>
             </div>
-            <div>
-              <Crow3D />
-            </div>
           </div>
         </div>
         <div class="hor-part" style="flex: 1;">
-          <h2 class="text-xl font-bold">까마귀를 좋아하는</h2>
+          <h2 class="text-xl font-bold">까마귀를 좋아하는 사람</h2>
           <div class="headline gap-4">
             <div class="content">
               <!-- <h2 class="content-title">이현수는 까마귀를 좋아한다</h2> -->
@@ -140,6 +145,10 @@ function updateMessage() {
                 <p>까마귀 : 아 저거 까마귀인가?</p>
                 <p>레이븐 : 아 저거 독수리인가?</p>
               </blockquote>
+            </div>
+            <!-- 빨간색 두꺼운 테두리를 가진 박스 안에 CROW 라는 글자를 가운데 꽉차게 출력 -->
+            <div class="border border-red-400 mt-2 p-2 overflow-hidden relative border-8 flex items-center justify-center h-32">
+              <div class="text-7xl font-bold w-full text-center">CROW</div>
             </div>
           </div>
         </div>
@@ -241,7 +250,7 @@ function updateMessage() {
   </div>
 </template>
 
-<style>
+<style lang="scss">
 @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@200..900&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,100..900;1,100..900&display=swap');
@@ -253,6 +262,7 @@ function updateMessage() {
 
 .index-wrapper {
   background-color:#ebebe0;
+  width: 1024px;
   color: #1f1f14;
   font-family: 
     'Noto Serif KR',
@@ -268,13 +278,14 @@ function updateMessage() {
   border-top: 1px solid #3d3d29;
 
   font-family: "Marcellus", serif;
-  font-weight: 400;
+  font-weight: 700;
   font-style: normal;
 
   letter-spacing: 2px;
-}
-.title-separate {
-  grid-template-columns: 1fr 3fr 1fr;
+  
+  .title-separate {
+    grid-template-columns: 1fr 5fr 1fr;
+  }
 }
 .inter-band {
   border-top: 2px solid #3d3d29;
