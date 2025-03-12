@@ -188,6 +188,18 @@ function updateMessage() {
       <ScrollingText direction="right" />
     </section>
 
+    <div class="">
+      <h2 class="text-2xl my-4">데이터독 User Journey 세션 발표</h2>
+      <img 
+        src="/assets/img/weiwei202309_A_highly_detailed_black_and_white_line_art_illustr_38e30c76-aff2-4d4f-af5c-8a0295897408.png"
+        style="width: 100%; height: 360px; object-fit: cover; object-position: 50% 30%;"/>
+      <div class="columns-2">
+        데이터독 Observabiliity Day 행사에서 User Journey 세션의 마지막 차례 발표를 진행했다. 데이터독을 짧은시간 활용하며 얻은 경험을 공유하고, 데이터독의 무궁무진한 활용성에 대해 설명했다. 
+        O2O 환경의 리코 특성을 살려서, 데이터독을 에러 분석과 사용성 측정 면에서 어떻게 활용했는지를 중점적으로 설명한다. 이론 뿐 아닌 실제 사례를 들어서 데이터독을 도입하려는 사람들 혹은 이미 사용중인 유저들에게 좋은 아이디어가 되었을 것이다.
+        세션을 들은 시청자들이 발표를 잘 들었다며 소식을 전해받고 있다.
+      </div>
+    </div>
+
     <FloatingText />
 
     <!-- Career Section -->
