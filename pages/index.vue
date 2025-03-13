@@ -205,32 +205,52 @@ function updateMessage() {
     <!-- Career Section -->
     <section class="career-wrapper mt-16">
       <div class="career-entry border border-stone-700 p-4">
-        <div class="company-info columns-3">
-          <img src="https://cdn.jebowang.com/news/photo/202111/4427_12628_5145.png" alt="리코 로고" />
-          <h3 class="text-xl">2021.01.04 ~ {{ dayjs().format('YYYY.MM.DD') }} ({{ dayjs().diff(dayjs('2021-01-04'), 'year') }}년 {{ dayjs().diff(dayjs('2021-01-04'), 'month') % 12 }}달 {{ dayjs().diff(dayjs('2021-01-04'), 'day') % 30 }}일)</h3>
-          <h2 class="text-4xl font-bold">리코</h2>
-          <p>
-            This post is based on an interview with June Hunter, a Vancouver-based photographer whose art features crows, ravens, and many other birds of the West Coast.
-            In this post, we're going to boost your bird identification skills and compare common ravens (Corvus corax) with common crows (Corvus brachyrhynchos). We'll go over how you can tell the difference between these two black birds and what makes each bird uniquely wonderful.
-          </p>
-          <img class="p-2" src="https://lh4.googleusercontent.com/proxy/FzctGmacmVXJ0QYGfEnnZTFtBIUxZAh1ZjmVM1H1Z83lyJAp-ujEkZQTkDxyqYqXIEHwJlxHU-ScmLCWAvCpHf1329YKxmc7MSIN0lDiFCUlmHavGQyh_KCj9rOr" alt="리코 이미지" />
-          <p>
-            For simplicity, we'll compare the American crow to the common raven in this post. While crows around the world are similar, the size and vocalizations of crows in Europe, the Middle East, Africa and Asia are not identical to those of American crows.
-            Love must not entreat,' she added, 'or demand. Love must have the strength to become certain within itself. Then it ceases merely to be attracted and begins to attract.
-          </p>
-          <img class="p-2" src="https://mblogthumb-phinf.pstatic.net/MjAyMzAzMDZfMTEx/MDAxNjc4MDY4MTU1Njgw.bwJ5w_8LvSd5ZQZ4mk4_xFxKLOtelp9OXLFQdxRGKr0g.dD2tY9-7YRGeB7xXEzqGzNiHtwt30wEjsS55kbGB3Ggg.JPEG.monthlypeople/%EB%A6%AC%EC%BD%94_%EA%B9%80%EA%B7%BC%ED%98%B8_%EB%8C%80%ED%91%9C.jpg?type=w800" alt="리코 이미지" />
+        <div class="company-info relative">
+          <img 
+            class="w-1/2" 
+            src="https://mblogthumb-phinf.pstatic.net/MjAyMzAzMDZfMTEx/MDAxNjc4MDY4MTU1Njgw.bwJ5w_8LvSd5ZQZ4mk4_xFxKLOtelp9OXLFQdxRGKr0g.dD2tY9-7YRGeB7xXEzqGzNiHtwt30wEjsS55kbGB3Ggg.JPEG.monthlypeople/%EB%A6%AC%EC%BD%94_%EA%B9%80%EA%B7%BC%ED%98%B8_%EB%8C%80%ED%91%9C.jpg?type=w800" 
+            alt="리코 이미지" />
+          <img 
+            class="absolute left-60 top-0"
+            src="https://cdn.jebowang.com/news/photo/202111/4427_12628_5145.png" 
+            alt="리코 로고" />
+          <div class="absolute left-[60%] right-0 top-80">
+            <h3 class="text-xl">2021.01.04 ~ {{ dayjs().format('YYYY.MM.DD') }} ({{ dayjs().diff(dayjs('2021-01-04'), 'year') }}년 {{ dayjs().diff(dayjs('2021-01-04'), 'month') % 12 }}달 {{ dayjs().diff(dayjs('2021-01-04'), 'day') % 30 }}일)</h3>
+            <h2 class="text-4xl font-bold">리코</h2>
+            <p class=" columns-3">
+              This post is based on an interview with June Hunter, a Vancouver-based photographer whose art features crows, ravens, and many other birds of the West Coast.
+              In this post, we're going to boost your bird identification skills and compare common ravens (Corvus corax) with common crows (Corvus brachyrhynchos). We'll go over how you can tell the difference between these two black birds and what makes each bird uniquely wonderful.
+              <img class="p-2" src="https://lh4.googleusercontent.com/proxy/FzctGmacmVXJ0QYGfEnnZTFtBIUxZAh1ZjmVM1H1Z83lyJAp-ujEkZQTkDxyqYqXIEHwJlxHU-ScmLCWAvCpHf1329YKxmc7MSIN0lDiFCUlmHavGQyh_KCj9rOr" alt="리코 이미지" />
+            </p>
+          </div>
         </div>
         <div class="what-did-i">
-          <h3 class="text-2xl font-bold">내가 한 것들</h3>
-          <ul>
-            <li>업박스 1.0 &gt; 프론트 개발 (Vue2)</li>
-            <li>업박스 2.0 &gt; 프론트 개발 (Vue3)</li>
-            <li>업박스 1.0 &gt; 안드로이드 개발</li>
-            <li>업박스 2.0 &gt; 안드로이드 개발</li>
-            <li>업박스 홈페이지</li>
-            <li>업박스 관리페이지</li>
-            <li>리코 홈페이지</li>
-          </ul>
+          <div class="grid grid-cols-3 gap-4">
+            <div class="">
+              <img 
+                class="p-4"
+                src="https://lh4.googleusercontent.com/proxy/FzctGmacmVXJ0QYGfEnnZTFtBIUxZAh1ZjmVM1H1Z83lyJAp-ujEkZQTkDxyqYqXIEHwJlxHU-ScmLCWAvCpHf1329YKxmc7MSIN0lDiFCUlmHavGQyh_KCj9rOr" 
+                alt="리코 이미지" />
+              <h3 class="text-xl">업박스 클라우드</h3>
+              <p>업박스 클라우드 프론트엔드 개발. 업박스 1.0, 업박스 2.0</p>
+            </div>
+            <div class="">
+              <img 
+                class="p-4"
+                src="https://lh4.googleusercontent.com/proxy/FzctGmacmVXJ0QYGfEnnZTFtBIUxZAh1ZjmVM1H1Z83lyJAp-ujEkZQTkDxyqYqXIEHwJlxHU-ScmLCWAvCpHf1329YKxmc7MSIN0lDiFCUlmHavGQyh_KCj9rOr" 
+                alt="새로운 이미지" />
+              <h3 class="text-xl">프로젝트 X</h3>
+              <p>안드로이드</p>
+            </div>
+            <div class="">
+              <img 
+                class="p-4"
+                src="https://lh4.googleusercontent.com/proxy/FzctGmacmVXJ0QYGfEnnZTFtBIUxZAh1ZjmVM1H1Z83lyJAp-ujEkZQTkDxyqYqXIEHwJlxHU-ScmLCWAvCpHf1329YKxmc7MSIN0lDiFCUlmHavGQyh_KCj9rOr" 
+                alt="또 다른 이미지" />
+              <h3 class="text-xl">프로젝트 Y</h3>
+              <p>홈페이지</p>
+            </div>
+          </div>
         </div>
       </div>
       <div class="career-entry mt-4">
