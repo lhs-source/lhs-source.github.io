@@ -225,54 +225,101 @@ function updateMessage() {
           </div>
         </div>
         <div class="what-did-i">
-          <div class="grid grid-cols-3 gap-4">
+          <div class="grid grid-cols-2 gap-4">
             <div class="">
               <img 
-                class="p-4"
+                class="p-8 px-20"
                 src="https://lh4.googleusercontent.com/proxy/FzctGmacmVXJ0QYGfEnnZTFtBIUxZAh1ZjmVM1H1Z83lyJAp-ujEkZQTkDxyqYqXIEHwJlxHU-ScmLCWAvCpHf1329YKxmc7MSIN0lDiFCUlmHavGQyh_KCj9rOr" 
                 alt="리코 이미지" />
               <h3 class="text-xl">업박스 클라우드</h3>
-              <p>업박스 클라우드 프론트엔드 개발. 업박스 1.0, 업박스 2.0</p>
+              <p>업박스 클라우드 프론트엔드 개발. 업박스 1.0, 업박스 2.0. 안드로이드 네이티브앱에 웹뷰를 활용. </p>
             </div>
             <div class="">
               <img 
-                class="p-4"
+                class="p-8 px-20"
                 src="https://lh4.googleusercontent.com/proxy/FzctGmacmVXJ0QYGfEnnZTFtBIUxZAh1ZjmVM1H1Z83lyJAp-ujEkZQTkDxyqYqXIEHwJlxHU-ScmLCWAvCpHf1329YKxmc7MSIN0lDiFCUlmHavGQyh_KCj9rOr" 
                 alt="새로운 이미지" />
-              <h3 class="text-xl">프로젝트 X</h3>
-              <p>안드로이드</p>
-            </div>
-            <div class="">
-              <img 
-                class="p-4"
-                src="https://lh4.googleusercontent.com/proxy/FzctGmacmVXJ0QYGfEnnZTFtBIUxZAh1ZjmVM1H1Z83lyJAp-ujEkZQTkDxyqYqXIEHwJlxHU-ScmLCWAvCpHf1329YKxmc7MSIN0lDiFCUlmHavGQyh_KCj9rOr" 
-                alt="또 다른 이미지" />
-              <h3 class="text-xl">프로젝트 Y</h3>
-              <p>홈페이지</p>
+              <h3 class="text-xl">업박스 홈페이지</h3>
+              <p>업박스 홈페이지 유지보수 및 개편. 서버리스를 위해 Google Sheet 로 데이터 관리. Next 로 CMS 구현. Firebase Firestore, Google OAuth. Summernote 제작자와 함께 포팅 작업 진행.</p>
             </div>
           </div>
+        </div>
+        <div class="grid grid-cols-3 gap-4">
+          <div>Vue</div>
+          <div>Typescript</div>
+          <div>Android</div>
+          <div>AWS</div>
+          <div>Datadog</div>
+          <div>Figma</div>
+          <div>Attlasian</div>
+          <div>Github</div>
         </div>
       </div>
       <div class="career-entry mt-4">
         <div class="company-info columns-3">
-          <img src="https://static.wixstatic.com/media/030690_c0dbf404c6894e83846454dfbe372c87~mv2.png" alt="뱅크비 로고" />
-          <h2 class="text-xl">뱅크비</h2>
+          <h3 class="text-xl">
+            2017.01.02 ~ 
+            {{ dayjs('2020-12-31').format('YYYY.MM.DD') }} 
+            ({{ dayjs('2020-12-31').diff(dayjs('2017-01-02'), 'year') }}년 {{ dayjs('2020-12-31').diff(dayjs('2017-01-02'), 'month') % 12 }}달 {{ dayjs('2020-12-31').diff(dayjs('2017-01-02'), 'day') % 30 }}일)
+          </h3>
+          <h2 class="text-4xl font-bold">뱅크비</h2>
           <p>
-            This post is based on an interview with June Hunter, a Vancouver-based photographer whose art features crows, ravens, and many other birds of the West Coast.
+            This post is based on an interview with June Hunter, 
+            a Vancouver-based photographer whose art features crows, ravens, and many other birds of the West Coast.
             In this post, we're going to boost your bird identification skills and compare common ravens (Corvus corax) with common crows (Corvus brachyrhynchos). We'll go over how you can tell the difference between these two black birds and what makes each bird uniquely wonderful.
           </p>
+          <img 
+            class="shape-img"
+            src="https://static.wixstatic.com/media/030690_c0dbf404c6894e83846454dfbe372c87~mv2.png" 
+            alt="뱅크비 로고" />
           <p>
             For simplicity, we'll compare the American crow to the common raven in this post. While crows around the world are similar, the size and vocalizations of crows in Europe, the Middle East, Africa and Asia are not identical to those of American crows.
+            For simplicity, we'll compare the American crow to the common raven in this post. While crows around the world are similar, the size and vocalizations of crows in Europe, the Middle East, Africa and Asia are not identical to those of American crows.
+            While crows around the world are similar, the size and vocalizations of crows in Europe, Africa and Asia are not identical to those of American crows.
+            
           </p>
+          <p class="l">
+            For simplicity, we'll compare the American crow to the common raven in this post. While crows around the world are similar, the size and vocalizations of crows in Europe, the Middle East, Africa and Asia are not identical to those of American crows.
+            For simplicity, we'll compare the American crow to the common raven in this post. While crows around the world are similar, the size and vocalizations of crows in Europe, the Middle East, Africa and Asia are not identical to those of American crows.
+          </p>
+          
         </div>
         <div class="what-did-i">
-          <h3 class="text-2xl font-bold">내가 한 것들</h3>
-          <ul>
-            <li>하나카드 앱카드 앱 &gt; WhiteBox 모듈 난독화</li>
-            <li>TaSIM &gt; e2e 암호화 칩 개발 및 설치지원</li>
-            <li>OmniDoc &gt; 스크래핑 모듈 개발</li>
-            <li>Bankbe &gt; 베트남 은행사 스크래핑</li>
-          </ul>
+          <div class="grid grid-cols-3 gap-4">
+            <div class="">
+              <img 
+                class="p-4"
+                src="https://static.wixstatic.com/media/030690_c0dbf404c6894e83846454dfbe372c87~mv2.png" 
+                alt="리코 이미지" />
+              <h3 class="text-xl">하나카드 앱카드 Whitebox 난독화 모듈</h3>
+              <p>업박스 클라우드 프론트엔드 개발. 업박스 1.0, 업박스 2.0. 안드로이드 네이티브앱에 웹뷰를 활용. </p>
+            </div>
+            <div class="">
+              <img 
+                class="p-4"
+                src="https://static.wixstatic.com/media/030690_c0dbf404c6894e83846454dfbe372c87~mv2.png" 
+                alt="새로운 이미지" />
+              <h3 class="text-xl">OmniDoc, Bankbe 스크래핑 모듈</h3>
+              <p>업박스 홈페이지 유지보수 및 개편. 서버리스를 위해 Google Sheet 로 데이터 관리. Next 로 CMS 구현. Firebase Firestore, Google OAuth. Summernote 제작자와 함께 포팅 작업 진행.</p>
+            </div>
+            <div class="">
+              <img 
+                class="p-4"
+                src="https://static.wixstatic.com/media/030690_c0dbf404c6894e83846454dfbe372c87~mv2.png" 
+                alt="새로운 이미지" />
+              <h3 class="text-xl">TaSIM e2e 암호화</h3>
+              <p>업박스 홈페이지 유지보수 및 개편. 서버리스를 위해 Google Sheet 로 데이터 관리. Next 로 CMS 구현. Firebase Firestore, Google OAuth. Summernote 제작자와 함께 포팅 작업 진행.</p>
+            </div>
+          </div>
+        </div>
+        <div class="grid grid-cols-3 gap-4">
+          <div>C++</div>
+          <div>LLVM</div>
+          <div>Android</div>
+          <div>AWS</div>
+          <div>Lua</div>
+          <div>Attlasian</div>
+          <div>Gitlab</div>
         </div>
       </div>
     </section>
@@ -354,6 +401,28 @@ function updateMessage() {
 }
 .flex-1 {
   flex: 1;
+}
+
+.shape-img {
+  width: 680px;
+  height: auto;
+  float: right;
+  shape-outside: polygon(25% 0%, 100% 0%, 100% 100%, 25% 100%, 0% 50%);
+  position: relative;
+  margin-left: -140px;
+  transform: translateX(184px) scale(1.3);
+}
+
+.l {
+  &::before {
+    content: '';
+    display: block;
+    clear: both;
+    float: left;
+    shape-outside: polygon(0% 0%, 75% 0%, 100% 50%, 75% 100%, 0% 100%);
+    width: 220px;
+    height: 130px;
+  }
 }
 
 /* (추가로 필요한 섹션별 스타일을 여기서 정의) */
