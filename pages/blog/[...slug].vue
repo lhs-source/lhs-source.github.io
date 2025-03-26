@@ -1,6 +1,7 @@
 <script setup lang="ts">
 
 import dayjs from 'dayjs';
+import CardLink from './CardLink.vue';
 
 const route = useRoute();
 const { data: article } = await useAsyncData("article", () =>
@@ -25,6 +26,12 @@ const { data: article } = await useAsyncData("article", () =>
 //     ] }
 // }
 const tableOfContents = article?.value?.body?.toc;
+
+console.log('article?.value?.body', article?.value?.body);
+
+const components = {
+  'cardlink': CardLink,
+}
 
 </script>
 
@@ -57,7 +64,8 @@ const tableOfContents = article?.value?.body?.toc;
         </div>
         <ContentRendererMarkdown 
           :value="article" 
-          class="text-stone-300 mt-16" />
+          class="text-stone-300 mt-16"
+          :components="components" />
       </div>
       <template #empty>
         <p>No content found.</p>
@@ -121,20 +129,32 @@ li {
 blockquote {
   padding: 0.8em;
   margin: 0.8em 0;
-  background-color: #0c2d20;
-  border-left: 0.25em solid #42b883;
+  background-color: #08261c;
+  border-left: 0.25em solid #136949;
 }
 
 /* pre 에 포함된 code 제외하고, 나머지 code 에 대해서 스타일을 적용 */
 :not(pre) > code {
-  background-color: #1a5138;
+  background-color: #08261c;
   padding: 0.1em 0.3em;
   border-radius: 0.2em;
   font-size: 0.85em;
+  color: #7ed7ac;
+  border: 1px solid #12533c;
 }
 pre {
   font-size: 0.8rem;
+  border: 1px solid #104432;
+  border-top: none;
 }
+/* shiki 이전 형제 태그 select */
+div:has(+ .shiki) {
+  background-color: #08261c;
+  color: #d6f5e2;
+  border-color: #104432;
+  border-bottom: none;
+}
+
 
 /* table */
 table {
