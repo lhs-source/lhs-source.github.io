@@ -39,7 +39,8 @@ const components = {
   <main class="p-4 pb-24">
     <ContentRenderer v-if="article" :value="article">
       <div class="max-w-2xl mx-auto mt-12">
-        <div class="text-sm text-stone-600 dark:text-stone-400 mt-2">
+        <a href="/blog" class="text-stone-600 dark:text-stone-400">← 목록으로</a>
+        <div class="text-sm text-stone-600 dark:text-stone-400 mt-8">
           {{ dayjs(article.created).format('YYYY-MM-DD') }} 
           <template v-if="article.updated !== article.created">[수정: {{ dayjs(article.updated).format('YYYY-MM-DD') }}]</template>
         </div>
