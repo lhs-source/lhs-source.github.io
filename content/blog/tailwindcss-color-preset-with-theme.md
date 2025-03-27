@@ -6,8 +6,8 @@ volumne: short
 tags:
   - css
   - tailwindcss
-created: 2025-03-26
-updated: 2025-03-26
+created: 2025-03-27
+updated: 2025-03-27
 filename: tailwindcss-color-preset-with-theme
 ---
 
