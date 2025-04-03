@@ -14,37 +14,38 @@ import PostCard from './PostCard.vue';
 
 // updated 기준으로 내림차순 정렬
 const blog = ref<any[]>([]);
-const { data: blogData } = await useAsyncData("blog", () => queryContent("/blog").find());
+const route = useRoute();
+const { data: blogData } = await useAsyncData(route.path, () => queryCollection("blog").all());
 if(blogData.value) {
   blog.value = blogData.value.sort((a, b) => {
     return dayjs(b.updated).unix() - dayjs(a.updated).unix();
   });
 }
-const { data: tags } = await useAsyncData("tags", () => queryContent("/blog").only(['tags']).find());
+// const { data: tags } = await useAsyncData(route.path, () => queryCollection("blog").all());
 const allTagList: any[] = [];
 // 태그마다 개수를 세서 내림차순으로 정렬
-if(tags.value) {
-  const tagList = tags.value.map(tag => tag.tags).flat();
-  const tagCount = tagList.reduce((acc, tag) => {
-    acc[tag] = (acc[tag] || 0) + 1;
-    return acc;
-  }, {});
-  for(let tagName of Object.keys(tagCount)) {
-    allTagList.push({
-      tagName,
-      count: tagCount[tagName]
-    });
-  }
-  allTagList.sort((a, b) => b.count - a.count);
-}
+// if(tags.value) {
+//   const tagList = tags.value.map(tag => tag.tags).flat();
+//   const tagCount = tagList.reduce((acc, tag) => {
+//     acc[tag] = (acc[tag] || 0) + 1;
+//     return acc;
+//   }, {});
+//   for(let tagName of Object.keys(tagCount)) {
+//     allTagList.push({
+//       tagName,
+//       count: tagCount[tagName]
+//     });
+//   }
+//   allTagList.sort((a, b) => b.count - a.count);
+// }
 const selectedTag = ref<string | null>(null);
 async function onClickTag(tag: { tagName: string, count: number } | null) {
   if(tag === null) {
     selectedTag.value = null;
-    blog.value = await queryContent("/blog").find();
+    blog.value = await queryCollection("blog").all();
   } else {
     selectedTag.value = tag.tagName;
-    blog.value = await queryContent("/blog").where({ tags: { $contains: selectedTag.value }}).find();
+    blog.value = await queryCollection("blog").where(selectedTag.value, "IN", "tags").all();
     console.log('blog.value', blog.value);
   }
 }

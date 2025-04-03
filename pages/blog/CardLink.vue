@@ -49,7 +49,7 @@ const htmlCode = slots?.default?.().map((slot) => {
       <img :src="props.image" alt="image" class="w-36 h-auto" />
     </div>
     <div class="flex-2 ml-4">
-      <div class="text-;">
+      <div class="text-l">
         <a :href="props.url">
           {{ props.title }}
           <img :src="props.favicon" alt="image" class="bg-stone-400 ml-2 w-4 h-4 inline-block" />
@@ -65,7 +65,7 @@ const htmlCode = slots?.default?.().map((slot) => {
       <img :src="htmlCode.image" alt="image" class="w-36 h-auto" />
     </div>
     <div class="flex-2 ml-4">
-      <div class="text-;">
+      <div class="text-l">
         <a :href="htmlCode.url">
           {{ htmlCode.title }}
           <img :src="htmlCode.favicon" alt="image" class="bg-stone-400 ml-2 w-4 h-4 inline-block" />

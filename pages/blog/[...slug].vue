@@ -4,9 +4,10 @@ import dayjs from 'dayjs';
 import CardLink from './CardLink.vue';
 
 const route = useRoute();
-const { data: article } = await useAsyncData("article", () =>
+console.log('route.params.slug', route.params.slug);
+const { data: article } = await useAsyncData(route.path, () =>
   // 파일 이름을 [...slug].vue 로 하면 route.params.slug 로 접근 가능
-  queryContent(`/blog/${route.params.slug}`).findOne()
+  queryCollection("blog").path(route.path).first()
 );
 
 // {
@@ -27,7 +28,7 @@ const { data: article } = await useAsyncData("article", () =>
 // }
 const tableOfContents = article?.value?.body?.toc;
 
-console.log('article?.value?.body', article?.value?.body);
+// console.log('article?.value', article?.value);
 
 const components = {
   'cardlink': CardLink,
@@ -37,7 +38,7 @@ const components = {
 
 <template>
   <main class="p-4 pb-24">
-    <ContentRenderer v-if="article" :value="article">
+    <template v-if="article">
       <div class="max-w-2xl mx-auto mt-12">
         <a href="/blog" class="text-stone-600 dark:text-stone-400">← 목록으로</a>
         <div class="text-sm text-stone-600 dark:text-stone-400 mt-8">
@@ -63,15 +64,16 @@ const components = {
             </li>
           </ul>
         </div>
-        <ContentRendererMarkdown 
-          :value="article" 
-          class="text-stone-300 mt-16"
-          :components="components" />
       </div>
-      <template #empty>
-        <p>No content found.</p>
-      </template>
-    </ContentRenderer>
+      <ContentRenderer 
+        v-if="article" 
+        :value="article"
+        :components="components">
+      </ContentRenderer>
+    </template>
+    <template v-else>
+      <p>No content found.</p>
+    </template>
   </main>
 </template>
 
@@ -88,6 +90,7 @@ main {
   /* "Gowun Dodum", */
     "Pretendard-Regular",
     serif;
+  font-size: 0.8rem;
   font-weight: 400;
   font-style: normal;
   line-height: 1.4;

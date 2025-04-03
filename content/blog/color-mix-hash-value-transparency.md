@@ -35,12 +35,14 @@ background-color: rgba(var(--color-base-20), 0.5);
 ## color-mix
 
 ::cardlink
+---
 url: https://developer.mozilla.org/en-US/docs/Web/CSS/color_value/color-mix
 title: "color-mix() - CSS: Cascading Style Sheets | MDN"
 description: "The color-mix() functional notation takes two <color> values and returns the result of mixing them in a given colorspace by a given amount."
 host: developer.mozilla.org
 favicon: https://developer.mozilla.org/favicon-48x48.bc390275e955dacb2e65.png
 image: https://developer.mozilla.org/mdn-social-share.d893525a4fb5fb1f67a2.png
+---
 ::
 
 ```css
@@ -55,10 +57,12 @@ background-color: color-mix(in srgb, var(--color-base-20), #0000 50%);
 
 
 ::cardlink
+---
 url: https://caniuse.com/?search=color-mix
 title: "\"color-mix\" | Can I use... Support tables for HTML5, CSS3, etc"
 host: caniuse.com
 favicon: https://caniuse.com/img/favicon-128.png
+---
 ::
 
 
@@ -70,12 +74,14 @@ favicon: https://caniuse.com/img/favicon-128.png
 ## tailwindcss 를 사용하면 --alpha() 를 사용할 수 있다
 
 ::cardlink
+---
 url: https://tailwindcss.com/docs/functions-and-directives#alpha-function
 title: "Functions and directives - Core concepts"
 description: "A reference for the custom functions and directives Tailwind exposes to your CSS."
 host: tailwindcss.com
 favicon: https://tailwindcss.com/favicons/favicon-32x32.png?v=4
 image: https://tailwindcss.com/api/og?path=/docs/functions-and-directives
+---
 ::
 
 ```css

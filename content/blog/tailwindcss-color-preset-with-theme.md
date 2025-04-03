@@ -45,21 +45,25 @@ image: https://tailwindcss.com/api/og?path=/docs/color
 테마를 수정하는 방식을 제공한다.
 
 ::cardlink
+---
 url: https://tailwindcss.com/docs/color#customizing-your-theme
 title: "color - Typography"
 description: "Utilities for controlling the text color of an element."
 host: tailwindcss.com
 favicon: https://tailwindcss.com/favicons/favicon-32x32.png?v=4
 image: https://tailwindcss.com/api/og?path=/docs/color
+---
 ::
 
 ::cardlink
+---
 url: https://tailwindcss.com/docs/theme
 title: "Theme variables - Core concepts"
 description: "Using utility classes as an API for your design tokens."
 host: tailwindcss.com
 favicon: https://tailwindcss.com/favicons/favicon-32x32.png?v=4
 image: https://tailwindcss.com/api/og?path=/docs/theme
+---
 ::
 
 ```css
@@ -82,11 +86,13 @@ image: https://tailwindcss.com/api/og?path=/docs/theme
 오오 
 
 ::cardlink
+---
 url: https://stackoverflow.com/a/79499827
 title: "How to use custom color themes in TailwindCSS v4"
 description: "My tailwind.config.js in v3 looks like this, but I can't find a way to use it in v4:theme: {  extend: {    colors: {      lightHover: '#fcf4ff',      darkHover: '#2a004a',      darktheme: '#1..."
 host: stackoverflow.com
 image: https://cdn.sstatic.net/Sites/stackoverflow/Img/apple-touch-icon@2.png?v=73d79a89bded
+---
 ::
 
 다음은 테마를 적용해보자.
@@ -143,9 +149,11 @@ function changeTheme(theme: ColorTheme) {
 ## vue3 에서 css variables 값 가져오기
 
 ::cardlink
+---
 url: https://www.reddit.com/r/vuejs/comments/13o4z9y/how_to_access_css_variable_varbackgrounf_color_in/
 title: "Reddit - The heart of the internet"
 host: www.reddit.com
+---
 ::
 
 ```ts

@@ -2,14 +2,15 @@
 import dayjs from 'dayjs';
 
 interface BlogPost {
-  title: string;
-  subject: string;
-  tags: string;
-  created: string;
-  updated: string;
+  id: string;       // "blog/blog/npm-rollup-os.md"
+  title: string;    // "npm 의존성 설치 문제 애플 실리콘에서의 Rollup 패키지 (npm ERR notsup Unsupported platform for rollup-darwin-arm64)"
+  subject: string;  // "Node"
+  tags: string;     // ['rollup', 'error', 'dependencies', 'node', 'npm']
+  created: string;  // "2025-01-20"
+  updated: string;  // "2025-01-20"
   image: string;
-  description: string;
-  _path: string;
+  description: string;  // "npm의 의존성 설치 실패 문제. @rollup/rollup-darwin-arm64 패키지가 애플 실리콘에서만 설치 가능하다. Windows 및 Linux 환경에서의 설치 불가 원인. optionalDependencies의 사용 방법."
+  path: string;     // "/blog/npm-rollup-os"
 }
 const props = defineProps<{
   post: BlogPost;
@@ -25,7 +26,7 @@ const props = defineProps<{
         </div>
       </div>
       <a 
-        :href="post._path" 
+        :href="post.path" 
         class="hover:underline text-stone-600 hover:text-blue-500 dark:text-stone-300 dark:hover:text-blue-300">
         <h2 class="text-xl font-bold">
           {{ post.title }}
