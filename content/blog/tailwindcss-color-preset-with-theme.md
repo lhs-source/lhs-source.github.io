@@ -23,12 +23,14 @@ tailwindcss 에서 미리 기 정의된 color 프리셋을 제공한다. font, b
 ## font color preset custom
 
 ::cardlink
+---
 url: https://tailwindcss.com/docs/color#using-a-custom-value
-title: "color - Typography"
-description: "Utilities for controlling the text color of an element."
+title: color - Typography
+description: Utilities for controlling the text color of an element.
 host: tailwindcss.com
 favicon: https://tailwindcss.com/favicons/favicon-32x32.png?v=4
 image: https://tailwindcss.com/api/og?path=/docs/color
+---
 ::
 
 ```html

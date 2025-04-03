@@ -40,4 +40,10 @@ export default defineNuxtConfig({
   },
 
   compatibilityDate: '2025-01-20',
+
+  nitro: {
+    prerender: {
+      routes: ['/sitemap.xml']
+    }
+  }
 })
