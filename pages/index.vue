@@ -19,13 +19,17 @@ const titleMenu = ref<TitleMenu[]>([
   { title: '스도쿠', path: 'play/sudoku', content: '스도쿠 게임입니다. 플레이해보세요!' },
   { title: '스터디', path: 'study', content: '공부한 내용을 테스트해보는 공간' },
   { title: '포스트', path: 'blog', content: '블로그 포스트 목록. 지금까지 쌓아온 지식공간' },
-  { title: '앵커1', path: '#', content: '앵커1' },
-  { title: '앵커2', path: '#', content: '앵커2' },
+  { title: '공복 타이머', path: 'fasting-timer', content: '공복 타이머 체크용' },
+  { title: '마비m도우미', path: 'https://moma-zeta.vercel.app/', content: '마비노기 모바일 도우미' },
   { title: '앵커3', path: '#', content: '앵커3' },
   { title: '앵커4', path: '#', content: '앵커4' }
 ]);
 
 function onClickMenu(menu: TitleMenu) {
+  if (menu.path.startsWith('http')) {
+    window.open(menu.path, '_blank');
+    return;
+  }
   router.push(menu.path);
 }
 
