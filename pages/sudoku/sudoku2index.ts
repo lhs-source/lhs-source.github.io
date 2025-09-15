@@ -1,11 +1,11 @@
 import { createSudokuInstance } from "./sudoku2";
-import {
-  type AnalyzeData,
-  type Board,
-  type Difficulty,
-  type SolvingStep,
-  type SolvingResult,
-  InternalBoard,
+import type {
+  AnalyzeData,
+  Board,
+  Difficulty,
+  SolvingStep,
+  SolvingResult,
+  InternalBoard
 } from "./sudoku2types";
 
 export { type AnalyzeData, type Board, type Difficulty, type SolvingStep };

@@ -16,7 +16,7 @@ interface TitleMenu {
 
 const titleMenu = ref<TitleMenu[]>([
   { title: '포트폴리오', path: 'portfolio', content: '본격적인 포트폴리오?' },
-  { title: '스도쿠', path: 'play/sudoku', content: '스도쿠 게임입니다. 플레이해보세요!' },
+  { title: '스도쿠', path: 'sudoku', content: '스도쿠 게임입니다. 플레이해보세요!' },
   { title: '스터디', path: 'study', content: '공부한 내용을 테스트해보는 공간' },
   { title: '포스트', path: 'blog', content: '블로그 포스트 목록. 지금까지 쌓아온 지식공간' },
   { title: '공복 타이머', path: 'fasting-timer', content: '공복 타이머 체크용' },

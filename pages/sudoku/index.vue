@@ -137,7 +137,7 @@
 <script setup lang="ts">
 import { candidateAll, generate, generateWithCandidate, hint2, solve } from './sudoku2index';
 import { computed, nextTick, onMounted, onUnmounted, ref } from 'vue';
-import { CellValue, InternalBoard, SolvingResult } from './sudoku2types';
+import type { CellValue, InternalBoard, SolvingResult } from './sudoku2types';
 
 interface Solve {
   value: number | null;   // 초기값
