@@ -16,6 +16,12 @@ const menuList = [{
   }, {
     label: '블로그',
     value: '/blog',
+  }, {
+    label: '스도쿠',
+    value: '/sudoku',
+  }, {
+    label: '스터디',
+    value: '/study',
   }
 ]
 </script>

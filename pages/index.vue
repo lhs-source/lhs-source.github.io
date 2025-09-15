@@ -26,7 +26,7 @@ const titleMenu = ref<TitleMenu[]>([
 ]);
 
 function onClickMenu(menu: TitleMenu) {
-  if (menu.path.startsWith('http')) {
+  if (menu.path.startsWith('https://')) {
     window.open(menu.path, '_blank');
     return;
   }
