@@ -192,38 +192,106 @@ function updateMessage() {
       <ScrollingText direction="right" />
     </section>
 
-    <div class="">
-      <h2 class="text-2xl my-4">데이터독 User Journey 세션 발표</h2>
-      <img 
-        src="/assets/img/weiwei202309_A_highly_detailed_black_and_white_line_art_illustr_38e30c76-aff2-4d4f-af5c-8a0295897408.png"
-        style="width: 100%; height: 360px; object-fit: cover; object-position: 50% 30%;"/>
-      <div class="columns-2">
-        데이터독 Observabiliity Day 행사에서 User Journey 세션의 마지막 차례 발표를 진행했다. 데이터독을 짧은시간 활용하며 얻은 경험을 공유하고, 데이터독의 무궁무진한 활용성에 대해 설명했다. 
-        O2O 환경의 리코 특성을 살려서, 데이터독을 에러 분석과 사용성 측정 면에서 어떻게 활용했는지를 중점적으로 설명한다. 이론 뿐 아닌 실제 사례를 들어서 데이터독을 도입하려는 사람들 혹은 이미 사용중인 유저들에게 좋은 아이디어가 되었을 것이다.
-        세션을 들은 시청자들이 발표를 잘 들었다며 소식을 전해받고 있다.
+    <section class="mt-16">
+      <div class="flex gap-4">
+        <div class="">
+          <img 
+            src="/assets/img/datadog.png"
+            style="width: 100%; object-fit: cover; object-position: 50% 30%;"/>
+          <div class="flex flex-col justify-center items-center my-8">
+            <div>
+              <h2 class="text-3xl text-bold">
+                데이터독 User Journey 세션 발표
+              </h2>
+              <p class="text-sm text-right">Datadog Korea Observability Day 2024</p>
+            </div>
+          </div>
+          <div class="columns-2 mt-2">
+            데이터독 Observabiliity Day 행사에서 User Journey 세션의 마지막 차례 발표를 진행했다. 데이터독을 짧은시간 활용하며 얻은 경험을 공유하고, 데이터독의 무궁무진한 활용성에 대해 설명했다. 
+            O2O 환경의 리코 특성을 살려서, 데이터독을 에러 분석과 사용성 측정 면에서 어떻게 활용했는지를 중점적으로 설명한다. 이론 뿐 아닌 실제 사례를 들어서 데이터독을 도입하려는 사람들 혹은 이미 사용중인 유저들에게 좋은 아이디어가 되었을 것이다.
+            세션을 들은 시청자들이 발표를 잘 들었다며 소식을 전해받고 있다. <a href="https://tech.e3view.com/datadog-live-seoul-2024-balpyojaryo/" target="_blank">발표 자료</a>
+            <h3 class="text-lg font-bold"> 1. 에러 대응 </h3>
+            <p>
+              안드로이드 앱에서 이미지 업로드 시 HEIC 파일 형식으로 인해 발생하는 에러를 Datadog LOG로 확인하고 해결하는 과정을 설명. 버전 업데이트 후 캐시 문제로 인해 지속적으로 발생하는 에러를 해결한 사례. 
+              대시보드: 지속적인 모니터링이 필요한 케이스들을 대시보드에 모아 한 번에 볼 수 있도록 구성했습니다.
+              리포트 되지 않은 에러 확인: 사용자가 리포트하지 않은 에러까지 사전에 확인하여 대응합니다.
+              알림: 외부 서비스의 가용성이 중요한 경우, 담당자에게 맨션과 링크를 포함한 알림을 전송합니다.
+              로그 인덱싱 제외: 불필요한 로그는 소스 코드 수정 없이 Datadog에서 필터링하여 인덱싱에서 제외합니다.
+            </p>
+            <h3 class="text-lg font-bold">2. 데이터 기반 의사결정 </h3>
+            <p>
+              패치 시간 변경: 시간대별 사용량 데이터 분석을 통해 기존 오후 3시였던 패치 시간을 오전 11시로 변경했습니다.
+              OS 비율 확인: 드라이버의 iOS 사용 비율이 일정 수준 이상으로 올라가면 iOS 앱 제공을 고려하고, 고객의 경우 Windows 사용 비율이 압도적이므로 웹 스타일 지원이 필요함을 확인했습니다.
+            </p>
+            <h3 class="text-lg font-bold">3. 사용성 측정 및 대시보드 구성 </h3>
+            <p>
+              검색 기능: Custom Action을 사용하여 검색 필터 영역의 노출 고정 여부를 결정하고, Funnel 전환율을 확인하여 사용성을 측정합니다.
+              데이터 등록 시간 파악: 데이터 등록 시간을 단축하는 것을 목표로, 등록 과정의 현 상황을 측정하고 대시보드화하여 개선점을 찾습니다.
+              커스텀 메트릭으로 인덱싱: 장기적인 지표 추적을 위해 Custom Metric을 사용합니다.
+            </p>
+          </div>
+        </div>
+        <div class="flex flex-col gap-4 min-w-[100px]">
+          <div class="w-full">
+            <img src="/assets/img/datadog_1.png" class="w-full"/>
+            <h5>에러 대응 케이스</h5>
+          </div>
+          <div class="w-full">
+            <img src="/assets/img/datadog_2.png" class="w-full"/>
+            <h5>데이터 기반 의사결정</h5>
+          </div>
+          <div class="w-full">
+            <img src="/assets/img/datadog_3.png" class="w-full"/>
+            <h5>사용성 측정 및 대시보드</h5>
+          </div>
+        </div>
       </div>
-    </div>
+    </section>
 
     <FloatingText />
 
     <!-- Career Section -->
-    <section class="career-wrapper mt-16">
-      <div class="career-entry border border-stone-700 p-4">
+    <section class="career-wrapper mt-32">
+      <div class="career-entry p-4">
         <div class="company-info relative">
+          <div class="w-1/2 pl-5 pt-10 pb-0">
+            <img 
+              class="w-full" 
+              src="/assets/img/upboxbox.png" 
+              alt="리코 이미지" />
+            <!-- <img 
+              class="w-full" 
+              src="/assets/img/upboxbox_multi.png" 
+              alt="리코 이미지" /> -->
+          </div>
           <img 
-            class="w-1/2" 
-            src="https://mblogthumb-phinf.pstatic.net/MjAyMzAzMDZfMTEx/MDAxNjc4MDY4MTU1Njgw.bwJ5w_8LvSd5ZQZ4mk4_xFxKLOtelp9OXLFQdxRGKr0g.dD2tY9-7YRGeB7xXEzqGzNiHtwt30wEjsS55kbGB3Ggg.JPEG.monthlypeople/%EB%A6%AC%EC%BD%94_%EA%B9%80%EA%B7%BC%ED%98%B8_%EB%8C%80%ED%91%9C.jpg?type=w800" 
-            alt="리코 이미지" />
-          <img 
-            class="absolute left-60 top-0"
+            style="filter: drop-shadow(3px 3px 1px rgba(0, 0, 0, 0.7));"
+            class="absolute left-1/3 top-0"
             src="https://cdn.jebowang.com/news/photo/202111/4427_12628_5145.png" 
             alt="리코 로고" />
-          <div class="absolute left-[60%] right-0 top-80">
-            <h3 class="text-xl">2021.01.04 ~ {{ dayjs().format('YYYY.MM.DD') }} ({{ dayjs().diff(dayjs('2021-01-04'), 'year') }}년 {{ dayjs().diff(dayjs('2021-01-04'), 'month') % 12 }}달 {{ dayjs().diff(dayjs('2021-01-04'), 'day') % 30 }}일)</h3>
+          <div class="absolute left-[50%] right-0 top-80">
+            <h3 class="text-xl">
+              2021.01.04 ~ 
+              {{ dayjs().format('YYYY.MM.DD') }} 
+              ({{ dayjs().diff(dayjs('2021-01-04'), 'year') }}년 
+              {{ dayjs().diff(dayjs('2021-01-04'), 'month') % 12 }}달 
+              {{ dayjs().diff(dayjs('2021-01-04'), 'day') % 30 }}일)
+            </h3>
             <h2 class="text-4xl font-bold">리코</h2>
-            <p class=" columns-3">
-              This post is based on an interview with June Hunter, a Vancouver-based photographer whose art features crows, ravens, and many other birds of the West Coast.
-              In this post, we're going to boost your bird identification skills and compare common ravens (Corvus corax) with common crows (Corvus brachyrhynchos). We'll go over how you can tell the difference between these two black birds and what makes each bird uniquely wonderful.
+            <p class=" columns-2">
+              리코는 대한민국 폐기물 시장을 혁신하는 환경 스타트업입니다. 수집운반 토탈 서비스 '업박스(UpBox)' 서비스를 기반으로 빠르게 성장하는 스타트업 입니다.
+              리코는 시리즈 A / B / 브릿지 투자 유치에 이어 2025년 시리즈C 투자 유치에 성공하여 총 885억원의 투자를 유치하였고, 매출액 기준 매년 100% 이상 고성장을 이뤄내고 있는 환경 스타트업입니다.
+              현재 5,000여개 이상의 고객사를 보유하고 있으며, B마트, 맥도날드, 스타벅스 등의 고객에게 압도적인 품질의 폐기물 수거서비스를 제공하고 있습니다.
+
+              [UpBox는 맞춤형 폐기물 수집운반 토탈 서비스를 제공합니다.]
+              '어떤 폐기물이든 하나의 서비스로' 맞춤형 폐기물 수집운반 토탈 서비스 UpBox는 자체 폐기물 관리 소프트웨어를 통해 폐기물을 편리하게, 깨끗하게 정확하게 처리하여 기존에 만날 수 없었던 최고의 폐기물 수거서비스를 제공합니다.
+              UpBox 고객은 배출한 폐기물의 양과 탄소 배출량 등의 환경 기여 지표들을 실시간으로 확인할 수 있습니다.
+
+              <!-- 배출 환경 개선부터 자원순환까지 최적의 폐기물 솔루션을 제공합니다.
+              폐기물 배출 환경 개선. 양질의 폐자원을 생성하고 사업장 폐기물 배출 시설을 쾌적하게 관리할 수 있도록 폐기물 배출 환경을 개선합니다.
+              폐기물 수거 운반. 배출량을 측정 한 뒤 GPS가 탑재 된 업박스 전용 트럭으로 폐기물을 운반하기 때문에 폐기물의 이동 경로를 추적할 수 있습니다.
+              관리 업무 자동화. 폐기물 관리 자동화를 돕는 전용 소프트웨어(웹/ 앱)를 제공합니다. 배출량 데이터 모니터링부터 실시간 요금 확인, 폐기물 신고 서류 등 제반 업무를 소프트웨어 상에서 간편하게 관리할 수 있어 업무시간을 단축할 수 있습니다.
+              자원순환. 폐기물이 다시 자원으로 쓰일 수 있도록 자원순환 캠페인을 기획하고 운영합니다. 음식물부터 플라스틱까지 다양한 폐기물을 수거해 재질별로 분리한 뒤 업사이클링합니다. -->
               <img class="p-2" src="https://lh4.googleusercontent.com/proxy/FzctGmacmVXJ0QYGfEnnZTFtBIUxZAh1ZjmVM1H1Z83lyJAp-ujEkZQTkDxyqYqXIEHwJlxHU-ScmLCWAvCpHf1329YKxmc7MSIN0lDiFCUlmHavGQyh_KCj9rOr" alt="리코 이미지" />
             </p>
           </div>
@@ -231,24 +299,22 @@ function updateMessage() {
         <div class="what-did-i">
           <div class="grid grid-cols-2 gap-4">
             <div class="">
-              <img 
+              <!-- <img 
                 class="p-8 px-20"
                 src="https://lh4.googleusercontent.com/proxy/FzctGmacmVXJ0QYGfEnnZTFtBIUxZAh1ZjmVM1H1Z83lyJAp-ujEkZQTkDxyqYqXIEHwJlxHU-ScmLCWAvCpHf1329YKxmc7MSIN0lDiFCUlmHavGQyh_KCj9rOr" 
-                alt="리코 이미지" />
+                alt="리코 이미지" /> -->
+              <div class="bg-stone-300 w-full h-[240px]">image</div>
               <h3 class="text-xl">업박스 클라우드</h3>
               <p>업박스 클라우드 프론트엔드 개발. 업박스 1.0, 업박스 2.0. 안드로이드 네이티브앱에 웹뷰를 활용. </p>
             </div>
             <div class="">
-              <img 
-                class="p-8 px-20"
-                src="https://lh4.googleusercontent.com/proxy/FzctGmacmVXJ0QYGfEnnZTFtBIUxZAh1ZjmVM1H1Z83lyJAp-ujEkZQTkDxyqYqXIEHwJlxHU-ScmLCWAvCpHf1329YKxmc7MSIN0lDiFCUlmHavGQyh_KCj9rOr" 
-                alt="새로운 이미지" />
+              <div class="bg-stone-300 w-full h-[240px]">image</div>
               <h3 class="text-xl">업박스 홈페이지</h3>
               <p>업박스 홈페이지 유지보수 및 개편. 서버리스를 위해 Google Sheet 로 데이터 관리. Next 로 CMS 구현. Firebase Firestore, Google OAuth. Summernote 제작자와 함께 포팅 작업 진행.</p>
             </div>
           </div>
         </div>
-        <div class="grid grid-cols-3 gap-4">
+        <div class="grid grid-cols-2 gap-4">
           <div>Vue</div>
           <div>Typescript</div>
           <div>Android</div>
@@ -264,29 +330,27 @@ function updateMessage() {
           <h3 class="text-xl">
             2017.01.02 ~ 
             {{ dayjs('2020-12-31').format('YYYY.MM.DD') }} 
-            ({{ dayjs('2020-12-31').diff(dayjs('2017-01-02'), 'year') }}년 {{ dayjs('2020-12-31').diff(dayjs('2017-01-02'), 'month') % 12 }}달 {{ dayjs('2020-12-31').diff(dayjs('2017-01-02'), 'day') % 30 }}일)
+            ({{ dayjs('2020-12-31').diff(dayjs('2017-01-02'), 'year') }}년 
+            {{ dayjs('2020-12-31').diff(dayjs('2017-01-02'), 'month') % 12 }}달 
+            {{ dayjs('2020-12-31').diff(dayjs('2017-01-02'), 'day') % 30 }}일)
           </h3>
           <h2 class="text-4xl font-bold">뱅크비</h2>
-          <p>
-            This post is based on an interview with June Hunter, 
-            a Vancouver-based photographer whose art features crows, ravens, and many other birds of the West Coast.
-            In this post, we're going to boost your bird identification skills and compare common ravens (Corvus corax) with common crows (Corvus brachyrhynchos). We'll go over how you can tell the difference between these two black birds and what makes each bird uniquely wonderful.
+          <p> 
+            뱅크비는 은행, 보험, 증권사 등 금융권에 핵심 트렌드로 자리 잡고 있는 업무 프로세스 개선과 자동화, 하이퍼스크래핑 등 디지털 전환에 필요한 핵심 솔루션과 컨설팅을 제공하고 있다. 
+            디지털 전환을 통한 편리함 추구를 위해 보안이나 개인정보보호, 규제사항을 등한시 할 수 있는 업계에서 뱅크비는 ICT서비스를 고객중심으로 편리하게 개선하면서도 보안상으로는 더 안전하게 지켜줄 수 있는 혁신기술과 노하우를 보유하고 있다는 차별성을 갖추고 있다. 
+          </p>
+          <p> 
+            뱅크비는 카카오뱅크의 안전하고 편리한 보안플랫폼 설계와 컨설팅을 수행하면서 우수한 기술력과 노하우를 인정받았고 핀테크 도입과 디지털전환을 필요로 하는 은행, 저축은행, 카드사, 보험사, 증권사 등 다양한 금융기업을 대상으로 자체개발한 솔루션과 서비스 제공을 확대하고 있다.
           </p>
           <img 
             class="shape-img"
             src="https://static.wixstatic.com/media/030690_c0dbf404c6894e83846454dfbe372c87~mv2.png" 
             alt="뱅크비 로고" />
-          <p>
-            For simplicity, we'll compare the American crow to the common raven in this post. While crows around the world are similar, the size and vocalizations of crows in Europe, the Middle East, Africa and Asia are not identical to those of American crows.
-            For simplicity, we'll compare the American crow to the common raven in this post. While crows around the world are similar, the size and vocalizations of crows in Europe, the Middle East, Africa and Asia are not identical to those of American crows.
-            While crows around the world are similar, the size and vocalizations of crows in Europe, Africa and Asia are not identical to those of American crows.
-            
+          <p class="l"> 
+            2016년 11월 기업부설연구소를 설립하고, 2018년 5월 전문연구요원 지정업체로 인정받아 전문 연구인력을 중심으로 한 조직체계를 완성하였으며 연구개발분야 투자를 늘리고 있다.
+            주요 제품은 카카오뱅크, 신한카드 등 다수 금융기관의 비대면 업무 처리(고객 평가, 심사, 대출 등)에 적용된 스크래핑 솔루션(OmniDoc/OmniReal), 금융기관의 편리하고 안전한 보안/인증처리를 위한 사설인증 솔루션(OmniCA), 보험사, 카드사 및 핀테크 플랫폼 기업에 적용된 신분증 진위 확인 서비스(OmniCheck) 등이 있으며 국내 전 카드사에 모바일결제/국내 IC카드 결제 규격 수립 관련 컨설팅을 수행함과 동시에 대부분의 카드사에 직승인 관련 공개키 기반 솔루션을 납품했다.  
+            금융기업 이외에도 롯데쇼핑, 현대백화점, GS리테일, 신세계백화점, 이마트 등 국내 유통 대기업들의 전국 가맹점에서 발생하는 지급 결제 프로세스를 자체 개발한 지급결제 핀테크 솔루션 TaSIM을 통해 안전하게 지켜주고 있다.
           </p>
-          <p class="l">
-            For simplicity, we'll compare the American crow to the common raven in this post. While crows around the world are similar, the size and vocalizations of crows in Europe, the Middle East, Africa and Asia are not identical to those of American crows.
-            For simplicity, we'll compare the American crow to the common raven in this post. While crows around the world are similar, the size and vocalizations of crows in Europe, the Middle East, Africa and Asia are not identical to those of American crows.
-          </p>
-          
         </div>
         <div class="what-did-i">
           <div class="grid grid-cols-3 gap-4">
@@ -317,14 +381,64 @@ function updateMessage() {
           </div>
         </div>
         <div class="grid grid-cols-3 gap-4">
-          <div>C++</div>
-          <div>LLVM</div>
-          <div>Android</div>
-          <div>AWS</div>
-          <div>Lua</div>
-          <div>Attlasian</div>
-          <div>Gitlab</div>
         </div>
+
+        <!-- 여기 -->
+        <!-- Honeycomb Skills Section -->
+        <section class="mt-16">
+          <div class="honeycomb-skills p-24 flex justify-center">
+            <div class="honeycomb-skills-container">
+              <div>C++</div>
+              <div>LLVM</div>
+              <div>Android</div>
+              <div>AWS</div>
+              <div>Lua</div>
+              <div>Attlasian</div>
+              <div>Gitlab</div>
+            </div>
+          </div>
+
+          <div class="honeycomb2-grid">
+            <div class="honeycomb2-row">
+              <div class="hex fake-hex"></div>
+              <div class="hex"></div>
+              <div class="hex"></div>
+              <div class="hex"></div>
+              <div class="hex"></div>
+            </div>
+
+            <div class="honeycomb2-row">
+              <div class="hex fake-hex"></div>
+              <div class="hex"></div>
+              <div class="hex fake-hex"></div>
+              <div class="hex"></div>
+            </div>
+
+            <div class="honeycomb2-row">
+              <div class="hex fake-hex"></div>
+              <div class="hex"></div>
+              <div class="hex"></div>
+              <div class="hex"></div>
+              <div class="hex fake-hex"></div>
+            </div>
+
+            <div class="honeycomb2-row">
+              <div class="hex fake-hex"></div>
+              <div class="hex"></div>
+              <div class="hex"></div>
+              <div class="hex"></div>
+            </div>
+
+            <div class="honeycomb2-row">
+              <div class="hex"></div>
+              <div class="hex fake-hex"></div>
+              <div class="hex"></div>
+              <div class="hex fake-hex"></div>
+              <div class="hex fake-hex"></div>
+            </div>
+          </div>
+        </section>
+
       </div>
     </section>
   </div>
@@ -429,5 +543,72 @@ function updateMessage() {
   }
 }
 
-/* (추가로 필요한 섹션별 스타일을 여기서 정의) */
+
+.honeycomb-skills {
+  display:flex;
+  --s: 100px;  /* size  */
+  --m: 4px;    /* margin */
+  --f: calc(1.732 * var(--s) + 4 * var(--m)  - 1px);
+  .honeycomb-skills-container {
+    font-size: 0; /*disable white space between inline block element */
+
+    div {
+      width: var(--s);
+      margin: var(--m);
+      height: calc(var(--s)*1.1547);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: initial;
+      clip-path: polygon(0% 25%, 0% 75%, 50% 100%, 100% 75%, 100% 25%, 50% 0%);
+      background: rgb(203, 168, 25);
+      position: relative;
+      margin-bottom: calc(var(--m) - var(--s)*0.2885);
+      
+      &::before {
+        content: '';
+        position: absolute;
+        z-index: -10;
+        top: 2px;
+        left: 2px;
+        right: 2px;
+        bottom: 2px;
+        width: calc(var(--s) - 4px);
+        height: calc(var(--s)*1.1547 - 4px);
+        clip-path: polygon(0% 25%, 0% 75%, 50% 100%, 100% 75%, 100% 25%, 50% 0%);
+        background: rgb(255, 233, 109);
+        box-sizing: border-box;
+      }
+
+      &:nth-child(odd)::before {
+        background: rgb(250, 215, 19);
+      }
+    }
+
+    &::before {
+      content: "";
+      width: calc(var(--s)/2 + var(--m));
+      float: left;
+      height: 120%;
+      shape-outside: repeating-linear-gradient(
+                      #0000 0 calc(var(--f) - 3px),
+                      #000 0 var(--f));
+    }
+  }
+}
+
+
+a {
+  color: #2b8e61;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  font-weight: 700;
+  &::after {
+    // link icon
+    content: '🔗';
+    margin-left: 4px;
+    font-size: 12px;
+    vertical-align: middle;
+  }
+}
 </style>
