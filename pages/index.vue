@@ -254,7 +254,7 @@ function updateMessage() {
     <section class="career-wrapper mt-32">
       <div class="career-entry p-4">
         <div class="company-info relative">
-          <div class="w-1/2 pl-5 pt-10 pb-0">
+          <div class="w-1/2 absolute -right-10">
             <img 
               class="w-full" 
               src="/assets/img/upboxbox.png" 
@@ -266,10 +266,10 @@ function updateMessage() {
           </div>
           <img 
             style="filter: drop-shadow(3px 3px 1px rgba(0, 0, 0, 0.7));"
-            class="absolute left-1/3 top-0"
+            class="absolute left-0 top-0"
             src="https://cdn.jebowang.com/news/photo/202111/4427_12628_5145.png" 
             alt="리코 로고" />
-          <div class="absolute left-[50%] right-0 top-80">
+          <div class="w-1/2 pt-[320px] pl-10">
             <h3 class="text-xl">
               2021.01.04 ~ 
               {{ dayjs().format('YYYY.MM.DD') }} 
@@ -292,11 +292,14 @@ function updateMessage() {
               폐기물 수거 운반. 배출량을 측정 한 뒤 GPS가 탑재 된 업박스 전용 트럭으로 폐기물을 운반하기 때문에 폐기물의 이동 경로를 추적할 수 있습니다.
               관리 업무 자동화. 폐기물 관리 자동화를 돕는 전용 소프트웨어(웹/ 앱)를 제공합니다. 배출량 데이터 모니터링부터 실시간 요금 확인, 폐기물 신고 서류 등 제반 업무를 소프트웨어 상에서 간편하게 관리할 수 있어 업무시간을 단축할 수 있습니다.
               자원순환. 폐기물이 다시 자원으로 쓰일 수 있도록 자원순환 캠페인을 기획하고 운영합니다. 음식물부터 플라스틱까지 다양한 폐기물을 수거해 재질별로 분리한 뒤 업사이클링합니다. -->
-              <img class="p-2" src="https://lh4.googleusercontent.com/proxy/FzctGmacmVXJ0QYGfEnnZTFtBIUxZAh1ZjmVM1H1Z83lyJAp-ujEkZQTkDxyqYqXIEHwJlxHU-ScmLCWAvCpHf1329YKxmc7MSIN0lDiFCUlmHavGQyh_KCj9rOr" alt="리코 이미지" />
+              <img 
+                class="p-2" 
+                src="https://lh4.googleusercontent.com/proxy/FzctGmacmVXJ0QYGfEnnZTFtBIUxZAh1ZjmVM1H1Z83lyJAp-ujEkZQTkDxyqYqXIEHwJlxHU-ScmLCWAvCpHf1329YKxmc7MSIN0lDiFCUlmHavGQyh_KCj9rOr" 
+                alt="리코 이미지" />
             </p>
           </div>
         </div>
-        <div class="what-did-i">
+        <div class="what-did-i mt-10">
           <div class="grid grid-cols-2 gap-4">
             <div class="">
               <!-- <img 
@@ -314,7 +317,10 @@ function updateMessage() {
             </div>
           </div>
         </div>
-        <div class="grid grid-cols-2 gap-4">
+      </div>
+      <!-- Honeycomb Skills Section -->
+      <div class="honeycomb-skills p-12 flex justify-center">
+        <div class="honeycomb-skills-container">
           <div>Vue</div>
           <div>Typescript</div>
           <div>Android</div>
@@ -325,58 +331,85 @@ function updateMessage() {
           <div>Github</div>
         </div>
       </div>
-      <div class="career-entry mt-4">
-        <div class="company-info columns-3">
-          <h3 class="text-xl">
-            2017.01.02 ~ 
-            {{ dayjs('2020-12-31').format('YYYY.MM.DD') }} 
-            ({{ dayjs('2020-12-31').diff(dayjs('2017-01-02'), 'year') }}년 
-            {{ dayjs('2020-12-31').diff(dayjs('2017-01-02'), 'month') % 12 }}달 
-            {{ dayjs('2020-12-31').diff(dayjs('2017-01-02'), 'day') % 30 }}일)
-          </h3>
-          <h2 class="text-4xl font-bold">뱅크비</h2>
-          <p> 
-            뱅크비는 은행, 보험, 증권사 등 금융권에 핵심 트렌드로 자리 잡고 있는 업무 프로세스 개선과 자동화, 하이퍼스크래핑 등 디지털 전환에 필요한 핵심 솔루션과 컨설팅을 제공하고 있다. 
-            디지털 전환을 통한 편리함 추구를 위해 보안이나 개인정보보호, 규제사항을 등한시 할 수 있는 업계에서 뱅크비는 ICT서비스를 고객중심으로 편리하게 개선하면서도 보안상으로는 더 안전하게 지켜줄 수 있는 혁신기술과 노하우를 보유하고 있다는 차별성을 갖추고 있다. 
-          </p>
-          <p> 
-            뱅크비는 카카오뱅크의 안전하고 편리한 보안플랫폼 설계와 컨설팅을 수행하면서 우수한 기술력과 노하우를 인정받았고 핀테크 도입과 디지털전환을 필요로 하는 은행, 저축은행, 카드사, 보험사, 증권사 등 다양한 금융기업을 대상으로 자체개발한 솔루션과 서비스 제공을 확대하고 있다.
-          </p>
-          <img 
-            class="shape-img"
-            src="https://static.wixstatic.com/media/030690_c0dbf404c6894e83846454dfbe372c87~mv2.png" 
-            alt="뱅크비 로고" />
-          <p class="l"> 
-            2016년 11월 기업부설연구소를 설립하고, 2018년 5월 전문연구요원 지정업체로 인정받아 전문 연구인력을 중심으로 한 조직체계를 완성하였으며 연구개발분야 투자를 늘리고 있다.
-            주요 제품은 카카오뱅크, 신한카드 등 다수 금융기관의 비대면 업무 처리(고객 평가, 심사, 대출 등)에 적용된 스크래핑 솔루션(OmniDoc/OmniReal), 금융기관의 편리하고 안전한 보안/인증처리를 위한 사설인증 솔루션(OmniCA), 보험사, 카드사 및 핀테크 플랫폼 기업에 적용된 신분증 진위 확인 서비스(OmniCheck) 등이 있으며 국내 전 카드사에 모바일결제/국내 IC카드 결제 규격 수립 관련 컨설팅을 수행함과 동시에 대부분의 카드사에 직승인 관련 공개키 기반 솔루션을 납품했다.  
-            금융기업 이외에도 롯데쇼핑, 현대백화점, GS리테일, 신세계백화점, 이마트 등 국내 유통 대기업들의 전국 가맹점에서 발생하는 지급 결제 프로세스를 자체 개발한 지급결제 핀테크 솔루션 TaSIM을 통해 안전하게 지켜주고 있다.
-          </p>
+
+      <div class="career-entry mt-24 ">
+        <div class="company-info relative  min-h-[640px]">
+          <div class="flex-1 w-[120px]">
+            <img 
+              style="filter: drop-shadow(3px 3px 1px rgba(0, 0, 0, 0.7)); transform: translateX(-80px) rotate(-20deg);"
+              class="min-w-[360px] relative -left-10 top-40"
+              src="/assets/img/bank_bee.png" 
+              alt="뱅크비 로고" />
+          </div>
+          <div class="columns-2 w-3/4 absolute right-20 top-20 l">
+            <h3 class="text-xl">
+              2017.01.02 ~ 
+              {{ dayjs('2020-12-31').format('YYYY.MM.DD') }} 
+              ({{ dayjs('2020-12-31').diff(dayjs('2017-01-02'), 'year') }}년 
+              {{ dayjs('2020-12-31').diff(dayjs('2017-01-02'), 'month') % 12 }}달 
+              {{ dayjs('2020-12-31').diff(dayjs('2017-01-02'), 'day') % 30 }}일)
+            </h3>
+            <!-- <img 
+              class=""
+              src="https://static.wixstatic.com/media/030690_c0dbf404c6894e83846454dfbe372c87~mv2.png" 
+              alt="뱅크비 로고" /> -->
+            <h2 class="text-4xl font-bold">뱅크비</h2>
+            <p> 
+              뱅크비는 은행, 보험, 증권사 등 금융권에 핵심 트렌드로 자리 잡고 있는 업무 프로세스 개선과 자동화, 하이퍼스크래핑 등 디지털 전환에 필요한 핵심 솔루션과 컨설팅을 제공하고 있다. 
+              디지털 전환을 통한 편리함 추구를 위해 보안이나 개인정보보호, 규제사항을 등한시 할 수 있는 업계에서 뱅크비는 ICT서비스를 고객중심으로 편리하게 개선하면서도 보안상으로는 더 안전하게 지켜줄 수 있는 혁신기술과 노하우를 보유하고 있다는 차별성을 갖추고 있다. 
+            </p>
+            <p> 
+              뱅크비는 카카오뱅크의 안전하고 편리한 보안플랫폼 설계와 컨설팅을 수행하면서 우수한 기술력과 노하우를 인정받았고 핀테크 도입과 디지털전환을 필요로 하는 은행, 저축은행, 카드사, 보험사, 증권사 등 다양한 금융기업을 대상으로 자체개발한 솔루션과 서비스 제공을 확대하고 있다.
+            </p>
+            <p> 
+              2016년 11월 기업부설연구소를 설립하고, 2018년 5월 전문연구요원 지정업체로 인정받아 전문 연구인력을 중심으로 한 조직체계를 완성하였으며 연구개발분야 투자를 늘리고 있다.
+              주요 제품은 카카오뱅크, 신한카드 등 다수 금융기관의 비대면 업무 처리(고객 평가, 심사, 대출 등)에 적용된 스크래핑 솔루션(OmniDoc/OmniReal), 금융기관의 편리하고 안전한 보안/인증처리를 위한 사설인증 솔루션(OmniCA), 보험사, 카드사 및 핀테크 플랫폼 기업에 적용된 신분증 진위 확인 서비스(OmniCheck) 등이 있으며 국내 전 카드사에 모바일결제/국내 IC카드 결제 규격 수립 관련 컨설팅을 수행함과 동시에 대부분의 카드사에 직승인 관련 공개키 기반 솔루션을 납품했다.  
+              금융기업 이외에도 롯데쇼핑, 현대백화점, GS리테일, 신세계백화점, 이마트 등 국내 유통 대기업들의 전국 가맹점에서 발생하는 지급 결제 프로세스를 자체 개발한 지급결제 핀테크 솔루션 TaSIM을 통해 안전하게 지켜주고 있다.
+            </p>
+          </div>
         </div>
         <div class="what-did-i">
           <div class="grid grid-cols-3 gap-4">
             <div class="">
               <img 
-                class="p-4"
-                src="https://static.wixstatic.com/media/030690_c0dbf404c6894e83846454dfbe372c87~mv2.png" 
+                class=""
+                src="https://thesegye.com/news/data/20220425/p1065569090753704_269_thum.jpg" 
                 alt="리코 이미지" />
               <h3 class="text-xl">하나카드 앱카드 Whitebox 난독화 모듈</h3>
-              <p>업박스 클라우드 프론트엔드 개발. 업박스 1.0, 업박스 2.0. 안드로이드 네이티브앱에 웹뷰를 활용. </p>
+              <p>
+                하나카드 1QPay 앱에 탑재되는 NFC 모듈. 
+                지불카드의 token화 보안 서비스와, HCE 스펙을 따라 NFC 결제 통신을 제공.
+                VISA token 발급 및 EMV 카드 결제 스펙을 이해하여 NFC 결제 모듈을 유지보수. (Android java, JNI).
+                보안 모듈인 Whitebox 암호화 모듈을 LLVM 난독화 컴파일러로 컴파일하여 SharedObject의 분석 방지. (C++)
+                라이브러리 JNI 구성
+              </p>
             </div>
             <div class="">
               <img 
-                class="p-4"
-                src="https://static.wixstatic.com/media/030690_c0dbf404c6894e83846454dfbe372c87~mv2.png" 
+                class=""
+                src="https://mblogthumb-phinf.pstatic.net/MjAyMDAzMTJfNCAg/MDAxNTgzOTkwNzkyMDQx.6kNv4JvbSS_qy0YKQCfcUNH2jwiuOmjsadhACl23ZZYg.D8-hUem8g7SHrpGpcIxad-gA3tE3GgLlxRsVbKQ46Zwg.JPEG.mage7th/flyhi-1024x760.jpg?type=w966" 
                 alt="새로운 이미지" />
               <h3 class="text-xl">OmniDoc, Bankbe 스크래핑 모듈</h3>
-              <p>업박스 홈페이지 유지보수 및 개편. 서버리스를 위해 Google Sheet 로 데이터 관리. Next 로 CMS 구현. Firebase Firestore, Google OAuth. Summernote 제작자와 함께 포팅 작업 진행.</p>
+              <p>
+                17여개의 민원사이트에서 40여개의 민원문서를 발급할 수 있는 솔루션. 
+                타사의 서비스에 탑재되어 고객의 민간업무를 대행해주는 편리한 서비스 제공. 
+                금융결제원 Payinfo, 신용조회 KCB, 범죄자조회 Crime 등의 사이트를 스크래핑 담당.
+              </p>
             </div>
             <div class="">
               <img 
-                class="p-4"
-                src="https://static.wixstatic.com/media/030690_c0dbf404c6894e83846454dfbe372c87~mv2.png" 
+                class=""
+                src="https://mblogthumb-phinf.pstatic.net/MjAyNDAzMjFfMjM3/MDAxNzExMDAxNjk1NjA2.-qXL7uT7lgAAG89tsxe2uRphnk41FWWI3IkCiFwdYvAg.NQaevwzuy8NHGPSTlAdJOdrLkyhKlZ1hNMiis9q2OKwg.JPEG/SE-ae704e91-3454-459b-a24b-2bfb1c7dbc52.jpg?type=w800" 
                 alt="새로운 이미지" />
               <h3 class="text-xl">TaSIM e2e 암호화</h3>
-              <p>업박스 홈페이지 유지보수 및 개편. 서버리스를 위해 Google Sheet 로 데이터 관리. Next 로 CMS 구현. Firebase Firestore, Google OAuth. Summernote 제작자와 함께 포팅 작업 진행.</p>
+              <p>
+                카드사와 가맹점 사이의 E2E 암호화를 제공하는 TaSIM.
+                중간 VAN사의 영향을 받지 않은 채, 가맹점 단말기와 카드사 간의 암호화 제공.
+                여신협회 taSIM Application Specification 인증, EMVCo 및 CC(Common Criteria) 인증.
+                JavaCOS 에 Applet을 탑재하여 가맹점의 카드 리더 단말기에 장착.
+                Java COS의 작동을 이해하고, 해당 제품을 유지보수 및 대응.
+                Applet 설치용 MFC UI 제작.
+              </p>
             </div>
           </div>
         </div>
@@ -385,7 +418,7 @@ function updateMessage() {
 
         <!-- 여기 -->
         <!-- Honeycomb Skills Section -->
-        <section class="mt-16">
+        <section class="">
           <div class="honeycomb-skills p-24 flex justify-center">
             <div class="honeycomb-skills-container">
               <div>C++</div>
@@ -398,45 +431,6 @@ function updateMessage() {
             </div>
           </div>
 
-          <div class="honeycomb2-grid">
-            <div class="honeycomb2-row">
-              <div class="hex fake-hex"></div>
-              <div class="hex"></div>
-              <div class="hex"></div>
-              <div class="hex"></div>
-              <div class="hex"></div>
-            </div>
-
-            <div class="honeycomb2-row">
-              <div class="hex fake-hex"></div>
-              <div class="hex"></div>
-              <div class="hex fake-hex"></div>
-              <div class="hex"></div>
-            </div>
-
-            <div class="honeycomb2-row">
-              <div class="hex fake-hex"></div>
-              <div class="hex"></div>
-              <div class="hex"></div>
-              <div class="hex"></div>
-              <div class="hex fake-hex"></div>
-            </div>
-
-            <div class="honeycomb2-row">
-              <div class="hex fake-hex"></div>
-              <div class="hex"></div>
-              <div class="hex"></div>
-              <div class="hex"></div>
-            </div>
-
-            <div class="honeycomb2-row">
-              <div class="hex"></div>
-              <div class="hex fake-hex"></div>
-              <div class="hex"></div>
-              <div class="hex fake-hex"></div>
-              <div class="hex fake-hex"></div>
-            </div>
-          </div>
         </section>
 
       </div>
@@ -537,9 +531,20 @@ function updateMessage() {
     display: block;
     clear: both;
     float: left;
-    shape-outside: polygon(0% 0%, 75% 0%, 100% 50%, 75% 100%, 0% 100%);
-    width: 220px;
-    height: 130px;
+    shape-outside: polygon(0% 0%, 25% 0%, 100% 50%, 25% 100%, 0% 100%);
+    width: 100px;
+    height: 500px;
+  }
+}
+.r {
+  &::before {
+    content: '';
+    display: block;
+    clear: both;
+    float: right;
+    shape-outside: polygon(100% 0%, 75% 0%, 0% 50%, 75% 100%, 100% 100%);
+    width: 100px;
+    height: 500px;
   }
 }
 
