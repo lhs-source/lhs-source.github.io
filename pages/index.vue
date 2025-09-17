@@ -249,9 +249,15 @@ function updateMessage() {
     </section>
 
     <FloatingText />
+    
+    <!-- <hr class="my-16 mt-[240px] mx-4"/> -->
+
+    <div class="flex justify-center items-center mt-[320px]">
+      <h2 class="text-4xl font-bold bg-stone-800 text-white px-[240px] py-2">Career</h2>
+    </div>
 
     <!-- Career Section -->
-    <section class="career-wrapper mt-32">
+    <section class="career-wrapper">
       <div class="career-entry">
         <div class="company-info relative">
           <div class="w-[45%] absolute -right-2 bottom-0">
@@ -272,10 +278,10 @@ function updateMessage() {
             alt="리코 로고" /> -->
           <img
             style="filter: drop-shadow(3px 3px 1px rgba(0, 0, 0, 0.7));"
-            class="absolute -top-[120px] w-full"
+            class="w-full"
             src="/assets/img/resource_connector.png" 
             alt="리코 이미지" />
-          <div class="w-1/2 pt-[720px] ml-16">
+          <div class="w-1/2 pt-[240px] ml-16">
             <h3 class="text-xl">
               2021.01.04 ~ 
               {{ dayjs().format('YYYY.MM.DD') }} 
@@ -295,6 +301,11 @@ function updateMessage() {
                 <b>'어떤 폐기물이든 하나의 서비스로'</b> 맞춤형 폐기물 수집운반 토탈 서비스 UpBox는 자체 폐기물 관리 소프트웨어를 통해 폐기물을 편리하고 깨끗하고 정확하게 처리. 
                 UpBox 고객은 배출한 폐기물의 양과 탄소 배출량 등의 환경 기여 지표들을 실시간으로 확인할 수 있음.
               </p>
+              <p>
+                이번 라운드는 한국을 포함해 31개국에서 이케아 리테일을 운영하는 잉카 그룹의 투자 부문 ‘잉카 인베스트먼트’(Ingka Investments)가 리드 투자사로 참여했다. 
+                이번 투자는 잉카 인베스트먼트의 첫 한국 투자 사례이자, 최근 순환 경제 관련 기업에 10억 유로(약 1조 6,000억 원)를 투자하겠다고 발표한 이후 진행한 첫 아시아 투자 사례다. 
+                리코는 지속적인 재무적 성과 개선세를 이어가며 글로벌 투자자로부터 의미 있는 관심을 받았다.
+              </p>
               <!-- 배출 환경 개선부터 자원순환까지 최적의 폐기물 솔루션을 제공합니다.
               폐기물 배출 환경 개선. 양질의 폐자원을 생성하고 사업장 폐기물 배출 시설을 쾌적하게 관리할 수 있도록 폐기물 배출 환경을 개선합니다.
               폐기물 수거 운반. 배출량을 측정 한 뒤 GPS가 탑재 된 업박스 전용 트럭으로 폐기물을 운반하기 때문에 폐기물의 이동 경로를 추적할 수 있습니다.
@@ -307,66 +318,160 @@ function updateMessage() {
             </div>
           </div>
         </div>
-        <div class="what-did-i mt-10 px-4">
+        <div class="what-did-i mt-32 px-4 border-t border-b border-stone-800">
           <div class="grid grid-cols-2 gap-4" style="grid-template-columns: 1fr 240px;">
-            <div class="">
-              <div class="bg-stone-700 w-full p-12">
+            <div class="pb-8">
+              <div class="w-full p-12">
                 <img 
                   class="w-full"
                   src="/assets/img/macbook.png" 
                   alt="리코 이미지" />
               </div>
-              <div class="flex justify-center">
-                <h3 class="text-xl font-bold bg-stone-100 w-full mx-8 -mt-8 py-4 text-center">업박스 클라우드(Main project)</h3>
+              <div class="flex justify-center w-full border-t border-b py-8">
+                <div class="flex flex-col gap-2">
+                  <h3 class="text-4xl font-bold text-center">
+                    업박스 클라우드 프론트엔드 개발(Main project)
+                  </h3>
+                  <div class="text-sm flex flex-wrap gap-2">
+                    <span class="border border-stone-400 px-2 py-[1px] rounded-md">Vue3</span>
+                    <span class="border border-stone-400 px-2 py-[1px] rounded-md">Typescript</span>
+                    <span class="border border-stone-400 px-2 py-[1px] rounded-md">Pinia</span>
+                    <span class="border border-stone-400 px-2 py-[1px] rounded-md">Android Kotlin</span>
+                    <span class="border border-stone-400 px-2 py-[1px] rounded-md">WebView</span>
+                  </div>
+                </div>
               </div>
-              <p class="mt-4">
-                업박스 클라우드 프론트엔드 개발. 업박스 1.0, 업박스 2.0. 안드로이드 네이티브앱에 웹뷰를 활용. 
-                3가지 앱 타입으로 구성되며, 어드민, 드라이버, 커스터머가 있음.
-              </p>
-              <div class="grid grid-cols-3 gap-4 mt-4">
-                <div class="bg-stone-600 text-white p-4 py-8">
-                  <h3>Admn</h3>
-                  <p>
+              <div class="mt-8 columns-2">
+                <h3 class="text-lg font-bold">업박스 클라우드의 기술적 특징</h3>
+                <p>
+                  업박스 클라우드의 초기부터 현재까지 프론트엔드 개발을 전적으로 맡아서 진행함. 업박스 1.0, 업박스 2.0. 안드로이드 네이티브앱에 웹뷰를 활용. 
+                  3가지 앱 타입으로 구성되며, 어드민, 드라이버, 커스터머가 있음.
+                  B2B 서비스로써 내부 사용자가 다뤄야할 데이터와 업무의 양이 많고 복잡도가 높음. 낮은 에러률과 높은 정확도가 요구됨. 
+                  Upbox 2.0 버전을 작업하면서 React 와 Vue 중 기술스택을 직접 스터디하고 결정함.
+                </p>
+                <h3 class="text-lg font-bold mt-2">배출장 및 계약 관리</h3>
+                <p>
+                  배출장의 정보와 계약을 시스템화 하여 일정과 요금을 관리함. 배출장의 정보에 기반한 맞춤 수거 서비스를 제공.
+                </P>
+                <h3 class="text-lg font-bold mt-2">스케줄 관리</h3>
+                <p>
+                  기사님의 스케줄을 생성/수정하며, 방문해야할 업장을 지도에 표시하고 스케줄의 경로를 표시해 효율적인 운영 업무를 지원함.
+                </P>
+                <h3 class="text-lg font-bold mt-2">올바로 자동화 제공</h3>
+                <p>
+                  폐기물 배출장들이 조건에 따라 진행해야 하는 공공업무인 올바로 시스템에 배출량을 등록하는 업무를 자동화함.
+                </p>
+                <h3 class="text-lg font-bold mt-2">정산</h3>
+                <p>
+                  청구 데이터를 생성하고 보여줌. 청구 대상을 추가하거나 제외하여 재계산을 하고, 거래명세서와 세금계산서를 발행함. 가상계좌와 자동이체를 통한 정산 자동화가 가능함.
+                </P>
+                <h3 class="text-lg font-bold mt-2">드라이버의 수거 및 차량 관리</h3>
+                <p>
+                  드라이버의 수거 및 차량 관리를 할 수 있음. 정해진 순서와 종류 기반 혹은 유동적으로 변경해서 업무 진행.
+                </P>
+                <h3 class="text-lg font-bold mt-2">고객의 배출량 확인 </h3>
+                <p>
+                  배출장에서는 수거 일정과 배출량을 확인할 수 있고, 그래프를 통해 추이를 확인 가능함.
+                </P>
+                <img 
+                  class="border mt-2"
+                  src="https://dimg.donga.com/ugc/CDB/SHINDONGA/Article/60/40/86/91/604086910611d2738de6.jpg" 
+                  alt="리코 이미지" />
+              </div>
+              <div class="grid grid-cols-3 gap-4 mt-8">
+                <div class="border-2 border-stone-800 border-t-4">
+                  <h3 class="bg-stone-800 mx-1 py-2 text-lg text-white text-center text-bold">Admin</h3>
+                  <p class="p-4">
+                    리코 내부 직원이 주로 사용하는 데이터 관리 admin 페이지. 고객 및 계정 관리부터 계약 관리, 스케줄 생성, 정산 등 다양한 업무를 관리할 수 있음.
+                  </p>
+                </div>
+                <div class="border-2 border-stone-800 border-t-4">
+                  <h3 class="bg-stone-800 mx-1 py-2 text-lg text-white text-center ">Driver</h3>
+                  <p class="p-4">
                     업박스 클라우드 프론트엔드 개발. 업박스 1.0, 업박스 2.0. 안드로이드 네이티브앱에 웹뷰를 활용. 
                     3가지 앱 타입으로 구성되며, 어드민, 드라이버, 커스터머가 있음.
                   </p>
                 </div>
-                <div class="bg-stone-600 text-white p-4 py-8">
-                  <h3>Driver</h3>
-                  <p>
+                <div class="border-2 border-stone-800 border-t-4">
+                  <h3 class="bg-stone-800 mx-1 py-2 text-lg text-white text-center ">Customer</h3>
+                  <p class="p-4">
                     업박스 클라우드 프론트엔드 개발. 업박스 1.0, 업박스 2.0. 안드로이드 네이티브앱에 웹뷰를 활용. 
                     3가지 앱 타입으로 구성되며, 어드민, 드라이버, 커스터머가 있음.
                   </p>
                 </div>
-                <div class="bg-stone-600 text-white p-4 py-8">
-                  <h3>Customer</h3>
+              </div>
+              <div class="flex flex-col gap-2 mt-8">
+                <div class="flex items-center">
+                  <div class="bg-stone-300 min-w-[108px] h-[64px] flex items-center justify-center mr-4">
+                    Base
+                  </div>
                   <p>
-                    업박스 클라우드 프론트엔드 개발. 업박스 1.0, 업박스 2.0. 안드로이드 네이티브앱에 웹뷰를 활용. 
-                    3가지 앱 타입으로 구성되며, 어드민, 드라이버, 커스터머가 있음.
+                    vue3 + vite + pinia 를 기본으로 사용함. Composition API 를 활용해 코드 재사용성을 높임. Upbox 초기 1.0 버전에서는 vue2 + vue cli 를 사용했음.
+                    안드로이드 앱으로 제공하는 드라이버, 커스터머 앱은 Kotlin 으로 작성하여 동일 페이지를 WebView 로 제공함.
+                  </p>
+                </div>
+                <div class="flex items-center">
+                  <div class="bg-stone-300 min-w-[108px] h-[64px] flex items-center justify-center mr-4">
+                    Datadog
+                  </div>
+                  <p>
+                    Datadog 을 도입하여 에러 모니터링과 사용성 측정을 진행함.
+                  </p>
+                </div>
+                <div class="flex items-center">
+                  <div class="bg-stone-300 min-w-[108px] h-[64px] flex items-center justify-center mr-4">
+                    i18n
+                  </div>
+                  <p>
+                    <pre>vue-i18n</pre> 을 적용해 용어 통일성을 유지하고, 국제화의 발판을 마련함.
+                  </p>
+                </div>
+                <div class="flex items-center">
+                  <div class="bg-stone-300 min-w-[108px] h-[64px] flex items-center justify-center mr-4">
+                    컴포넌트
+                  </div>
+                  <p>
+                    디자인 시스템에 따라 컴포넌트를 제작하고 관리하여 재사용성을 높이고, 예측 가능한 코드를 작성함.
+                  </p>
+                </div>
+                <div class="flex items-center">
+                  <div class="bg-stone-300 min-w-[108px] h-[64px] flex items-center justify-center mr-4">
+                    GPS
+                  </div>
+                  <p>
+                    안드로이드 gps service 를 활용해 실시간 위치 정보를 백그라운드에서도 수집함. Notification 을 시스템 트레이에 띄워서 Foreground 로 유지함.
+                  </p>
+                </div>
+                <div class="flex items-center">
+                  <div class="bg-stone-300 min-w-[108px] h-[64px] flex items-center justify-center mr-4">
+                    Test
+                  </div>
+                  <p>
+                    Vitest 를 활용한 유닛테스트. 모듈화된 코드를 작성하여 테스트를 용이하게 하고 유지보수성을 높임.
                   </p>
                 </div>
               </div>
             </div>
-            <div class="border-l-2 border-stone-800 pl-4">
-              <div class="bg-stone-300 w-full h-[144px]">image</div>
-              <h3 class="text-xl font-bold">업박스 홈페이지</h3>
+            <div class="border-l-2 border-stone-800 pl-4 py-8">
+              <div class="bg-stone-300 w-full h-[144px]"></div>
+              <a class="block text-sm mt-4" href="https://upbox.us/" target="_blank">https://upbox.us/</a>
+              <h3 class="text-xl font-bold mb-4">업박스 홈페이지</h3>
               <p>
                 업박스 홈페이지 유지보수 및 개편. 서버리스를 위해 Google Sheet 로 데이터 관리. Next 로 CMS 구현. Firebase Firestore, Google OAuth. Summernote 제작자와 함께 포팅 작업 진행.
-                <a class="block" href="https://upbox.us/" target="_blank">https://upbox.us/</a>
               </p>
-
-              <div class="bg-stone-300 w-full h-[144px] ">image</div>
-              <h3 class="text-xl font-bold">리코 홈페이지</h3>
+              <hr class="my-8" />
+              <div class="bg-stone-300 w-full h-[144px] "></div>
+              <a class="block text-sm mt-4" href="https://recokr.com/" target="_blank">https://recokr.com/</a>
+              <h3 class="text-xl font-bold mb-4">리코 홈페이지</h3>
               <p>
                 업박스 홈페이지 유지보수 및 개편. 서버리스를 위해 Google Sheet 로 데이터 관리. Next 로 CMS 구현. Firebase Firestore, Google OAuth. Summernote 제작자와 함께 포팅 작업 진행.
-                <a class="block" href="https://recokr.com/" target="_blank">https://recokr.com/</a>
+                
               </p>
             </div>
           </div>
         </div>
       </div>
-      <!-- Honeycomb Skills Section -->
-      <div class="grid grid-cols-5 mt-8 p-8">
+      <!-- <div class="grid grid-cols-5 mt-8 p-8">
         <div class="border-b border-stone-800 p-4">
           <h3>Vue</h3>
           <p>Upbox 1.0 개발하며 Vue2 + vue cli + Typescript 사용</p>
@@ -398,18 +503,18 @@ function updateMessage() {
         <div class="border-l border-stone-800 p-4">
           <h3>Github</h3>
         </div>
-      </div>
+      </div> -->
 
-      <div class="career-entry mt-24 ">
-        <div class="company-info relative  min-h-[640px]">
+      <div class="career-entry mt-16">
+        <div class="company-info relative min-h-[480px]">
           <div class="flex-1 w-[120px]">
             <img 
               style="filter: drop-shadow(3px 3px 1px rgba(0, 0, 0, 0.7)); transform: translateX(-80px) rotate(-20deg);"
-              class="min-w-[360px] relative -left-10 top-40"
+              class="min-w-[320px] relative left-32 top-12"
               src="/assets/img/bank_bee.png" 
               alt="뱅크비 로고" />
           </div>
-          <div class="columns-2 w-3/4 absolute right-20 top-20 l">
+          <div class="columns-2 w-2/3 absolute right-32 top-0 l">
             <h3 class="text-xl">
               2017.01.02 ~ 
               {{ dayjs('2020-12-31').format('YYYY.MM.DD') }} 
@@ -440,10 +545,16 @@ function updateMessage() {
           <div class="grid grid-cols-3 gap-4">
             <div class="">
               <img 
-                class=""
+                class="h-[240px] w-full object-cover border"
                 src="https://thesegye.com/news/data/20220425/p1065569090753704_269_thum.jpg" 
                 alt="리코 이미지" />
-              <h3 class="text-xl">하나카드 앱카드 Whitebox 난독화 모듈</h3>
+              <h3 class="text-xl font-bold mt-4">하나카드 앱카드 Whitebox 난독화 모듈</h3>
+              <div class="text-sm mb-4 flex gap-2">
+                <span class="bg-amber-300 px-2 py-[1px] rounded-md">C++</span>
+                <span class="bg-amber-300 px-2 py-[1px] rounded-md">LLVM</span>
+                <span class="bg-amber-300 px-2 py-[1px] rounded-md">Android NDK</span>
+                <span class="bg-amber-300 px-2 py-[1px] rounded-md">Java</span>
+              </div>
               <p>
                 하나카드 1QPay 앱에 탑재되는 NFC 모듈. 
                 지불카드의 token화 보안 서비스와, HCE 스펙을 따라 NFC 결제 통신을 제공.
@@ -454,10 +565,14 @@ function updateMessage() {
             </div>
             <div class="">
               <img 
-                class=""
+                class="h-[240px] w-full object-cover border"
                 src="https://mblogthumb-phinf.pstatic.net/MjAyMDAzMTJfNCAg/MDAxNTgzOTkwNzkyMDQx.6kNv4JvbSS_qy0YKQCfcUNH2jwiuOmjsadhACl23ZZYg.D8-hUem8g7SHrpGpcIxad-gA3tE3GgLlxRsVbKQ46Zwg.JPEG.mage7th/flyhi-1024x760.jpg?type=w966" 
                 alt="새로운 이미지" />
-              <h3 class="text-xl">OmniDoc, Bankbe 스크래핑 모듈</h3>
+              <h3 class="text-xl font-bold mt-4">OmniDoc, Bankbe 스크래핑 모듈</h3>
+              <div class="text-sm mb-4 flex gap-2">
+                <span class="bg-amber-300 px-2 py-[1px] rounded-md">C++</span>
+                <span class="bg-amber-300 px-2 py-[1px] rounded-md">Lua</span>
+              </div>
               <p>
                 17여개의 민원사이트에서 40여개의 민원문서를 발급할 수 있는 솔루션. 
                 타사의 서비스에 탑재되어 고객의 민간업무를 대행해주는 편리한 서비스 제공. 
@@ -466,10 +581,14 @@ function updateMessage() {
             </div>
             <div class="">
               <img 
-                class=""
+                class="h-[240px] w-full object-cover border"
                 src="https://mblogthumb-phinf.pstatic.net/MjAyNDAzMjFfMjM3/MDAxNzExMDAxNjk1NjA2.-qXL7uT7lgAAG89tsxe2uRphnk41FWWI3IkCiFwdYvAg.NQaevwzuy8NHGPSTlAdJOdrLkyhKlZ1hNMiis9q2OKwg.JPEG/SE-ae704e91-3454-459b-a24b-2bfb1c7dbc52.jpg?type=w800" 
                 alt="새로운 이미지" />
-              <h3 class="text-xl">TaSIM e2e 암호화</h3>
+              <h3 class="text-xl font-bold mt-4">TaSIM e2e 암호화</h3>
+              <div class="text-sm mb-4 flex gap-2">
+                <span class="bg-amber-300 px-2 py-[1px] rounded-md">C++</span>
+                <span class="bg-amber-300 px-2 py-[1px] rounded-md">JavaCOS</span>
+              </div>
               <p>
                 카드사와 가맹점 사이의 E2E 암호화를 제공하는 TaSIM.
                 중간 VAN사의 영향을 받지 않은 채, 가맹점 단말기와 카드사 간의 암호화 제공.
@@ -481,12 +600,12 @@ function updateMessage() {
             </div>
           </div>
         </div>
-        <div class="grid grid-cols-3 gap-4">
+        <div class="py-32">
         </div>
 
         <!-- 여기 -->
         <!-- Honeycomb Skills Section -->
-        <section class="">
+        <!-- <section class="">
           <div class="honeycomb-skills p-24 flex justify-center">
             <div class="honeycomb-skills-container">
               <div>C++</div>
@@ -499,7 +618,7 @@ function updateMessage() {
             </div>
           </div>
 
-        </section>
+        </section> -->
 
       </div>
     </section>
@@ -516,7 +635,7 @@ function updateMessage() {
 @import url('https://fonts.googleapis.com/css2?family=Prata&display=swap');
 
 .index-wrapper {
-  width: 1024px;
+  width: 1440px;
   color: #1f1f14;
   font-family: 'Noto Serif KR', 'Noto Serif', sans-serif;
   white-space: pre-line;
@@ -601,7 +720,7 @@ function updateMessage() {
     float: left;
     shape-outside: polygon(0% 0%, 25% 0%, 100% 50%, 25% 100%, 0% 100%);
     width: 100px;
-    height: 500px;
+    height: 400px;
   }
 }
 .r {
@@ -612,7 +731,7 @@ function updateMessage() {
     float: right;
     shape-outside: polygon(100% 0%, 75% 0%, 0% 50%, 75% 100%, 100% 100%);
     width: 100px;
-    height: 500px;
+    height: 400px;
   }
 }
 

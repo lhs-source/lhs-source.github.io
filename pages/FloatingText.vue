@@ -8,13 +8,13 @@ const message = ref('Hello, World!');
 
 <template>
   <div class="container">
-    <div class="bordered-div mt-16 text-center">
+    <div class="bordered-div mb-16 mt-32 text-center">
       언어는 도구일 뿐, 사용하기 나름이다.
     </div>
     <!-- V 글자 (회전 없이 일반 텍스트로 표시) -->
     <div class="v-letter">
-      <div class="svg-container absolute -left-[200px] h-[500px]">
-        <svg style width="800px" height="800px" viewBox="0 -17.5 256 256" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" preserveAspectRatio="xMidYMid">
+      <div class="svg-container absolute -left-[100px] h-[500px]">
+        <svg style width="880px" height="880px" viewBox="0 -17.5 256 256" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" preserveAspectRatio="xMidYMid">
           <g>
             <path d="M204.8,0 L256,0 L128,220.8 L0,0 L50.56,0 L97.92,0 L128,51.2 L157.44,0 L204.8,0 Z" fill="#41B883"> </path>
             <path d="M0,0 L128,220.8 L256,0 L204.8,0 L128,132.48 L50.56,0 L0,0 Z" fill="#41B883"></path>
@@ -23,33 +23,41 @@ const message = ref('Hello, World!');
         </svg>
       </div>
     </div>
-    <h1 class=" absolute top-[200px] right-[10px] text-[84px] font-bold mix-blend-difference text-stone-400 transform -rotate-70">
+    <h1 class=" absolute top-[320px] right-[64px] text-[84px] font-bold mix-blend-difference text-stone-400 transform -rotate-70">
       SKILL STACK
     </h1>
-    <div class="text-group">
+    <div class="text-group mr-12">
       <!-- 오른쪽에 배치될 텍스트 -->
       <div class="text pt-[160px]">
         Analyzing updates. I'm pulling together the main aspects of Obsidian v1.8.3, 
-        <div class="text-8xl inline-block float-right">
+        <div class="text-8xl inline-block float-right text-emerald-700 font-bold">
           Vue
         </div>
-        focusing on highlights, new features, <div class="text-2xl inline-block">Python</div> improvements, bug fixes, and third-party library upgrades. 
-        <div class="text-4xl inline-block">
-          Android
-        </div>
-        Breaking down updates. I’m analyzing <div class="text-2xl inline-block">Java</div> the technical updates in Obsidian v1.8.3,
+        focusing on highlights, new features, <div class="text-2xl inline-block text-yellow-600 font-bold">Python</div> improvements, bug fixes, and third-party library upgrades. 
+        Breaking down updates. I’m analyzing <div class="text-2xl inline-block text-red-700 font-bold">Java</div> the technical updates in Obsidian v1.8.3,
         focusing on highlights, new features, improvements, 
-        <div class="text-5xl inline-block float-right">
-          Typescript
-        </div>
-        bug fixes, and third-party library upgrades. <div class="text-2xl inline-block">NuxtJS</div> Breaking down the update. 
+        bug fixes, and third-party library upgrades. <div class="text-2xl inline-block text-emerald-600 font-bold">NuxtJS</div> Breaking down the update. 
         I'm working through Obsidian v1.8.3, highlighting features like Web Viewer, sync options, and UI enhancements. Improvements target list numbering, 
-        <div class="text-4xl inline-block">
+        <div class="text-4xl inline-block text-amber-700 font-bold">
           C++
         </div>
-        editor suggestions, and canvas <div class="text-2xl inline-block">NextJS</div> functionality. Bug fixes are also addressed.
-        The bird fights its way out of the egg. The egg is the world. <div class="text-xl inline-block">Git</div> Who would be born must first destroy a world. <div class="text-xl inline-block">VSCode</div> The bird flies to God. That God's name is Abraxas.
-        I was only trying to live <div class="text-xl inline-block">Datadog</div> my life in accordance with the principles <div class="text-xl inline-block">Obsidian</div> which sprang from my own true self. Why was that so very difficult?
+        editor suggestions, and canvas functionality. Bug fixes are also addressed.
+        <div class="text-5xl inline-block float-right text-sky-700 font-bold">
+          Typescript
+        </div>
+        The bird fights its way out of the egg. The egg is the world. <div class="text-2xl inline-block font-bold">Git</div> 
+        Who would be born must first destroy a world. <div class="text-xl inline-block text-blue-700 font-bold">VSCode</div> The bird flies to God. That God's name is Abraxas.
+        I was only trying to live 
+        <div class="text-4xl inline-block text-lime-700 font-bold">
+          Android
+        </div> 
+        my life in accordance with the principles which sprang from my own true self. Why was that so very difficult?
+
+        Our god's name <div class="text-xl inline-block text-violet-700 font-bold">Obsidian</div> is Abraxas and he is God and Satan and he contains both the luminous and the dark world. I was only trying to live my life in accordance with the principles which sprang from my own true self. Why was that so very difficult?
+        If you hate a person, <div class="text-xl inline-block font-bold">Cursor</div> you hate something in him that is part of yourself. What isn't part of ourselves doesn't disturb us. 
+        I live in my dreams — that's what you sense. <div class="text-xl inline-block font-bold text-purple-700">Datadog</div> Other people live in dreams, but not in their own. That's the difference.
+        Love must not entreat,' she added, 'or demand. Love must have the strength to become certain within itself. 
+        Then it ceases merely to be attracted and <div class="text-2xl inline-block text-blue-700 font-bold">NextJS</div> begins to attract.
       </div>
     </div>
     
@@ -76,7 +84,7 @@ const message = ref('Hello, World!');
       그리고 나머지 모서리 (0,0)와 (0,450px)를 포함한 사각형 중에서
       오른쪽 부분만 텍스트가 침범하지 못하도록 합니다.
     */
-    $v-letter-width: 640px;
+    $v-letter-width: 800px;
     $v-letter-height: 800px;
     .v-letter {
       float: left;
@@ -128,8 +136,8 @@ const message = ref('Hello, World!');
       /* 테두리를 그릴 영역의 크기를 지정 (여기서는 40px 길이) */
       width: 40px;
       height: 40px;
-      border-top: 12px solid #000;
-      border-left: 12px solid #000;
+      border-top: 12px solid #1b1b1b;
+      border-left: 12px solid #1b1b1b;
       pointer-events: none;
     }
     /* 오른쪽 아래 코너에 테두리 선을 추가 */
@@ -140,8 +148,8 @@ const message = ref('Hello, World!');
       right: 0;
       width: 40px;
       height: 40px;
-      border-bottom: 12px solid #000;
-      border-right: 12px solid #000;
+      border-bottom: 12px solid #1b1b1b;
+      border-right: 12px solid #1b1b1b;
       pointer-events: none;
     }
 </style>
