@@ -41,9 +41,9 @@ function updateMessage() {
 </script>
 
 <template>
-  <div class="index-wrapper p-8 min-h-screen mx-auto max-w-7xl my-24">
+  <div class="index-wrapper min-h-screen mx-auto max-w-7xl my-24">
     <!-- Post Title Section -->
-    <section class="post-title-section">
+    <section class="post-title-section p-4">
       <div class="barcode mt-8">
         <div class="barcode-font self-end text-right text-3xl">
           WELCOME TO LEE HYUNSOO FRONTEND AREA
@@ -77,7 +77,7 @@ function updateMessage() {
     </section>
 
     <!-- Inter-band Section -->
-    <section class="inter-band text-sm">
+    <section class="inter-band text-sm px-4">
       <div class="flex justify-between">
         <span><b>{{ dayjs().format("YYYY년 MM월 DD일 ddd") }}</b></span>
         <span><u>https://lhs-source.github.io/</u></span>
@@ -87,7 +87,7 @@ function updateMessage() {
     </section>
 
     <!-- Menu Section -->
-    <section class="menu-section mt-2 pt-2 pb-4 grid gap-2">
+    <section class="menu-section mt-2 pt-2 pb-4 grid gap-2 px-4">
       <div
         v-for="menu in titleMenu"
         :key="menu.path"
@@ -100,7 +100,7 @@ function updateMessage() {
     </section>
 
     <!-- Headline Section -->
-    <section class="headline-section mt-2">
+    <section class="headline-section mt-2 px-4">
       <div class="flex gap-6">
         <article class="hor-part flex-2">
           <h1 class="text-4xl font-bold mb-2">
@@ -192,7 +192,7 @@ function updateMessage() {
       <ScrollingText direction="right" />
     </section>
 
-    <section class="mt-16">
+    <section class="mt-16 px-4">
       <div class="flex gap-4">
         <div class="">
           <img 
@@ -252,41 +252,49 @@ function updateMessage() {
 
     <!-- Career Section -->
     <section class="career-wrapper mt-32">
-      <div class="career-entry p-4">
+      <div class="career-entry">
         <div class="company-info relative">
-          <div class="w-1/2 absolute -right-10">
+          <div class="w-[45%] absolute -right-2 bottom-0">
             <img 
+              style="filter: drop-shadow(6px 6px 1px rgba(0, 0, 0, 0.7));"
               class="w-full" 
-              src="/assets/img/upboxbox.png" 
+              src="/assets/img/upboxbox2.png" 
               alt="리코 이미지" />
             <!-- <img 
               class="w-full" 
               src="/assets/img/upboxbox_multi.png" 
               alt="리코 이미지" /> -->
           </div>
-          <img 
+          <!-- <img 
             style="filter: drop-shadow(3px 3px 1px rgba(0, 0, 0, 0.7));"
             class="absolute left-0 top-0"
             src="https://cdn.jebowang.com/news/photo/202111/4427_12628_5145.png" 
-            alt="리코 로고" />
-          <div class="w-1/2 pt-[320px] pl-10">
+            alt="리코 로고" /> -->
+          <img
+            style="filter: drop-shadow(3px 3px 1px rgba(0, 0, 0, 0.7));"
+            class="absolute -top-[120px] w-full"
+            src="/assets/img/resource_connector.png" 
+            alt="리코 이미지" />
+          <div class="w-1/2 pt-[720px] ml-16">
             <h3 class="text-xl">
               2021.01.04 ~ 
               {{ dayjs().format('YYYY.MM.DD') }} 
               ({{ dayjs().diff(dayjs('2021-01-04'), 'year') }}년 
-              {{ dayjs().diff(dayjs('2021-01-04'), 'month') % 12 }}달 
+              {{ dayjs().diff(dayjs('2021-01-04'), 'month') % 12 }}개월 
               {{ dayjs().diff(dayjs('2021-01-04'), 'day') % 30 }}일)
             </h3>
             <h2 class="text-4xl font-bold">리코</h2>
-            <p class=" columns-2">
-              리코는 대한민국 폐기물 시장을 혁신하는 환경 스타트업입니다. 수집운반 토탈 서비스 '업박스(UpBox)' 서비스를 기반으로 빠르게 성장하는 스타트업 입니다.
-              리코는 시리즈 A / B / 브릿지 투자 유치에 이어 2025년 시리즈C 투자 유치에 성공하여 총 885억원의 투자를 유치하였고, 매출액 기준 매년 100% 이상 고성장을 이뤄내고 있는 환경 스타트업입니다.
-              현재 5,000여개 이상의 고객사를 보유하고 있으며, B마트, 맥도날드, 스타벅스 등의 고객에게 압도적인 품질의 폐기물 수거서비스를 제공하고 있습니다.
-
-              [UpBox는 맞춤형 폐기물 수집운반 토탈 서비스를 제공합니다.]
-              '어떤 폐기물이든 하나의 서비스로' 맞춤형 폐기물 수집운반 토탈 서비스 UpBox는 자체 폐기물 관리 소프트웨어를 통해 폐기물을 편리하게, 깨끗하게 정확하게 처리하여 기존에 만날 수 없었던 최고의 폐기물 수거서비스를 제공합니다.
-              UpBox 고객은 배출한 폐기물의 양과 탄소 배출량 등의 환경 기여 지표들을 실시간으로 확인할 수 있습니다.
-
+            <div class=" columns-2">
+              <p>
+                리코는 대한민국 폐기물 시장을 혁신하는 환경 스타트업. 수집운반 토탈 서비스 '업박스(UpBox)' 서비스를 갖는다.
+                리코는 시리즈 A / B / 브릿지 투자 유치에 이어 2025년 시리즈C 투자 유치에 성공해 총 885억원의 투자를 유치했고, 매출액 기준 매년 100% 이상 고성장을 이뤄냄.
+                현재 5,000여개 이상의 고객사를 보유.
+              </p>
+              <p>
+                <h4 class="block font-bold my-2">UpBox는 맞춤형 폐기물 수집운반 토탈 서비스를 제공.</h4>
+                <b>'어떤 폐기물이든 하나의 서비스로'</b> 맞춤형 폐기물 수집운반 토탈 서비스 UpBox는 자체 폐기물 관리 소프트웨어를 통해 폐기물을 편리하고 깨끗하고 정확하게 처리. 
+                UpBox 고객은 배출한 폐기물의 양과 탄소 배출량 등의 환경 기여 지표들을 실시간으로 확인할 수 있음.
+              </p>
               <!-- 배출 환경 개선부터 자원순환까지 최적의 폐기물 솔루션을 제공합니다.
               폐기물 배출 환경 개선. 양질의 폐자원을 생성하고 사업장 폐기물 배출 시설을 쾌적하게 관리할 수 있도록 폐기물 배출 환경을 개선합니다.
               폐기물 수거 운반. 배출량을 측정 한 뒤 GPS가 탑재 된 업박스 전용 트럭으로 폐기물을 운반하기 때문에 폐기물의 이동 경로를 추적할 수 있습니다.
@@ -296,39 +304,99 @@ function updateMessage() {
                 class="p-2" 
                 src="https://lh4.googleusercontent.com/proxy/FzctGmacmVXJ0QYGfEnnZTFtBIUxZAh1ZjmVM1H1Z83lyJAp-ujEkZQTkDxyqYqXIEHwJlxHU-ScmLCWAvCpHf1329YKxmc7MSIN0lDiFCUlmHavGQyh_KCj9rOr" 
                 alt="리코 이미지" />
-            </p>
+            </div>
           </div>
         </div>
-        <div class="what-did-i mt-10">
-          <div class="grid grid-cols-2 gap-4">
+        <div class="what-did-i mt-10 px-4">
+          <div class="grid grid-cols-2 gap-4" style="grid-template-columns: 1fr 240px;">
             <div class="">
-              <!-- <img 
-                class="p-8 px-20"
-                src="https://lh4.googleusercontent.com/proxy/FzctGmacmVXJ0QYGfEnnZTFtBIUxZAh1ZjmVM1H1Z83lyJAp-ujEkZQTkDxyqYqXIEHwJlxHU-ScmLCWAvCpHf1329YKxmc7MSIN0lDiFCUlmHavGQyh_KCj9rOr" 
-                alt="리코 이미지" /> -->
-              <div class="bg-stone-300 w-full h-[240px]">image</div>
-              <h3 class="text-xl">업박스 클라우드</h3>
-              <p>업박스 클라우드 프론트엔드 개발. 업박스 1.0, 업박스 2.0. 안드로이드 네이티브앱에 웹뷰를 활용. </p>
+              <div class="bg-stone-700 w-full p-12">
+                <img 
+                  class="w-full"
+                  src="/assets/img/macbook.png" 
+                  alt="리코 이미지" />
+              </div>
+              <div class="flex justify-center">
+                <h3 class="text-xl font-bold bg-stone-100 w-full mx-8 -mt-8 py-4 text-center">업박스 클라우드(Main project)</h3>
+              </div>
+              <p class="mt-4">
+                업박스 클라우드 프론트엔드 개발. 업박스 1.0, 업박스 2.0. 안드로이드 네이티브앱에 웹뷰를 활용. 
+                3가지 앱 타입으로 구성되며, 어드민, 드라이버, 커스터머가 있음.
+              </p>
+              <div class="grid grid-cols-3 gap-4 mt-4">
+                <div class="bg-stone-600 text-white p-4 py-8">
+                  <h3>Admn</h3>
+                  <p>
+                    업박스 클라우드 프론트엔드 개발. 업박스 1.0, 업박스 2.0. 안드로이드 네이티브앱에 웹뷰를 활용. 
+                    3가지 앱 타입으로 구성되며, 어드민, 드라이버, 커스터머가 있음.
+                  </p>
+                </div>
+                <div class="bg-stone-600 text-white p-4 py-8">
+                  <h3>Driver</h3>
+                  <p>
+                    업박스 클라우드 프론트엔드 개발. 업박스 1.0, 업박스 2.0. 안드로이드 네이티브앱에 웹뷰를 활용. 
+                    3가지 앱 타입으로 구성되며, 어드민, 드라이버, 커스터머가 있음.
+                  </p>
+                </div>
+                <div class="bg-stone-600 text-white p-4 py-8">
+                  <h3>Customer</h3>
+                  <p>
+                    업박스 클라우드 프론트엔드 개발. 업박스 1.0, 업박스 2.0. 안드로이드 네이티브앱에 웹뷰를 활용. 
+                    3가지 앱 타입으로 구성되며, 어드민, 드라이버, 커스터머가 있음.
+                  </p>
+                </div>
+              </div>
             </div>
-            <div class="">
-              <div class="bg-stone-300 w-full h-[240px]">image</div>
-              <h3 class="text-xl">업박스 홈페이지</h3>
-              <p>업박스 홈페이지 유지보수 및 개편. 서버리스를 위해 Google Sheet 로 데이터 관리. Next 로 CMS 구현. Firebase Firestore, Google OAuth. Summernote 제작자와 함께 포팅 작업 진행.</p>
+            <div class="border-l-2 border-stone-800 pl-4">
+              <div class="bg-stone-300 w-full h-[144px]">image</div>
+              <h3 class="text-xl font-bold">업박스 홈페이지</h3>
+              <p>
+                업박스 홈페이지 유지보수 및 개편. 서버리스를 위해 Google Sheet 로 데이터 관리. Next 로 CMS 구현. Firebase Firestore, Google OAuth. Summernote 제작자와 함께 포팅 작업 진행.
+                <a class="block" href="https://upbox.us/" target="_blank">https://upbox.us/</a>
+              </p>
+
+              <div class="bg-stone-300 w-full h-[144px] ">image</div>
+              <h3 class="text-xl font-bold">리코 홈페이지</h3>
+              <p>
+                업박스 홈페이지 유지보수 및 개편. 서버리스를 위해 Google Sheet 로 데이터 관리. Next 로 CMS 구현. Firebase Firestore, Google OAuth. Summernote 제작자와 함께 포팅 작업 진행.
+                <a class="block" href="https://recokr.com/" target="_blank">https://recokr.com/</a>
+              </p>
             </div>
           </div>
         </div>
       </div>
       <!-- Honeycomb Skills Section -->
-      <div class="honeycomb-skills p-12 flex justify-center">
-        <div class="honeycomb-skills-container">
-          <div>Vue</div>
-          <div>Typescript</div>
-          <div>Android</div>
-          <div>AWS</div>
-          <div>Datadog</div>
-          <div>Figma</div>
-          <div>Attlasian</div>
-          <div>Github</div>
+      <div class="grid grid-cols-5 mt-8 p-8">
+        <div class="border-b border-stone-800 p-4">
+          <h3>Vue</h3>
+          <p>Upbox 1.0 개발하며 Vue2 + vue cli + Typescript 사용</p>
+        </div>
+        <div class="border-b border-l border-stone-800 p-4">
+          <h3>Typescript</h3>
+        </div>
+        <div class="border-b border-l border-stone-800 p-4">
+          <h3>Android</h3>
+        </div>
+        <div class="border-b border-l border-stone-800 p-4">
+          <h3>AWS</h3>
+        </div>
+        <div class="border-b border-l border-stone-800 p-4">
+          <h3>Datadog</h3>
+        </div>
+        <div class="p-4">
+          <h3>Figma</h3>
+        </div>
+        <div class="border-l border-stone-800 p-4">
+          <h3>Attlasian</h3>
+        </div>
+        <div class="border-l border-stone-800 p-4">
+          <h3>Github</h3>
+        </div>
+        <div class="border-l border-stone-800 p-4">
+          <h3>Github</h3>
+        </div>
+        <div class="border-l border-stone-800 p-4">
+          <h3>Github</h3>
         </div>
       </div>
 
@@ -346,7 +414,7 @@ function updateMessage() {
               2017.01.02 ~ 
               {{ dayjs('2020-12-31').format('YYYY.MM.DD') }} 
               ({{ dayjs('2020-12-31').diff(dayjs('2017-01-02'), 'year') }}년 
-              {{ dayjs('2020-12-31').diff(dayjs('2017-01-02'), 'month') % 12 }}달 
+              {{ dayjs('2020-12-31').diff(dayjs('2017-01-02'), 'month') % 12 }}개월 
               {{ dayjs('2020-12-31').diff(dayjs('2017-01-02'), 'day') % 30 }}일)
             </h3>
             <!-- <img 
@@ -368,7 +436,7 @@ function updateMessage() {
             </p>
           </div>
         </div>
-        <div class="what-did-i">
+        <div class="what-did-i px-4">
           <div class="grid grid-cols-3 gap-4">
             <div class="">
               <img 
