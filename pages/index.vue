@@ -185,6 +185,60 @@ function updateMessage() {
       </div>
     </section>
 
+    <!-- 취미 등 -->
+    <section class="mt-16">
+      <div class="grid" style="grid-template-columns: 1fr 2fr;">
+        <div class="flex " style="grid-row: 1 / 4;">
+          <img src="/assets/img/boxing.jpg" class="h-64" />
+          <div>
+            <h3 class="text-xl font-bold mb-2">BOXING</h3>
+            <p>
+              복싱은 나의 체력과 체력을 향상시키는 좋은 방법입니다. 
+            </p>
+            <p class="bg-stone-300 p-1">
+              영등포구청 생활체육 대회 우승.
+            </p>
+          </div>
+        </div>
+        <div class="flex ">
+          <img src="/assets/img/boxing.jpg" class="h-16" />
+          <div>
+            <h3 class="text-xl font-bold">DRAWING</h3>
+            <p>
+              어렸을 때부터 그림을 자주 그려옴
+            </p>
+            <p class="bg-stone-300 p-1">
+              인스타 : @iddms5446
+            </p>
+          </div>
+        </div>
+        <div class="flex ">
+          <img src="/assets/img/boxing.jpg" class="h-16" />
+          <div> 
+            <h3 class="text-xl font-bold">MOVIE, BOOK</h3>
+            <p>
+              훌륭환 작품을 찾아봄. 넓은 영역 보다는 좋아하는 좁은 영역을 주로 즐기며, 책은 최근에 습관적으로 읽기 시작.
+            </p>
+            <p class="bg-stone-300 p-1">
+              헤어질 결심, 슬픔의 삼각형, 애프터 양, 랍스터
+            </p>
+          </div>
+        </div>
+        <div class="flex ">
+          <img src="/assets/img/boxing.jpg" class="h-16" />
+          <div>
+            <h3 class="text-xl font-bold">ANIME, FIGURE</h3>
+            <p>
+              애니를 좋아하며, 피규어를 수집함. 
+            </p>
+            <p class="bg-stone-300 p-1">
+              나루토, 진격의 거인, 슈타인즈 게이트
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <!-- Scrolling and 3D Components -->
     <section class="mt-16">
       <ScrollingText />
