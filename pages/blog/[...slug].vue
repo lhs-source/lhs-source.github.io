@@ -7,8 +7,10 @@ const route = useRoute();
 console.log('route.params.slug', route.params.slug);
 const { data: article } = await useAsyncData(route.path, () =>
   // 파일 이름을 [...slug].vue 로 하면 route.params.slug 로 접근 가능
-  queryCollection("blog").path(route.path).first()
+  queryContent("blog").where({ filename: route.params.slug[0] }).findOne()
 );
+
+console.log('article?.value', article?.value);
 
 // {
 //    "toc": { 

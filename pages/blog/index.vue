@@ -17,6 +17,7 @@ const blog = ref<any[]>([]);
 const route = useRoute();
 const { data: blogData } = await useAsyncData(route.path, () => queryContent('blog').find());
 if(blogData.value) {
+  console.log('blogData.value', blogData.value);
   blog.value = blogData.value.sort((a, b) => {
     return dayjs(b.updated).unix() - dayjs(a.updated).unix();
   });
