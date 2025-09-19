@@ -725,6 +725,20 @@ function updateMessage() {
     url('/assets/gray-dirty-paperboard_95678-93.avif');
   background-size: 626px 443px;
 
+  a {
+    color: #2b8e61;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    font-weight: 700;
+    &::after {
+      // link icon
+      content: '🔗';
+      margin-left: 4px;
+      font-size: 12px;
+      vertical-align: middle;
+    }
+  }
+
 }
 
 /* Barcode font styling */
@@ -853,18 +867,4 @@ function updateMessage() {
   }
 }
 
-
-a {
-  color: #2b8e61;
-  text-decoration: underline;
-  text-underline-offset: 3px;
-  font-weight: 700;
-  &::after {
-    // link icon
-    content: '🔗';
-    margin-left: 4px;
-    font-size: 12px;
-    vertical-align: middle;
-  }
-}
 </style>

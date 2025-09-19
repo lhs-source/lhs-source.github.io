@@ -142,7 +142,7 @@
 <script setup lang="ts">
 import { ref, reactive, computed, onMounted, onUnmounted } from 'vue'
 import { useHead, useSeoMeta } from '#app'
-import Header from '~/components/Header.vue'
+import Header from '~/components/GlobalHeader.vue'
 import { generate, solve, hint, candidateAll } from '~/lib/sudoku/index'
 import type { Board, Difficulty, SolvingResult } from '~/lib/sudoku/types'
 
