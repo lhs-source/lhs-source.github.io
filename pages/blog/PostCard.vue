@@ -2,95 +2,152 @@
 import dayjs from 'dayjs';
 
 interface BlogPost {
-  title: string;
-  subject: string;
-  tags: string;
-  created: string;
-  updated: string;
+  id: string;       // "blog/blog/npm-rollup-os.md"
+  title: string;    // "npm 의존성 설치 문제 애플 실리콘에서의 Rollup 패키지 (npm ERR notsup Unsupported platform for rollup-darwin-arm64)"
+  subject: string;  // "Node"
+  tags: string;     // ['rollup', 'error', 'dependencies', 'node', 'npm']
+  volume: string;   // "short" "long" "medium"
+  created: string;  // "2025-01-20"
+  updated: string;  // "2025-01-20"
   image: string;
-  description: string;
-  _path: string;
+  description: string;  // "npm의 의존성 설치 실패 문제. @rollup/rollup-darwin-arm64 패키지가 애플 실리콘에서만 설치 가능하다. Windows 및 Linux 환경에서의 설치 불가 원인. optionalDependencies의 사용 방법."
+  _path: string;     // "/blog/npm-rollup-os"
 }
 const props = defineProps<{
   post: BlogPost;
 }>();
 
+const volumeString = computed(() => {
+  switch(props.post.volume) {
+    case 'short': return '짧은글';
+    case 'long': return '긴글';
+    case 'medium': return '중간글';
+  }
+});
+
 </script>
 <template>
-  <Card class="post-card-wrapper text-stone-700">
-    <CardHeader class="min-h-[50%]">
-      <div class="mt-2">
-        <div class="text-sm text-stone-600 dark:text-stone-400 mt-2">
-          {{ dayjs(post.created).format('YYYY-MM-DD') }} <template v-if="post.updated !== post.created">[수정: {{ dayjs(post.updated).format('YYYY-MM-DD') }}]</template>
-        </div>
+  <article class="post-card-wrapper">
+    <!-- Post Header -->
+    <div class="post-header">
+      <div class="post-date">
+        {{ dayjs(post.created).format('YYYY년 MM월 DD일') }}
+        <template v-if="post.updated !== post.created">
+          <span class="update-info">[수정: {{ dayjs(post.updated).format('MM-DD') }}]</span>
+        </template>
       </div>
-      <a 
-        :href="post._path" 
-        class="hover:underline text-stone-600 hover:text-blue-500 dark:text-stone-300 dark:hover:text-blue-300">
-        <h2 class="text-xl font-bold">
+      
+      <a :href="post._path" class="post-title-link">
+        <h2 class="post-title">
           {{ post.title }}
         </h2>
       </a>
-      <div v-if="post.tags" class="flex flex-wrap gap-1 mt-2">
-        <span v-for="tag of post.tags" :key="tag">
-          <Badge variant="secondary">
-            {{ tag }}
-          </Badge>
-        </span>
-      </div>
-    </CardHeader>
-    <CardContent class="post-card-description">
+      <div class="text-sm">{{ post.subject }} {{ volumeString }}</div>
+      
+    </div>
+    
+    <!-- Post Content -->
+    <div class="post-content">
       <img 
         v-if="post.image" 
-        class="w-full" 
+        class="post-image" 
         :src="`/images/${post.image}`" 
         :alt="`image for ${post.title} article`" />
-      <p class="mt-2 pt-4 font-medium text-stone-700 dark:text-stone-300">{{ post.description }}</p>
-    </CardContent>
-    <CardFooter>
-    </CardFooter>
-  </Card>
+      <p class="post-description">{{ post.description }}</p>
+    </div>
+    
+    <!-- Post Footer -->
+    <footer class="post-footer">
+      <div v-if="post.tags" class="post-tags">
+        <span v-for="tag of post.tags" :key="tag" class="post-tag">
+          {{ tag }}
+        </span>
+      </div>
+    </footer>
+  </article>
 </template>
-<style scoped>
-@font-face {
-  font-family: 'Pretendard-Regular';
-  src: url('https://fastly.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff') format('woff');
-  font-weight: 400;
-  font-style: normal;
-}
+<style lang="scss" scoped>
+@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@200..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,100..900;1,100..900&display=swap');
 
-a {
-  text-decoration: none;
-}
 .post-card-wrapper {
-  position: relative;
-  left: 16px;
-  line-height: 1.4;
+  background: white;
+  border: 2px solid #3d3d29;
+  border-radius: 0;
+  padding: 0;
+  margin-bottom: 16px;
+  box-shadow: 4px 4px 0px rgba(61, 61, 41, 0.3);
+  font-family: 'Noto Serif KR', 'Noto Serif', sans-serif;
+  line-height: 1.5;
 }
-.post-card-wrapper::after {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: -16px;
-  width: 100%;
-  height: 100%;
-  background-color: #35495e;
-  border-top-left-radius: 6px;
-  border-bottom-left-radius: 6px;
-  z-index: -1;
-}
-.post-card-description {
-  /* position: relative;
-  left: -6%;
-  right: -30px;
-  width: 108%;
-  background-color: #35495e;
-  font-weight: 400; */
 
-  /* font-family: "Pretendard-Regular", serif;
-  font-weight: 400;
-  font-style: normal; */
+.post-header {
+  padding: 16px 20px 12px;
+  border-bottom: 1px solid #e0e0e0;
   
+  .post-date {
+    font-size: 0.8rem;
+    color: #666;
+    margin-bottom: 4px;
+    font-weight: 500;
+    
+    .update-info {
+      color: #999;
+      font-size: 0.75rem;
+    }
+  }
+  
+  .post-title-link {
+    text-decoration: none;
+    color: inherit;
+  }
+  
+  .post-title {
+    font-size: 1.2rem;
+    font-weight: bold;
+    margin: 0 0 12px 0;
+    line-height: 1.3;
+    color: #1f1f14;
+  }
 }
 
+.post-content {
+  padding: 16px 20px;
+  
+  .post-image {
+    width: 100%;
+    height: auto;
+    margin-bottom: 12px;
+    border: 1px solid #ddd;
+  }
+  
+  .post-description {
+    font-size: 0.9rem;
+    color: #333;
+    margin: 0;
+    line-height: 1.6;
+    text-align: justify;
+  }
+}
+  
+.post-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  
+  .post-tag {
+    background: #f0f0f0;
+    border: 1px solid #ccc;
+    padding: 2px 8px;
+    font-size: 0.75rem;
+    color: #2b2b2b;
+    border-radius: 0;
+  }
+}
+
+.post-footer {
+  padding: 12px 20px 16px;
+  border-top: 1px solid #e0e0e0;
+  background: #f8f8f8;
+}
 </style>

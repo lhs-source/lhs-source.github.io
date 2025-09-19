@@ -2,7 +2,7 @@
 title: Postman 으로 FCM 알림 테스트하기
 description: FCM 알림을 테스트하는 간단한 방법. Postman 을 비롯한 curl 기반 HTTP 요청 프로그램으로 테스트하기.
 subject: Android
-volumne: short
+volume: short
 tags: 
   - Android
   - FCM

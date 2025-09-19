@@ -11,11 +11,17 @@ import {
 
 // 헤더 메뉴 목록
 const menuList = [{
-    label: '더미 메뉴1',
-    value: '',
+    label: '간헐적 단식',
+    value: '/fasting-timer',
   }, {
-    label: '더미 메뉴2',
-    value: '',
+    label: '블로그',
+    value: '/blog',
+  }, {
+    label: '스도쿠',
+    value: '/sudoku',
+  }, {
+    label: '스터디',
+    value: '/study',
   }
 ]
 </script>
@@ -34,12 +40,10 @@ const menuList = [{
       </div>
       <NavigationMenu class="menu-list flex items-center gap-4">
         <NavigationMenuList>
-          <NavigationMenuItem>
-            <NavigationMenuLink href="/"
+          <NavigationMenuItem v-for="menu of menuList" :key="menu.label">
+            <NavigationMenuLink :href="menu.value"
               class="menu cursor-pointer select-none text-stone-200 no-underline" 
-              :class="navigationMenuTriggerStyle()"
-              v-for="menu of menuList" 
-              :key="menu.label">
+              :class="navigationMenuTriggerStyle()">
               {{ menu.label }}
             </NavigationMenuLink>
           </NavigationMenuItem>
@@ -77,7 +81,7 @@ header {
 .header-row.slot {
   display: none;
 }
-@media screen and (max-width: $media-toc) {
+@media screen and (max-width: 768px) {
   .header-row.slot {
     display: block;
   }

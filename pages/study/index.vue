@@ -48,7 +48,7 @@ const pageList = [
   </div>
 </template>
 
-<style>
+<style scoped>
 .page-index-wrapper {
   min-height: 100vh;
   background-color: #242424;

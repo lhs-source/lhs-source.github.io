@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { nextTick, onMounted, ref, watch } from 'vue';
-import Header from '../components/Header.vue';
+import Header from '../components/GlobalHeader.vue';
 import HeaderSubPost from '../components/HeaderSubPost.vue';
 import LeftNavigation from '../components/LeftNavigation.vue';
 import { onBeforeRouteUpdate, useRoute } from 'vue-router';

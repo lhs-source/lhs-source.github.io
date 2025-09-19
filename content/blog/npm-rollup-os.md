@@ -16,12 +16,14 @@ filename: npm-rollup-os
 
 
 ::cardlink
+---
 url: https://github.com/rollup/rollup/issues/5295#issuecomment-1942985686
 title: "Unsupported platform · Issue #5295 · rollup/rollup"
 description: "Rollup Version 4.8.0 Operating System (or Browser) MacOS M2 Pro Node Version (if applicable) 20.10.0 Link To Reproduction Nuxt 3, npm i Expected Behaviour module should be installed as expected. Ac..."
 host: github.com
 favicon: https://github.githubassets.com/favicons/favicon.svg
 image: https://opengraph.githubassets.com/4f1a9d9ff77dc018315c5faae0716be8d6e371e7a8f96f7acf8f9e0a847b5069/rollup/rollup/issues/5295
+---
 ::
 
 

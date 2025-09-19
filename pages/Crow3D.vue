@@ -9,7 +9,7 @@ onMounted(() => {
   let crowModel: any = null;
   let mouseX = 0;
   let mouseY = 0;
-  const width = 1024;
+  const width = 1440;
 
   // ✅ 초기 회전값 (오른쪽 45도)
   const initialRotation = new THREE.Euler(0, Math.PI / 3, 0, "YXZ");
@@ -23,7 +23,7 @@ onMounted(() => {
 
   const scene = new THREE.Scene();
   const aspectRatio = width / (width / 2);
-  const camera = new THREE.PerspectiveCamera(40, aspectRatio, 0.1, 1000);
+  const camera = new THREE.PerspectiveCamera(40, aspectRatio, 0.1, 800);
 
   const renderer = new THREE.WebGLRenderer({
     alpha: true,
@@ -33,7 +33,7 @@ onMounted(() => {
   renderer.setSize(width, width / 2);
   renderer.setPixelRatio(window.devicePixelRatio);
   three.value?.appendChild(renderer.domElement);
-  camera.position.set(0, 0, 10);
+  camera.position.set(0, -0.5, 10);
 
   // ✅ 최대 회전 범위 설정 (각도 제한)
   const maxMouseRotation = {
@@ -117,11 +117,11 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="relative w-full h-[512px]">
+  <div class="relative w-full h-[600px]">
     <div class="absolute inset-0 flex flex-col leading-[0.9] items-center justify-center z-0">
       <span class="font-bold text-stone-800 text-[400px] leading-none w-full text-center">CROW</span>
     </div>
-    <div id="three" ref="three" class="absolute inset-0 z-10" style="width: calc(100%); height: 50vw"></div>
+    <div id="three" ref="three" class="absolute inset-0 z-10" style="width: calc(100%); height: 60vw"></div>
   </div>
 </template>
 

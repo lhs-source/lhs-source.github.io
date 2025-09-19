@@ -11,7 +11,7 @@ title: tailwindcss 4.0.8 버전 storybook 호환성 오류
 description: tailwindcss 와 storybook 의 호환성 문제 해결 과정. 특정 버전의 문제로 핫픽스 적용.
 subject: Tailwindcss
 filename: tailwindcss-storybook-version-error
-volumne: medium
+volume: medium
 ---
 
 ## Error: ENOENT: no such file or directory, stat 'C:\Users\PROJECTPATH\iframe.html'
@@ -61,21 +61,25 @@ path: 'C:\Users\PROJECTPATH\iframe.html'
 iframe.html 파일을 찾지 못해서 발생한 에러이다. storybook 과 tailwindcss 를 같이 사용할 때, 미리보기 파일이 생성이 안되면서 발생하는 것으로 보인다.
 
 ::cardlink
+---
 url: https://github.com/tailwindlabs/tailwindcss/issues/16785
 title: "4.0.8 + Vite + Storybook = new crash · Issue #16785 · tailwindlabs/tailwindcss"
 description: "What version of Tailwind CSS are you using? v4.0.8 What build tool (or framework if it abstracts the build tool) are you using? Storybook v8.5.8 Vite v5.4.14 What version of Node.js are you using? ..."
 host: github.com
 favicon: https://github.githubassets.com/favicons/favicon.svg
 image: https://opengraph.githubassets.com/e7a6f8fe1ba78e023dbfa9f44388e93bcbe3c43841cf0e9034777d276d47677c/tailwindlabs/tailwindcss/issues/16785
+---
 ::
 
 ::cardlink
+---
 url: https://github.com/tailwindlabs/tailwindcss/pull/16780
 title: "Vite: Don't crash with virtual module dependencies by philipp-spiess · Pull Request #16780 · tailwindlabs/tailwindcss"
 description: "Fixes #16732If we can not get the mtime from a file, chances are that the resource is a virtual module. This is perfectly legit and we can fall back to what we did before the changes in 4.0.8 (whi..."
 host: github.com
 favicon: https://github.githubassets.com/favicons/favicon.svg
 image: https://opengraph.githubassets.com/f4e77eb4132aa99f9be1cfadae376ec84a4a99df80f95e1692ae31ba1d1ef10a/tailwindlabs/tailwindcss/pull/16780
+---
 ::
 
 헤당 이슈 혹은 비슷한 이슈가 이미 오픈되어 있었다. 이 문제를 발견한 시점으로부터 바로 하루 전이었다.

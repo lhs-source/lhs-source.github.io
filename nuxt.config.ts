@@ -2,14 +2,12 @@
 export default defineNuxtConfig({
   devtools: { enabled: true },
   css: ['~/assets/css/main.css'],
-
   postcss: {
     plugins: {
       tailwindcss: {},
       autoprefixer: {},
     },
   },
-
   modules: [
     "@nuxt/content",
     "shadcn-nuxt",
@@ -18,26 +16,30 @@ export default defineNuxtConfig({
     "@nuxt/image",
     '@pinia/nuxt',
   ],
-
   content: {
-    markdown: {
-      toc: {
-        depth: 2,
-        searchDepth: 2
+    build: {
+      markdown: {
+        toc: {
+          depth: 2,
+          searchDepth: 2
+        },
       },
-    },
-    highlight: {
-      theme: 'github-dark',
-    },
+      // highlight: {
+      //   theme: 'github-dark',
+      // },
+    }
   },
-
+  mdc: { },
   colorMode: {
     classSuffix: ''
   },
-
   pinia: {
     // autoImports: ['defineStore', 'acceptHMRUpdate'],
   },
-
   compatibilityDate: '2025-01-20',
+  nitro: {
+    prerender: {
+      routes: ['/sitemap.xml']
+    }
+  }
 })
