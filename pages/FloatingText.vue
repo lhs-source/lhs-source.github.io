@@ -8,9 +8,6 @@ const message = ref('Hello, World!');
 
 <template>
   <div class="container">
-    <div class="bordered-div mb-16 mt-32 text-center">
-      언어는 도구일 뿐, 사용하기 나름이다.
-    </div>
     <!-- V 글자 (회전 없이 일반 텍스트로 표시) -->
     <div class="v-letter">
       <div class="svg-container absolute -left-[100px] h-[500px]">
@@ -23,7 +20,7 @@ const message = ref('Hello, World!');
         </svg>
       </div>
     </div>
-    <h1 class=" absolute top-[320px] right-[64px] text-[84px] font-bold mix-blend-difference text-stone-400 transform -rotate-70">
+    <h1 class=" absolute top-8 right-[64px] text-[84px] font-bold mix-blend-difference text-stone-400 transform -rotate-70">
       SKILL STACK
     </h1>
     <div class="text-group mr-12">
@@ -59,6 +56,9 @@ const message = ref('Hello, World!');
         Love must not entreat,' she added, 'or demand. Love must have the strength to become certain within itself. 
         Then it ceases merely to be attracted and <div class="text-2xl inline-block text-blue-700 font-bold">NextJS</div> begins to attract.
       </div>
+    </div>
+    <div class="bordered-div mb-16 mt-12 p-16 text-center">
+      언어는 도구일 뿐, 사용하기 나름이다.
     </div>
     
   </div>
@@ -123,7 +123,6 @@ const message = ref('Hello, World!');
       width: 100%;
       display: inline-block;
       position: relative; /* pseudo-element의 위치 기준 */
-      padding: 40px;
       // background-color: #214f31; /* 필요에 따라 배경색 지정 */
       mix-blend-mode: hard-light;
     }

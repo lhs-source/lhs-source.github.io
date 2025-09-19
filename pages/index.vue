@@ -185,8 +185,10 @@ function updateMessage() {
       </div>
     </section>
 
+    <FloatingText />
+
     <!-- 취미 등 -->
-    <section class="mt-16">
+    <section class="mx-4">
       <div class="grid" style="grid-template-columns: 1fr 2fr;">
         <div class="flex " style="grid-row: 1 / 4;">
           <img src="/assets/img/boxing.jpg" class="h-64" />
@@ -240,7 +242,7 @@ function updateMessage() {
     </section>
 
     <!-- Scrolling and 3D Components -->
-    <section class="mt-16">
+    <section class="mt-8">
       <ScrollingText />
       <Crow3D />
       <ScrollingText direction="right" />
@@ -250,6 +252,7 @@ function updateMessage() {
       <div class="flex gap-4">
         <div class="">
           <img 
+            class="border"
             src="/assets/img/datadog.png"
             style="width: 100%; object-fit: cover; object-position: 50% 30%;"/>
           <div class="flex flex-col justify-center items-center my-8">
@@ -287,26 +290,24 @@ function updateMessage() {
         </div>
         <div class="flex flex-col gap-4 min-w-[100px]">
           <div class="w-full">
-            <img src="/assets/img/datadog_1.png" class="w-full"/>
+            <img src="/assets/img/datadog_1.png" class="w-full border"/>
             <h5>에러 대응 케이스</h5>
           </div>
           <div class="w-full">
-            <img src="/assets/img/datadog_2.png" class="w-full"/>
+            <img src="/assets/img/datadog_2.png" class="w-full border"/>
             <h5>데이터 기반 의사결정</h5>
           </div>
           <div class="w-full">
-            <img src="/assets/img/datadog_3.png" class="w-full"/>
+            <img src="/assets/img/datadog_3.png" class="w-full border"/>
             <h5>사용성 측정 및 대시보드</h5>
           </div>
         </div>
       </div>
     </section>
-
-    <FloatingText />
     
     <!-- <hr class="my-16 mt-[240px] mx-4"/> -->
 
-    <div class="flex justify-center items-center mt-[320px]">
+    <div class="flex justify-center items-center mt-8 border-t">
       <h2 class="text-4xl font-bold bg-stone-800 text-white px-[240px] py-2">Career</h2>
     </div>
 
@@ -335,7 +336,7 @@ function updateMessage() {
             class="w-full"
             src="/assets/img/resource_connector.png" 
             alt="리코 이미지" />
-          <div class="w-1/2 pt-[240px] ml-16">
+          <div class="w-1/2 pt-[240px] ml-24">
             <h3 class="text-xl">
               2021.01.04 ~ 
               {{ dayjs().format('YYYY.MM.DD') }} 
@@ -372,7 +373,7 @@ function updateMessage() {
             </div>
           </div>
         </div>
-        <div class="what-did-i mt-32 px-4 border-t border-b border-stone-800">
+        <div class="what-did-i mt-32 px-4 border-stone-800">
           <div class="grid grid-cols-2 gap-4" style="grid-template-columns: 1fr 240px;">
             <div class="pb-8">
               <div class="w-full p-12">
@@ -469,7 +470,7 @@ function updateMessage() {
                     Datadog
                   </div>
                   <p>
-                    Datadog 을 도입하여 에러 모니터링과 사용성 측정을 진행함.
+                    Datadog 을 도입하여 에러 모니터링과 사용성 측정을 진행함. 사용성을 지표로 측정하여, 기능의 효과를 수치로 확인하고 개선함.
                   </p>
                 </div>
                 <div class="flex items-center">
@@ -501,12 +502,21 @@ function updateMessage() {
                     Test
                   </div>
                   <p>
-                    Vitest 를 활용한 유닛테스트. 모듈화된 코드를 작성하여 테스트를 용이하게 하고 유지보수성을 높임.
+                    Vitest 를 활용한 유닛테스트. 모듈화된 코드를 작성하여 테스트를 용이하게 하고 유지보수성을 높임. ai 를 활용해 
+                  </p>
+                </div>
+                <div class="flex items-center">
+                  <div class="bg-stone-300 min-w-[108px] h-[64px] flex items-center justify-center mr-4">
+                    CICD
+                  </div>
+                  <p>
+                    Girhub Actions 를 사용한 CICD 구축. 브랜치 전략과 종합하여, CI의 자동화 및 특정 브랜치를 수동으로 배포할 수 있도록 구축. 
+                    production 배포 시 코드 프리즈를 통해 빌드를 미리 준비하고, 정해진 시간에 버튼 한 번으로 배포.
                   </p>
                 </div>
               </div>
             </div>
-            <div class="border-l-2 border-stone-800 pl-4 py-8">
+            <div class="pl-4 py-8">
               <div class="bg-stone-300 w-full h-[144px]"></div>
               <a class="block text-sm mt-4" href="https://upbox.us/" target="_blank">https://upbox.us/</a>
               <h3 class="text-xl font-bold mb-4">업박스 홈페이지</h3>
@@ -564,7 +574,7 @@ function updateMessage() {
           <div class="flex-1 w-[120px]">
             <img 
               style="filter: drop-shadow(3px 3px 1px rgba(0, 0, 0, 0.7)); transform: translateX(-80px) rotate(-20deg);"
-              class="min-w-[320px] relative left-32 top-12"
+              class="min-w-[320px] relative left-24 top-12"
               src="/assets/img/bank_bee.png" 
               alt="뱅크비 로고" />
           </div>
@@ -773,7 +783,7 @@ function updateMessage() {
     clear: both;
     float: left;
     shape-outside: polygon(0% 0%, 25% 0%, 100% 50%, 25% 100%, 0% 100%);
-    width: 100px;
+    width: 60px;
     height: 400px;
   }
 }
@@ -784,7 +794,7 @@ function updateMessage() {
     clear: both;
     float: right;
     shape-outside: polygon(100% 0%, 75% 0%, 0% 50%, 75% 100%, 100% 100%);
-    width: 100px;
+    width: 60px;
     height: 400px;
   }
 }
