@@ -11,7 +11,7 @@ title: tailwindcss 4.0.8 버전 storybook 호환성 오류
 description: tailwindcss 와 storybook 의 호환성 문제 해결 과정. 특정 버전의 문제로 핫픽스 적용.
 subject: Tailwindcss
 filename: tailwindcss-storybook-version-error
-volumne: medium
+volume: medium
 ---
 
 ## Error: ENOENT: no such file or directory, stat 'C:\Users\PROJECTPATH\iframe.html'

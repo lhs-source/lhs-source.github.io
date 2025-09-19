@@ -2,7 +2,7 @@
 title: css variables 에 투명도 조절 (color-mix 함수)
 description: CSS 변수의 투명도를 조절하는 방법을 자세히 다루고, color-mix 함수를 통해 배경에 효과적인 투명도를 적용하는 기법을 소개한다. 다양한 컬러 코드 및 변수를 활용하여 디자인에 깊이를 더하는 방법을 배울 수 있다
 subject: CSS
-volumne: short
+volume: short
 tags:
   - css
   - tailwindcss

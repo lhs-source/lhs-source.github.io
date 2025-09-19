@@ -15,7 +15,7 @@ import PostCard from './PostCard.vue';
 // updated 기준으로 내림차순 정렬
 const blog = ref<any[]>([]);
 const route = useRoute();
-const { data: blogData } = await useAsyncData(route.path, () => queryCollection("blog").all());
+const { data: blogData } = await useAsyncData(route.path, () => queryContent('blog').find());
 if(blogData.value) {
   blog.value = blogData.value.sort((a, b) => {
     return dayjs(b.updated).unix() - dayjs(a.updated).unix();
@@ -42,10 +42,12 @@ const selectedTag = ref<string | null>(null);
 async function onClickTag(tag: { tagName: string, count: number } | null) {
   if(tag === null) {
     selectedTag.value = null;
-    blog.value = await queryCollection("blog").all();
+    const { data } = await queryContent('blog').find();
+    blog.value = data || [];
   } else {
     selectedTag.value = tag.tagName;
-    blog.value = await queryCollection("blog").where(selectedTag.value, "IN", "tags").all();
+    const { data } = await queryContent('blog').where({ tags: { $in: [selectedTag.value] } }).find();
+    blog.value = data || [];
     console.log('blog.value', blog.value);
   }
 }

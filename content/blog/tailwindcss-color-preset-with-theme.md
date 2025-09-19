@@ -2,7 +2,7 @@
 title: tailwindcss color 프리셋 적용하기
 description: Tailwind CSS의 테마 커스터마이징 방법을 소개하며, 사용자 정의 색상 변수를 설정하여 디자인을 개선하는 기술을 다룬다. 다양한 테마 설정과 CSS 변수 사용 사례를 통해 원하는 스타일을 구현하는 방법을 배울 수 있다.
 subject: CSS
-volumne: short
+volume: short
 tags:
   - css
   - tailwindcss
