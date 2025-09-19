@@ -34,6 +34,28 @@ const careerData = ref([
     period: '2021년 1월 ~ 재직중',
     duration: '약 4년 8개월',
     position: '프론트엔드 개발자',
+    problemSolving: [
+      {
+        title: '기술 스택 의사결정',
+        description: '업박스 클라우드 1.0 개발 당시 Typescript 도입을 적극 도입하여 잠재적 타입 버그 제거. 업박스 클라우드 2.0 개발 착수 당시 기술 분석을 통해 Vue3 로 결정(React 와 비교)'
+      },
+      {
+        title: '구글 심사 시 원하지 않을 때 배포되는 문제',
+        description: '관리형 게시를 사용해 원하는 때에 배포하는 간단한 시스템 활용'
+      },
+      {
+        title: '버전 캐시 문제',
+        description: '데이터독 도입으로 오동작을 일으키는 케이스가 버전 문제가 대다수임을 확인. 버전 비교를 통해 캐시를 무효화하고 최신 FE 앱을 받을 수 있도록 구현하여 에러 발생 빈도 90프로 가량 제거. 기존 1주일 간 이전 버전을 사용하는 케이스 다수 → 최대 2일 안에 모든 사용자 최신 버전 사용'
+      },
+      {
+        title: '프론트 개발자 사이의 컨벤션이 맞지 않는 문제',
+        description: '서로 다른 IDE 사용, 코딩 컨벤션 결정, lint 도입으로 기계의 도움을 받아 누락되는 케이스 제거'
+      },
+      {
+        title: 'css 단일 속성 class 증가 문제',
+        description: '빠른 css 속성 적용을 위해 글로벌 단위의 단일 속성 class 를 지속적으로 추가하게 됨. tailwindcss 의 utility class 를 활용하여 직접 정의하는 것보다는 공통된 컨벤션으로 작업할 수 있게 됨'
+      }
+    ],
     projects: [
       {
         name: '업박스 클라우드 - 폐기물처리 플랫폼',
@@ -58,7 +80,7 @@ const careerData = ref([
         responsibilities: [
           '각 홈페이지를 유지보수하고, 인바운드 측정을 위해 마케팅팀과 협업하여 데이터를 수집'
         ]
-      }
+      },
     ]
   },
   {
@@ -289,6 +311,21 @@ const presentationData = ref([
                   {{ responsibility }}
                 </li>
               </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- 문제 해결 경험 섹션 -->
+        <div v-if="career.problemSolving" class="problem-solving-section">
+          <h4 class="problem-solving-title">문제 해결 경험</h4>
+          <div class="problem-solving-items">
+            <div 
+              v-for="problem in career.problemSolving" 
+              :key="problem.title"
+              class="problem-item"
+            >
+              <h5 class="problem-title">{{ problem.title }}</h5>
+              <p class="problem-description">{{ problem.description }}</p>
             </div>
           </div>
         </div>
@@ -672,6 +709,45 @@ const presentationData = ref([
       margin-bottom: 0;
     }
   }
+}
+
+/* Problem Solving Section */
+.problem-solving-section {
+  margin-top: 30px;
+  padding-top: 20px;
+  border-top: 1px solid #e9ecef;
+}
+
+.problem-solving-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: #333;
+  margin: 0 0 20px 0;
+}
+
+.problem-solving-items {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.problem-item {
+  border-left: 3px solid #28a745;
+  padding-left: 16px;
+}
+
+.problem-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: #333;
+  margin: 0 0 8px 0;
+}
+
+.problem-description {
+  color: #555;
+  margin: 0;
+  font-size: 13px;
+  line-height: 1.5;
 }
 
 /* Freelance Projects */
