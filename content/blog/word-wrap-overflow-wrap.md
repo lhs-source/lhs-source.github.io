@@ -2,7 +2,7 @@
 title: word-wrap 이 overflow-wrap 로 변경됨
 description: 지금까지 사용했던 word-wrap 이 overflow-wrap 으로 변경되었다.
 subject: CSS
-volumn: short
+volume: short
 tags:
   - css
 created: 2025-08-11
