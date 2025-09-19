@@ -41,5 +41,12 @@ export default defineNuxtConfig({
     prerender: {
       routes: ['/sitemap.xml']
     }
-  }
+  },
+  vite: {
+    define: {
+      'process.env.DEBUG': false
+    }
+  },
+  ssr: true,
+  target: 'static'
 })
