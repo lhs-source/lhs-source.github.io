@@ -28,7 +28,7 @@ onMounted(() => {
 </template>
 
 <style lang="scss" scoped>
-@import '/src/pages/post.scss';
+@import '~/pages/post.scss';
 
 aside {
   z-index: 5;

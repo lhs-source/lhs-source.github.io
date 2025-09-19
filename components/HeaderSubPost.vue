@@ -35,7 +35,7 @@ function onClickTOC() {
 </template>
 
 <style lang="scss" scoped>
-@import '/src/pages/post.scss';
+@import '~/pages/post.scss';
 // variables 임시
 $color-text-lighter: rgba(255, 255, 255, .92);
 $color-text-normal: rgba(255, 255, 255, .87);

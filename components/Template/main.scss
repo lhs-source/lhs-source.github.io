@@ -1,0 +1,82 @@
+// 'Oswald', 제목용
+@import url('https://fonts.googleapis.com/css2?family=Jura:wght@300..700&family=Oswald:wght@200..700&display=swap');
+// 'Indie Flower', 대화체용. 러스티레이크같음
+@import url('https://fonts.googleapis.com/css2?family=Indie+Flower&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+// 'Black Ops One', 던전 제목느낌
+// 'Russo One' 완전 제목. 조금 가로로 넓음
+// 'Orbitron, 사이버 느낌
+// 'Amatic SC', 대화체
+@import url('https://fonts.googleapis.com/css2?family=Amatic+SC:wght@400;700&family=Black+Ops+One&family=Exo:ital,wght@0,100..900;1,100..900&family=Indie+Flower&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Orbitron:wght@400..900&family=Russo+One&display=swap');
+// 'Inter' 깔금 영문
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@200;400;600;700&display=swap');
+
+
+$color-text-lighter: rgba(255, 255, 255, .92);
+$color-text-normal: rgba(255, 255, 255, .87);
+$color-text-darker: rgba(235, 235, 235, .6);
+
+$vue-color-green: #42b883;
+$vue-color-blue: #35495e;
+$vue-color-reverse: #C6B7A3;
+
+
+
+section {
+  position: relative;
+  // isolation: auto;
+}
+
+.full-center {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.layer {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+// position
+.pos-relative {
+  position: relative;
+}
+.pos-absolute {
+  position: absolute;
+}
+.pos-fixed {
+  position: fixed;
+}
+.pos-sticky {
+  position: sticky;
+}
+// position point
+.top-left { top: 0; left: 0; }
+.top-center { top: 0; left: 50%; transform: translateX(-50%); }
+.top-right { top: 0; right: 0; }
+.center-left { top: 50%; left: 0; transform: translateY(-50%); }
+.center-center { top: 50%; left: 50%; transform: translate(-50%, -50%); }
+.center-right { top: 50%; right: 0; transform: translateY(-50%); }
+.bottom-left { bottom: 0; left: 0; }
+.bottom-right { bottom: 0; right: 0; }
+
+// 100 ~ 2000vh, 100단위
+@for $i from 1 through 50 {
+  .h-#{$i}00vh {
+    height: #{$i}00vh;
+  }
+}
+
+.text-stroke {
+  -webkit-text-fill-color: transparent;
+  -webkit-text-stroke-width: 1px;
+  -webkit-text-stroke-color: rgb(237, 216, 243);
+}
+
+.full-screen {
+  width: 100%;
+  height: 100vh;
+}
