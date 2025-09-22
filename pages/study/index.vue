@@ -26,6 +26,11 @@ const pageList = [
     name: 'Vue3Reactivity',
     path: 'Vue3Reactivity'
   },
+  {
+    id: 6,
+    name: 'Overflow',
+    path: 'Overflow'
+  },
 ]
 
 
@@ -33,7 +38,7 @@ const pageList = [
 
 <template>
   <div class="page-index-wrapper">
-    <header>TO BE HEADER</header>
+    <GlobalHeader />
     <nav>
       <ul>
         <li v-for="page in pageList" :key="page.path">

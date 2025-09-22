@@ -5,11 +5,11 @@ interface BlogPost {
   id: string;       // "blog/blog/npm-rollup-os.md"
   title: string;    // "npm 의존성 설치 문제 애플 실리콘에서의 Rollup 패키지 (npm ERR notsup Unsupported platform for rollup-darwin-arm64)"
   subject: string;  // "Node"
-  tags: string;     // ['rollup', 'error', 'dependencies', 'node', 'npm']
+  tags: string[];   // ['rollup', 'error', 'dependencies', 'node', 'npm']
   volume: string;   // "short" "long" "medium"
   created: string;  // "2025-01-20"
   updated: string;  // "2025-01-20"
-  image: string;
+  image?: string;
   description: string;  // "npm의 의존성 설치 실패 문제. @rollup/rollup-darwin-arm64 패키지가 애플 실리콘에서만 설치 가능하다. Windows 및 Linux 환경에서의 설치 불가 원인. optionalDependencies의 사용 방법."
   _path: string;     // "/blog/npm-rollup-os"
 }
