@@ -26,7 +26,6 @@ const keywordData = ref([
     description: '주인의식을 갖고 일합니다. 모든 면에서 완성도가 높은 제품을 만들어서 사용자가 좋은 경험을 가져가는 것을 목표로 합니다. 이를 위해 필요한 업무라면 영역을 가리지 않고 협업합니다. 제거해야할 방해요소가 있거나 좋은 아이디어가 있을 때 성장을 위해 적극적으로 목소리를 냅니다.'
   },
   {
-    // 부족한 것은 빠르게 인정하고, 잘못된 점은 빠르게
     title: '신뢰',
     description: '업무를 빠르고 정확하게 수행하는 믿고 맡길 수 있는 동료입니다. 신뢰할 수 있는 동료가 되기 위해서 변명하지 않고 부족한 점을 빠르게 인정합니다. 팀이 좋은 방향으로 나아갈 수 있도록 적극적으로 동료들과 피드백을 주고받고 투명하게 업무를 처리하는 문화를 주도합니다.'
   },
@@ -242,29 +241,19 @@ const freelanceData = ref([
 ]);
 
 // 기술 스택 데이터
-// 메인과 기타로 나눠서, 기타는 숙련도 필요 없음
 const techStackData = ref([
-  {
-    category: 'Frontend',
-    technologies: [
-      { name: 'Vue.js 3', level: 'Expert' },
-      { name: 'TypeScript', level: 'Expert' },      { name: 'C++', level: 'Intermediate' },
-      { name: 'Java', level: 'Intermediate' },
-      { name: 'Android Kotlin', level: 'Advanced' },
-    ]
-  },
-  {
-    category: 'Backend & DevOps',
-    technologies: [
-      { name: 'AWS', level: 'Intermediate' },
-      { name: 'Github Actions', level: 'Advanced' },
-      { name: 'Datadog', level: 'Advanced' },
-      { name: 'Git', level: 'Expert' },
-      { name: 'Storybook', level: 'Advanced' },
-      { name: 'Jira', level: 'Advanced' },
-      { name: 'Figma', level: 'Intermediate' },
-    ]
-  },
+  { name: 'VueJS 3', isMain: true },
+  { name: 'TypeScript', isMain: true },
+  { name: 'C++', isMain: false },
+  { name: 'Java', isMain: false },
+  { name: 'Android Kotlin', isMain: false },
+  { name: 'AWS', isMain: false },
+  { name: 'Github Actions', isMain: false },
+  { name: 'Datadog', isMain: false },
+  { name: 'Git', isMain: false },
+  { name: 'Storybook', isMain: false },
+  { name: 'Atlassian', isMain: false },
+  { name: 'Figma', isMain: false },
 ]);
 
 // 발표 및 컨퍼런스 데이터
@@ -340,28 +329,14 @@ const presentationData = ref([
     <section class="section">
       <h2 class="section-title">기술 스택</h2>
       
-      <div class="tech-stack-grid">
+      <div class="tech-stack-horizontal">
         <div 
-          v-for="category in techStackData" 
-          :key="category.category"
-          class="tech-category"
+          v-for="tech in techStackData" 
+          :key="tech.name"
+          class="tech-item-horizontal"
+          :class="{ 'main-tech': tech.isMain }"
         >
-          <h3 class="tech-category-title">{{ category.category }}</h3>
-          <div class="tech-list">
-            <div 
-              v-for="tech in category.technologies" 
-              :key="tech.name"
-              class="tech-item"
-            >
-              <span class="tech-name">{{ tech.name }}</span>
-              <div class="tech-level-container">
-                <div class="tech-level-bar" :class="`level-${tech.level.toLowerCase()}`">
-                  <div class="tech-level-fill" :class="`fill-${tech.level.toLowerCase()}`"></div>
-                </div>
-                <span class="tech-level-text">{{ tech.level }}</span>
-              </div>
-            </div>
-          </div>
+          {{ tech.name }}
         </div>
       </div>
     </section>
@@ -733,95 +708,31 @@ const presentationData = ref([
 }
 
 /* Tech Stack Section */
-.tech-stack-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 20px;
+.tech-stack-horizontal {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
   margin-top: 15px;
 }
 
-.tech-category {
-  border-left: 3px solid #333;
-  padding-left: 16px;
-  padding-top: 8px;
-  padding-bottom: 8px;
-}
-
-.tech-category-title {
-  font-size: 15px;
-  font-weight: 600;
-  color: #333;
-  margin: 0 0 12px 0;
-}
-
-.tech-list {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-}
-
-.tech-item {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 6px 0;
-  gap: 12px;
-}
-
-.tech-name {
-  font-size: 13px;
+.tech-item-horizontal {
+  padding: 8px 12px;
+  font-size: 14px;
   color: #555;
   font-weight: 400;
-  flex-shrink: 0;
-  min-width: 120px;
-}
-
-.tech-level-container {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  flex: 1;
-  max-width: 120px;
-}
-
-.tech-level-bar {
-  height: 6px;
-  background: #f0f0f0;
-  border-radius: 3px;
-  overflow: hidden;
-  flex: 1;
-  position: relative;
-}
-
-.tech-level-fill {
-  height: 100%;
-  border-radius: 3px;
-  transition: width 0.3s ease;
+  transition: all 0.2s ease;
+  border-bottom: 2px solid transparent;
   
-  &.fill-expert {
-    width: 100%;
-    background: #333;
+  &.main-tech {
+    color: #333;
+    font-weight: 600;
+    border-bottom-color: #333;
   }
   
-  &.fill-advanced {
-    width: 75%;
-    background: #666;
+  &:hover {
+    color: #333;
+    border-bottom-color: #ccc;
   }
-  
-  &.fill-intermediate {
-    width: 50%;
-    background: #999;
-  }
-}
-
-.tech-level-text {
-  font-size: 10px;
-  color: #777;
-  font-weight: 500;
-  text-transform: uppercase;
-  letter-spacing: 0.3px;
-  min-width: 60px;
-  text-align: right;
 }
 
 /* Career Section */
@@ -1279,42 +1190,13 @@ const presentationData = ref([
     }
   }
   
-  .tech-stack-grid {
-    grid-template-columns: 1fr;
-    gap: 15px;
-  }
-  
-  .tech-category {
-    padding-left: 12px;
-  }
-  
-  .tech-category-title {
-    font-size: 14px;
-  }
-  
-  .tech-item {
-    flex-direction: column;
-    align-items: flex-start;
+  .tech-stack-horizontal {
     gap: 8px;
   }
   
-  .tech-name {
+  .tech-item-horizontal {
+    padding: 6px 8px;
     font-size: 12px;
-    min-width: auto;
-  }
-  
-  .tech-level-container {
-    width: 100%;
-    max-width: none;
-  }
-  
-  .tech-level-bar {
-    height: 5px;
-  }
-  
-  .tech-level-text {
-    font-size: 9px;
-    min-width: 50px;
   }
 }
 </style>
