@@ -1,23 +1,22 @@
 <script setup lang="ts">
 import dayjs from 'dayjs';
-import { Badge } from '@/components/ui/badge'
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from '@/components/ui/card'
 import PostCard from './PostCard.vue';
-// import { Header } from '@/components'
 
 // updated 기준으로 내림차순 정렬
 const blog = ref<any[]>([]);
 const route = useRoute();
-const { data: blogData } = await useAsyncData(() => queryCollection('content').where({ _path: { $regex: '^/blog' } }).find());
+// Nuxt Content v3 방식으로 블로그 데이터 로드
+const { data: blogData } = await useAsyncData('blog', async () => {
+  try {
+    const result = await queryCollection('blog').all();
+    return result;
+  } catch (error) {
+    console.error('queryCollection error:', error);
+    return [];
+  }
+});
+
 if(blogData.value) {
-  console.log('blogData.value', blogData.value);
   blog.value = blogData.value.sort((a, b) => {
     return dayjs(b.updated).unix() - dayjs(a.updated).unix();
   });
@@ -63,34 +62,43 @@ if(blogData.value) {
 const selectedTag = ref<string | null>(null);
 const selectedSubject = ref<string | null>(null);
 async function onClickTag(tag: { tagName: string, count: number } | null) {
-  if(tag === null) {
-    selectedTag.value = null;
-    const data = await queryContent('/blog').find();
-    blog.value = (data || []).sort((a, b) => {
-      return dayjs(b.updated).unix() - dayjs(a.updated).unix();
-    });
-  } else {
-    selectedTag.value = tag.tagName;
-    const data = await queryContent('/blog').where({ tags: { $contains: selectedTag.value } }).find();
-    blog.value = (data || []).sort((a, b) => {
-      return dayjs(b.updated).unix() - dayjs(a.updated).unix();
-    });
-    console.log('blog.value', blog.value);
+  try {
+    if(tag === null) {
+      selectedTag.value = null;
+      const data = await queryCollection('content').where('path', 'LIKE', '/blog/%').all();
+      blog.value = (data || []).sort((a, b) => {
+        return dayjs(b.updated).unix() - dayjs(a.updated).unix();
+      });
+    } else {
+      selectedTag.value = tag.tagName;
+      const data = await queryCollection('content').where('path', 'LIKE', '/blog/%').where('tags', 'LIKE', `%${selectedTag.value}%`).all();
+      blog.value = (data || []).sort((a, b) => {
+        return dayjs(b.updated).unix() - dayjs(a.updated).unix();
+      });
+      console.log('Filtered blog.value by tag:', blog.value);
+    }
+  } catch (error) {
+    console.error('Error filtering by tag:', error);
   }
 }
 async function onClickSubject(subject: { subjectName: string, count: number } | null) {
-  if(subject === null) {
-    selectedSubject.value = null;
-    const data = await queryContent('/blog').find();
-    blog.value = (data || []).sort((a, b) => {
-      return dayjs(b.updated).unix() - dayjs(a.updated).unix();
-    });
-  } else {
-    selectedSubject.value = subject.subjectName;
-    const data = await queryContent('/blog').where({ subject: { $contains: selectedSubject.value } }).find();
-    blog.value = (data || []).sort((a, b) => {
-      return dayjs(b.updated).unix() - dayjs(a.updated).unix();
-    });
+  try {
+    if(subject === null) {
+      selectedSubject.value = null;
+      const data = await queryCollection('content').where('path', 'LIKE', '/blog/%').all();
+      blog.value = (data || []).sort((a, b) => {
+        return dayjs(b.updated).unix() - dayjs(a.updated).unix();
+      });
+    } else {
+      selectedSubject.value = subject.subjectName;
+      const data = await queryCollection('content').where('path', 'LIKE', '/blog/%').where('subject', '=', selectedSubject.value).all();
+      blog.value = (data || []).sort((a, b) => {
+        return dayjs(b.updated).unix() - dayjs(a.updated).unix();
+      });
+      console.log('Filtered blog.value by subject:', blog.value);
+    }
+  } catch (error) {
+    console.error('Error filtering by subject:', error);
   }
 }
 </script>
