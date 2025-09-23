@@ -48,15 +48,19 @@ const careerData = ref([
     position: '프론트엔드 개발자',
     projects: [
       {
-        name: '업박스 클라우드 개발 - 폐기물처리 플랫폼',
+        name: '업박스 클라우드 개발 - 폐기물 매니지먼트 서비스',
         period: '2021년 1월 ~ 진행중',
         technologies: 'NodeJS, Vite, Vue3, Android Kotlin, Webview, Github Actions, AWS, TailwindCSS, i18n, Storybook',
-        description: '폐기물의 처리 과정에서 발생하는 모든 데이터를 투명하고 정확하게 관리하는 플랫폼입니다. 제공되는 앱의 종류로는 업박스 어드민, 업박스 드라이버, 업박스 커스터머가 있으며, 각각 기사님들의 수거 및 차량 관리, 배출장에서의 수거 일정 및 정보 확인에 사용됩니다. 모든 앱은 담당하는 법인과 역할에 맞춰 권한이 부여되고, 권한별로 메뉴와 기능이 차등 제공됩니다. 고객의 업장 특성과 계약을 기반해 맞춤으로 법적 문제가 발생하지 않도록 수거 일정을 조율합니다. 폐기물 처리 데이터 기반한 청구서를 생성하고, 정산까지 자동으로 이루어집니다. 폐기물 산업 특성상 법적인 문제가 굉장히 복잡하고 행정 처리 업무가 많습니다.  고객들은 번거로운 과정을 줄이고, 행정 처리에 필요한 서류를 원할 때 바로 확인이 가능하도록 업박스에서 서식에 맞는 데이터를 제공합니다. 초기 음식물류 폐기물 중심에서 현재는 재활용과 폐수오니 등 여러 폐기물 종류를 종합 지원하는 형태로 발전했습니다.',
+        isMain: true,
+        description: [
+          '업박스 클라우드는 폐기물의 처리 과정에서 발생하는 모든 데이터를 투명하고 정확하게 관리하는 클라우드 서비스입니다. 제공되는 앱의 종류로는 업박스 어드민, 업박스 드라이버, 업박스 커스터머가 있으며, 각각 기사님들의 수거 및 차량 관리, 업장의 수거 일정 및 정보 확인에 사용됩니다.',
+          '모든 앱은 담당하는 법인과 역할에 맞춰 권한이 부여되고, 권한별로 메뉴와 기능이 차등 제공됩니다. 고객의 업장 특성과 계약을 기반해 맞춤으로 법적 문제가 발생하지 않도록 수거 일정을 조율합니다. 폐기물 처리 데이터 기반한 청구서를 생성하고, 정산까지 자동으로 이루어집니다.',
+          '폐기물 산업 특성상 법적인 문제가 굉장히 복잡하고 행정 처리 업무가 많습니다. 고객들은 번거로운 과정을 줄이고, 행정 처리에 필요한 서류를 원할 때 바로 확인이 가능하도록 업박스에서 서식에 맞는 데이터를 제공합니다.',
+          '초기 음식물류 폐기물 중심에서 현재는 재활용과 폐수오니 등 여러 폐기물 종류를 종합 지원하는 형태로 발전했습니다.'
+        ],
         responsibilityCategories: [
           {
             category: '프론트엔드 리드',
-            icon: '▶',
-            color: '#333333',
             items: [
               '업박스 클라우드 FE 개발을 처음부터 현재까지 핵심 멤버로 참여 (1.0 온보딩 → 2.0 론칭 → 현재 2.14.0 버전)',
               '약 3~4주마다 전략 과제 배포를 통한 지속적인 제품 개선 및 기능 확장'
@@ -64,39 +68,30 @@ const careerData = ref([
           },
           {
             category: '핵심 기능 개발',
-            icon: '●',
-            color: '#555555',
             items: [
-              '고객, 계약, 폐기물 처리, 청구 등 업박스 어드민 핵심 기능 개발',
-              '복잡한 조건의 데이터 유효성 검증 및 사용자 친화적 입력 프로세스 구현',
+              '고객, 계약, 폐기물 처리, 청구 데이터를 관리하는 업박스 어드민 핵심 기능 개발',
+              '복잡한 조건과 권한의 데이터 유효성 검증 및 사용자 친화적 입력 프로세스 구현',
               '지도 기반 수거 일정 관리 시스템 - 방문 업장 표시 및 일정 최적화 기능',
               '전자계약, 가상계좌, 자동이체, 채널톡 등 외부 서비스 연동'
             ]
           },
           {
             category: '안드로이드 개발',
-            icon: '■',
-            color: '#666666',
             items: [
-              '안드로이드 Kotlin 네이티브 개발 - 권한 요청, 푸시, 네비게이션, 파일 선택 기능',
-              'WebView와 네이티브 간 데이터 연동 - 푸시 알림을 Room DB에 저장 후 웹으로 전달',
+              '안드로이드 Kotlin 네이티브를 개발하여 권한 요청, 푸시, 네비게이션, 파일 선택 기능 구현.',
+              'WebView와 네이티브 간 통신 및 데이터 연동 - 푸시 알림을 Room DB에 저장 후 웹으로 전달',
               '마케팅 연동을 위한 딥링크 지원'
             ]
           },
           {
             category: '디자인 시스템 구축',
-            icon: '◆',
-            color: '#777777',
             items: [
               '디자인팀과 협업하여 UDS(Upbox Design System) 설립 및 컴포넌트 가이드화',
               '복잡한 프로덕트 특성에 맞는 유기적 컴포넌트 설계',
-              'UDS 규칙을 TailwindCSS에 적용하여 일관된 디자인 시스템 구축'
             ]
           },
           {
             category: 'DevOps & 모니터링',
-            icon: '▲',
-            color: '#888888',
             items: [
               '데이터독 도입 추진 및 초기 구성 - Sourcemap 업로드 자동화로 에러 추적 시스템 구축',
               '사용량 기반 배포 시간 결정, 사용성 측정을 통한 데이터 기반 의사결정 체계 구축',
@@ -106,10 +101,9 @@ const careerData = ref([
           },
           {
             category: '기술 표준화 & 조직 기여',
-            icon: '★',
-            color: '#999999',
             items: [
               'i18n 도입으로 용어 통일 및 해외 진출 대비',
+              '데이터독 사용법 및 활용 방법 공유',
               'Atlassian 툴(Jira 자동화) 및 데이터독 사용법 내부 교육 및 공유'
             ]
           }
@@ -144,7 +138,7 @@ const careerData = ref([
         name: '업박스 홈페이지 제작',
         period: '2021년 1월 ~ 상시 진행',
         technologies: 'VanilaJS, EJS, AWS',
-        description: '리코는 리코 홈페이지와 업박스 홈페이지 2개를 운영합니다. 리코 홈페이지는 회사의 정보가 담긴 방면 업박스 홈페이지는 제품 측면에서 인바운드에 초점을 맞추었습니다.',
+        description: ['리코는 리코 홈페이지와 업박스 홈페이지 2개를 운영합니다. 리코 홈페이지는 회사의 정보가 담긴 방면 업박스 홈페이지는 제품 측면에서 인바운드에 초점을 맞추었습니다.'],
         responsibilities: [
           '각 홈페이지를 유지보수하고, 인바운드 측정을 위해 마케팅팀과 협업하여 데이터를 수집'
         ]
@@ -161,7 +155,7 @@ const careerData = ref([
         name: '뱅크비 - 베트남 통합계좌관리 솔루션',
         period: '2019년 9월 ~ 2020년 12월',
         technologies: 'C/C++',
-        description: '베트남 은행을 자동으로 연결해주고 입출금내역을 조회하여 계좌를 한눈에 볼 수 있는 모바일 어플리케이션. BIDV, Vietcom, TP 은행 등 약 11개 은행에 대한 계좌조회를 제공.',
+        description: ['베트남 은행을 자동으로 연결해주고 입출금내역을 조회하여 계좌를 한눈에 볼 수 있는 모바일 어플리케이션. BIDV, Vietcom, TP 은행 등 약 11개 은행에 대한 계좌조회를 제공.'],
         responsibilities: [
           '은행을 연결하고 내역을 조회하는 스크래핑 모듈을 담당하고(C/C++), 모바일 앱은 베트남 현지 협력사에서 개발',
           '2019년 10월 직접 베트남에 가서 현지 직원과 업무를 같이 진행',
@@ -173,7 +167,7 @@ const careerData = ref([
         name: 'Omnidoc - 문서발급 솔루션',
         period: '2019년 4월 ~ 2020년 12월',
         technologies: 'C/C++',
-        description: '17여개의 민원사이트에서 40여개의 민원문서를 발급할 수 있는 솔루션. 타사의 서비스에 탑재되어 고객의 민간업무를 대행해주는 편리한 서비스 제공.',
+        description: ['17여개의 민원사이트에서 40여개의 민원문서를 발급할 수 있는 솔루션. 타사의 서비스에 탑재되어 고객의 민간업무를 대행해주는 편리한 서비스 제공.'],
         responsibilities: [
           '금융결제원 Payinfo, 신용조회 KCB, 범죄자조회 Crime 등의 사이트를 스크래핑 담당'
         ]
@@ -182,7 +176,7 @@ const careerData = ref([
         name: '오픈망 직승인 프로젝트',
         period: '2018년 8월 ~ 2019년 3월',
         technologies: 'SpringBoot, JPA',
-        description: '가맹점과 카드사 간의 E2E 보안을 위한 클라우드 POS 서비스. AWS 를 이용한 클라우드 서비스 (EC2, S3, elastic search, 보안 등)',
+        description: ['가맹점과 카드사 간의 E2E 보안을 위한 클라우드 POS 서비스. AWS 를 이용한 클라우드 서비스 (EC2, S3, elastic search, 보안 등)'],
         responsibilities: [
           '카드사와의 승인 및 매입 관련 프로세스를 테스트하기 위한 더미카드사 서버를 제작. (Spring boot, JPA, MySQL)',
           'VAN사에서 제공하는 가맹점 관리, 결제내역 조회 등의 기능을 직접 구현',
@@ -193,7 +187,7 @@ const careerData = ref([
         name: '하나1QPay NFC 결제모듈',
         period: '2017년 6월 ~ 2018년 8월',
         technologies: 'Java, C/C++',
-        description: '하나카드 1QPay 앱에 탑재되는 NFC 모듈. 지불카드의 token화 보안 서비스와, HCE 스펙을 따라 NFC 결제 통신을 제공.',
+        description: ['하나카드 1QPay 앱에 탑재되는 NFC 모듈. 지불카드의 token화 보안 서비스와, HCE 스펙을 따라 NFC 결제 통신을 제공.'],
         responsibilities: [
           'VISA token 발급 및 EMV 카드 결제 스펙을 이해하여 NFC 결제 모듈을 유지보수. (Android java, JNI)',
           '보안 모듈인 Whitebox 암호화 모듈을 LLVM 난독화 컴파일러로 컴파일하여 SharedObject의 분석 방지. (C++)',
@@ -204,7 +198,7 @@ const careerData = ref([
         name: 'TaSIM - 대형가맹점 직승인 프로젝트',
         period: '2017년 1월 ~ 2017년 6월',
         technologies: 'Java Card OS, MFC',
-        description: '카드사와 가맹점 사이의 E2E 암호화를 제공하는 TaSIM. 중간 VAN사의 영향을 받지 않은 채, 가맹점 단말기와 카드사 간의 암호화 제공. 여신협회 taSIM Application Specification 인증, EMVCo 및 CC(Common Criteria) 인증.',
+        description: ['카드사와 가맹점 사이의 E2E 암호화를 제공하는 TaSIM. 중간 VAN사의 영향을 받지 않은 채, 가맹점 단말기와 카드사 간의 암호화 제공. 여신협회 taSIM Application Specification 인증, EMVCo 및 CC(Common Criteria) 인증.'],
         responsibilities: [
           'JavaCOS 에 Applet을 탑재하여 가맹점의 카드 리더 단말기에 장착',
           'Java COS의 작동을 이해하고, 해당 제품을 유지보수 및 대응',
@@ -221,7 +215,7 @@ const freelanceData = ref([
     name: 'MGX 모바일 게임 시세조회 어플리케이션',
     period: '2021년 1월 ~ 2021년 3월',
     technologies: 'NodeJS, ReactNative',
-    description: '리니지m, 리니지2m, 블래이드앤소울, 바람의나라, 트릭스터 등 모바일 게임의 시세조회, 시세추이, 거래소 아이템 검색 등을 제공하는 어플리케이션. 소식 전하기, 커뮤니티 기능 제공.',
+    description: ['리니지m, 리니지2m, 블래이드앤소울, 바람의나라, 트릭스터 등 모바일 게임의 시세조회, 시세추이, 거래소 아이템 검색 등을 제공하는 어플리케이션. 소식 전하기, 커뮤니티 기능 제공.'],
     responsibilities: [
       '어플리케이션 제작 담당',
       '구글 로그인을 위한 Firebase 연동 및 카카오 로그인 연동'
@@ -231,7 +225,7 @@ const freelanceData = ref([
     name: 'KlookPay - KlookPay POC 어플리케이션',
     period: '2020년 9월 ~ 2020년 11월',
     technologies: 'NodeJS, Angular, NativeScript, ExpressJS, Docker',
-    description: 'KB카드에서 진행하는 KlookPay 프로젝트의 POC 어플리케이션. KlookPay는 KB카드의 마일리지, 포인트 및 결제 시스템을 Klook에 연동하는 서비스.',
+    description: ['KB카드에서 진행하는 KlookPay 프로젝트의 POC 어플리케이션. KlookPay는 KB카드의 마일리지, 포인트 및 결제 시스템을 Klook에 연동하는 서비스.'],
     responsibilities: [
       'KB카드와 협업하여 안드로이드 앱 기술지원을 진행 (Nativescript-ng)',
       '기존 Angular 개인프로젝트로 진행했던 경험을 바탕으로 현재 버전의 Angular에 맞는 스터디를 다시 진행하고, 어플리케이션 제작',
@@ -262,7 +256,7 @@ const presentationData = ref([
     title: '데이터독 User Journey 세션 발표',
     event: 'Datadog Korea Observability Day 2024',
     period: '2024년 9월',
-    description: 'O2O 환경의 리코 특성을 살려 데이터독을 에러 분석과 사용성 측정 면에서 활용한 경험 공유',
+    description: ['O2O 환경의 리코 특성을 살려 데이터독을 에러 분석과 사용성 측정 면에서 활용한 경험 공유'],
     topics: [
       '에러 대응: HEIC 파일 형식 에러 해결, 대시보드 구성, 알림 시스템',
       '데이터 기반 의사결정: 패치 시간 변경, OS 비율 분석',
@@ -393,7 +387,11 @@ const presentationData = ref([
               </div>
             </div>
             
-            <p class="project-description">{{ project.description }}</p>
+            <div>
+              <p v-for="description in project.description" :key="description" class="project-description">
+                {{ description }}
+              </p>
+            </div>
             
             <div v-if="project.responsibilities" class="project-responsibilities">
               <h5 class="responsibilities-title">기여 및 성과</h5>
@@ -415,7 +413,6 @@ const presentationData = ref([
                   v-for="category in (project as any).responsibilityCategories" 
                   :key="category.category"
                   class="category-card"
-                  :style="{ borderLeftColor: category.color }"
                 >
                   <div class="category-header">
                     <h6 class="category-title">
@@ -481,7 +478,7 @@ const presentationData = ref([
             </div>
           </div>
           
-          <p class="project-description">{{ project.description }}</p>
+          <p v-for="description in project.description" :key="description" class="project-description">{{ description }}</p>
           
           <div class="project-responsibilities">
             <h4 class="responsibilities-title">담당 업무 내용</h4>
