@@ -21,43 +21,60 @@ if(blogData.value) {
     return dayjs(b.updated).unix() - dayjs(a.updated).unix();
   });
 }
-// 태그 목록 생성
-const allTagList: any[] = [];
-const allSubjectList: any[] = [];
+// 태그와 주제 목록을 queryCollection으로 생성
+const allTagList = ref<any[]>([]);
+const allSubjectList = ref<any[]>([]);
 
-// 블로그 데이터에서 태그 추출 및 카운트
-if(blogData.value) {
-  const tagList = blogData.value
-    .map(post => post.tags)
-    .filter(Boolean)
-    .flat();
-  const subjectList = blogData.value
-    .map(post => post.subject)
-    .filter(Boolean)
-    .flat();
-  const tagCount = tagList.reduce((acc, tag) => {
-    acc[tag] = (acc[tag] || 0) + 1;
-    return acc;
-  }, {});
-  const subjectCount = subjectList.reduce((acc, subject) => {
-    acc[subject] = (acc[subject] || 0) + 1;
-    return acc;
-  }, {});
-  for(let tagName of Object.keys(tagCount)) {
-    allTagList.push({
+// 블로그 데이터에서 태그와 주제 추출 및 카운트
+const { data: tagSubjectData } = await useAsyncData('blog-tags-subjects', async () => {
+  try {
+    const blogPosts = await queryCollection('blog').all();
+    
+    // 태그 목록 생성
+    const tagList = blogPosts
+      .map(post => post.tags)
+      .filter(Boolean)
+      .flat();
+    
+    const tagCount = tagList.reduce((acc, tag) => {
+      acc[tag] = (acc[tag] || 0) + 1;
+      return acc;
+    }, {});
+    
+    const tagListWithCount = Object.keys(tagCount).map(tagName => ({
       tagName,
       count: tagCount[tagName]
-    });
-  }
-  allTagList.sort((a, b) => b.count - a.count);
-
-  for(let subjectName of Object.keys(subjectCount)) {
-    allSubjectList.push({
+    })).sort((a, b) => b.count - a.count);
+    
+    // 주제 목록 생성
+    const subjectList = blogPosts
+      .map(post => post.subject)
+      .filter(Boolean)
+      .flat();
+    
+    const subjectCount = subjectList.reduce((acc, subject) => {
+      acc[subject] = (acc[subject] || 0) + 1;
+      return acc;
+    }, {});
+    
+    const subjectListWithCount = Object.keys(subjectCount).map(subjectName => ({
       subjectName,
       count: subjectCount[subjectName]
-    });
+    })).sort((a, b) => b.count - a.count);
+    
+    return {
+      tags: tagListWithCount,
+      subjects: subjectListWithCount
+    };
+  } catch (error) {
+    console.error('Error loading tags and subjects:', error);
+    return { tags: [], subjects: [] };
   }
-  allSubjectList.sort((a, b) => b.count - a.count); 
+});
+
+if(tagSubjectData.value) {
+  allTagList.value = tagSubjectData.value.tags;
+  allSubjectList.value = tagSubjectData.value.subjects;
 }
 const selectedTag = ref<string | null>(null);
 const selectedSubject = ref<string | null>(null);
@@ -65,17 +82,16 @@ async function onClickTag(tag: { tagName: string, count: number } | null) {
   try {
     if(tag === null) {
       selectedTag.value = null;
-      const data = await queryCollection('content').where('path', 'LIKE', '/blog/%').all();
+      const data = await queryCollection('blog').all();
       blog.value = (data || []).sort((a, b) => {
         return dayjs(b.updated).unix() - dayjs(a.updated).unix();
       });
     } else {
       selectedTag.value = tag.tagName;
-      const data = await queryCollection('content').where('path', 'LIKE', '/blog/%').where('tags', 'LIKE', `%${selectedTag.value}%`).all();
+      const data = await queryCollection('blog').where('tags', 'LIKE', `%${selectedTag.value}%`).all();
       blog.value = (data || []).sort((a, b) => {
         return dayjs(b.updated).unix() - dayjs(a.updated).unix();
       });
-      console.log('Filtered blog.value by tag:', blog.value);
     }
   } catch (error) {
     console.error('Error filtering by tag:', error);
@@ -85,17 +101,16 @@ async function onClickSubject(subject: { subjectName: string, count: number } | 
   try {
     if(subject === null) {
       selectedSubject.value = null;
-      const data = await queryCollection('content').where('path', 'LIKE', '/blog/%').all();
+      const data = await queryCollection('blog').all();
       blog.value = (data || []).sort((a, b) => {
         return dayjs(b.updated).unix() - dayjs(a.updated).unix();
       });
     } else {
       selectedSubject.value = subject.subjectName;
-      const data = await queryCollection('content').where('path', 'LIKE', '/blog/%').where('subject', '=', selectedSubject.value).all();
+      const data = await queryCollection('blog').where('subject', '=', selectedSubject.value).all();
       blog.value = (data || []).sort((a, b) => {
         return dayjs(b.updated).unix() - dayjs(a.updated).unix();
       });
-      console.log('Filtered blog.value by subject:', blog.value);
     }
   } catch (error) {
     console.error('Error filtering by subject:', error);
@@ -162,7 +177,7 @@ async function onClickSubject(subject: { subjectName: string, count: number } | 
         </button>
         <button 
           v-for="tag of allTagList" 
-          :key="tag"
+          :key="tag.tagName"
           :class="['tag-button', selectedTag === tag.tagName ? 'active' : '']"
           @click="onClickTag(tag)">
           {{ tag.tagName }}({{ tag.count }})
