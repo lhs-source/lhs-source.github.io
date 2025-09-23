@@ -46,37 +46,12 @@ const careerData = ref([
     period: '2021년 1월 ~ 재직중',
     duration: '약 4년 8개월',
     position: '프론트엔드 개발자',
-    // SBI 형태로 재구성 필요
-    // situation, behavior, impact 로 재구성 필요
-    // 최적화, 해결, 도입, 개선, 효율화 용어를 적극 활용 
-    problemSolving: [
-      {
-        title: '기술 스택 의사결정',
-        description: '업박스 클라우드 1.0 에서 Typescript 도입을 적극 추진하여 잠재적 타입 버그 제거. 업박스 클라우드 2.0 개발 착수 시점 기술 분석을 통해 Vue3 로 결정(React 와 비교)'
-      },
-      {
-        title: '구글 심사 시 원하지 않을 때 배포되는 문제',
-        description: '관리형 게시를 사용해 원하는 때에 배포하는 간단한 시스템 활용'
-      },
-      {
-        title: '버전 캐시 문제',
-        description: '데이터독 도입으로 오동작을 일으키는 케이스가 버전 문제가 대다수임을 확인. 버전 비교를 통해 캐시를 무효화하고 최신 FE 앱을 받을 수 있도록 구현하여 에러 발생 빈도 90프로 가량 제거. 기존 1주일 간 이전 버전을 사용하는 케이스 다수 → 최대 2일 안에 모든 사용자 최신 버전 사용'
-      },
-      {
-        title: '프론트 개발자 사이의 컨벤션이 맞지 않는 문제',
-        description: '서로 다른 IDE 사용, 코딩 컨벤션 결정, lint 도입으로 기계의 도움을 받아 누락되는 케이스 제거'
-      },
-      {
-        title: 'css 단일 속성 class 증가 문제',
-        description: '빠른 css 속성 적용을 위해 글로벌 단위의 단일 속성 class 를 지속적으로 추가하게 됨. tailwindcss 의 utility class 를 활용하여 직접 정의하는 것보다는 공통된 컨벤션으로 작업할 수 있게 됨'
-      }
-    ],
     projects: [
       {
         name: '업박스 클라우드 개발 - 폐기물처리 플랫폼',
         period: '2021년 1월 ~ 진행중',
         technologies: 'NodeJS, Vite, Vue3, Android Kotlin, Webview, Github Actions, AWS, TailwindCSS, i18n, Storybook',
-        description: '폐기물의 처리 과정에서 발생하는 모든 데이터를 투명하고 정확하게 관리하는 플랫폼입니다. 제공되는 앱의 종류로는 업박스 어드민, 업박스 드라이버, 업박스 커스터머가 있으며, 각각 기사님들의 수거 및 차량 관리, 배출장에서의 수거 일정 및 정보 확인에 사용됩니다. 모든 앱은 담당하는 법인과 역할에 맞춰 권한이 부여되고, 권한별로 메뉴와 기능이 차등 제공됩니다. 초기 음식물류 폐기물 중심에서 현재는 재활용과 폐수오니 등 여러 폐기물 종류를 종합 지원하는 형태로 발전했습니다.',
+        description: '폐기물의 처리 과정에서 발생하는 모든 데이터를 투명하고 정확하게 관리하는 플랫폼입니다. 제공되는 앱의 종류로는 업박스 어드민, 업박스 드라이버, 업박스 커스터머가 있으며, 각각 기사님들의 수거 및 차량 관리, 배출장에서의 수거 일정 및 정보 확인에 사용됩니다. 모든 앱은 담당하는 법인과 역할에 맞춰 권한이 부여되고, 권한별로 메뉴와 기능이 차등 제공됩니다. 고객의 업장 특성과 계약을 기반해 맞춤으로 법적 문제가 발생하지 않도록 수거 일정을 조율합니다. 폐기물 처리 데이터 기반한 청구서를 생성하고, 정산까지 자동으로 이루어집니다. 폐기물 산업 특성상 법적인 문제가 굉장히 복잡하고 행정 처리 업무가 많습니다.  고객들은 번거로운 과정을 줄이고, 행정 처리에 필요한 서류를 원할 때 바로 확인이 가능하도록 업박스에서 서식에 맞는 데이터를 제공합니다. 초기 음식물류 폐기물 중심에서 현재는 재활용과 폐수오니 등 여러 폐기물 종류를 종합 지원하는 형태로 발전했습니다.',
         responsibilityCategories: [
           {
             category: '프론트엔드 리드',
@@ -137,6 +112,31 @@ const careerData = ref([
               'i18n 도입으로 용어 통일 및 해외 진출 대비',
               'Atlassian 툴(Jira 자동화) 및 데이터독 사용법 내부 교육 및 공유'
             ]
+          }
+        ],
+        // SBI 형태로 재구성 필요
+        // situation, behavior, impact 로 재구성 필요
+        // 최적화, 해결, 도입, 개선, 효율화 용어를 적극 활용 
+        problemSolving: [
+          {
+            title: '기술 스택 의사결정',
+            description: '업박스 클라우드 1.0 에서 Typescript 도입을 적극 추진하여 잠재적 타입 버그 제거. 업박스 클라우드 2.0 개발 착수 시점 기술 분석을 통해 Vue3 로 결정(React 와 비교)'
+          },
+          {
+            title: '구글 심사 시 원하지 않을 때 배포되는 문제',
+            description: '관리형 게시를 사용해 원하는 때에 배포하는 간단한 시스템 활용'
+          },
+          {
+            title: '버전 캐시 문제',
+            description: '데이터독 도입으로 오동작을 일으키는 케이스가 버전 문제가 대다수임을 확인. 버전 비교를 통해 캐시를 무효화하고 최신 FE 앱을 받을 수 있도록 구현하여 에러 발생 빈도 90프로 가량 제거. 기존 1주일 간 이전 버전을 사용하는 케이스 다수 → 최대 2일 안에 모든 사용자 최신 버전 사용'
+          },
+          {
+            title: '프론트 개발자 사이의 컨벤션이 맞지 않는 문제',
+            description: '서로 다른 IDE 사용, 코딩 컨벤션 결정, lint 도입으로 기계의 도움을 받아 누락되는 케이스 제거'
+          },
+          {
+            title: 'css 단일 속성 class 증가 문제',
+            description: '빠른 css 속성 적용을 위해 글로벌 단위의 단일 속성 class 를 지속적으로 추가하게 됨. tailwindcss 의 utility class 를 활용하여 직접 정의하는 것보다는 공통된 컨벤션으로 작업할 수 있게 됨'
           }
         ]
       },
@@ -434,20 +434,29 @@ const presentationData = ref([
                 </div>
               </div>
             </div>
-          </div>
-        </div>
 
-        <!-- 문제 해결 경험 섹션 -->
-        <div v-if="career.problemSolving" class="problem-solving-section">
-          <h4 class="problem-solving-title">문제 해결 경험</h4>
-          <div class="problem-solving-items">
-            <div 
-              v-for="problem in career.problemSolving" 
-              :key="problem.title"
-              class="problem-item"
-            >
-              <h5 class="problem-title">{{ problem.title }}</h5>
-              <p class="problem-description">{{ problem.description }}</p>
+            <!-- 문제 해결 경험 섹션 -->
+            <div v-if="project.problemSolving" class="problem-solving-section mt-8">
+              <h5 class="problem-solving-title font-bold">문제 해결 경험</h5>
+              <div class="problem-solving-categories-grid">
+                <div 
+                  v-for="problem in project.problemSolving" 
+                  :key="problem.title"
+                  class="problem-category-card"
+                  :style="{ borderLeftColor: '#28a745' }"
+                >
+                  <div class="problem-category-header">
+                    <h6 class="problem-category-title">
+                      {{ problem.title }}
+                    </h6>
+                  </div>
+                  <ul class="problem-category-items">
+                    <li class="problem-category-item">
+                      {{ problem.description }}
+                    </li>
+                  </ul>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -926,15 +935,6 @@ const presentationData = ref([
     list-style: none;
     position: relative;
     
-    &::before {
-      content: '';
-      position: absolute;
-      left: 0;
-      top: 0;
-      bottom: 0;
-      width: 1px;
-      background: linear-gradient(to bottom, #d0d0d0, transparent);
-    }
   }
   
   .category-item {
@@ -962,40 +962,59 @@ const presentationData = ref([
 
 /* Problem Solving Section */
 .problem-solving-section {
-  margin-top: 30px;
-  padding-top: 20px;
-}
-
-.problem-solving-title {
-  font-size: 16px;
-  font-weight: 600;
-  color: #333;
-  margin: 0 0 20px 0;
-}
-
-.problem-solving-items {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-}
-
-.problem-item {
-  border-left: 3px solid #28a745;
-  padding-left: 16px;
-}
-
-.problem-title {
-  font-size: 14px;
-  font-weight: 600;
-  color: #333;
-  margin: 0 0 8px 0;
-}
-
-.problem-description {
-  color: #555;
-  margin: 0;
-  font-size: 13px;
-  line-height: 1.5;
+  .problem-solving-categories-grid {
+    display: grid;
+    gap: 20px;
+    margin-top: 15px;
+  }
+  
+  .problem-category-card {
+    padding: 0px;
+    transition: all 0.2s ease;
+  }
+  
+  .problem-category-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 12px;
+  }
+  
+  .problem-category-title {
+    font-size: 14px;
+    font-weight: 600;
+    margin: 0;
+    letter-spacing: -0.02em;
+  }
+  
+  .problem-category-items {
+    margin: 0;
+    padding-left: 16px;
+    list-style: none;
+    position: relative;
+  }
+  
+  .problem-category-item {
+    margin-bottom: 8px;
+    color: #555;
+    font-size: 13px;
+    line-height: 1.5;
+    position: relative;
+    padding-left: 12px;
+    
+    &::before {
+      content: '·';
+      position: absolute;
+      left: -4px;
+      color: #aaa;
+      font-weight: bold;
+      font-size: 16px;
+    }
+    
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
 }
 
 /* Freelance Projects */
@@ -1197,6 +1216,25 @@ const presentationData = ref([
   .tech-item-horizontal {
     padding: 6px 8px;
     font-size: 12px;
+  }
+  
+  .problem-solving-section {
+    .problem-solving-categories-grid {
+      grid-template-columns: 1fr;
+      gap: 15px;
+    }
+    
+    .problem-category-card {
+      padding: 12px;
+    }
+    
+    .problem-category-title {
+      font-size: 13px;
+    }
+    
+    .problem-category-item {
+      font-size: 12px;
+    }
   }
 }
 </style>
