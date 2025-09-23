@@ -114,23 +114,39 @@ const careerData = ref([
         problemSolving: [
           {
             title: '기술 스택 의사결정',
-            description: '업박스 클라우드 1.0 에서 Typescript 도입을 적극 추진하여 잠재적 타입 버그 제거. 업박스 클라우드 2.0 개발 착수 시점 기술 분석을 통해 Vue3 로 결정(React 와 비교)'
+            description: [
+              '업박스 클라우드 1.0 에서 Javascript 의 유지보수 편의성을 위해 Typescript 도입을 적극 추진하여 잠재적 타입 버그 제거',
+              '업박스 클라우드 2.0 개발 착수 시점 기술 분석을 통해 Vue3 로 결정(React 와 비교)'
+            ]
           },
           {
-            title: '구글 심사 시 원하지 않을 때 배포되는 문제',
-            description: '관리형 게시를 사용해 원하는 때에 배포하는 간단한 시스템 활용'
+            title: '안드로이드 배포 시점 불확실 문제',
+            description: [
+              '구글 심사 시 원하지 않을 때 배포되어서 웹과 버전이 안맞는 문제가 발생',
+              '관리형 게시를 사용해 원하는 때에 배포하는 간단한 시스템을 발견하고 활용'
+            ]
           },
           {
             title: '버전 캐시 문제',
-            description: '데이터독 도입으로 오동작을 일으키는 케이스가 버전 문제가 대다수임을 확인. 버전 비교를 통해 캐시를 무효화하고 최신 FE 앱을 받을 수 있도록 구현하여 에러 발생 빈도 90프로 가량 제거. 기존 1주일 간 이전 버전을 사용하는 케이스 다수 → 최대 2일 안에 모든 사용자 최신 버전 사용'
+            description: [
+              '데이터독 도입으로 모니터링을 통해 오동작을 일으키는 케이스가 버전 문제가 대다수임을 확인',
+              '버전 비교를 통해 캐시를 무효화하고 최신 FE 앱을 받을 수 있도록 구현하여 에러 발생 빈도 90프로 가량 제거',
+              '기존 1주일 간 이전 버전을 사용하는 케이스 다수 → 최대 2일 안에 모든 사용자 최신 버전 사용'
+            ]
           },
           {
             title: '프론트 개발자 사이의 컨벤션이 맞지 않는 문제',
-            description: '서로 다른 IDE 사용, 코딩 컨벤션 결정, lint 도입으로 기계의 도움을 받아 누락되는 케이스 제거'
+            description: [
+              '서로 다른 IDE와 규칙을 사용하여 개발자마다 코드 스타일이 다른 문제가 발생',
+              '코딩 컨벤션을 함께 결정하고 lint를 도입하고 확장프로그램의 설정을 맞추어 기계의 도움을 받아 컨벤션 일치'
+            ]
           },
           {
             title: 'css 단일 속성 class 증가 문제',
-            description: '빠른 css 속성 적용을 위해 글로벌 단위의 단일 속성 class 를 지속적으로 추가하게 됨. tailwindcss 의 utility class 를 활용하여 직접 정의하는 것보다는 공통된 컨벤션으로 작업할 수 있게 됨'
+            description: [
+              '빠른 css 속성 적용을 위해 자체적으로 글로벌 단위의 단일 속성 class 를 지속적으로 추가하게 됨',
+              'tailwindcss 의 utility class 를 활용하여 직접 정의하는 것보다는 공통된 컨벤션으로 작업할 수 있게 됨'
+            ]
           }
         ]
       },
@@ -155,9 +171,10 @@ const careerData = ref([
         name: '뱅크비 - 베트남 통합계좌관리 솔루션',
         period: '2019년 9월 ~ 2020년 12월',
         technologies: 'C/C++',
-        description: ['베트남 은행을 자동으로 연결해주고 입출금내역을 조회하여 계좌를 한눈에 볼 수 있는 모바일 어플리케이션. BIDV, Vietcom, TP 은행 등 약 11개 은행에 대한 계좌조회를 제공.'],
+        description: ['베트남 은행을 자동으로 연결해주고 입출금내역을 조회하여 계좌를 한눈에 볼 수 있는 모바일 어플리케이션. BIDV, Vietcom, TP 은행 등 약 11개 은행에 대한 계좌조회를 제공합니다.'],
         responsibilities: [
           '은행을 연결하고 내역을 조회하는 스크래핑 모듈을 담당하고(C/C++), 모바일 앱은 베트남 현지 협력사에서 개발',
+          '크로스 플랫폼 CMAKE 빌드 구성',
           '2019년 10월 직접 베트남에 가서 현지 직원과 업무를 같이 진행',
           '베트남 은행에서 제공하는 데이터를 크롤링하여 계좌 정보와 이체 기능을 제공',
           '기존 C 코드를 Modern C++로 리팩터링'
@@ -167,7 +184,7 @@ const careerData = ref([
         name: 'Omnidoc - 문서발급 솔루션',
         period: '2019년 4월 ~ 2020년 12월',
         technologies: 'C/C++',
-        description: ['17여개의 민원사이트에서 40여개의 민원문서를 발급할 수 있는 솔루션. 타사의 서비스에 탑재되어 고객의 민간업무를 대행해주는 편리한 서비스 제공.'],
+        description: ['17여개의 민원사이트에서 40여개의 민원문서를 발급할 수 있는 솔루션. 타사의 서비스에 탑재되어 고객의 민간업무를 대행해주는 편리한 서비스 제공합니다.'],
         responsibilities: [
           '금융결제원 Payinfo, 신용조회 KCB, 범죄자조회 Crime 등의 사이트를 스크래핑 담당'
         ]
@@ -176,18 +193,18 @@ const careerData = ref([
         name: '오픈망 직승인 프로젝트',
         period: '2018년 8월 ~ 2019년 3월',
         technologies: 'SpringBoot, JPA',
-        description: ['가맹점과 카드사 간의 E2E 보안을 위한 클라우드 POS 서비스. AWS 를 이용한 클라우드 서비스 (EC2, S3, elastic search, 보안 등)'],
+        description: ['VAN사를 통하지 않고 가맹점과 카드사 간의 E2E 보안을 위한 클라우드 POS 서비스입니다.'],
         responsibilities: [
           '카드사와의 승인 및 매입 관련 프로세스를 테스트하기 위한 더미카드사 서버를 제작. (Spring boot, JPA, MySQL)',
           'VAN사에서 제공하는 가맹점 관리, 결제내역 조회 등의 기능을 직접 구현',
-          '카드사의 결제 시스템을 이해하고 그 안의 보안 시스템을 직접 적용'
+          // '카드사의 결제 시스템을 이해하고 그 안의 보안 시스템을 직접 적용'
         ]
       },
       {
         name: '하나1QPay NFC 결제모듈',
         period: '2017년 6월 ~ 2018년 8월',
         technologies: 'Java, C/C++',
-        description: ['하나카드 1QPay 앱에 탑재되는 NFC 모듈. 지불카드의 token화 보안 서비스와, HCE 스펙을 따라 NFC 결제 통신을 제공.'],
+        description: ['하나카드 1QPay 앱에 탑재되는 NFC 모듈로 지불카드의 token화 보안 서비스와, HCE 스펙을 따라 NFC 결제 통신을 제공합니다.'],
         responsibilities: [
           'VISA token 발급 및 EMV 카드 결제 스펙을 이해하여 NFC 결제 모듈을 유지보수. (Android java, JNI)',
           '보안 모듈인 Whitebox 암호화 모듈을 LLVM 난독화 컴파일러로 컴파일하여 SharedObject의 분석 방지. (C++)',
@@ -198,7 +215,7 @@ const careerData = ref([
         name: 'TaSIM - 대형가맹점 직승인 프로젝트',
         period: '2017년 1월 ~ 2017년 6월',
         technologies: 'Java Card OS, MFC',
-        description: ['카드사와 가맹점 사이의 E2E 암호화를 제공하는 TaSIM. 중간 VAN사의 영향을 받지 않은 채, 가맹점 단말기와 카드사 간의 암호화 제공. 여신협회 taSIM Application Specification 인증, EMVCo 및 CC(Common Criteria) 인증.'],
+        description: ['카드사와 가맹점 사이의 E2E 암호화를 제공합니다. 중간 VAN사의 영향을 받지 않은 채, 가맹점 단말기와 카드사 간의 암호화 제공합니다. 여신협회 taSIM Application Specification 인증, EMVCo 및 CC(Common Criteria) 인증을 취득하고 구현한 임베디드 카드 암호화 모듈입니다.'],
         responsibilities: [
           'JavaCOS 에 Applet을 탑재하여 가맹점의 카드 리더 단말기에 장착',
           'Java COS의 작동을 이해하고, 해당 제품을 유지보수 및 대응',
@@ -215,7 +232,7 @@ const freelanceData = ref([
     name: 'MGX 모바일 게임 시세조회 어플리케이션',
     period: '2021년 1월 ~ 2021년 3월',
     technologies: 'ReactNative',
-    description: ['리니지m, 리니지2m, 바람의나라 등 모바일 게임의 시세조회, 시세추이, 거래소 아이템 검색 등을 제공하는 어플리케이션. 소식 전하기, 커뮤니티 기능 제공.'],
+    description: ['리니지m, 리니지2m, 바람의나라 등 모바일 게임의 시세조회, 시세추이, 거래소 아이템 검색 등을 제공하는 어플리케이션. 소식 전하기, 커뮤니티 기능을 제공합니다.'],
     responsibilities: [
       '어플리케이션 제작 담당',
       '구글 로그인을 위한 Firebase 연동 및 카카오 로그인 연동'
@@ -225,7 +242,7 @@ const freelanceData = ref([
     name: 'KlookPay - KlookPay POC 어플리케이션',
     period: '2020년 9월 ~ 2020년 11월',
     technologies: 'NodeJS, Angular, NativeScript, ExpressJS, Docker',
-    description: ['KB카드에서 진행하는 KlookPay 프로젝트의 POC 어플리케이션. KlookPay는 KB카드의 마일리지, 포인트 및 결제 시스템을 Klook에 연동하는 서비스.'],
+    description: ['KB카드에서 진행하는 KlookPay 프로젝트의 POC 어플리케이션. KlookPay는 KB카드의 마일리지, 포인트 및 결제 시스템을 Klook에 연동하는 서비스입니다.'],
     responsibilities: [
       'KB카드와 협업하여 안드로이드 앱 기술지원을 진행 (Nativescript-ng)',
       '기존 Angular 개인프로젝트로 진행했던 경험을 바탕으로 현재 버전의 Angular에 맞는 스터디를 다시 진행하고, 어플리케이션 제작',
@@ -340,21 +357,29 @@ const presentationData = ref([
       <h2 class="section-title">경력 (총 {{ dayjs().diff(dayjs("2017-01-01"), 'year') }}년 {{ dayjs().diff(dayjs("2021-01-01"), 'month') % 12 }}개월)</h2>
       
       <div class="career-summary">
-        <div class="career-item">
-          <span class="company">주식회사 리코</span>
-          <div class="text-sm ml-2">
-            폐기물 매니지먼트 클라우드 서비스 기업
+        <div class="career-timeline">
+          <div class="career-item">
+            <div class="timeline-dot"></div>
+            <div class="timeline-content">
+              <span class="company">주식회사 리코</span>
+              <div class="text-sm ml-2">
+                폐기물 매니지먼트 클라우드 서비스 기업
+              </div>
+              <div class="flex-1"></div>
+              <span class="period">2021년 1월 ~ 재직중 (약 {{ dayjs().diff(dayjs("2021-01-01"), 'year') }}년 {{ dayjs().diff(dayjs("2021-01-01"), 'month') % 12 }}개월)</span>
+            </div>
           </div>
-          <div class="flex-1"></div>
-          <span class="period">2021년 1월 ~ 재직중 (약 {{ dayjs().diff(dayjs("2021-01-01"), 'year') }}년 {{ dayjs().diff(dayjs("2021-01-01"), 'month') % 12 }}개월)</span>
-        </div>
-        <div class="career-item">
-          <span class="company">주식회사 뱅크비</span>
-          <div class="text-sm ml-2">
-            스크래핑 전문 핀테크 기업
+          <div class="career-item">
+            <div class="timeline-dot"></div>
+            <div class="timeline-content">
+              <span class="company">주식회사 뱅크비</span>
+              <div class="text-sm ml-2">
+                스크래핑 전문 핀테크 기업
+              </div>
+              <div class="flex-1"></div>
+              <span class="period">2017년 1월 ~ 2020년 12월 (약 4년)</span>
+            </div>
           </div>
-          <div class="flex-1"></div>
-          <span class="period">2017년 1월 ~ 2020년 12월 (약 4년)</span>
         </div>
       </div>
 
@@ -410,6 +435,7 @@ const presentationData = ref([
             <div v-if="project.responsibilityCategories && project.isMain" class="section-divider" />
             <div v-if="(project as any).responsibilityCategories" class="responsibility-categories">
               <h5 class="responsibilities-title font-bold">기여 및 성과</h5>
+              <p class="text-xs">프론트엔드 개발의 중심 역할을 맡으며 주요 기능 개발을 담당했습니다.</p>
               <div class="categories-grid">
                 <div 
                   v-for="category in (project as any).responsibilityCategories" 
@@ -438,6 +464,7 @@ const presentationData = ref([
             <div v-if="project.problemSolving" class="problem-solving-section">
               
               <h5 class="problem-solving-title font-bold">문제 해결 경험</h5>
+              <p class="text-xs">처음부터 완벽하지 못하지만, 문제점과 개선점을 충분히 이해하고 실천해온 경험을 공유합니다.</p>
               <div class="problem-solving-categories-grid">
                 <div 
                   v-for="problem in project.problemSolving" 
@@ -450,8 +477,12 @@ const presentationData = ref([
                     </h6>
                   </div>
                   <ul class="problem-category-items">
-                    <li class="problem-category-item">
-                      {{ problem.description }}
+                    <li 
+                      v-for="desc in problem.description" 
+                      :key="desc"
+                      class="problem-category-item"
+                    >
+                      {{ desc }}
                     </li>
                   </ul>
                 </div>
@@ -665,7 +696,7 @@ const presentationData = ref([
     font-size: 24px;
     font-weight: 700;
     color: #333;
-    margin: 0 0 20px 0;
+    margin: 84px 0 20px 0;
     padding-bottom: 8px;
     border-bottom: 2px solid #666;
   }
@@ -758,24 +789,61 @@ const presentationData = ref([
   border-radius: 8px;
   margin-bottom: 40px;
 
-  .career-item {
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
-    margin-bottom: 4px;
-    
-    &:last-child {
-      margin-bottom: 0;
+  .career-timeline {
+    position: relative;
+    padding-left: 20px;
+
+    &::before {
+      content: '';
+      position: absolute;
+      left: 5px;
+      top: 12px;
+      bottom: 12px;
+      width: 2px;
+      background: #ccc;
     }
 
-    .company {
-      font-weight: 600;
-      color: #333;
-    }
+    .career-item {
+      position: relative;
+      display: flex;
+      align-items: flex-start;
+      margin-bottom: 24px;
+      
+      &:last-child {
+        margin-bottom: 0;
+      }
 
-    .period {
-      color: #666;
-      font-size: 13px;
+      .timeline-dot {
+        position: absolute;
+        left: -20px;
+        top: 6px;
+        width: 12px;
+        height: 12px;
+        background: #666;
+        border-radius: 50%;
+        border: 3px solid #f8f9fa;
+        z-index: 1;
+      }
+
+      .timeline-content {
+        flex: 1;
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 8px;
+
+        .company {
+          font-weight: 600;
+          width: 120px;
+          color: #333;
+        }
+
+        .period {
+          color: #666;
+          font-size: 13px;
+        }
+      }
     }
   }
 }
@@ -813,46 +881,26 @@ const presentationData = ref([
       }
     }
   }
+  &:last-child {
+    border-top: 1px solid #ccc;
+    padding-top: 20px;
+  }
 }
 
 /* Project Styles */
 .projects {
   display: flex;
   flex-direction: column;
-  gap: 48px;
+  gap: 32px;
 
   .project-item {
     padding-left: 16px;
-    
-    &.main-project {
-      background: #f8f9fa;
-      border: 1px solid #e9ecef;
-      border-radius: 8px;
-      padding: 20px;
-      margin: 0 -4px 25px -4px;
-      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-      position: relative;
-      
-      &::before {
-        content: '메인 프로젝트';
-        position: absolute;
-        top: -10px;
-        right: 20px;
-        background: #666;
-        color: white;
-        padding: 4px 12px;
-        border-radius: 4px;
-        font-size: 11px;
-        font-weight: 600;
-        letter-spacing: 0.5px;
-      }
-    }
 
     .project-header {
       margin-bottom: 12px;
 
       .project-name {
-        border-left: 3px solid #999;
+        border-left: 3px solid #666;
         font-size: 18px;
         font-weight: 600;
         color: #333;
@@ -890,7 +938,7 @@ const presentationData = ref([
     .project-description {
       color: #555;
       margin: 0 0 15px 0;
-      font-size: 14px;
+      font-size: 13px;
     }
 
     .project-responsibilities {
@@ -923,6 +971,36 @@ const presentationData = ref([
 
     .problem-solving-title {
       color: #333;
+    }
+    
+    &.main-project {
+      background: #f8f9fa;
+      border: 1px solid #e9ecef;
+      border-radius: 8px;
+      padding: 20px;
+      margin: 0 -4px 0 -4px;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+      position: relative;
+      
+      .project-name {
+        border: none;
+        padding-left: 0;
+        margin-left: 0;
+      }
+      
+      &::before {
+        content: '메인 프로젝트';
+        position: absolute;
+        top: -10px;
+        right: 20px;
+        background: #666;
+        color: white;
+        padding: 2px 8px;
+        border-radius: 2px;
+        font-size: 12px;
+        font-weight: 400;
+        letter-spacing: 0.5px;
+      }
     }
   }
 }
@@ -1046,10 +1124,9 @@ const presentationData = ref([
         position: relative;
 
         .problem-category-item {
-          margin-bottom: 8px;
+          margin-bottom: 4px;
           color: #555;
           font-size: 13px;
-          line-height: 1.5;
           position: relative;
           padding-left: 12px;
           
@@ -1114,7 +1191,7 @@ const presentationData = ref([
     .project-description {
       color: #555;
       margin: 0 0 15px 0;
-      font-size: 14px;
+      font-size: 13px;
     }
 
     .project-responsibilities {
@@ -1186,7 +1263,7 @@ const presentationData = ref([
     .presentation-description {
       color: #555;
       margin: 0 0 15px 0;
-      font-size: 14px;
+      font-size: 13px;
     }
 
     .presentation-topics {
@@ -1294,10 +1371,26 @@ const presentationData = ref([
   }
 
   .career-summary {
-    .career-item {
-      flex-direction: column;
-      align-items: flex-start;
-      gap: 4px;
+    .career-timeline {
+      padding-left: 16px;
+
+      &::before {
+        left: 6px;
+      }
+
+      .career-item {
+        .timeline-dot {
+          left: -16px;
+          width: 10px;
+          height: 10px;
+        }
+
+        .timeline-content {
+          flex-direction: column;
+          align-items: flex-start;
+          gap: 4px;
+        }
+      }
     }
   }
 
