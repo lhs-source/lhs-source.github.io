@@ -509,12 +509,18 @@ const presentationData = ref([
           class="presentation-item"
         >
           <div class="presentation-header">
-            <h3 class="presentation-title">{{ presentation.title }}</h3>
+            <h3 class="presentation-name">{{ presentation.title }}</h3>
+            <div class="presentation-meta">
+              <span class="presentation-period">{{ presentation.period }}</span>
+              <span class="presentation-event">{{ presentation.event }}</span>
+            </div>
           </div>
           
-          <span class="presentation-period">{{ presentation.period }}</span>
-          <p class="presentation-event">{{ presentation.event }}</p>
-          <p class="presentation-description">{{ presentation.description }}</p>
+          <div>
+            <p v-for="description in presentation.description" :key="description" class="presentation-description">
+              {{ description }}
+            </p>
+          </div>
           
           <div class="presentation-topics">
             <h4 class="topics-title">주요 내용</h4>
@@ -1086,38 +1092,38 @@ const presentationData = ref([
 }
 
 .presentation-item {
-  // border: 1px solid #e9ecef;
-  // border-radius: 8px;
-  // border-left: 3px solid #6137ad;
   padding-left: 16px;
 }
 
 .presentation-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
   margin-bottom: 12px;
 }
 
-.presentation-title {
-  font-size: 16px;
+.presentation-name {
+  border-left: 3px solid #333;
+  font-size: 18px;
   font-weight: 600;
   color: #333;
-  margin: 0;
-  flex: 1;
+  margin-left: -16px;
+  padding-left: 16px;
 }
 
-.presentation-date {
+.presentation-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-top: 4px;
+}
+
+.presentation-period {
   color: #666;
-  font-size: 14px;
-  margin-left: 20px;
+  font-size: 13px;
 }
 
 .presentation-event {
   color: #007bff;
+  font-size: 13px;
   font-weight: 500;
-  margin: 0 0 8px 0;
-  font-size: 14px;
 }
 
 .presentation-description {
@@ -1229,8 +1235,10 @@ const presentationData = ref([
     gap: 8px;
   }
   
-  .presentation-date {
-    margin-left: 0;
+  .presentation-meta {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
   }
   
   .responsibility-categories {
