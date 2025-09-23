@@ -35,14 +35,30 @@ const keywordData = ref([
   },
   {
     title: '효율성',
-    description: '우선순위를 정하여 선택과 집중합니다. 비효율적인 프로세스를 개선하기 위해 업무를 간소화시키기 위해 노력합니다. 불필요한 요소들을 찾아 제거하고 생산성을 높이기 위한 좋은 방법을 제안합니다.',
+    description: '우선순위를 정하여 선택과 집중합니다. 비효율적인 프로세스를 개선하고 업무를 간소화시키기 위해 노력합니다. 불필요한 요소들을 찾아 제거하고 생산성을 높이기 위한 좋은 방법을 제안합니다.',
   }
+]);
+
+// 기술 스택 데이터
+const techStackData = ref([
+  { name: 'Vue3', isMain: true },
+  { name: 'TypeScript', isMain: false },
+  { name: 'C++', isMain: false },
+  { name: 'Java', isMain: false },
+  { name: 'Android Kotlin', isMain: false },
+  { name: 'AWS', isMain: false },
+  { name: 'Github Actions', isMain: false },
+  { name: 'Datadog', isMain: false },
+  { name: 'Git', isMain: false },
+  { name: 'Storybook', isMain: false },
+  { name: 'Atlassian', isMain: false },
+  { name: 'Figma', isMain: false },
 ]);
 
 // 경력 데이터
 const careerData = ref([
   {
-    company: '리코',
+    company: '주식회사 리코',
     period: '2021년 1월 ~ 재직중',
     duration: '약 4년 8개월',
     position: '프론트엔드 개발자',
@@ -56,7 +72,7 @@ const careerData = ref([
           '업박스 클라우드는 폐기물의 처리 과정에서 발생하는 모든 데이터를 투명하고 정확하게 관리하는 클라우드 서비스입니다. 제공되는 앱의 종류로는 업박스 어드민, 업박스 드라이버, 업박스 커스터머가 있으며, 각각 기사님들의 수거 및 차량 관리, 업장의 수거 일정 및 정보 확인에 사용됩니다.',
           '모든 앱은 담당하는 법인과 역할에 맞춰 권한이 부여되고, 권한별로 메뉴와 기능이 차등 제공됩니다. 고객의 업장 특성과 계약을 기반해 맞춤으로 법적 문제가 발생하지 않도록 수거 일정을 조율합니다. 폐기물 처리 데이터 기반한 청구서를 생성하고, 정산까지 자동으로 이루어집니다.',
           '폐기물 산업 특성상 법적인 문제가 굉장히 복잡하고 행정 처리 업무가 많습니다. 고객들은 번거로운 과정을 줄이고, 행정 처리에 필요한 서류를 원할 때 바로 확인이 가능하도록 업박스에서 서식에 맞는 데이터를 제공합니다.',
-          '초기 음식물류 폐기물 중심에서 현재는 재활용과 폐수오니 등 여러 폐기물 종류를 종합 지원하는 형태로 발전했습니다.'
+          '초기 음식물류 폐기물 중심에서 현재는 재활용과 폐수오니(슬러지) 등 여러 폐기물 종류를 종합 지원하는 형태로 발전했습니다.'
         ],
         responsibilityCategories: [
           {
@@ -78,7 +94,7 @@ const careerData = ref([
           {
             category: '안드로이드 개발',
             items: [
-              '안드로이드 Kotlin 네이티브를 개발하여 권한 요청, 푸시, 네비게이션, 파일 선택 기능 구현.',
+              '안드로이드 Kotlin 네이티브를 개발하여 권한 요청, 푸시, 네비게이션, 파일 선택 기능 구현',
               'WebView와 네이티브 간 통신 및 데이터 연동 - 푸시 알림을 Room DB에 저장 후 웹으로 전달',
               '마케팅 연동을 위한 딥링크 지원'
             ]
@@ -103,7 +119,6 @@ const careerData = ref([
             category: '기술 표준화 & 조직 기여',
             items: [
               'i18n 도입으로 용어 통일 및 해외 진출 대비',
-              '데이터독 사용법 및 활용 방법 공유',
               'Atlassian 툴(Jira 자동화) 및 데이터독 사용법 내부 교육 및 공유'
             ]
           }
@@ -120,41 +135,41 @@ const careerData = ref([
             ]
           },
           {
-            title: '안드로이드 배포 시점 불확실 문제',
+            title: '사용자의 버전 업데이트 지연 시간 단축',
+            description: [
+              '데이터독 도입으로 모니터링을 통해 오동작을 일으키는 케이스가 버전 문제가 대다수임을 확인',
+              '버전 비교를 통해 캐시를 무효화하고 최신 FE 앱을 받을 수 있도록 구현하여 에러 발생 빈도 약 90% 제거',
+              '최신 버전으로 업데이트하는 데 걸리는 시간 최대 7일 → 2일로 단축'
+            ]
+          },
+          {
+            title: '프론트 개발자 컨벤션 통일',
+            description: [
+              '서로 다른 IDE와 규칙을 사용하여 개발자마다 코드 스타일이 다른 문제가 발생',
+              '코딩 컨벤션을 결정한 후, Lint 도입과 공통된 확장프로그램을 활용해 컨벤션 일치',
+            ]
+          },
+          {
+            title: 'CSS 관리 체계 개선',
+            description: [
+              '빠른 CSS 속성 적용을 위해 자체적으로 글로벌 단위의 단일 속성 class 를 지속적으로 추가함',
+              'Tailwindcss 의 Utility class 를 활용하여 직접 정의하는 것보다는 범용적인 컨벤션으로 작업할 수 있게 됨'
+            ]
+          },
+          {
+            title: '안드로이드 배포 시점 제어',
             description: [
               '구글 심사 시 원하지 않을 때 배포되어서 웹과 버전이 안맞는 문제가 발생',
               '관리형 게시를 사용해 원하는 때에 배포하는 간단한 시스템을 발견하고 활용'
             ]
           },
-          {
-            title: '버전 캐시 문제',
-            description: [
-              '데이터독 도입으로 모니터링을 통해 오동작을 일으키는 케이스가 버전 문제가 대다수임을 확인',
-              '버전 비교를 통해 캐시를 무효화하고 최신 FE 앱을 받을 수 있도록 구현하여 에러 발생 빈도 90프로 가량 제거',
-              '기존 1주일 간 이전 버전을 사용하는 케이스 다수 → 최대 2일 안에 모든 사용자 최신 버전 사용'
-            ]
-          },
-          {
-            title: '프론트 개발자 사이의 컨벤션이 맞지 않는 문제',
-            description: [
-              '서로 다른 IDE와 규칙을 사용하여 개발자마다 코드 스타일이 다른 문제가 발생',
-              '코딩 컨벤션을 함께 결정하고 lint를 도입하고 확장프로그램의 설정을 맞추어 기계의 도움을 받아 컨벤션 일치'
-            ]
-          },
-          {
-            title: 'css 단일 속성 class 증가 문제',
-            description: [
-              '빠른 css 속성 적용을 위해 자체적으로 글로벌 단위의 단일 속성 class 를 지속적으로 추가하게 됨',
-              'tailwindcss 의 utility class 를 활용하여 직접 정의하는 것보다는 공통된 컨벤션으로 작업할 수 있게 됨'
-            ]
-          }
         ]
       },
       {
         name: '업박스 홈페이지 제작',
         period: '2021년 1월 ~ 상시 진행',
         technologies: 'VanilaJS, EJS, AWS',
-        description: ['리코는 리코 홈페이지와 업박스 홈페이지 2개를 운영합니다. 리코 홈페이지는 회사의 정보가 담긴 방면 업박스 홈페이지는 제품 측면에서 인바운드에 초점을 맞추었습니다.'],
+        description: ['회사의 정보가 담긴 리코 홈페이지와 제품 측면에서 인바운드에 초점 맞춘 업박스 홈페이지를 제작하고 유지보수했습니다.'],
         responsibilities: [
           '각 홈페이지를 유지보수하고, 인바운드 측정을 위해 마케팅팀과 협업하여 데이터를 수집'
         ]
@@ -162,7 +177,7 @@ const careerData = ref([
     ]
   },
   {
-    company: '뱅크비',
+    company: '주식회사 뱅크비',
     period: '2017년 1월 ~ 2020년 12월',
     duration: '약 4년',
     position: 'C++ 개발자',
@@ -186,7 +201,7 @@ const careerData = ref([
         technologies: 'C/C++',
         description: ['17여개의 민원사이트에서 40여개의 민원문서를 발급할 수 있는 솔루션. 타사의 서비스에 탑재되어 고객의 민간업무를 대행해주는 편리한 서비스 제공합니다.'],
         responsibilities: [
-          '금융결제원 Payinfo, 신용조회 KCB, 범죄자조회 Crime 등의 사이트를 스크래핑 담당'
+          '금융결제원 Payinfo, 신용조회 KCB, 범죄자조회 Crime 등의 사이트 스크래핑 담당'
         ]
       },
       {
@@ -195,7 +210,7 @@ const careerData = ref([
         technologies: 'SpringBoot, JPA',
         description: ['VAN사를 통하지 않고 가맹점과 카드사 간의 E2E 보안을 위한 클라우드 POS 서비스입니다.'],
         responsibilities: [
-          '카드사와의 승인 및 매입 관련 프로세스를 테스트하기 위한 더미카드사 서버를 제작. (Spring boot, JPA, MySQL)',
+          '카드사와의 승인 및 매입 관련 프로세스를 테스트하기 위한 더미카드사 서버를 제작 (Spring boot, JPA, MySQL)',
           'VAN사에서 제공하는 가맹점 관리, 결제내역 조회 등의 기능을 직접 구현',
           // '카드사의 결제 시스템을 이해하고 그 안의 보안 시스템을 직접 적용'
         ]
@@ -206,8 +221,8 @@ const careerData = ref([
         technologies: 'Java, C/C++',
         description: ['하나카드 1QPay 앱에 탑재되는 NFC 모듈로 지불카드의 token화 보안 서비스와, HCE 스펙을 따라 NFC 결제 통신을 제공합니다.'],
         responsibilities: [
-          'VISA token 발급 및 EMV 카드 결제 스펙을 이해하여 NFC 결제 모듈을 유지보수. (Android java, JNI)',
-          '보안 모듈인 Whitebox 암호화 모듈을 LLVM 난독화 컴파일러로 컴파일하여 SharedObject의 분석 방지. (C++)',
+          'VISA token 발급 및 EMV 카드 결제 스펙을 이해하여 NFC 결제 모듈을 유지보수 (Android java, JNI)',
+          '보안 모듈인 Whitebox 암호화 모듈을 LLVM 난독화 컴파일러로 컴파일하여 SharedObject의 분석 방지 (C++)',
           '라이브러리를 JNI로 연동하여 제공'
         ]
       },
@@ -215,7 +230,7 @@ const careerData = ref([
         name: 'TaSIM - 대형가맹점 직승인 프로젝트',
         period: '2017년 1월 ~ 2017년 6월',
         technologies: 'Java Card OS, MFC',
-        description: ['카드사와 가맹점 사이의 E2E 암호화를 제공합니다. 중간 VAN사의 영향을 받지 않은 채, 가맹점 단말기와 카드사 간의 암호화 제공합니다. 여신협회 taSIM Application Specification 인증, EMVCo 및 CC(Common Criteria) 인증을 취득하고 구현한 임베디드 카드 암호화 모듈입니다.'],
+        description: ['카드사와 가맹점 사이의 E2E 암호화를 수행하는 임베디드 카드 암호화 모듈입니다. 중간 VAN사의 영향을 받지 않고, 가맹점 단말기와 카드사 간의 암호화를 제공합니다. 여신협회 taSIM Application Specification 인증, EMVCo 및 CC(Common Criteria) 인증을 취득하고 구현했습니다.'],
         responsibilities: [
           'JavaCOS 에 Applet을 탑재하여 가맹점의 카드 리더 단말기에 장착',
           'Java COS의 작동을 이해하고, 해당 제품을 유지보수 및 대응',
@@ -251,29 +266,13 @@ const freelanceData = ref([
   }
 ]);
 
-// 기술 스택 데이터
-const techStackData = ref([
-  { name: 'VueJS 3', isMain: true },
-  { name: 'TypeScript', isMain: true },
-  { name: 'C++', isMain: false },
-  { name: 'Java', isMain: false },
-  { name: 'Android Kotlin', isMain: false },
-  { name: 'AWS', isMain: false },
-  { name: 'Github Actions', isMain: false },
-  { name: 'Datadog', isMain: false },
-  { name: 'Git', isMain: false },
-  { name: 'Storybook', isMain: false },
-  { name: 'Atlassian', isMain: false },
-  { name: 'Figma', isMain: false },
-]);
-
 // 발표 및 컨퍼런스 데이터
 const presentationData = ref([
   {
     title: '데이터독 User Journey 세션 발표',
-    event: 'Datadog Korea Observability Day 2024',
+    event: 'Datadog Korea Observability Day 2024 - 웨이스트 매니지먼트 스타트업 프론트엔드 개발자의 Datadog을 활용한 효율적인 모니터링 시스템 구축기',
     period: '2024년 9월',
-    description: ['O2O 환경의 리코 특성을 살려 데이터독을 에러 분석과 사용성 측정 면에서 활용한 경험을 공유했습니다. "웨이스트 매니지먼트 스타트업 프론트엔드 개발자의 Datadog을 활용한 효율적인 모니터링 시스템 구축기"라는 제목으로 발표했습니다.'],
+    description: ['O2O 환경의 리코 특성을 살려 데이터독을 에러 분석과 사용성 측정 면에서 활용한 경험을 공유했습니다.'],
     topics: [
       '에러 대응: HEIC 파일 형식 에러 해결, 대시보드 구성, 알림 시스템',
       '데이터 기반 의사결정: 패치 시간 변경, OS 비율 분석',
@@ -291,26 +290,26 @@ const presentationData = ref([
     <!-- Header Section with Profile -->
     <header class="resume-header">
       <div class="profile-section">
-        <div class="profile-photo">
-          <!-- 프로필 사진 공간 -->
-          <div class="photo-placeholder">
-            <span class="photo-text">프로필 사진</span>
+        <div class="profile-background"></div>
+        <!-- <div class="profile-photo">
+          <img src="/assets/img/boxing.jpg" />
+        </div> -->
+        <div class="profile-info flex justify-between pb-4">
+          <div class="profile-info-header">
+            <h1 class="name">이현수</h1>
+            <h2 class="title">프론트엔드 개발자</h2>
           </div>
-        </div>
-        <div class="profile-info">
-          <h1 class="name">이현수</h1>
-          <h2 class="title">프론트엔드 개발자</h2>
           <div class="contact-info">
             <div class="contact-item">
-              <span class="label">Email:</span>
+              <span class="label">Email</span>
               <span class="value">iddms5446@gmail.com</span>
             </div>
             <div class="contact-item">
-              <span class="label">Phone:</span>
-              <span class="value">010-0000-0000</span>
+              <span class="label">Phone</span>
+              <span class="value">010-8209-2048</span>
             </div>
             <div class="contact-item">
-              <span class="label">GitHub:</span>
+              <span class="label">GitHub</span>
               <span class="value">github.com/lhs-source</span>
             </div>
           </div>
@@ -464,7 +463,7 @@ const presentationData = ref([
             <div v-if="project.problemSolving" class="problem-solving-section">
               
               <h5 class="problem-solving-title font-bold">문제 해결 경험</h5>
-              <p class="text-xs">처음부터 완벽하지 못하지만, 문제점과 개선점을 충분히 이해하고 실천해온 경험을 공유합니다.</p>
+              <p class="text-xs">프로젝트의 완성도를 높이기 위해 지속적으로 문제를 발견하고 해결한 경험입니다.</p>
               <div class="problem-solving-categories-grid">
                 <div 
                   v-for="problem in project.problemSolving" 
@@ -586,6 +585,7 @@ const presentationData = ref([
               </a>
             </div>
           </div>
+          <div></div>
         </div>
       </div>
     </section>
@@ -599,13 +599,13 @@ const presentationData = ref([
 .resume-background {
   min-height: 100vh;
   background: white;
-  padding: 20px 0;
+  // padding: 20px 0;
 }
 
 .resume-container {
   max-width: 1000px;
   margin: 0 auto;
-  padding: 40px;
+  // padding: 40px;
   padding-bottom: 240px;
   background: white;
   color: #666;
@@ -615,16 +615,32 @@ const presentationData = ref([
 
 /* Header Section */
 .resume-header {
-  padding-bottom: 30px;
-  margin-bottom: 40px;
+  // padding-bottom: 30px;
+  margin-bottom: 0px;
 
   .profile-section {
     display: flex;
     gap: 30px;
-    align-items: flex-start;
+    align-items: flex-end;
+    padding-bottom: 16px;
+    background-color: #f9f9f9;
+    min-height: 320px;
+
+    .profile-background {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 320px;
+      background-color: #f9f9f9;
+    }
 
     .profile-photo {
-      flex-shrink: 0;
+      z-index: 1;
+      // flex-shrink: 0;
+      img {
+        height: 240px;
+      }
 
       .photo-placeholder {
         width: 150px;
@@ -645,23 +661,29 @@ const presentationData = ref([
     }
 
     .profile-info {
+      z-index: 1;
       flex: 1;
 
-      .name {
-        font-size: 36px;
-        font-weight: 700;
-        margin: 0 0 8px 0;
-        color: #666;
-      }
+      .profile-info-header {
+        display: flex;
+        align-items: end;
+        gap: 8px;
+        .name {
+          font-size: 36px;
+          font-weight: 600;
+          color: #333;
+        }
 
-      .title {
-        font-size: 18px;
-        font-weight: 500;
-        color: #666;
-        margin: 0 0 20px 0;
+        .title {
+          font-size: 16px;
+          font-weight: 400;
+          color: #333;
+        }
       }
 
       .contact-info {
+        font-size: 14px;
+        margin-top: 12px;
         display: flex;
         flex-direction: column;
 
@@ -684,6 +706,107 @@ const presentationData = ref([
   }
 }
 
+/* Common Styles */
+.section-title {
+  font-size: 24px;
+  font-weight: 700;
+  color: #333;
+  margin: 48px 0 20px 0;
+  padding-bottom: 8px;
+  border-bottom: 2px solid #666;
+}
+
+.subsection-title {
+  font-size: 18px;
+  font-weight: 600;
+  color: #666;
+  margin: 0 0 15px 0;
+}
+
+.content-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: #333;
+  margin: 12px 0 8px 0;
+}
+
+.content-description {
+  color: #555;
+  margin: 0 0 4px 0;
+  font-size: 13px;
+}
+
+.content-list {
+  margin: 0;
+  padding-left: 18px;
+
+  .content-item {
+    position: relative;
+    padding-left: 12px;
+    margin-bottom: 6px;
+    color: #555;
+    font-size: 13px;
+    
+    &:last-child {
+      margin-bottom: 0;
+    }
+    
+          
+    &::before {
+      content: '·';
+      position: absolute;
+      left: -4px;
+      color: #666;
+      font-weight: bold;
+      font-size: 16px;
+    }
+  }
+}
+
+.item-header {
+  margin-bottom: 12px;
+}
+
+.item-name {
+  border-left: 3px solid #666;
+  font-size: 18px;
+  font-weight: 600;
+  color: #333;
+  margin-left: -16px;
+  padding-left: 16px;
+  position: relative;
+  
+  &::before {
+    content: '';
+    position: absolute;
+    left: -3px;
+    top: 6px;
+    bottom: 4px;
+    width: 3px;
+    background: #666;
+  }
+  
+  border-left: none;
+}
+
+.item-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  margin-top: 2px;
+
+  .item-period {
+    color: #666;
+    font-size: 13px;
+  }
+
+  .item-tech {
+    color: #0064FF;
+    font-size: 13px;
+    font-weight: 500;
+  }
+}
+
 /* Section Styles */
 .section {
   margin-bottom: 40px;
@@ -692,27 +815,11 @@ const presentationData = ref([
     margin-bottom: 0;
   }
 
-  .section-title {
-    font-size: 24px;
-    font-weight: 700;
-    color: #333;
-    margin: 84px 0 20px 0;
-    padding-bottom: 8px;
-    border-bottom: 2px solid #666;
-  }
-
   .subsection {
     margin-bottom: 30px;
     
     &:last-child {
       margin-bottom: 0;
-    }
-
-    .subsection-title {
-      font-size: 18px;
-      font-weight: 600;
-      color: #666;
-      margin: 0 0 15px 0;
     }
   }
 }
@@ -756,12 +863,13 @@ const presentationData = ref([
 /* Tech Stack Section */
 .tech-stack-horizontal {
   display: flex;
+  justify-content: space-between;
   flex-wrap: wrap;
   gap: 12px;
   margin-top: 15px;
 
   .tech-item-horizontal {
-    padding: 8px 12px;
+    padding: 8px 8px;
     font-size: 14px;
     color: #555;
     font-weight: 400;
@@ -897,70 +1005,47 @@ const presentationData = ref([
     padding-left: 16px;
 
     .project-header {
-      margin-bottom: 12px;
+      @extend .item-header;
 
       .project-name {
-        border-left: 3px solid #666;
-        font-size: 18px;
-        font-weight: 600;
-        color: #333;
-        margin-left: -16px;
-        padding-left: 16px;
+        @extend .item-name;
         
         .main-project & {
           color: #222;
           font-weight: 700;
           font-size: 20px;
-          border-left-color: #666;
-          border-left-width: 4px;
+          // border-left-color: #666;
+          // border-left-width: 4px;
         }
       }
 
       .project-meta {
-        display: flex;
-        flex-direction: column;
-        gap: 2px;
-        margin-top: 2px;
+        @extend .item-meta;
 
         .project-period {
-          color: #666;
-          font-size: 13px;
+          @extend .item-period;
         }
 
         .project-tech {
-          color: #0064FF; // toss blue
-          font-size: 13px;
-          font-weight: 500;
+          @extend .item-tech;
         }
       }
     }
 
     .project-description {
-      color: #555;
-      margin: 0 0 15px 0;
-      font-size: 13px;
+      @extend .content-description;
     }
 
     .project-responsibilities {
       .responsibilities-title {
-        font-size: 14px;
-        font-weight: 600;
-        color: #333;
-        margin: 0 0 8px 0;
+        @extend .content-title;
       }
       
       .responsibilities-list {
-        margin: 0;
-        padding-left: 18px;
+        @extend .content-list;
 
         .responsibility-item {
-          margin-bottom: 6px;
-          color: #555;
-          font-size: 13px;
-          
-          &:last-child {
-            margin-bottom: 0;
-          }
+          @extend .content-item;
         }
       }
     }
@@ -974,18 +1059,21 @@ const presentationData = ref([
     }
     
     &.main-project {
-      background: #f8f9fa;
-      border: 1px solid #e9ecef;
-      border-radius: 8px;
-      padding: 20px;
-      margin: 0 -4px 0 -4px;
-      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+      background: #f8f8f8;
+      border: 1px solid #f0f0f0;
+      border-radius: 4px;
+      padding: 20px 24px 20px 24px;
+      // margin: 0 -4px 0 -4px;
+      // box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
       position: relative;
       
       .project-name {
         border: none;
         padding-left: 0;
         margin-left: 0;
+        &::before {
+          content: none;
+        }
       }
       
       &::before {
@@ -993,7 +1081,7 @@ const presentationData = ref([
         position: absolute;
         top: -10px;
         right: 20px;
-        background: #666;
+        background: #333;
         color: white;
         padding: 2px 8px;
         border-radius: 2px;
@@ -1030,11 +1118,9 @@ const presentationData = ref([
         }
 
         .category-title {
-          font-size: 14px;
-          font-weight: 600;
+          @extend .content-title;
           margin: 0;
           letter-spacing: -0.02em;
-          color: #333;
         }
       }
 
@@ -1109,11 +1195,10 @@ const presentationData = ref([
         margin-bottom: 12px;
 
         .problem-category-title {
-          font-size: 14px;
-          font-weight: 600;
+          @extend .content-title;
           margin: 0;
           letter-spacing: -0.02em;
-          color: #495057;
+          color: #333;
         }
       }
 
@@ -1158,62 +1243,40 @@ const presentationData = ref([
     padding-left: 16px;
 
     .project-header {
-      margin-bottom: 12px;
+      @extend .item-header;
 
       .project-name {
-        border-left: 3px solid #666;
-        font-size: 18px;
-        font-weight: 600;
-        color: #333;
-        margin-left: -16px;
-        padding-left: 16px;
+        @extend .item-name;
       }
 
       .project-meta {
-        display: flex;
-        flex-direction: column;
-        gap: 4px;
-        margin-top: 4px;
+        @extend .item-meta;
 
         .project-period {
-          color: #666;
-          font-size: 13px;
+          @extend .item-period;
         }
 
         .project-tech {
-          color: #0064FF; // toss blue
-          font-size: 13px;
-          font-weight: 500;
+          @extend .item-tech;
         }
       }
     }
 
     .project-description {
-      color: #555;
-      margin: 0 0 15px 0;
-      font-size: 13px;
+      @extend .content-description;
     }
 
     .project-responsibilities {
       .responsibilities-title {
-        font-size: 14px;
-        font-weight: 600;
-        color: #333;
-        margin: 0 0 8px 0;
+        @extend .content-title;
       }
       
       .responsibilities-list {
-        margin: 0;
-        padding-left: 18px;
+        @extend .content-list;
 
         .responsibility-item {
-          margin-bottom: 6px;
-          color: #555;
-          font-size: 13px;
+          @extend .content-item;
           
-          &:last-child {
-            margin-bottom: 0;
-          }
         }
       }
     }
@@ -1230,62 +1293,41 @@ const presentationData = ref([
     padding-left: 16px;
 
     .presentation-header {
-      margin-bottom: 12px;
+      @extend .item-header;
 
       .presentation-name {
-        border-left: 3px solid #632CA6;
-        font-size: 18px;
-        font-weight: 600;
-        color: #333;
-        margin-left: -16px;
-        padding-left: 16px;
+        @extend .item-name;
+        border-left-color: #632CA6;
       }
 
       .presentation-meta {
-        display: flex;
-        flex-direction: column;
-        gap: 4px;
-        margin-top: 4px;
+        @extend .item-meta;
 
         .presentation-period {
-          color: #666;
-          font-size: 13px;
+          @extend .item-period;
         }
 
         .presentation-event {
-          color: #0064FF; // toss blue
-          font-size: 13px;
-          font-weight: 500;
+          @extend .item-tech;
         }
       }
     }
 
     .presentation-description {
-      color: #555;
-      margin: 0 0 15px 0;
-      font-size: 13px;
+      @extend .content-description;
     }
 
     .presentation-topics {
       .topics-title {
-        font-size: 14px;
-        font-weight: 600;
-        color: #333;
-        margin: 0 0 8px 0;
+        @extend .content-title;
       }
       
       .topics-list {
-        margin: 0 0 15px 0;
-        padding-left: 18px;
+        @extend .content-list;
+        margin-bottom: 15px;
 
         .topic-item {
-          margin-bottom: 6px;
-          color: #555;
-          font-size: 13px;
-          
-          &:last-child {
-            margin-bottom: 0;
-          }
+          @extend .content-item;
         }
       }
     }
@@ -1305,7 +1347,7 @@ const presentationData = ref([
           
           &.event-link {
             color: #0064FF; // toss blue
-            font-size: 13px;
+            font-size: 14px;
           }
           
           &:hover {
@@ -1341,9 +1383,9 @@ const presentationData = ref([
   
   .resume-header {
     .profile-section {
-      flex-direction: column;
-      align-items: center;
-      text-align: center;
+      // flex-direction: column;
+      // align-items: center;
+      // text-align: center;
 
       .profile-photo {
         .photo-placeholder {
