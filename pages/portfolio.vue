@@ -378,6 +378,7 @@ const presentationData = ref([
             v-for="project in career.projects" 
             :key="project.name"
             class="project-item"
+            :class="{ 'main-project': (project as any).isMain }"
           >
             <div class="project-header">
               <h4 class="project-name">{{ project.name }}</h4>
@@ -406,6 +407,7 @@ const presentationData = ref([
               </ul>
             </div>
 
+            <div v-if="project.responsibilityCategories && project.isMain" class="section-divider" />
             <div v-if="(project as any).responsibilityCategories" class="responsibility-categories">
               <h5 class="responsibilities-title font-bold">기여 및 성과</h5>
               <div class="categories-grid">
@@ -431,16 +433,16 @@ const presentationData = ref([
                 </div>
               </div>
             </div>
-
+            <div v-if="project.problemSolving && project.isMain" class="section-divider" />
             <!-- 문제 해결 경험 섹션 -->
-            <div v-if="project.problemSolving" class="problem-solving-section mt-8">
+            <div v-if="project.problemSolving" class="problem-solving-section">
+              
               <h5 class="problem-solving-title font-bold">문제 해결 경험</h5>
               <div class="problem-solving-categories-grid">
                 <div 
                   v-for="problem in project.problemSolving" 
                   :key="problem.title"
                   class="problem-category-card"
-                  :style="{ borderLeftColor: '#28a745' }"
                 >
                   <div class="problem-category-header">
                     <h6 class="problem-category-title">
@@ -818,6 +820,30 @@ const presentationData = ref([
 .project-item {
   // border-left: 3px solid #333;
   padding-left: 16px;
+  
+  &.main-project {
+    background: #f8f9fa;
+    border: 1px solid #e9ecef;
+    border-radius: 8px;
+    padding: 20px;
+    margin: 0 -4px 25px -4px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    position: relative;
+    
+    &::before {
+      content: '메인 프로젝트';
+      position: absolute;
+      top: -10px;
+      right: 20px;
+      background: #333;
+      color: white;
+      padding: 4px 12px;
+      border-radius: 4px;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+    }
+  }
 }
 
 .project-header {
@@ -832,6 +858,14 @@ const presentationData = ref([
   // margin: 0 0 6px 0;
   margin-left: -16px;
   padding-left: 16px;
+  
+  .main-project & {
+    color: #333;
+    font-weight: 700;
+    font-size: 20px;
+    border-left-color: #333;
+    border-left-width: 4px;
+  }
 }
 
 .project-meta {
@@ -892,18 +926,10 @@ const presentationData = ref([
   }
   
   .category-card {
-    // background: #fafafa;
-    // border-radius: 6px;
     padding: 0px;
-    // border-left: 3px solid;
     transition: all 0.2s ease;
-    // border: 1px solid #f0f0f0;
-    
-    // &:hover {
-    //   background: #f5f5f5;
-    //   border-color: #e0e0e0;
-    //   box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
-    // }
+    // border-left: 3px solid #333;
+    padding-left: 16px;
   }
   
   .category-header {
@@ -924,6 +950,7 @@ const presentationData = ref([
     font-weight: 600;
     margin: 0;
     letter-spacing: -0.02em;
+    color: #333;
   }
   
   .category-items {
@@ -946,7 +973,7 @@ const presentationData = ref([
       content: '·';
       position: absolute;
       left: -4px;
-      color: #aaa;
+      color: #333;
       font-weight: bold;
       font-size: 16px;
     }
@@ -957,8 +984,28 @@ const presentationData = ref([
   }
 }
 
+/* Section Divider */
+.section-divider {
+  height: 1px;
+  background: #b6b8bb;
+  margin: 30px 0 20px 0;
+  position: relative;
+  
+  &::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: -2px;
+    width: 40px;
+    height: 5px;
+    background: #333;
+  }
+}
+
 /* Problem Solving Section */
 .problem-solving-section {
+  margin-top: 20px;
+  
   .problem-solving-categories-grid {
     display: grid;
     gap: 20px;
@@ -968,6 +1015,8 @@ const presentationData = ref([
   .problem-category-card {
     padding: 0px;
     transition: all 0.2s ease;
+    // border-left: 3px solid #6c757d;
+    padding-left: 16px;
   }
   
   .problem-category-header {
@@ -982,6 +1031,7 @@ const presentationData = ref([
     font-weight: 600;
     margin: 0;
     letter-spacing: -0.02em;
+    color: #495057;
   }
   
   .problem-category-items {
@@ -1003,7 +1053,7 @@ const presentationData = ref([
       content: '·';
       position: absolute;
       left: -4px;
-      color: #aaa;
+      color: #6c757d;
       font-weight: bold;
       font-size: 16px;
     }
@@ -1231,6 +1281,35 @@ const presentationData = ref([
     
     .problem-category-item {
       font-size: 12px;
+    }
+  }
+  
+  .project-item {
+    &.main-project {
+      padding: 16px;
+      margin: 0 -2px 20px -2px;
+      
+      &::before {
+        top: -8px;
+        right: 16px;
+        font-size: 10px;
+        padding: 3px 8px;
+      }
+    }
+  }
+  
+  .project-name {
+    .main-project & {
+      font-size: 18px;
+    }
+  }
+  
+  .section-divider {
+    margin: 20px 0 15px 0;
+    
+    &::before {
+      width: 30px;
+      height: 4px;
     }
   }
 }
