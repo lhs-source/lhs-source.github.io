@@ -60,19 +60,17 @@ const careerData = ref([
   {
     company: '주식회사 리코',
     period: '2021년 1월 ~ 재직중',
-    duration: '약 4년 8개월',
+    duration: `약 ${dayjs().diff(dayjs("2021-01-01"), 'year')}년 ${dayjs().diff(dayjs("2021-01-01"), 'month') % 12 + 1}개월`,
     position: '프론트엔드 개발자',
     projects: [
       {
         name: '업박스 클라우드 개발 - 폐기물 매니지먼트 서비스',
         period: '2021년 1월 ~ 진행중',
-        technologies: 'NodeJS, Vite, Vue3, Android Kotlin, Webview, Github Actions, AWS, TailwindCSS, i18n, Storybook',
+        technologies: 'Vue3, Vite, Android Kotlin, Webview, Github Actions, AWS, TailwindCSS, Storybook',
         isMain: true,
         description: [
-          '업박스 클라우드는 폐기물의 처리 과정에서 발생하는 모든 데이터를 투명하고 정확하게 관리하는 클라우드 서비스입니다. 제공되는 앱의 종류로는 업박스 어드민, 업박스 드라이버, 업박스 커스터머가 있으며, 각각 기사님들의 수거 및 차량 관리, 업장의 수거 일정 및 정보 확인에 사용됩니다.',
-          '모든 앱은 담당하는 법인과 역할에 맞춰 권한이 부여되고, 권한별로 메뉴와 기능이 차등 제공됩니다. 고객의 업장 특성과 계약을 기반해 맞춤으로 법적 문제가 발생하지 않도록 수거 일정을 조율합니다. 폐기물 처리 데이터 기반한 청구서를 생성하고, 정산까지 자동으로 이루어집니다.',
-          '폐기물 산업 특성상 법적인 문제가 굉장히 복잡하고 행정 처리 업무가 많습니다. 고객들은 번거로운 과정을 줄이고, 행정 처리에 필요한 서류를 원할 때 바로 확인이 가능하도록 업박스에서 서식에 맞는 데이터를 제공합니다.',
-          '초기 음식물류 폐기물 중심에서 현재는 재활용과 폐수오니(슬러지) 등 여러 폐기물 종류를 종합 지원하는 형태로 발전했습니다.'
+          '리코의 초기 멤버로 합류하여 시리즈 A 부터 시리즈 C까지 성장의 과정을 함께했습니다.',
+          '업박스 클라우드는 폐기물의 처리 과정에서 발생하는 모든 데이터를 투명하고 정확하게 관리하는 클라우드 서비스입니다. 전통적인 방식에 머물러 있던 폐기물 산업의 복잡한 업무 프로세스를 디지털화하고, 데이터 기반의 효율적인 운영 관리 시스템을 구축하는 것을 목표로 합니다. 폐기물 수거부터 처리, 정산까지 전 과정에서 발생하는 법적 리스크와 데이터의 누락 및 부정확성을 해결하고, 복잡한 행정 업무를 자동화하여 산업의 투명성과 효율성을 높이는 데 기여합니다.',
         ],
         responsibilityCategories: [
           {
@@ -168,7 +166,7 @@ const careerData = ref([
       {
         name: '업박스 홈페이지 제작',
         period: '2021년 1월 ~ 상시 진행',
-        technologies: 'VanilaJS, EJS, AWS',
+        technologies: 'VanillaJS, EJS, AWS',
         description: ['회사의 정보가 담긴 리코 홈페이지와 제품 측면에서 인바운드에 초점 맞춘 업박스 홈페이지를 제작하고 유지보수했습니다.'],
         responsibilities: [
           '각 홈페이지를 유지보수하고, 인바운드 측정을 위해 마케팅팀과 협업하여 데이터를 수집'
@@ -199,7 +197,7 @@ const careerData = ref([
         name: 'Omnidoc - 문서발급 솔루션',
         period: '2019년 4월 ~ 2020년 12월',
         technologies: 'C/C++',
-        description: ['17여개의 민원사이트에서 40여개의 민원문서를 발급할 수 있는 솔루션. 타사의 서비스에 탑재되어 고객의 민간업무를 대행해주는 편리한 서비스 제공합니다.'],
+        description: ['17여개의 민원사이트에서 40여개의 민원문서를 발급할 수 있는 솔루션. 타사의 서비스에 탑재되어 고객의 민간업무를 대행해주는 편리한 서비스를 제공합니다.'],
         responsibilities: [
           '금융결제원 Payinfo, 신용조회 KCB, 범죄자조회 Crime 등의 사이트 스크래핑 담당'
         ]
@@ -232,8 +230,8 @@ const careerData = ref([
         technologies: 'Java Card OS, MFC',
         description: ['카드사와 가맹점 사이의 E2E 암호화를 수행하는 임베디드 카드 암호화 모듈입니다. 중간 VAN사의 영향을 받지 않고, 가맹점 단말기와 카드사 간의 암호화를 제공합니다. 여신협회 taSIM Application Specification 인증, EMVCo 및 CC(Common Criteria) 인증을 취득하고 구현했습니다.'],
         responsibilities: [
-          'JavaCOS 에 Applet을 탑재하여 가맹점의 카드 리더 단말기에 장착',
-          'Java COS의 작동을 이해하고, 해당 제품을 유지보수 및 대응',
+          'Java Card OS에 Applet을 탑재하여 가맹점의 카드 리더 단말기에 장착',
+          'Java Card OS의 작동을 이해하고, 해당 제품을 유지보수 및 대응',
           'Applet 설치용 MFC UI 제작'
         ]
       }
@@ -256,7 +254,7 @@ const freelanceData = ref([
   {
     name: 'KlookPay - KlookPay POC 어플리케이션',
     period: '2020년 9월 ~ 2020년 11월',
-    technologies: 'NodeJS, Angular, NativeScript, ExpressJS, Docker',
+    technologies: 'Angular, NativeScript, ExpressJS, Docker',
     description: ['KB카드에서 진행하는 KlookPay 프로젝트의 POC 어플리케이션. KlookPay는 KB카드의 마일리지, 포인트 및 결제 시스템을 Klook에 연동하는 서비스입니다.'],
     responsibilities: [
       'KB카드와 협업하여 안드로이드 앱 기술지원을 진행 (Nativescript-ng)',
@@ -274,7 +272,7 @@ const presentationData = ref([
     period: '2024년 9월',
     description: ['O2O 환경의 리코 특성을 살려 데이터독을 에러 분석과 사용성 측정 면에서 활용한 경험을 공유했습니다.'],
     topics: [
-      '에러 대응: HEIC 파일 형식 에러 해결, 대시보드 구성, 알림 시스템',
+      '에러 대응: HEIC 파일 형식 에러 해결, 버전 캐시 문제 해결, 대시보드 구성, 알림 시스템',
       '데이터 기반 의사결정: 패치 시간 변경, OS 비율 분석',
       '사용성 측정: Custom Action 활용, Funnel 전환율 측정'
     ],
@@ -295,9 +293,23 @@ const presentationData = ref([
           <img src="/assets/img/boxing.jpg" />
         </div> -->
         <div class="profile-info flex justify-between pb-4">
-          <div class="profile-info-header">
-            <h1 class="name">이현수</h1>
-            <h2 class="title">프론트엔드 개발자</h2>
+          <div class="">
+            <div class="profile-info-header">
+              <h1 class="name">이현수</h1>
+              <h2 class="title text-sm">프론트엔드 개발자</h2>
+            </div>
+            <!-- <h2 class="title text-sm">토스 플레이스의 시작을 함께 만들어갈 프론트엔드 개발자</h2> -->
+            <!-- <div class="text-xs">토스 플레이스의 시작을 함께 만들어갈 개발자입니다.</div> -->
+            <!-- <h2 class="title text-sm">초기 멤버로서 겪는 시행착오를 성장 동력으로 삼는 능동적인 프론트엔드 개발자</h2> -->
+            <!-- <h2 class="title text-sm">시작부터 안정화까지 경험한 프론트엔드 개발자</h2> -->
+            <!-- <h2 class="title text-xs mt-2">
+              스타트업의 시작부터 안정화까지 경험하며 겪은 시행착오를 성장 동력으로 삼고 발전했습니다. <br />
+              이제는 토스 플레이스팀에 기여하고 함께 성장하고 싶습니다.
+            </h2> -->
+            <h2 class="title text-xs mt-2">
+              스타트업 초기 멤버로서의 경험을 바탕으로 
+              토스 플레이스 팀에서 규모 있는 서비스의 안정화와 성장에 기여하겠습니다.
+            </h2>
           </div>
           <div class="contact-info">
             <div class="contact-item">
@@ -353,7 +365,7 @@ const presentationData = ref([
 
     <!-- 경력 Section -->
     <section class="section">
-      <h2 class="section-title">경력 (총 {{ dayjs().diff(dayjs("2017-01-01"), 'year') }}년 {{ dayjs().diff(dayjs("2021-01-01"), 'month') % 12 }}개월)</h2>
+      <h2 class="section-title">경력 (총 {{ dayjs().diff(dayjs("2017-01-01"), 'year') }}년 {{ dayjs().diff(dayjs("2017-01-01"), 'month') % 12 + 1 }}개월)</h2>
       
       <div class="career-summary">
         <div class="career-timeline">
@@ -365,7 +377,7 @@ const presentationData = ref([
                 폐기물 매니지먼트 클라우드 서비스 기업
               </div>
               <div class="flex-1"></div>
-              <span class="period">2021년 1월 ~ 재직중 (약 {{ dayjs().diff(dayjs("2021-01-01"), 'year') }}년 {{ dayjs().diff(dayjs("2021-01-01"), 'month') % 12 }}개월)</span>
+              <span class="period">2021년 1월 ~ 재직중 (약 {{ dayjs().diff(dayjs("2021-01-01"), 'year') }}년 {{ dayjs().diff(dayjs("2021-01-01"), 'month') % 12 + 1 }}개월)</span>
             </div>
           </div>
           <div class="career-item">
@@ -434,7 +446,10 @@ const presentationData = ref([
             <div v-if="project.responsibilityCategories && project.isMain" class="section-divider" />
             <div v-if="(project as any).responsibilityCategories" class="responsibility-categories">
               <h5 class="responsibilities-title font-bold">기여 및 성과</h5>
-              <p class="text-xs">프론트엔드 개발의 중심 역할을 맡으며 주요 기능 개발을 담당했습니다.</p>
+              <p class="text-xs">
+                프론트엔드 개발의 중심 역할을 맡으며 주요 기능 개발을 담당했습니다.
+
+              </p>
               <div class="categories-grid">
                 <div 
                   v-for="category in (project as any).responsibilityCategories" 
@@ -711,7 +726,7 @@ const presentationData = ref([
   font-size: 24px;
   font-weight: 700;
   color: #333;
-  margin: 48px 0 20px 0;
+  margin: 64px 0 20px 0;
   padding-bottom: 8px;
   border-bottom: 2px solid #666;
 }
@@ -732,7 +747,7 @@ const presentationData = ref([
 
 .content-description {
   color: #555;
-  margin: 0 0 4px 0;
+  margin: 0 0 12px 0;
   font-size: 13px;
 }
 
