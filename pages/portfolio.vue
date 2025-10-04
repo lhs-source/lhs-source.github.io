@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import dayjs from 'dayjs';
+import PortfolioAuth from '~/components/PortfolioAuth.vue';
 
 // 타입 정의
 interface ResponsibilityCategory {
@@ -280,13 +281,28 @@ const presentationData = ref([
     eventLink: 'https://www.datadoghq.com/ko/event/datadogliveseoul2024/#speakers'
   }
 ]);
+
+// 인증 상태 관리
+const isAuthenticated = ref(false);
+
+const handleAuthenticated = () => {
+  isAuthenticated.value = true;
+};
 </script>
 
 <template>
-  <div class="resume-background">
-    <div class="resume-container">
-    <!-- Header Section with Profile -->
-    <header class="resume-header">
+  <div>
+    <!-- 인증되지 않은 경우 비밀번호 입력 화면 -->
+    <PortfolioAuth 
+      v-if="!isAuthenticated"
+      @authenticated="handleAuthenticated"
+    />
+    
+    <!-- 인증된 경우 포트폴리오 내용 -->
+    <div v-else class="resume-background">
+      <div class="resume-container">
+      <!-- Header Section with Profile -->
+      <header class="resume-header">
       <div class="profile-section">
         <div class="profile-background"></div>
         <!-- <div class="profile-photo">
@@ -604,6 +620,7 @@ const presentationData = ref([
         </div>
       </div>
     </section>
+      </div>
     </div>
   </div>
 </template>
