@@ -324,7 +324,7 @@ const handleAuthenticated = () => {
             </h2> -->
             <h2 class="title text-xs mt-2">
               스타트업 초기 멤버로서의 경험을 바탕으로 
-              토스 플레이스 팀에서 규모 있는 서비스의 안정화와 성장에 기여하겠습니다.
+              무신사 프론트엔드팀에서 글로벌 패션 플랫폼의 성장과 혁신에 기여하겠습니다.
             </h2>
           </div>
           <div class="contact-info">
@@ -523,42 +523,6 @@ const handleAuthenticated = () => {
       </div>
     </section>
 
-    <!-- 프리랜서 프로젝트 Section -->
-    <section class="section">
-      <h2 class="section-title">기타 프로젝트</h2>
-      
-      <div class="freelance-projects">
-        <div 
-          v-for="project in freelanceData" 
-          :key="project.name"
-          class="freelance-item"
-        >
-          <div class="project-header">
-            <h3 class="project-name">{{ project.name }}</h3>
-            <div class="project-meta">
-              <span class="project-period">{{ project.period }}</span>
-              <span class="project-tech">{{ project.technologies }}</span>
-            </div>
-          </div>
-          
-          <p v-for="description in project.description" :key="description" class="project-description">{{ description }}</p>
-          
-          <div class="project-responsibilities">
-            <h4 class="responsibilities-title">기여 및 성과</h4>
-            <ul class="responsibilities-list">
-              <li 
-                v-for="responsibility in project.responsibilities" 
-                :key="responsibility"
-                class="responsibility-item"
-              >
-                {{ responsibility }}
-              </li>
-            </ul>
-          </div>
-        </div>
-      </div>
-    </section>
-
     <!-- 발표 및 컨퍼런스 Section -->
     <section class="section">
       <h2 class="section-title">발표 & 컨퍼런스</h2>
@@ -617,6 +581,42 @@ const handleAuthenticated = () => {
             </div>
           </div>
           <div></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 프리랜서 프로젝트 Section -->
+    <section class="section">
+      <h2 class="section-title">기타 프로젝트</h2>
+      
+      <div class="freelance-projects">
+        <div 
+          v-for="project in freelanceData" 
+          :key="project.name"
+          class="freelance-item"
+        >
+          <div class="project-header">
+            <h3 class="project-name">{{ project.name }}</h3>
+            <div class="project-meta">
+              <span class="project-period">{{ project.period }}</span>
+              <span class="project-tech">{{ project.technologies }}</span>
+            </div>
+          </div>
+          
+          <p v-for="description in project.description" :key="description" class="project-description">{{ description }}</p>
+          
+          <div class="project-responsibilities">
+            <h4 class="responsibilities-title">기여 및 성과</h4>
+            <ul class="responsibilities-list">
+              <li 
+                v-for="responsibility in project.responsibilities" 
+                :key="responsibility"
+                class="responsibility-item"
+              >
+                {{ responsibility }}
+              </li>
+            </ul>
+          </div>
         </div>
       </div>
     </section>
@@ -832,11 +832,11 @@ const handleAuthenticated = () => {
     font-size: 13px;
   }
 
-  .item-tech {
-    color: #0064FF;
-    font-size: 13px;
-    font-weight: 500;
-  }
+      .item-tech {
+        color: #333333;
+        font-size: 13px;
+        font-weight: 500;
+      }
 }
 
 /* Section Styles */
@@ -1371,19 +1371,19 @@ const handleAuthenticated = () => {
 
       .presentation-link {
         .link {
-          color: #0064FF; // toss blue
+          color: #333333; // musinsa dark gray
           text-decoration: none;
           font-weight: 700;
           font-size: 14px;
           text-decoration: underline;
           
           &.event-link {
-            color: #0064FF; // toss blue
+            color: #333333; // musinsa dark gray
             font-size: 14px;
           }
           
           &:hover {
-            color: #632CA6; // datadog violet
+            color: #000000; // musinsa black
           }
         }
       }
