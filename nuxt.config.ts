@@ -9,11 +9,11 @@ export default defineNuxtConfig({
     },
   },
   modules: [
-    "@nuxt/content",
-    "shadcn-nuxt",
+    '@nuxt/content',
+    'shadcn-nuxt',
     '@nuxtjs/color-mode',
-    "@nuxtjs/tailwindcss",
-    "@nuxt/image",
+    '@nuxtjs/tailwindcss',
+    '@nuxt/image',
     '@pinia/nuxt',
   ],
   content: {
@@ -21,13 +21,14 @@ export default defineNuxtConfig({
       markdown: {
         toc: {
           depth: 2,
-          searchDepth: 2
+          searchDepth: 2,
         },
       },
-      // highlight: {
-      //   theme: 'github-dark',
-      // },
-    }
+    },
+    database: {
+      type: 'sqlite',
+      filename: 'SQLITE_DB_LOCATION'
+    },
   },
   mdc: { },
   colorMode: {

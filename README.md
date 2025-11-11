@@ -1,75 +1,26 @@
-# Nuxt 3 Minimal Starter
-
-Look at the [Nuxt 3 documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
+# Blog LEE HYUNSOO
 
 ## Setup
 
 Make sure to install the dependencies:
 
 ```bash
-# npm
 npm install
-
-# pnpm
 pnpm install
-
-# yarn
 yarn install
-
-# bun
 bun install
 ```
 
-## Development Server
+### pnpm native build
 
-Start the development server on `http://localhost:3000`:
+over pnpm v10, we need to approve the build scripts.
 
-```bash
-# npm
-npm run dev
-
-# pnpm
-pnpm run dev
-
-# yarn
-yarn dev
-
-# bun
-bun run dev
+```sh
+# approve native build scripts and install ~
+pnpm approve-builds
+# ....
+# check if the better-sqlite3 node file exists
+find node_modules/.pnpm/better-sqlite3@* -name better_sqlite3.node
+node_modules/.pnpm/better-sqlite3@12.4.1/node_modules/better-sqlite3/build/Release/better_sqlite3.node
 ```
 
-## Production
-
-Build the application for production:
-
-```bash
-# npm
-npm run build
-
-# pnpm
-pnpm run build
-
-# yarn
-yarn build
-
-# bun
-bun run build
-```
-
-Locally preview production build:
-
-```bash
-# npm
-npm run preview
-
-# pnpm
-pnpm run preview
-
-# yarn
-yarn preview
-
-# bun
-bun run preview
-```
-
-Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
