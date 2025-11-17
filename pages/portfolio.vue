@@ -16,147 +16,8 @@ const profileSummary = {
   ],
 };
 
-const coreStrengths = [
-  {
-    title: '오너십',
-    description:
-      '제품 전 과정을 책임지는 자세로 장애 요인을 스스로 제거하고 필요한 의사결정을 주도합니다.',
-  },
-  {
-    title: '신뢰',
-    description:
-      '투명한 커뮤니케이션과 빠른 실행으로 동료가 믿고 맡길 수 있는 개발 문화를 만들어갑니다.',
-  },
-  {
-    title: '커뮤니케이션',
-    description:
-      '비즈니스를 이해하는 시각을 바탕으로 타 직군과 협업하며 메시지의 목적과 기대 효과를 명확히 전달합니다.',
-  },
-  {
-    title: '효율성',
-    description:
-      '우선순위를 재정렬하고 불필요한 프로세스를 제거해 팀의 생산성과 유지보수성을 높입니다.',
-  },
-];
 
-const coreTechnologies = [
-  { name: 'Vue3', emphasis: true },
-  { name: 'TypeScript', emphasis: true },
-  { name: 'Android Kotlin', emphasis: false },
-  { name: 'Vite', emphasis: false },
-  { name: 'TailwindCSS', emphasis: false },
-  { name: 'AWS', emphasis: false },
-  { name: 'Github Actions', emphasis: false },
-  { name: 'Datadog', emphasis: false },
-  { name: 'Storybook', emphasis: false },
-];
-
-const careerTimeline = [
-  {
-    company: '주식회사 리코',
-    role: '프론트엔드 개발자',
-    period: '2021년 1월 ~ 재직 중',
-    description: '폐기물 매니지먼트 SaaS인 업박스 클라우드를 0 → 1 → 2.0까지 이끈 핵심 멤버',
-  },
-  {
-    company: '주식회사 뱅크비',
-    role: 'C++ 개발자',
-    period: '2017년 1월 ~ 2020년 12월',
-    description: '금융 스크래핑 엔진과 계좌 관리 솔루션을 개발하며 대규모 크롤링 시스템 경험 축적',
-  },
-];
-
-const careerDetails = [
-  {
-    company: '주식회사 리코',
-    role: '프론트엔드 개발자',
-    period: '2021년 1월 ~ 재직 중',
-    summary:
-      '폐기물 산업 특화 SaaS인 업박스 클라우드의 프론트엔드를 0 → 1 → 2.0으로 성장시키며 제품 전략과 실행을 이끈 핵심 멤버입니다.',
-    projects: [
-      {
-        name: '업박스 클라우드 개발',
-        summary:
-          '권한 기반 B2B SaaS로, 고객·계약·수거 스케줄·청구를 하나의 플랫폼에서 관리하도록 지원합니다. 스타트업 특유의 빠른 제품 사이클 속에서 안정성과 확장성을 동시에 달성했습니다.',
-        focusHighlights: [
-          'Vue3·TypeScript 기반 설계로 엔터프라이즈 규모의 프로덕트 일관성 확보',
-          '디자인 시스템(UDS) 정착과 Storybook 자동화를 통해 UI/UX 표준화',
-          'Github Actions와 S3 메타 버전 관제를 활용한 배포 자동화 설계',
-          'Android WebView와의 하이브리드 통신 구조를 직접 구현해 현장 대응 속도 개선',
-        ],
-        problemSolving: [
-          {
-            title: '유효성 검사 시스템 경량화',
-            statements: [
-              '외부 라이브러리 의존으로 인한 디자인 미스매치와 번들 비대를 해소하기 위해 useValidate/useValidateRoot를 직접 설계.',
-              '컴포저블 기반 DSL로 복잡한 비즈니스 규칙을 선언적으로 표현하고, 비동기 검증까지 통합.',
-              'Storybook 자동 문서화를 통해 디자인·QA팀과의 협업 속도를 2배 이상 향상.',
-            ],
-          },
-          {
-            title: '웹뷰 캐시 & 버전 관제',
-            statements: [
-              'DataDog 세션리플레이와 S3 meta.json을 연결해 장애 버전을 즉시 역추적.',
-              'Android Google Play 강제 업데이트 정책을 적용해 현장 사용자의 업데이트 지연을 7일 → 2일로 단축.',
-              'IndexedDB 백업과 안내 UX를 결합해 캐시 무효화 시 데이터 손실 우려 해소.',
-            ],
-          },
-          {
-            title: '푸시 알림 전달 신뢰도 확보',
-            statements: [
-              'Foreground/Background/종료 상태를 구분한 저장 파이프라인을 설계해 FCM 누락률 0% 달성.',
-              'Room DB ↔ IndexedDB 간 멱등 로직을 추가해 중복 전송 없이 오프라인 이력 동기화.',
-              'QA 시나리오를 문서화해 현장 피드백 사이클을 절반으로 축소.',
-            ],
-          },
-          {
-            title: '스케줄 편집 성능 개선',
-            statements: [
-              'useScheduleInjection composable로 데이터 흐름을 재구성해 props drilling 제거.',
-              'Pinia 스토어 역할을 재분리하고 가상 스크롤을 도입해 렌더링 성능 20% 향상.',
-              '정적 타입 검증을 강화해 권한 누락·데이터 누락 오류를 사전에 차단.',
-            ],
-          },
-        ],
-      },
-      {
-        name: '업박스 홈페이지 제작',
-        summary:
-          '제품과 브랜드 신뢰도를 높이기 위한 마케팅 웹사이트를 구축하고 지표를 기반으로 유지보수했습니다.',
-        focusHighlights: [
-          '마케팅 팀과 협업해 전환 지표를 추적하고 콘텐츠 A/B 테스트 지원',
-          'AWS 기반 배포 파이프라인으로 빠른 컨텐츠 업데이트 환경 구성',
-        ],
-      },
-    ],
-  },
-  {
-    company: '주식회사 뱅크비',
-    role: 'C++ 개발자',
-    period: '2017년 1월 ~ 2020년 12월',
-    summary:
-      '금융 스크래핑 엔진과 계좌 관리 솔루션을 개발하며 대규모 크롤링/자동화 시스템 구축 경험을 쌓았습니다.',
-    projects: [
-      {
-        name: '뱅크비 - 베트남 통합계좌관리',
-        summary: '11개 은행 계정을 통합 관리하는 스크래핑 엔진을 개발해 핀테크 기반 서비스를 구현했습니다.',
-        focusHighlights: [
-          '크로스플랫폼 CMake 빌드 환경을 구성해 배포 효율성 확보',
-          '현지 협력사와 협업하여 은행별 데이터 포맷에 대응',
-        ],
-      },
-      {
-        name: 'Omnidoc - 문서발급 솔루션',
-        summary:
-          '문서 발급 자동화 솔루션을 개발하며 다양한 관공서 포맷을 처리하고, C++ 레거시 코드를 Modern C++로 리팩터링.',
-        focusHighlights: [
-          '고객사 요구에 맞춘 커스텀 파서 및 전처리 모듈을 개발',
-          '보안 요구사항에 맞춘 데이터 암호화 및 접근 제어 적용',
-        ],
-      },
-    ],
-  },
-];
+// Removed detailed careerDetails to avoid duplication with resume content.
 
 const portfolioItems = [
   {
@@ -314,8 +175,7 @@ const portfolioItems = [
 <template>
   <div class="portfolio-page">
     <section class="portfolio-hero">
-      <div class="hero-label">Portfolio & Resume</div>
-      <h1 class="hero-title">문제 해결 중심 프론트엔드 포트폴리오</h1>
+      <h1 class="hero-title">Portfolio</h1>
       <p class="hero-description">
         복잡한 제품 환경에서 비즈니스 가치를 빠르게 전달하기 위해 STAR 사고방식으로 문제를 정의하고 실행합니다.
         이력서의 핵심 경험을 간결히 담아 실제 프로젝트와 연결했습니다.
@@ -350,123 +210,7 @@ const portfolioItems = [
       </div>
     </section>
 
-    <section class="strengths-section">
-      <h3 class="section-heading">핵심 역량</h3>
-      <div class="strengths-grid">
-        <article
-          v-for="strength in coreStrengths"
-          :key="strength.title"
-          class="strength-card"
-        >
-          <h4 class="strength-title">{{ strength.title }}</h4>
-          <p class="strength-description">{{ strength.description }}</p>
-        </article>
-      </div>
-    </section>
-
-    <section class="skills-section">
-      <h3 class="section-heading">주요 기술 스택</h3>
-      <div class="skills-cloud">
-        <span
-          v-for="tech in coreTechnologies"
-          :key="tech.name"
-          :class="['skill-chip', tech.emphasis ? 'skill-emphasis' : '']"
-        >
-          {{ tech.name }}
-        </span>
-      </div>
-    </section>
-
-    <section class="career-section">
-      <h3 class="section-heading">경력 스냅샷</h3>
-      <div class="career-timeline">
-        <article
-          v-for="career in careerTimeline"
-          :key="career.company"
-          class="career-card"
-        >
-          <header class="career-card-header">
-            <div>
-              <h4 class="career-company">{{ career.company }}</h4>
-              <p class="career-role">{{ career.role }}</p>
-            </div>
-            <span class="career-period">{{ career.period }}</span>
-          </header>
-          <p class="career-description">{{ career.description }}</p>
-        </article>
-      </div>
-    </section>
-
-    <section class="career-detail-section">
-      <h3 class="section-heading">경력 상세</h3>
-      <div class="career-detail-list">
-        <article
-          v-for="career in careerDetails"
-          :key="career.company"
-          class="career-detail-card"
-        >
-          <header class="career-detail-header">
-            <div>
-              <h4 class="career-detail-company">{{ career.company }}</h4>
-              <p class="career-detail-role">{{ career.role }}</p>
-            </div>
-            <span class="career-detail-period">{{ career.period }}</span>
-          </header>
-          <p class="career-detail-summary">
-            {{ career.summary }}
-          </p>
-
-          <div class="career-projects">
-            <div
-              v-for="project in career.projects"
-              :key="project.name"
-              class="career-project-card"
-            >
-              <div class="career-project-header">
-                <h5 class="career-project-name">{{ project.name }}</h5>
-              </div>
-              <p class="career-project-summary">
-                {{ project.summary }}
-              </p>
-              <ul class="career-project-highlights">
-                <li
-                  v-for="highlight in project.focusHighlights"
-                  :key="highlight"
-                  class="career-project-highlight"
-                >
-                  {{ highlight }}
-                </li>
-              </ul>
-
-              <div
-                v-if="project.problemSolving"
-                class="career-project-problem-solving"
-              >
-                <h6 class="problem-solving-title">문제 해결 경험</h6>
-                <div class="problem-solving-cards">
-                  <article
-                    v-for="problem in project.problemSolving"
-                    :key="problem.title"
-                    class="problem-card compact"
-                  >
-                    <h6 class="problem-title">{{ problem.title }}</h6>
-                    <ul class="problem-list">
-                      <li
-                        v-for="statement in problem.statements"
-                        :key="statement"
-                        class="problem-item"
-                      >
-                        {{ statement }}
-                      </li>
-                    </ul>
-                  </article>
-                </div>
-              </div>
-            </div>
-          </div>
-        </article>
-      </div>
-    </section>
+    <!-- Removed detailed career section to avoid duplication with resume -->
 
     <section class="portfolio-timeline">
       <div class="timeline">
@@ -802,7 +546,8 @@ const portfolioItems = [
 .career-card-header {
   display: flex;
   justify-content: space-between;
-  align-items: flex-start;
+  align-items: center;
+  gap: 16px;
 
   .career-company {
     font-size: 20px;
@@ -824,6 +569,30 @@ const portfolioItems = [
   }
 }
 
+.career-card-texts {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.career-card-image-wrap {
+  width: 120px;
+  height: 72px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  overflow: hidden;
+  background: #f8fafc;
+  border: 1px solid rgba(148, 163, 184, 0.25);
+}
+
+.career-card-image {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+
 .career-description {
   margin: 0;
   font-size: 15px;
@@ -832,57 +601,47 @@ const portfolioItems = [
 }
 
 .career-detail-section {
-  max-width: 960px;
-  margin: 0 auto;
+  /* removed */
 }
 
 .career-detail-list {
-  display: flex;
-  flex-direction: column;
-  gap: 36px;
+  /* removed */
 }
 
 .career-detail-card {
-  border: 1px solid rgba(15, 23, 42, 0.1);
-  border-radius: 20px;
-  padding: 28px 32px;
-  background: #ffffff;
-  box-shadow: 0 20px 40px -38px rgba(15, 23, 42, 0.5);
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
+  /* removed */
 }
 
 .career-detail-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
+  /* removed */
 }
 
 .career-detail-company {
-  margin: 0;
-  font-size: 22px;
-  font-weight: 700;
-  color: #0f172a;
+  /* removed */
 }
 
 .career-detail-role {
-  margin: 6px 0 0 0;
-  font-size: 15px;
-  color: #475569;
+  /* removed */
 }
 
 .career-detail-period {
-  font-size: 13px;
-  font-weight: 600;
-  color: #6366f1;
+  /* removed */
+}
+
+.career-detail-texts {
+  /* removed */
+}
+
+.career-detail-image-wrap {
+  /* removed */
+}
+
+.career-detail-image {
+  /* removed */
 }
 
 .career-detail-summary {
-  margin: 0;
-  font-size: 15px;
-  line-height: 1.6;
-  color: #1f2933;
+  /* removed */
 }
 
 .career-projects {
@@ -1193,6 +952,11 @@ const portfolioItems = [
   .portfolio-card {
     padding: 28px 30px;
   }
+
+  .career-card-image-wrap {
+    width: 100px;
+    height: 64px;
+  }
 }
 
 @media (max-width: 768px) {
@@ -1320,6 +1084,11 @@ const portfolioItems = [
 
   .problem-solving-grid {
     grid-template-columns: 1fr;
+  }
+
+  .career-card-image-wrap {
+    width: 96px;
+    height: 60px;
   }
 }
 </style>
