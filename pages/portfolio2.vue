@@ -114,24 +114,34 @@ function navigateToHome() {
 </template>
 
 <style scoped lang="scss">
+@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@200..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,100..900;1,100..900&display=swap');
+
 .portfolio2-wrapper {
   min-height: 100vh;
-  background-color: #ffffff;
-  color: #1f2933;
-  font-family: 'Pretendard', 'Noto Sans KR', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  font-weight: 200;
+  color: #111111;
+  font-family: 'Noto Serif KR', 'Noto Serif', serif;
+  font-weight: 300;
+  background-repeat: repeat;
+  background:
+    linear-gradient(rgba(220, 216, 200, 0.379), rgba(220, 216, 200, 0.379)),
+    url('/assets/gray-dirty-paperboard_95678-93.avif');
+  background-size: 626px 443px;
 }
 
 .portfolio2-container {
   display: flex;
   min-height: 100vh;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 40px 32px 80px;
 }
 
 .sidebar {
   width: 280px;
   min-width: 280px;
-  background-color: #f8fafc;
-  border-right: 1px solid #e2e8f0;
+  background-color: transparent;
+  border-right: 1px solid #999966;
   padding: 32px 24px;
   position: sticky;
   top: 0;
@@ -147,13 +157,13 @@ function navigateToHome() {
   font-size: 24px;
   line-height: 1.2;
   margin: 0;
-  color: #0f172a;
-  font-weight: 600;
+  color: #111111;
+  font-weight: 800;
   cursor: pointer;
   transition: color 0.2s;
 
   &:hover {
-    color: #3b82f6;
+    color: #b45309;
   }
 }
 
@@ -167,18 +177,18 @@ function navigateToHome() {
   padding: 12px 16px;
   border-radius: 8px;
   cursor: pointer;
-  transition: background-color 0.2s;
+  transition: background-color 0.2s, color 0.2s;
   display: flex;
   flex-direction: column;
   gap: 4px;
 
   &:hover {
-    background-color: #e2e8f0;
+    background-color: rgba(214, 211, 196, 0.7);
   }
 
   &.active {
-    background-color: #dbeafe;
-    color: #1e40af;
+    background-color: rgba(188, 181, 164, 0.9);
+    color: #433021;
     font-weight: 500;
   }
 }
@@ -186,28 +196,51 @@ function navigateToHome() {
 .nav-item-label {
   font-size: 15px;
   line-height: 1.4;
+  font-weight: 500;
 }
 
 .nav-item-subtitle {
   font-size: 12px;
-  color: #64748b;
+  color: #111111;
   line-height: 1.3;
 }
 
 .nav-item.active .nav-item-subtitle {
-  color: #3b82f6;
+  color: #050505;
 }
 
 .nav-divider {
   height: 1px;
-  background-color: #e2e8f0;
+  background-color: #999966;
   margin: 12px 0;
 }
 
 .main-content {
   flex: 1;
-  padding: 96px 64px 160px;
+  padding: 80px 64px 160px;
   max-width: 900px;
   width: 100%;
+  margin: 0 auto;
+  color: #111111;
+  font-size: 15px;
+  line-height: 1.8;
+}
+
+.main-content :deep(p),
+.main-content :deep(li),
+.main-content :deep(span),
+.main-content :deep(h1),
+.main-content :deep(h2),
+.main-content :deep(h3),
+.main-content :deep(h4),
+.main-content :deep(h5),
+.main-content :deep(h6) {
+  color: #111111;
+}
+
+.main-content :deep(p),
+.main-content :deep(li),
+.main-content :deep(span) {
+  font-weight: 600;
 }
 </style>
