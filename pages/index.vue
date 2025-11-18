@@ -701,7 +701,7 @@ function updateMessage() {
 .index-wrapper {
   width: 1440px;
   color: #1f1f14;
-  font-family: 'Noto Serif KR', 'Noto Serif', sans-serif;
+  font-family: 'Pretendard', 'Noto Serif KR', 'Noto Serif', sans-serif;
   white-space: pre-line;
   word-break: break-all;
 
@@ -724,6 +724,7 @@ function updateMessage() {
     linear-gradient(rgba(220, 216, 200, 0.379), rgba(220, 216, 200, 0.379)),
     url('/assets/gray-dirty-paperboard_95678-93.avif');
   background-size: 626px 443px;
+  // background-color: rgb(226, 226, 226);
 
   a {
     color: #2b8e61;
