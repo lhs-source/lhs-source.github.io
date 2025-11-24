@@ -2,6 +2,15 @@
 import { ref, onMounted, onUnmounted } from 'vue'
 import gsap from 'gsap'
 import ResumePaper from './components/ResumePaper.vue'
+import UpboxCloud from './components/projects/UpboxCloud.vue'
+import RicoHomepage from './components/projects/RicoHomepage.vue'
+import BankB from './components/projects/BankB.vue'
+import DatadogTalk from './components/projects/DatadogTalk.vue'
+import FreelanceProjects from './components/projects/FreelanceProjects.vue'
+import Hana1QPay from './components/projects/Hana1QPay.vue'
+import Omnidoc from './components/projects/Omnidoc.vue'
+import OpenApproval from './components/projects/OpenApproval.vue'
+import Tasim from './components/projects/Tasim.vue'
 
 // State
 const isReading = ref(false)
@@ -11,21 +20,45 @@ const pageScrollY = ref(0)
 
 // Pages data
 const pages = ref([
-  { id: 'resume', title: 'Resume', type: 'resume', color: '#ffeb3b', rotation: -2 },
-  { id: 'p1', title: 'Portfolio 1', type: 'portfolio', color: '#4caf50', rotation: 1 },
-  { id: 'p2', title: 'Portfolio 2', type: 'portfolio', color: '#2196f3', rotation: -1 },
-  { id: 'p3', title: 'Portfolio 3', type: 'portfolio', color: '#9c27b0', rotation: 2 },
+  { id: 'resume', title: 'Resume', type: 'resume', color: '#ffeb3b', rotation: -2, component: ResumePaper },
+  { id: 'upbox', title: 'Upbox Cloud', type: 'portfolio', color: '#4caf50', rotation: 1, component: UpboxCloud },
+  { id: 'rico', title: 'Rico Homepage', type: 'portfolio', color: '#2196f3', rotation: -1, component: RicoHomepage },
+  { id: 'datadog', title: 'Datadog Talk', type: 'portfolio', color: '#ff9800', rotation: 2, component: DatadogTalk },
+  { id: 'freelance', title: 'Freelance', type: 'portfolio', color: '#9c27b0', rotation: -2, component: FreelanceProjects },
+  { id: 'bankb', title: 'BankB', type: 'portfolio', color: '#3f51b5', rotation: 1, component: BankB },
+  { id: 'omnidoc', title: 'Omnidoc', type: 'portfolio', color: '#00bcd4', rotation: -1, component: Omnidoc },
+  { id: 'open', title: 'Open Approval', type: 'portfolio', color: '#8bc34a', rotation: 2, component: OpenApproval },
+  { id: 'hana', title: 'Hana 1QPay', type: 'portfolio', color: '#e91e63', rotation: -2, component: Hana1QPay },
+  { id: 'tasim', title: 'TaSIM', type: 'portfolio', color: '#607d8b', rotation: 1, component: Tasim },
 ])
 
 // Stack Order State
 // Tracks the visual order of pages from bottom to top.
-// Initial: [3, 2, 1, 0] (Index 0 is top, Index 3 is bottom)
+// Initial: [N-1, ..., 0] (Index 0 is top)
 // Actually, let's store page INDICES.
 // Visual Order: [Bottom Page Index, ..., Top Page Index]
-const stackOrder = ref<number[]>([3, 2, 1, 0])
+const stackOrder = ref<number[]>([])
+
+// Initialize stack order
+const initStackOrder = () => {
+  stackOrder.value = Array.from({ length: pages.value.length }, (_, i) => pages.value.length - 1 - i)
+}
+initStackOrder()
 
 // Z-Index state (dynamic) - mapped by page index
-const zIndices = ref<number[]>([100, 3, 2, 1])
+const zIndices = ref<number[]>([])
+const initZIndices = () => {
+  zIndices.value = Array.from({ length: pages.value.length }, (_, i) => {
+    // If i is 0 (Resume), it should be top (highest index)
+    // Stack order is [Bottom, ..., Top]
+    // Resume is at index 0 in pages array.
+    // In stackOrder, Resume (0) is at the end (Top).
+    // So Resume gets highest Z.
+    // Let's just map based on initial stack order.
+    return pages.value.length - i
+  })
+}
+initZIndices()
 
 // Refs
 const deskContainer = ref<HTMLElement | null>(null)
@@ -110,7 +143,7 @@ const selectPage = async (index: number) => {
     y: -window.innerHeight * 1.2,
     z: 500, // Lift off the stack to prevent clipping
     rotationX: 45,
-    opacity: 0.5,
+    opacity: 1, // Keep opacity 1 as requested
     duration: 0.5,
     ease: 'power2.in'
   })
@@ -143,7 +176,7 @@ const selectPage = async (index: number) => {
     y: 0,
     opacity: 1,
     duration: 0.6,
-    ease: 'power2.out',
+    ease: 'power2.out', // Smooth landing
     delay: 0.1
   })
 
@@ -305,49 +338,8 @@ onUnmounted(() => {
 
             <!-- Front Face -->
             <div class="page-face page-front">
-              <!-- Resume Content -->
-              <div v-if="page.type === 'resume'" class="page-content resume-page">
-                <ResumePaper />
-              </div>
-
-              <!-- Portfolio Content -->
-              <div v-else class="page-content portfolio-page">
-                <div class="portfolio-header">
-                  <h2>{{ page.title }}</h2>
-                  <span class="project-date">2024.01 - 2024.03</span>
-                </div>
-
-                <div class="portfolio-body">
-                  <div class="main-image">
-                    <img :src="`https://picsum.photos/seed/${page.id}/800/400`" alt="Project Image" />
-                  </div>
-
-                  <div class="project-info">
-                    <h3>Project Overview</h3>
-                    <p>
-                      This is a detailed case study of {{ page.title }}. It explores the challenges faced during
-                      development
-                      and the innovative solutions implemented to overcome them. The project focuses on user experience
-                      and performance optimization.
-                    </p>
-
-                    <h3>Key Features</h3>
-                    <ul>
-                      <li>Responsive Design for all devices</li>
-                      <li>Real-time data synchronization</li>
-                      <li>Advanced interactive animations</li>
-                      <li>Secure authentication system</li>
-                    </ul>
-
-                    <h3>Tech Stack</h3>
-                    <div class="tech-tags">
-                      <span class="tag">Vue 3</span>
-                      <span class="tag">TypeScript</span>
-                      <span class="tag">GSAP</span>
-                      <span class="tag">Node.js</span>
-                    </div>
-                  </div>
-                </div>
+              <div class="page-content">
+                <component :is="page.component" />
               </div>
             </div>
 
@@ -578,6 +570,7 @@ onUnmounted(() => {
 }
 
 .resume-page {
+  width: 100%;
 
   // Override resume styles to fit in the sheet
   :deep(.resume-background) {
@@ -594,89 +587,6 @@ onUnmounted(() => {
     max-width: none; // Allow full width
     width: 100%;
     box-sizing: border-box;
-  }
-}
-
-.portfolio-page {
-  .portfolio-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: baseline;
-    margin-bottom: 30px;
-    border-bottom: 2px solid #eee;
-    padding-bottom: 15px;
-
-    h2 {
-      font-size: 2rem;
-      color: #333;
-      margin: 0;
-    }
-
-    .project-date {
-      color: #888;
-      font-size: 0.9rem;
-    }
-  }
-
-  .main-image {
-    width: 100%;
-    height: 350px;
-    border-radius: 8px;
-    overflow: hidden;
-    margin-bottom: 30px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-
-    img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      transition: transform 0.5s ease;
-
-      &:hover {
-        transform: scale(1.02);
-      }
-    }
-  }
-
-  .project-info {
-    h3 {
-      font-size: 1.2rem;
-      margin: 25px 0 15px;
-      color: #444;
-      border-left: 4px solid #333;
-      padding-left: 10px;
-    }
-
-    p {
-      line-height: 1.7;
-      color: #555;
-      margin-bottom: 15px;
-    }
-
-    ul {
-      padding-left: 20px;
-
-      li {
-        margin-bottom: 8px;
-        color: #555;
-      }
-    }
-
-    .tech-tags {
-      display: flex;
-      gap: 10px;
-      flex-wrap: wrap;
-      margin-top: 15px;
-
-      .tag {
-        background: #f0f0f0;
-        padding: 6px 12px;
-        border-radius: 20px;
-        font-size: 0.85rem;
-        color: #666;
-        font-weight: 500;
-      }
-    }
   }
 }
 </style>
