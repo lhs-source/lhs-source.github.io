@@ -20,16 +20,16 @@ const pageScrollY = ref(0)
 
 // Pages data
 const pages = ref([
-  { id: 'resume', title: 'Resume', type: 'resume', color: '#ffeb3b', rotation: -2, component: ResumePaper },
-  { id: 'upbox', title: 'Upbox Cloud', type: 'portfolio', color: '#4caf50', rotation: 1, component: UpboxCloud },
-  { id: 'rico', title: 'Rico Homepage', type: 'portfolio', color: '#2196f3', rotation: -1, component: RicoHomepage },
-  { id: 'datadog', title: 'Datadog Talk', type: 'portfolio', color: '#ff9800', rotation: 2, component: DatadogTalk },
-  { id: 'freelance', title: 'Freelance', type: 'portfolio', color: '#9c27b0', rotation: -2, component: FreelanceProjects },
-  { id: 'bankb', title: 'BankB', type: 'portfolio', color: '#3f51b5', rotation: 1, component: BankB },
-  { id: 'omnidoc', title: 'Omnidoc', type: 'portfolio', color: '#00bcd4', rotation: -1, component: Omnidoc },
-  { id: 'open', title: 'Open Approval', type: 'portfolio', color: '#8bc34a', rotation: 2, component: OpenApproval },
-  { id: 'hana', title: 'Hana 1QPay', type: 'portfolio', color: '#e91e63', rotation: -2, component: Hana1QPay },
-  { id: 'tasim', title: 'TaSIM', type: 'portfolio', color: '#607d8b', rotation: 1, component: Tasim },
+  { id: 'resume', title: 'Resume', type: 'resume', color: '#ffeb3b', rotation: -2, component: ResumePaper, tapeImage: 'masking1.png' },
+  { id: 'upbox', title: 'Upbox Cloud', type: 'portfolio', color: '#4caf50', rotation: 1, component: UpboxCloud, tapeImage: 'masking2.png' },
+  { id: 'rico', title: 'Rico Homepage', type: 'portfolio', color: '#2196f3', rotation: -1, component: RicoHomepage, tapeImage: 'masking3.png' },
+  { id: 'datadog', title: 'Datadog Talk', type: 'portfolio', color: '#ff9800', rotation: 2, component: DatadogTalk, tapeImage: 'masking4.png' },
+  { id: 'freelance', title: 'Freelance', type: 'portfolio', color: '#9c27b0', rotation: -2, component: FreelanceProjects, tapeImage: 'masking5.png' },
+  { id: 'bankb', title: 'BankB', type: 'portfolio', color: '#3f51b5', rotation: 1, component: BankB, tapeImage: 'masking1.png' },
+  { id: 'omnidoc', title: 'Omnidoc', type: 'portfolio', color: '#00bcd4', rotation: -1, component: Omnidoc, tapeImage: 'masking2.png' },
+  { id: 'open', title: 'Open Approval', type: 'portfolio', color: '#8bc34a', rotation: 2, component: OpenApproval, tapeImage: 'masking3.png' },
+  { id: 'hana', title: 'Hana 1QPay', type: 'portfolio', color: '#e91e63', rotation: -2, component: Hana1QPay, tapeImage: 'masking4.png' },
+  { id: 'tasim', title: 'TaSIM', type: 'portfolio', color: '#607d8b', rotation: 1, component: Tasim, tapeImage: 'masking5.png' },
 ])
 
 // Stack Order State
@@ -327,10 +327,10 @@ onUnmounted(() => {
             :style="{ zIndex: zIndices[index] }">
             <!-- Attached Post-it Tab -->
             <div class="post-it-tab" :style="{
-              backgroundColor: page.color,
               top: `${40 + index * 60}px`
             }" @click.stop="selectPage(index)" @mouseenter="onTabHover(true)" @mouseleave="onTabHover(false)">
-              {{ page.title }}
+              <img :src="`/assets/portfolio/${page.tapeImage}`" class="tape-bg" alt="" />
+              <span class="tab-text">{{ page.title }}</span>
             </div>
 
             <!-- Hover Gutter (Left margin trigger) -->
@@ -364,6 +364,8 @@ onUnmounted(() => {
   overflow: hidden;
   background-color: #2c3e50; // Dark background for focus
   font-family: 'Noto Sans KR', sans-serif;
+  letter-spacing: -0.03em;
+  font-size: 0.95rem;
 }
 
 /* Desk View */
@@ -399,7 +401,7 @@ onUnmounted(() => {
 
     .resume-preview {
       h1 {
-        font-size: 2rem;
+        font-size: 1.8rem;
         margin-bottom: 0.5rem;
       }
 
@@ -411,7 +413,7 @@ onUnmounted(() => {
         display: block;
         margin-top: 2rem;
         color: #999;
-        font-size: 0.8rem;
+        font-size: 0.75rem;
       }
     }
   }
@@ -547,31 +549,46 @@ onUnmounted(() => {
 /* Post-it Tabs (Attached to Page) */
 .post-it-tab {
   position: absolute;
-  left: -85px; // Positioned to stick out from the stack
-  width: 90px;
-  height: 45px;
-  padding: 10px 15px;
+  left: -100px; // Positioned to stick out from the stack
+  width: 120px;
+  height: 55px;
+  padding: 10px 25px 10px 15px; // Adjust padding to center text visually
   box-sizing: border-box;
-  font-size: 0.85rem;
+  font-size: 0.8rem;
   font-weight: 600;
   color: #333;
   cursor: pointer;
-  box-shadow: -2px 3px 5px rgba(0, 0, 0, 0.2);
+  // box-shadow: -2px 3px 5px rgba(0, 0, 0, 0.2); // Removed box-shadow
+  filter: drop-shadow(-2px 3px 2px rgba(0, 0, 0, 0.2)); // Use drop-shadow for transparency
   transition: width 0.2s ease, left 0.2s ease;
   display: flex;
   align-items: center;
-  justify-content: flex-end;
-  clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
-  border-radius: 2px 0 0 2px;
+  justify-content: center;
+  // clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%); // Removed clip-path
+  // border-radius: 2px 0 0 2px; // Removed border-radius
   z-index: 10; // Ensure tabs are above the page content
   pointer-events: auto; // Re-enable interactions
-  // The tab is a sibling of the faces, so it will rotate with the sheet.
-  // Its content (text) will be mirrored when the sheet is flipped.
-  // This is acceptable for a simple colored tab.
+  background-color: transparent; // Transparent background
+
+  .tape-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: fill;
+    z-index: -1;
+  }
+
+  .tab-text {
+    position: relative;
+    z-index: 1;
+    white-space: nowrap; // Prevent text wrapping
+  }
 
   &:hover {
-    width: 100px;
-    left: -95px; // Move further out on hover
+    width: 130px;
+    left: -110px; // Move further out on hover
   }
 }
 
