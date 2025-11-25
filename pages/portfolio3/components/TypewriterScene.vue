@@ -7,6 +7,8 @@
 import * as THREE from 'three';
 // @ts-ignore
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
+// @ts-ignore
+import { AnimationMixer, LoopRepeat, Vector3 } from 'three';
 import { onMounted, onBeforeUnmount, ref } from 'vue';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
@@ -18,12 +20,25 @@ const container = ref<HTMLElement | null>(null);
 let scene: THREE.Scene;
 let camera: THREE.PerspectiveCamera;
 let renderer: THREE.WebGLRenderer;
+const clock = new THREE.Clock();
 let typewriterModel: THREE.Group | null = null;
 let deskModel: THREE.Group | null = null;
 let paperMesh: THREE.Mesh;
 let animationId: number;
 let initialPaperY = 1.5; // Will be updated when model loads
 let initialTypewriterY = 0;
+let cockroachMixer: AnimationMixer | null = null;
+let cockroachModel: THREE.Group | null = null;
+let cockroachTarget = new Vector3();
+let cockroachWalkSpeed = 0.8; // Fast like a real cockroach
+let cockroachWalkAction: any = null;
+let cockroachIdleAction: any = null;
+const cockroachBounds = {
+    minX: -1.2,
+    maxX: 1.2,
+    minZ: -0.8,
+    maxZ: 0.8
+};
 
 const init = () => {
     if (!container.value) return;
@@ -67,6 +82,7 @@ const init = () => {
 
     // Desk model
     loadDeskModel();
+    loadCockroachModel();
 
     // Load typewriter model
     loadTypewriterModel();
@@ -190,6 +206,78 @@ const loadDeskModel = () => {
         (error: Error) => {
             console.error('Failed to load mahogany table model:', error);
             createDeskSurfaceFallback();
+        }
+    );
+};
+
+let cockroachYOffset = 0;
+
+const loadCockroachModel = () => {
+    const loader = new GLTFLoader();
+
+    loader.load(
+        '/assets/3dmodels/giant_cockroach.glb',
+        (gltf: any) => {
+            cockroachModel = gltf.scene;
+
+            // Scale the cockroach (slightly larger)
+            const cockroachScale = 0.08;
+            cockroachModel.scale.setScalar(cockroachScale);
+
+            // Update matrix world to apply scale before calculating bounding box
+            cockroachModel.updateMatrixWorld(true);
+
+            // Calculate bounding box to find the bottom of the model (after scale applied)
+            const box = new THREE.Box3().setFromObject(cockroachModel);
+            const minY = box.min.y;
+            // Store the offset needed to place the model on the ground
+            // Lower the cockroach slightly so body appears closer to the table surface
+            cockroachYOffset = -minY - 0.035;
+
+            cockroachModel.traverse((child: any) => {
+                if (child instanceof THREE.Mesh) {
+                    child.castShadow = true;
+                    child.receiveShadow = true;
+                }
+            });
+
+            const mixer = new AnimationMixer(cockroachModel);
+            cockroachMixer = mixer;
+            
+            if (gltf.animations && gltf.animations.length > 0) {
+                // Find walk and idle animations
+                const walkClip = gltf.animations.find((clip: any) => 
+                    clip.name.toLowerCase().includes('walk') || clip.name.toLowerCase().includes('run')
+                );
+                const idleClip = gltf.animations.find((clip: any) => 
+                    clip.name.toLowerCase().includes('idle')
+                );
+
+                if (walkClip) {
+                    cockroachWalkAction = mixer.clipAction(walkClip);
+                    cockroachWalkAction.setLoop(LoopRepeat, Infinity);
+                    cockroachWalkAction.timeScale = 2;
+                }
+
+                if (idleClip) {
+                    cockroachIdleAction = mixer.clipAction(idleClip);
+                    cockroachIdleAction.setLoop(LoopRepeat, Infinity);
+                }
+
+                // Start with walk animation since cockroach starts moving immediately
+                if (cockroachWalkAction) {
+                    cockroachWalkAction.play();
+                } else if (cockroachIdleAction) {
+                    cockroachIdleAction.play();
+                }
+            }
+
+            resetCockroachPosition(true);
+            scene.add(cockroachModel);
+        },
+        undefined,
+        (error: Error) => {
+            console.error('Failed to load cockroach model:', error);
         }
     );
 };
@@ -346,6 +434,13 @@ const createDeskSurfaceFallback = () => {
 
 const animate = () => {
     animationId = requestAnimationFrame(animate);
+    const delta = clock.getDelta();
+
+    if (cockroachMixer) {
+        cockroachMixer.update(delta);
+        wanderCockroach(delta);
+    }
+
     renderer.render(scene, camera);
 };
 
@@ -430,6 +525,104 @@ const liftPaper = (progress: number) => {
         paperMesh.scale.set(1, 1, 1);
     }
 };
+
+let cockroachPauseTimer = 0;
+let cockroachIsPaused = false;
+let cockroachRestTimer = 0;
+let cockroachIsResting = false;
+
+function switchToWalk() {
+    if (cockroachIdleAction && cockroachWalkAction) {
+        cockroachIdleAction.fadeOut(0.2);
+        cockroachWalkAction.reset().fadeIn(0.2).play();
+    } else if (cockroachWalkAction) {
+        cockroachWalkAction.play();
+    }
+}
+
+function switchToIdle() {
+    if (cockroachWalkAction && cockroachIdleAction) {
+        cockroachWalkAction.fadeOut(0.2);
+        cockroachIdleAction.reset().fadeIn(0.2).play();
+    } else if (cockroachIdleAction) {
+        cockroachIdleAction.play();
+    }
+}
+
+function wanderCockroach(delta: number) {
+    if (!cockroachModel) return;
+
+    // Long rest period (idle animation)
+    if (cockroachIsResting) {
+        cockroachRestTimer -= delta;
+        if (cockroachRestTimer <= 0) {
+            cockroachIsResting = false;
+            switchToWalk();
+            resetCockroachPosition();
+        }
+        return;
+    }
+
+    // Random pause behavior (cockroach-like stop and go)
+    if (cockroachIsPaused) {
+        cockroachPauseTimer -= delta;
+        if (cockroachPauseTimer <= 0) {
+            cockroachIsPaused = false;
+            // Sometimes change direction after pause
+            if (Math.random() < 0.5) {
+                resetCockroachPosition();
+            }
+        }
+        return;
+    }
+
+    // Random chance to take a long rest (switch to idle)
+    if (Math.random() < 0.003) {
+        cockroachIsResting = true;
+        cockroachRestTimer = Math.random() * 2 + 1; // 1-3 seconds rest
+        switchToIdle();
+        return;
+    }
+
+    // Random chance to pause briefly (still walking animation)
+    if (Math.random() < 0.01) {
+        cockroachIsPaused = true;
+        cockroachPauseTimer = Math.random() * 0.3 + 0.1; // 0.1-0.4 seconds pause
+        return;
+    }
+
+    const direction = new Vector3().subVectors(cockroachTarget, cockroachModel.position);
+    if (direction.length() < 0.05) {
+        resetCockroachPosition();
+        return;
+    }
+
+    direction.normalize();
+    
+    // Cockroach-like speed variation (fast bursts)
+    const speedVariation = 0.8 + Math.random() * 0.4;
+    const step = cockroachWalkSpeed * delta * speedVariation;
+    cockroachModel.position.add(direction.multiplyScalar(step));
+    
+    // Keep Y position fixed to ground
+    cockroachModel.position.y = cockroachYOffset;
+
+    // Fix direction: add PI to face forward
+    const heading = Math.atan2(direction.x, direction.z) + Math.PI;
+    cockroachModel.rotation.y = heading;
+}
+
+function resetCockroachPosition(initial = false) {
+    if (!cockroachModel) return;
+
+    if (initial) {
+        cockroachModel.position.set(0.5, cockroachYOffset, 0.3);
+    }
+
+    const targetX = THREE.MathUtils.randFloat(cockroachBounds.minX, cockroachBounds.maxX);
+    const targetZ = THREE.MathUtils.randFloat(cockroachBounds.minZ, cockroachBounds.maxZ);
+    cockroachTarget.set(targetX, cockroachYOffset, targetZ);
+}
 
 // Fade out entire scene
 const fadeOutScene = (progress: number) => {

@@ -2,6 +2,14 @@
 export default defineNuxtConfig({
   devtools: { enabled: true },
   css: ['~/assets/css/main.css'],
+  components: {
+    dirs: [
+      {
+        path: '~/components',
+        extensions: ['vue'],
+      },
+    ],
+  },
   postcss: {
     plugins: {
       tailwindcss: {},
