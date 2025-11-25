@@ -503,7 +503,10 @@ onUnmounted(() => {
   min-height: 100%; // Allow to grow
   height: auto; // Allow to grow
   backface-visibility: hidden;
-  background: white;
+  background-image: url('/assets/textures/paper-crumpled.png');
+  background-repeat: repeat;
+  background-size: 400px 400px;
+  background-blend-mode: overlay;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
   padding: 50px;
   box-sizing: border-box;
@@ -513,12 +516,20 @@ onUnmounted(() => {
 
 .page-front {
   z-index: 2;
+  background-image: url('/assets/textures/paper-crumpled.png');
+  background-repeat: repeat;
+  background-size: 400px 400px;
+  background-blend-mode: overlay;
 }
 
 .page-back {
   z-index: 1;
   transform: rotateY(180deg);
   background-color: #f5f5f5;
+  background-image: url('/assets/textures/paper-crumpled.png');
+  background-repeat: repeat;
+  background-size: 400px 400px;
+  background-blend-mode: overlay;
   // Add texture or pattern if desired
 }
 
