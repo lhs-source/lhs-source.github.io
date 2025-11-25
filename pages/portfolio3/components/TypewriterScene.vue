@@ -1,5 +1,15 @@
 <template>
     <div ref="container" class="w-full h-full absolute top-0 left-0 z-0 pointer-events-none"></div>
+
+    <!-- Loading Screen -->
+    <Transition name="fade">
+        <div v-if="isLoading" class="loading-overlay">
+            <div class="loading-content">
+                <div class="loading-spinner"></div>
+                <div class="loading-text">Loading Assets... {{ Math.round(loadingProgress) }}%</div>
+            </div>
+        </div>
+    </Transition>
 </template>
 
 <script setup lang="ts">
@@ -8,7 +18,7 @@ import * as THREE from 'three';
 // @ts-ignore
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 // @ts-ignore
-import { AnimationMixer, LoopRepeat, Vector3 } from 'three';
+import { AnimationMixer, LoopRepeat, Vector3, LoadingManager } from 'three';
 import { onMounted, onBeforeUnmount, ref } from 'vue';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
@@ -16,6 +26,8 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 gsap.registerPlugin(ScrollTrigger);
 
 const container = ref<HTMLElement | null>(null);
+const isLoading = ref(true);
+const loadingProgress = ref(0);
 
 let scene: THREE.Scene;
 let camera: THREE.PerspectiveCamera;
@@ -38,6 +50,27 @@ const cockroachBounds = {
     maxX: 1.2,
     minZ: -0.8,
     maxZ: 0.8
+};
+
+// Loading Manager
+const loadingManager = new LoadingManager();
+
+loadingManager.onProgress = (url: string, itemsLoaded: number, itemsTotal: number) => {
+    const progress = (itemsLoaded / itemsTotal) * 100;
+    loadingProgress.value = progress;
+    // console.log(`Loading file: ${url}.\nLoaded ${itemsLoaded} of ${itemsTotal} files.`);
+};
+
+loadingManager.onLoad = () => {
+    // console.log('Loading complete!');
+    // Add a small delay for smooth transition
+    setTimeout(() => {
+        isLoading.value = false;
+    }, 500);
+};
+
+loadingManager.onError = (url: string) => {
+    console.error('There was an error loading ' + url);
 };
 
 const init = () => {
@@ -96,46 +129,46 @@ const init = () => {
 };
 
 const loadTypewriterModel = () => {
-    const loader = new GLTFLoader();
-    
+    const loader = new GLTFLoader(loadingManager);
+
     loader.load(
         '/assets/3dmodels/typewriter.glb',
         (gltf: any) => {
             typewriterModel = gltf.scene;
-            
+
             // Calculate bounding box to determine proper scale
             const box = new THREE.Box3().setFromObject(typewriterModel);
             const size = box.getSize(new THREE.Vector3());
             const center = box.getCenter(new THREE.Vector3());
-            
-            console.log('Typewriter model size:', size);
-            console.log('Typewriter model center:', center);
-            
+
+            // console.log('Typewriter model size:', size);
+            // console.log('Typewriter model center:', center);
+
             // Scale to fit nicely in view (target size ~1.5 units)
             const maxDim = Math.max(size.x, size.y, size.z);
             const targetSize = 1.0;
             const scale = targetSize / maxDim;
-            
+
             typewriterModel.scale.setScalar(scale);
-            
+
             // Recalculate bounding box after scaling
             const scaledBox = new THREE.Box3().setFromObject(typewriterModel);
             const scaledCenter = scaledBox.getCenter(new THREE.Vector3());
-            
+
             // Center the model and place it on the ground
             typewriterModel.position.x = -scaledCenter.x;
             typewriterModel.position.z = -scaledCenter.z;
             typewriterModel.position.y = -scaledBox.min.y; // Place on ground
-            
+
             // Store initial position for animations
             initialTypewriterY = typewriterModel.position.y;
             typewriterModel.userData.baseX = typewriterModel.position.x;
             typewriterModel.userData.baseZ = typewriterModel.position.z;
             typewriterModel.userData.baseRotZ = typewriterModel.rotation.z || 0;
-            
-            console.log('Applied scale:', scale);
-            console.log('Final position:', typewriterModel.position);
-            
+
+            // console.log('Applied scale:', scale);
+            // console.log('Final position:', typewriterModel.position);
+
             // Enable shadows for all meshes
             typewriterModel.traverse((child: any) => {
                 if (child instanceof THREE.Mesh) {
@@ -143,9 +176,9 @@ const loadTypewriterModel = () => {
                     child.receiveShadow = true;
                 }
             });
-            
+
             scene.add(typewriterModel);
-            
+
             // Adjust paper position based on typewriter model
             // Paper starts at the roller position (top back of typewriter)
             if (paperMesh) {
@@ -160,9 +193,7 @@ const loadTypewriterModel = () => {
                 setPaperProgress(0);
             }
         },
-        (progress: ProgressEvent) => {
-            console.log('Loading typewriter:', (progress.loaded / progress.total * 100).toFixed(1) + '%');
-        },
+        undefined, // onProgress handled by manager
         (error: Error) => {
             console.error('Error loading typewriter model:', error);
             // Fallback: create simple typewriter if model fails
@@ -172,7 +203,7 @@ const loadTypewriterModel = () => {
 };
 
 const loadDeskModel = () => {
-    const loader = new GLTFLoader();
+    const loader = new GLTFLoader(loadingManager);
 
     loader.load(
         '/assets/3dmodels/mahogany_table.glb',
@@ -213,7 +244,7 @@ const loadDeskModel = () => {
 let cockroachYOffset = 0;
 
 const loadCockroachModel = () => {
-    const loader = new GLTFLoader();
+    const loader = new GLTFLoader(loadingManager);
 
     loader.load(
         '/assets/3dmodels/giant_cockroach.glb',
@@ -243,13 +274,13 @@ const loadCockroachModel = () => {
 
             const mixer = new AnimationMixer(cockroachModel);
             cockroachMixer = mixer;
-            
+
             if (gltf.animations && gltf.animations.length > 0) {
                 // Find walk and idle animations
-                const walkClip = gltf.animations.find((clip: any) => 
+                const walkClip = gltf.animations.find((clip: any) =>
                     clip.name.toLowerCase().includes('walk') || clip.name.toLowerCase().includes('run')
                 );
-                const idleClip = gltf.animations.find((clip: any) => 
+                const idleClip = gltf.animations.find((clip: any) =>
                     clip.name.toLowerCase().includes('idle')
                 );
 
@@ -284,7 +315,7 @@ const loadCockroachModel = () => {
 
 const createFallbackTypewriter = () => {
     const typewriterGroup = new THREE.Group();
-    
+
     const materialBody = new THREE.MeshStandardMaterial({ color: 0x333333, roughness: 0.7 });
     const materialKeys = new THREE.MeshStandardMaterial({ color: 0x111111, roughness: 0.5 });
     const materialRoller = new THREE.MeshStandardMaterial({ color: 0x000000, roughness: 0.9 });
@@ -341,20 +372,20 @@ const createPaper = () => {
     const paperWidth = 0.55;
     const paperHeight = 0.9;
     const paperGeo = new THREE.PlaneGeometry(paperWidth, paperHeight);
-    
+
     // Pivot from bottom (translate geometry before creating mesh)
     paperGeo.translate(0, paperHeight / 2, 0);
-    
+
     // Create paper texture with subtle lines and typed content
     const canvas = document.createElement('canvas');
     canvas.width = 1024;
     canvas.height = 1500;
     const ctx = canvas.getContext('2d')!;
-    
+
     // White background
     ctx.fillStyle = '#fffef5';
     ctx.fillRect(0, 0, canvas.width, canvas.height);
-    
+
     // Subtle horizontal lines
     ctx.strokeStyle = '#e8e8e0';
     ctx.lineWidth = 1;
@@ -364,7 +395,7 @@ const createPaper = () => {
         ctx.lineTo(canvas.width - 40, y);
         ctx.stroke();
     }
-    
+
     // Typed content
     const typedLines = [
         'LEE HYUN SOO — CREATIVE FRONTEND ENGINEER',
@@ -393,7 +424,7 @@ const createPaper = () => {
     });
 
     const paperTexture = new THREE.CanvasTexture(canvas);
-    
+
     const paperMat = new THREE.MeshStandardMaterial({
         map: paperTexture,
         side: THREE.DoubleSide,
@@ -402,7 +433,7 @@ const createPaper = () => {
 
     paperMesh = new THREE.Mesh(paperGeo, paperMat);
     paperMesh.userData.height = paperHeight;
-    
+
     // Initial position (will be adjusted when typewriter loads)
     // Paper comes out from inside the typewriter (negative z offset)
     paperMesh.position.set(0.06, initialPaperY, -0.25);
@@ -415,7 +446,7 @@ const createPaper = () => {
 
 const createDeskSurfaceFallback = () => {
     const deskGeo = new THREE.PlaneGeometry(6, 6);
-    const woodTexture = new THREE.TextureLoader().load('https://images.unsplash.com/photo-1493663284031-b7e3aefcae8e?auto=format&fit=crop&w=800&q=80');
+    const woodTexture = new THREE.TextureLoader(loadingManager).load('https://images.unsplash.com/photo-1493663284031-b7e3aefcae8e?auto=format&fit=crop&w=800&q=80');
     woodTexture.wrapS = woodTexture.wrapT = THREE.RepeatWrapping;
     woodTexture.repeat.set(2, 2);
 
@@ -598,12 +629,12 @@ function wanderCockroach(delta: number) {
     }
 
     direction.normalize();
-    
+
     // Cockroach-like speed variation (fast bursts)
     const speedVariation = 0.8 + Math.random() * 0.4;
     const step = cockroachWalkSpeed * delta * speedVariation;
     cockroachModel.position.add(direction.multiplyScalar(step));
-    
+
     // Keep Y position fixed to ground
     cockroachModel.position.y = cockroachYOffset;
 
@@ -654,5 +685,56 @@ onBeforeUnmount(() => {
 </script>
 
 <style scoped>
-/* Add any specific styles if needed */
+.loading-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #1a1a1a;
+    z-index: 100;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    pointer-events: none;
+}
+
+.loading-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+}
+
+.loading-spinner {
+    width: 40px;
+    height: 40px;
+    border: 3px solid rgba(255, 255, 255, 0.1);
+    border-radius: 50%;
+    border-top-color: #fff;
+    animation: spin 1s ease-in-out infinite;
+}
+
+.loading-text {
+    color: #fff;
+    font-family: 'Courier New', monospace;
+    font-size: 0.9rem;
+    opacity: 0.8;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.fade-enter-active,
+.fade-leave-active {
+    transition: opacity 0.5s ease;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+    opacity: 0;
+}
 </style>
