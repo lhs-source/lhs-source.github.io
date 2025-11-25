@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { ref, onMounted, onUnmounted } from 'vue'
 import gsap from 'gsap'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
+import TypewriterScene from './components/TypewriterScene.vue'
 import ResumePaper from './components/ResumePaper.vue'
 import UpboxCloud from './components/projects/UpboxCloud.vue'
 import RicoHomepage from './components/projects/RicoHomepage.vue'
@@ -12,11 +14,16 @@ import Omnidoc from './components/projects/Omnidoc.vue'
 import OpenApproval from './components/projects/OpenApproval.vue'
 import Tasim from './components/projects/Tasim.vue'
 
+gsap.registerPlugin(ScrollTrigger)
+
 // State
 const isReading = ref(false)
 const currentPageIndex = ref(0)
 const isHoveringTabs = ref(false)
 const pageScrollY = ref(0)
+const showTypewriter = ref(true)
+const typewriterSceneRef = ref<any>(null)
+const scrollSpacerRef = ref<HTMLElement | null>(null)
 
 // Pages data
 const pages = ref([
@@ -285,14 +292,66 @@ const setPageRef = (el: any, index: number) => {
   if (el) pageRefs.value[index] = el
 }
 
+// Typewriter Scroll Animation Setup
+const setupTypewriterAnimation = () => {
+  if (!scrollSpacerRef.value || !typewriterSceneRef.value) return
+
+  const tl = gsap.timeline({
+    scrollTrigger: {
+      trigger: scrollSpacerRef.value,
+      start: 'top top',
+      end: 'bottom bottom',
+      scrub: 1,
+      pin: true,
+      onUpdate: (self) => {
+        const progress = self.progress
+
+        // Phase 1: Typing (0 to 0.6) - Paper comes out of typewriter
+        if (progress <= 0.6) {
+          const typingProgress = progress / 0.6
+          typewriterSceneRef.value?.setPaperProgress(typingProgress)
+        }
+
+        // Phase 2: Lifting (0.6 to 1.0) - Paper lifts up
+        else {
+          const liftProgress = (progress - 0.6) / 0.4
+          typewriterSceneRef.value?.setPaperProgress(1) // Keep paper fully visible
+          typewriterSceneRef.value?.liftPaper(liftProgress)
+
+          // Start fading out the 3D scene near the end
+          if (liftProgress > 0.7) {
+            const fadeProgress = (liftProgress - 0.7) / 0.3
+            showTypewriter.value = fadeProgress < 0.5
+          }
+        }
+      },
+      onLeave: () => {
+        // Animation complete, transition to desk view
+        showTypewriter.value = false
+        // Enable the desk/stack view
+        setTimeout(() => {
+          // Scroll to the actual content
+          window.scrollTo(0, 0)
+        }, 100)
+      }
+    }
+  })
+}
+
 onMounted(() => {
   window.addEventListener('wheel', handleScroll, { passive: false })
   window.addEventListener('resize', updateStackState)
+
+  // Setup typewriter animation after a short delay to ensure refs are ready
+  setTimeout(() => {
+    setupTypewriterAnimation()
+  }, 100)
 })
 
 onUnmounted(() => {
   window.removeEventListener('wheel', handleScroll)
   window.removeEventListener('resize', updateStackState)
+  ScrollTrigger.getAll().forEach(trigger => trigger.kill())
 })
 
 </script>
@@ -300,8 +359,15 @@ onUnmounted(() => {
 <template>
   <div class="portfolio-container">
 
+    <!-- Typewriter Intro (3D Scene) -->
+    <div v-if="showTypewriter" class="typewriter-intro">
+      <div ref="scrollSpacerRef" class="scroll-spacer">
+        <TypewriterScene ref="typewriterSceneRef" />
+      </div>
+    </div>
+
     <!-- Desk View -->
-    <div v-if="!isReading" ref="deskContainer" class="desk-view">
+    <div v-if="!isReading && !showTypewriter" ref="deskContainer" class="desk-view">
       <div class="desk-surface">
         <div class="desk-resume" @click="openPortfolio">
           <div class="resume-preview">
@@ -314,7 +380,7 @@ onUnmounted(() => {
     </div>
 
     <!-- Stack View (Reading Mode) -->
-    <div v-else ref="stackContainer" class="stack-view">
+    <div v-else-if="!showTypewriter" ref="stackContainer" class="stack-view">
       <div class="stack-overlay"></div>
       <div class="stack-wrapper">
 
@@ -338,6 +404,7 @@ onUnmounted(() => {
 
             <!-- Front Face -->
             <div class="page-face page-front">
+              <div class="page-texture"></div>
               <div class="page-content">
                 <component :is="page.component" />
               </div>
@@ -366,6 +433,22 @@ onUnmounted(() => {
   font-family: 'Noto Sans KR', sans-serif;
   letter-spacing: -0.03em;
   font-size: 0.95rem;
+}
+
+/* Typewriter Intro */
+.typewriter-intro {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  z-index: 1000;
+}
+
+.scroll-spacer {
+  width: 100%;
+  height: 300vh; // 3x viewport height for scroll duration
+  position: relative;
 }
 
 /* Desk View */
@@ -505,23 +588,39 @@ onUnmounted(() => {
   min-height: 100%; // Allow to grow
   height: auto; // Allow to grow
   backface-visibility: hidden;
-  background-image: url('/assets/textures/paper-crumpled.png');
-  background-repeat: repeat;
-  background-size: 400px 400px;
-  background-blend-mode: overlay;
+  // background-image: url('/assets/textures/paper-crumpled.png'); // Moved to .page-texture
+  // background-repeat: repeat;
+  // background-size: 400px 400px;
+  // background-blend-mode: overlay;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
   padding: 50px;
   box-sizing: border-box;
   border-radius: 2px;
   pointer-events: auto; // Re-enable interactions
+  background-color: white; // Base color
 }
 
-.page-front {
-  z-index: 2;
+.page-texture {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
   background-image: url('/assets/textures/paper-crumpled.png');
   background-repeat: repeat;
   background-size: 400px 400px;
   background-blend-mode: overlay;
+  opacity: 1;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.page-front {
+  z-index: 2;
+  // background-image: url('/assets/textures/paper-crumpled.png'); // Moved
+  // background-repeat: repeat;
+  // background-size: 400px 400px;
+  // background-blend-mode: overlay;
 }
 
 .page-back {
@@ -595,6 +694,9 @@ onUnmounted(() => {
 .page-content {
   max-width: 100%;
   overflow-wrap: break-word; // Prevent horizontal overflow
+  position: relative;
+  z-index: 1;
+  opacity: 0.95; // Allow texture to show through
 }
 
 .resume-page {
@@ -607,6 +709,7 @@ onUnmounted(() => {
     width: 100%; // Ensure it fits
     max-width: 100%;
     box-sizing: border-box;
+    background: transparent; // Make resume background transparent so page texture shows
   }
 
   :deep(.resume-container) {
@@ -615,6 +718,7 @@ onUnmounted(() => {
     max-width: none; // Allow full width
     width: 100%;
     box-sizing: border-box;
+    background: transparent; // Make resume container transparent
   }
 }
 </style>
