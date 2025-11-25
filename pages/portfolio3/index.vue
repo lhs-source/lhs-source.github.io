@@ -24,6 +24,8 @@ const pageScrollY = ref(0)
 const showTypewriter = ref(true)
 const typewriterSceneRef = ref<any>(null)
 const scrollSpacerRef = ref<HTMLElement | null>(null)
+const typewriterWrapperRef = ref<HTMLElement | null>(null)
+const deskContainerRef = ref<HTMLElement | null>(null)
 
 // Pages data
 const pages = ref([
@@ -296,41 +298,85 @@ const setPageRef = (el: any, index: number) => {
 const setupTypewriterAnimation = () => {
   if (!scrollSpacerRef.value || !typewriterSceneRef.value) return
 
+  // Initial desk position (above viewport)
+  if (deskContainerRef.value) {
+    gsap.set(deskContainerRef.value, { y: '-100%' })
+  }
+
+  const typingEnd = 0.45
+  const liftEnd = 0.75
+  const vanishEnd = 0.9
+
   const tl = gsap.timeline({
     scrollTrigger: {
       trigger: scrollSpacerRef.value,
       start: 'top top',
       end: 'bottom bottom',
       scrub: 1,
-      pin: true,
       onUpdate: (self) => {
         const progress = self.progress
 
-        // Phase 1: Typing (0 to 0.6) - Paper comes out of typewriter
-        if (progress <= 0.6) {
-          const typingProgress = progress / 0.6
+        if (progress <= typingEnd) {
+          const typingProgress = progress / typingEnd
           typewriterSceneRef.value?.setPaperProgress(typingProgress)
-        }
-
-        // Phase 2: Lifting (0.6 to 1.0) - Paper lifts up
-        else {
-          const liftProgress = (progress - 0.6) / 0.4
-          typewriterSceneRef.value?.setPaperProgress(1) // Keep paper fully visible
+          typewriterSceneRef.value?.hideTypewriter(0)
+        } else if (progress <= liftEnd) {
+          typewriterSceneRef.value?.setPaperProgress(1)
+          const liftProgress = (progress - typingEnd) / (liftEnd - typingEnd)
           typewriterSceneRef.value?.liftPaper(liftProgress)
+          typewriterSceneRef.value?.hideTypewriter(0)
+        } else if (progress <= vanishEnd) {
+          typewriterSceneRef.value?.setPaperProgress(1)
+          typewriterSceneRef.value?.liftPaper(1)
+          const vanishProgress = (progress - liftEnd) / (vanishEnd - liftEnd)
+          typewriterSceneRef.value?.hideTypewriter(vanishProgress)
+          typewriterSceneRef.value?.fadeOutScene(vanishProgress)
 
-          // Start fading out the 3D scene near the end
-          if (liftProgress > 0.7) {
-            const fadeProgress = (liftProgress - 0.7) / 0.3
-            showTypewriter.value = fadeProgress < 0.5
+          if (typewriterWrapperRef.value) {
+            gsap.set(typewriterWrapperRef.value, {
+              y: `${vanishProgress * 110}%`,
+              ease: 'none'
+            })
+          }
+
+          if (deskContainerRef.value) {
+            gsap.set(deskContainerRef.value, {
+              y: '-100%',
+              ease: 'none'
+            })
+          }
+        } else {
+          const deskProgress = (progress - vanishEnd) / (1 - vanishEnd)
+          typewriterSceneRef.value?.setPaperProgress(1)
+          typewriterSceneRef.value?.liftPaper(1)
+          typewriterSceneRef.value?.hideTypewriter(1)
+          typewriterSceneRef.value?.fadeOutScene(1)
+
+          if (typewriterWrapperRef.value) {
+            gsap.set(typewriterWrapperRef.value, {
+              y: '120%',
+              ease: 'none'
+            })
+          }
+
+          if (deskContainerRef.value) {
+            gsap.set(deskContainerRef.value, {
+              y: `${-100 + deskProgress * 100}%`,
+              ease: 'none'
+            })
           }
         }
       },
       onLeave: () => {
-        // Animation complete, transition to desk view
         showTypewriter.value = false
-        // Enable the desk/stack view
+        if (deskContainerRef.value) {
+          gsap.set(deskContainerRef.value, { y: 0 })
+        }
+        if (typewriterWrapperRef.value) {
+          gsap.set(typewriterWrapperRef.value, { y: '0%' })
+        }
+        typewriterSceneRef.value?.fadeOutScene(1)
         setTimeout(() => {
-          // Scroll to the actual content
           window.scrollTo(0, 0)
         }, 100)
       }
@@ -357,67 +403,72 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <div class="portfolio-container">
+  <div class="portfolio-container" :class="{ 'no-scroll': !showTypewriter }">
 
     <!-- Typewriter Intro (3D Scene) -->
-    <div v-if="showTypewriter" class="typewriter-intro">
+    <div v-show="showTypewriter" class="typewriter-intro">
       <div ref="scrollSpacerRef" class="scroll-spacer">
-        <TypewriterScene ref="typewriterSceneRef" />
-      </div>
-    </div>
-
-    <!-- Desk View -->
-    <div v-if="!isReading && !showTypewriter" ref="deskContainer" class="desk-view">
-      <div class="desk-surface">
-        <div class="desk-resume" @click="openPortfolio">
-          <div class="resume-preview">
-            <h1>Resume</h1>
-            <p>Lee Hyun Soo</p>
-            <span class="click-hint">(Click to Open)</span>
-          </div>
+        <div ref="typewriterWrapperRef" class="typewriter-scene-wrapper">
+          <TypewriterScene ref="typewriterSceneRef" />
         </div>
       </div>
     </div>
 
-    <!-- Stack View (Reading Mode) -->
-    <div v-else-if="!showTypewriter" ref="stackContainer" class="stack-view">
-      <div class="stack-overlay"></div>
-      <div class="stack-wrapper">
-
-        <!-- Hover Zone for Fan-out -->
-        <div class="hover-zone" @mouseenter="onTabHover(true)" @mouseleave="onTabHover(false)"></div>
-
-        <!-- Pages Stack -->
-        <div class="pages-stack">
-          <div v-for="(page, index) in pages" :key="page.id" :ref="(el) => setPageRef(el, index)" class="page-sheet"
-            :style="{ zIndex: zIndices[index] }">
-            <!-- Attached Post-it Tab -->
-            <div class="post-it-tab" :style="{
-              top: `${40 + index * 60}px`
-            }" @click.stop="selectPage(index)" @mouseenter="onTabHover(true)" @mouseleave="onTabHover(false)">
-              <img :src="`/assets/portfolio/${page.tapeImage}`" class="tape-bg" alt="" />
-              <span class="tab-text">{{ page.title }}</span>
+    <!-- Desk View (Always rendered, animated in) -->
+    <div ref="deskContainerRef" class="desk-view-wrapper">
+      <!-- Desk Surface View -->
+      <div v-if="!isReading" ref="deskContainer" class="desk-view">
+        <div class="desk-surface">
+          <div class="desk-resume" @click="openPortfolio">
+            <div class="resume-preview">
+              <h1>Resume</h1>
+              <p>Lee Hyun Soo</p>
+              <span class="click-hint">(Click to Open)</span>
             </div>
+          </div>
+        </div>
+      </div>
 
-            <!-- Hover Gutter (Left margin trigger) -->
-            <div class="hover-gutter" @mouseenter="onTabHover(true)" @mouseleave="onTabHover(false)"></div>
+      <!-- Stack View (Reading Mode) -->
+      <div v-else ref="stackContainer" class="stack-view">
+        <div class="stack-overlay"></div>
+        <div class="stack-wrapper">
 
-            <!-- Front Face -->
-            <div class="page-face page-front">
-              <div class="page-texture"></div>
-              <div class="page-content">
-                <component :is="page.component" />
+          <!-- Hover Zone for Fan-out -->
+          <div class="hover-zone" @mouseenter="onTabHover(true)" @mouseleave="onTabHover(false)"></div>
+
+          <!-- Pages Stack -->
+          <div class="pages-stack">
+            <div v-for="(page, index) in pages" :key="page.id" :ref="(el) => setPageRef(el, index)" class="page-sheet"
+              :style="{ zIndex: zIndices[index] }">
+              <!-- Attached Post-it Tab -->
+              <div class="post-it-tab" :style="{
+                top: `${40 + index * 60}px`
+              }" @click.stop="selectPage(index)" @mouseenter="onTabHover(true)" @mouseleave="onTabHover(false)">
+                <img :src="`/assets/portfolio/${page.tapeImage}`" class="tape-bg" alt="" />
+                <span class="tab-text">{{ page.title }}</span>
               </div>
-            </div>
 
-            <!-- Back Face -->
-            <div class="page-face page-back">
-              <!-- Blank or texture -->
-            </div>
+              <!-- Hover Gutter (Left margin trigger) -->
+              <div class="hover-gutter" @mouseenter="onTabHover(true)" @mouseleave="onTabHover(false)"></div>
 
+              <!-- Front Face -->
+              <div class="page-face page-front">
+                <div class="page-texture"></div>
+                <div class="page-content">
+                  <component :is="page.component" />
+                </div>
+              </div>
+
+              <!-- Back Face -->
+              <div class="page-face page-back">
+                <!-- Blank or texture -->
+              </div>
+
+            </div>
           </div>
-        </div>
 
+        </div>
       </div>
     </div>
 
@@ -427,28 +478,48 @@ onUnmounted(() => {
 <style scoped lang="scss">
 .portfolio-container {
   width: 100vw;
-  height: 100vh;
-  overflow: hidden;
-  background-color: #2c3e50; // Dark background for focus
+  min-height: 100vh;
+  background-color: #1a1a1a; // Match 3D scene background
   font-family: 'Noto Sans KR', sans-serif;
   letter-spacing: -0.03em;
   font-size: 0.95rem;
+  
+  &.no-scroll {
+    height: 100vh;
+    overflow: hidden;
+  }
 }
 
 /* Typewriter Intro */
 .typewriter-intro {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+}
+
+.scroll-spacer {
+  width: 100%;
+  height: 600vh; // 6x viewport height for slower scroll progression
+  position: relative;
+}
+
+.typewriter-scene-wrapper {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100vh;
-  z-index: 1000;
+  z-index: 10;
 }
 
-.scroll-spacer {
+/* Desk View Wrapper */
+.desk-view-wrapper {
+  position: fixed;
+  top: 0;
+  left: 0;
   width: 100%;
-  height: 300vh; // 3x viewport height for scroll duration
-  position: relative;
+  height: 100vh;
+  z-index: 5;
 }
 
 /* Desk View */
