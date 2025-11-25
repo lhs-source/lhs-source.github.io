@@ -557,7 +557,7 @@ const presentationData = ref([
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap');
 
 .resume-background {
-  // min-height: 100vh; // Removed for component usage
+  min-height: 120vh;
   background: white;
   width: 100%;
 }

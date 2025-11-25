@@ -643,7 +643,7 @@ onUnmounted(() => {
   min-height: 100%;
   background: transparent;
   border-radius: 2px;
-  transform-origin: center center;
+  transform-origin: center bottom;
   transform-style: preserve-3d;
 
   overflow: visible;
@@ -656,7 +656,7 @@ onUnmounted(() => {
   top: 0;
   left: 0;
   width: 100%;
-  min-height: 100%; // Allow to grow
+  min-height: 120vh;
   height: auto; // Allow to grow
   backface-visibility: hidden;
   // background-image: url('/assets/textures/paper-crumpled.png'); // Moved to .page-texture
