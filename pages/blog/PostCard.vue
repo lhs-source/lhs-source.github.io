@@ -18,10 +18,11 @@ const props = defineProps<{
 }>();
 
 const volumeString = computed(() => {
-  switch(props.post.volume) {
+  switch (props.post?.volume) {
     case 'short': return '짧은글';
     case 'long': return '긴글';
     case 'medium': return '중간글';
+    default: return '';
   }
 });
 
@@ -31,31 +32,28 @@ const volumeString = computed(() => {
     <!-- Post Header -->
     <div class="post-header">
       <div class="post-date">
-        {{ dayjs(post.created).format('YYYY년 MM월 DD일') }}
-        <template v-if="post.updated !== post.created">
+        {{ post.created ? dayjs(post.created).format('YYYY년 MM월 DD일') : '날짜 미정' }}
+        <template v-if="post.updated && post.created && post.updated !== post.created">
           <span class="update-info">[수정: {{ dayjs(post.updated).format('MM-DD') }}]</span>
         </template>
       </div>
-      
+
       <a :href="post._path" class="post-title-link">
         <h2 class="post-title">
           {{ post.title }}
         </h2>
       </a>
       <div class="text-sm">{{ post.subject }} {{ volumeString }}</div>
-      
+
     </div>
-    
+
     <!-- Post Content -->
     <div class="post-content">
-      <img 
-        v-if="post.image" 
-        class="post-image" 
-        :src="`/images/${post.image}`" 
+      <img v-if="post.image" class="post-image" :src="`/images/${post.image}`"
         :alt="`image for ${post.title} article`" />
       <p class="post-description">{{ post.description }}</p>
     </div>
-    
+
     <!-- Post Footer -->
     <footer class="post-footer">
       <div v-if="post.tags" class="post-tags">
@@ -84,24 +82,24 @@ const volumeString = computed(() => {
 .post-header {
   padding: 16px 20px 12px;
   border-bottom: 1px solid #e0e0e0;
-  
+
   .post-date {
     font-size: 0.8rem;
     color: #666;
     margin-bottom: 4px;
     font-weight: 500;
-    
+
     .update-info {
       color: #999;
       font-size: 0.75rem;
     }
   }
-  
+
   .post-title-link {
     text-decoration: none;
     color: inherit;
   }
-  
+
   .post-title {
     font-size: 1.2rem;
     font-weight: bold;
@@ -113,14 +111,14 @@ const volumeString = computed(() => {
 
 .post-content {
   padding: 16px 20px;
-  
+
   .post-image {
     width: 100%;
     height: auto;
     margin-bottom: 12px;
     border: 1px solid #ddd;
   }
-  
+
   .post-description {
     font-size: 0.9rem;
     color: #333;
@@ -129,12 +127,12 @@ const volumeString = computed(() => {
     text-align: justify;
   }
 }
-  
+
 .post-tags {
   display: flex;
   flex-wrap: wrap;
   gap: 6px;
-  
+
   .post-tag {
     background: #f0f0f0;
     border: 1px solid #ccc;

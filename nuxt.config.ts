@@ -38,7 +38,7 @@ export default defineNuxtConfig({
       filename: 'SQLITE_DB_LOCATION'
     },
   },
-  mdc: { },
+  mdc: {},
   colorMode: {
     classSuffix: ''
   },
@@ -48,7 +48,7 @@ export default defineNuxtConfig({
   compatibilityDate: '2025-01-20',
   nitro: {
     prerender: {
-      routes: ['/sitemap.xml']
+      routes: ['/', '/portfolio3', '/resume', '/blog', '/sitemap.xml']
     }
   },
   vite: {

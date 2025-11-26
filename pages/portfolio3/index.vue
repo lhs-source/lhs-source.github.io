@@ -14,7 +14,10 @@ import Omnidoc from './components/projects/Omnidoc.vue'
 import OpenApproval from './components/projects/OpenApproval.vue'
 import Tasim from './components/projects/Tasim.vue'
 
-gsap.registerPlugin(ScrollTrigger)
+// Register GSAP plugin only on client side
+if (process.client) {
+  gsap.registerPlugin(ScrollTrigger)
+}
 
 // State
 const isReading = ref(false)

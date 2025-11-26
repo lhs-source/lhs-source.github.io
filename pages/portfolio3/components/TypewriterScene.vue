@@ -23,7 +23,10 @@ import { onMounted, onBeforeUnmount, ref } from 'vue';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
-gsap.registerPlugin(ScrollTrigger);
+// Register GSAP plugin only on client side
+if (process.client) {
+    gsap.registerPlugin(ScrollTrigger);
+}
 
 const container = ref<HTMLElement | null>(null);
 const isLoading = ref(true);
