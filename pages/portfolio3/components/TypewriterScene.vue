@@ -84,7 +84,7 @@ const init = () => {
     // Camera - positioned to look at typewriter centered on screen
     const aspect = container.value.clientWidth / container.value.clientHeight;
     camera = new THREE.PerspectiveCamera(45, aspect, 0.1, 1000);
-    camera.position.set(0, 0.8, 5);
+    camera.position.set(0, 1.8, 4);
     camera.lookAt(0, 0.3, 0);
 
     // Renderer

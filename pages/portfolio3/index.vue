@@ -109,15 +109,13 @@ const selectPage = async (index: number) => {
   }
 
   // 1. Update Stack Order Logic
-  // We are moving newIndex to TOP.
-  // We are moving oldIndex to BOTTOM (visually).
-  // Current Order: [..., newIndex, ..., oldIndex] (oldIndex is top)
+  // We want to keep the natural order for all pages EXCEPT the new active one.
+  // Natural order is [N-1, ..., 0] (reversed indices)
 
-  // Remove newIndex and oldIndex from current order
-  const newOrder = stackOrder.value.filter(i => i !== newIndex && i !== oldIndex)
+  const naturalOrder = Array.from({ length: pages.value.length }, (_, i) => pages.value.length - 1 - i)
 
-  // Add oldIndex to the BEGINNING (Bottom)
-  newOrder.unshift(oldIndex)
+  // Remove newIndex from natural order
+  const newOrder = naturalOrder.filter(i => i !== newIndex)
 
   // Add newIndex to the END (Top)
   newOrder.push(newIndex)
@@ -248,9 +246,9 @@ const updateStackState = () => {
   // We want to fit (N-1) pages in that space.
   const paperWidth = 800
   const windowWidth = window.innerWidth
-  const leftSpace = Math.max(0, (windowWidth - paperWidth) / 2 - 50) // -50 padding
+  const leftSpace = Math.max(0, (windowWidth - paperWidth) / 2 - 200) // -100 padding for safety
   const totalPages = pages.value.length
-  const maxSpacing = 60 // Max pixels between pages
+  const maxSpacing = 20 // Reduced from 60 to keep it tighter
   const spacing = Math.min(maxSpacing, leftSpace / (totalPages - 1 || 1))
 
   pages.value.forEach((page, i) => {
@@ -277,6 +275,12 @@ const updateStackState = () => {
       // Bottom page (first in array) -> reverseIndex = total - 1 -> x = max offset
 
       x = -1 * spacing * reverseIndex
+
+      // Add slight rotation for fan shape
+      // Rotate counter-clockwise as we go deeper in the stack (leftwards)
+      // reverseIndex 0 (top) -> 0 rotation
+      // reverseIndex N -> -N * 2 degrees
+      rotationZ += -1 * reverseIndex * 2.5
     }
 
     gsap.to(el, {
@@ -334,7 +338,7 @@ const setupTypewriterAnimation = () => {
 
           if (typewriterWrapperRef.value) {
             gsap.set(typewriterWrapperRef.value, {
-              y: `${vanishProgress * 110}%`,
+              y: `${vanishProgress * 10}%`, // Reduced from 110% to 10% to keep it visible
               ease: 'none'
             })
           }
@@ -354,7 +358,7 @@ const setupTypewriterAnimation = () => {
 
           if (typewriterWrapperRef.value) {
             gsap.set(typewriterWrapperRef.value, {
-              y: '120%',
+              y: '10%', // Keep it at 10% instead of 120%
               ease: 'none'
             })
           }
@@ -443,7 +447,7 @@ onUnmounted(() => {
               :style="{ zIndex: zIndices[index] }">
               <!-- Attached Post-it Tab -->
               <div class="post-it-tab" :style="{
-                top: `${40 + index * 60}px`
+                top: `${40 + index * 60 + (page.rotation * 7)}px`
               }" @click.stop="selectPage(index)" @mouseenter="onTabHover(true)" @mouseleave="onTabHover(false)">
                 <img :src="`/assets/portfolio/${page.tapeImage}`" class="tape-bg" alt="" />
                 <span class="tab-text">{{ page.title }}</span>
@@ -483,7 +487,7 @@ onUnmounted(() => {
   font-family: 'Noto Sans KR', sans-serif;
   letter-spacing: -0.03em;
   font-size: 0.95rem;
-  
+
   &.no-scroll {
     height: 100vh;
     overflow: hidden;
@@ -499,7 +503,7 @@ onUnmounted(() => {
 
 .scroll-spacer {
   width: 100%;
-  height: 600vh; // 6x viewport height for slower scroll progression
+  height: 1000vh; // Increased from 600vh for longer scroll
   position: relative;
 }
 
