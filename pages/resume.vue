@@ -294,12 +294,26 @@ const presentationData = ref([
         <!-- <div class="profile-photo">
           <img src="/assets/img/boxing.jpg" />
         </div> -->
-        <div class="profile-info flex justify-between pb-4">
-          <div class="profile-info-header">
-            <h1 class="name">이현수</h1>
-            <h2 class="title">프론트엔드 개발자</h2>
+        <div class="profile-info flex flex-col md:flex-row md:justify-between pb-4 gap-4 md:gap-0">
+          <div>
+            <div class="profile-info-header">
+              <h1 class="name">이현수</h1>
+              <h2 class="title">프론트엔드 개발자</h2>
+            </div>
+              <!-- <h2 class="title text-sm">토스 플레이스의 시작을 함께 만들어갈 프론트엔드 개발자</h2> -->
+              <!-- <div class="text-xs">토스 플레이스의 시작을 함께 만들어갈 개발자입니다.</div> -->
+              <!-- <h2 class="title text-sm">초기 멤버로서 겪는 시행착오를 성장 동력으로 삼는 능동적인 프론트엔드 개발자</h2> -->
+              <!-- <h2 class="title text-sm">시작부터 안정화까지 경험한 프론트엔드 개발자</h2> -->
+              <!-- <h2 class="title text-xs mt-2">
+                스타트업의 시작부터 안정화까지 경험하며 겪은 시행착오를 성장 동력으로 삼고 발전했습니다. <br />
+                이제는 토스 플레이스팀에 기여하고 함께 성장하고 싶습니다.
+              </h2> -->
+            <h2 class="title text-xs mt-2">
+              스타트업 초기 멤버로서의 경험을 바탕으로 
+              무신사 프론트엔드팀에서 글로벌 패션 플랫폼의 성장과 혁신에 기여하겠습니다.
+            </h2>
           </div>
-          <div class="contact-info">
+          <div class="contact-info mt-4 md:mt-0 md:text-right">
             <div class="contact-item">
               <span class="label">Email</span>
               <span class="value">iddms5446@gmail.com</span>
@@ -491,43 +505,6 @@ const presentationData = ref([
         </div>
       </div>
     </section>
-
-    <!-- 프리랜서 프로젝트 Section -->
-    <section class="section">
-      <h2 class="section-title">기타 프로젝트</h2>
-      
-      <div class="freelance-projects">
-        <div 
-          v-for="project in freelanceData" 
-          :key="project.name"
-          class="freelance-item"
-        >
-          <div class="project-header">
-            <h3 class="project-name">{{ project.name }}</h3>
-            <div class="project-meta">
-              <span class="project-period">{{ project.period }}</span>
-              <span class="project-tech">{{ project.technologies }}</span>
-            </div>
-          </div>
-          
-          <p v-for="description in project.description" :key="description" class="project-description">{{ description }}</p>
-          
-          <div class="project-responsibilities">
-            <h4 class="responsibilities-title">기여 및 성과</h4>
-            <ul class="responsibilities-list">
-              <li 
-                v-for="responsibility in project.responsibilities" 
-                :key="responsibility"
-                class="responsibility-item"
-              >
-                {{ responsibility }}
-              </li>
-            </ul>
-          </div>
-        </div>
-      </div>
-    </section>
-
     <!-- 발표 및 컨퍼런스 Section -->
     <section class="section">
       <h2 class="section-title">발표 & 컨퍼런스</h2>
@@ -589,6 +566,43 @@ const presentationData = ref([
         </div>
       </div>
     </section>
+
+    <!-- 프리랜서 프로젝트 Section -->
+    <section class="section">
+      <h2 class="section-title">기타 프로젝트</h2>
+      
+      <div class="freelance-projects">
+        <div 
+          v-for="project in freelanceData" 
+          :key="project.name"
+          class="freelance-item"
+        >
+          <div class="project-header">
+            <h3 class="project-name">{{ project.name }}</h3>
+            <div class="project-meta">
+              <span class="project-period">{{ project.period }}</span>
+              <span class="project-tech">{{ project.technologies }}</span>
+            </div>
+          </div>
+          
+          <p v-for="description in project.description" :key="description" class="project-description">{{ description }}</p>
+          
+          <div class="project-responsibilities">
+            <h4 class="responsibilities-title">기여 및 성과</h4>
+            <ul class="responsibilities-list">
+              <li 
+                v-for="responsibility in project.responsibilities" 
+                :key="responsibility"
+                class="responsibility-item"
+              >
+                {{ responsibility }}
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
     </div>
   </div>
 </template>
