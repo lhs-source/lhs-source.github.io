@@ -69,6 +69,7 @@ loadingManager.onLoad = () => {
     // Add a small delay for smooth transition
     setTimeout(() => {
         isLoading.value = false;
+        playIntroAnimation();
     }, 500);
 };
 
@@ -129,6 +130,33 @@ const init = () => {
 
     // Resize Handler
     window.addEventListener('resize', onResize);
+
+    // Set initial state for intro animation
+    if (renderer) {
+        renderer.domElement.style.opacity = '0';
+    }
+};
+
+const playIntroAnimation = () => {
+    if (!scene || !renderer) return;
+
+    // Animate opacity
+    gsap.to(renderer.domElement, {
+        opacity: 1,
+        duration: 1.5,
+        ease: 'power2.out'
+    });
+
+    // Animate camera or scene position for slide-up effect
+    // Let's animate the camera position slightly to give a "rising" feel
+    const targetY = camera.position.y;
+    camera.position.y -= 0.5;
+
+    gsap.to(camera.position, {
+        y: targetY,
+        duration: 1.8,
+        ease: 'power3.out'
+    });
 };
 
 const loadTypewriterModel = () => {

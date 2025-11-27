@@ -32,16 +32,17 @@ const deskContainerRef = ref<HTMLElement | null>(null)
 
 // Pages data
 const pages = ref([
-  { id: 'resume', title: 'Resume', type: 'resume', color: '#ffeb3b', rotation: -2, component: ResumePaper, tapeImage: 'masking1.png' },
-  { id: 'upbox', title: 'Upbox Cloud', type: 'portfolio', color: '#4caf50', rotation: 1, component: UpboxCloud, tapeImage: 'masking2.png' },
-  { id: 'rico', title: 'Rico Homepage', type: 'portfolio', color: '#2196f3', rotation: -1, component: RicoHomepage, tapeImage: 'masking3.png' },
-  { id: 'datadog', title: 'Datadog Talk', type: 'portfolio', color: '#ff9800', rotation: 2, component: DatadogTalk, tapeImage: 'masking4.png' },
-  { id: 'freelance', title: 'Freelance', type: 'portfolio', color: '#9c27b0', rotation: -2, component: FreelanceProjects, tapeImage: 'masking5.png' },
-  { id: 'bankb', title: 'BankB', type: 'portfolio', color: '#3f51b5', rotation: 1, component: BankB, tapeImage: 'masking1.png' },
+  { id: 'resume', title: '이력서', type: 'resume', color: '#ffeb3b', rotation: -2, component: ResumePaper, tapeImage: 'masking1.png' },
+  { id: 'upbox', title: '업박스 클라우드', type: 'portfolio', color: '#4caf50', rotation: 1, component: UpboxCloud, tapeImage: 'masking2.png' },
+  { id: 'rico', title: '리코 홈페이지', type: 'portfolio', color: '#2196f3', rotation: -1, component: RicoHomepage, tapeImage: 'masking3.png' },
+  { id: 'datadog', title: '데이터독 발표', type: 'portfolio', color: '#ff9800', rotation: 2, component: DatadogTalk, tapeImage: 'masking4.png' },
+  { id: 'bankb', title: '뱅크비', type: 'portfolio', color: '#3f51b5', rotation: 1, component: BankB, tapeImage: 'masking1.png' },
   { id: 'omnidoc', title: 'Omnidoc', type: 'portfolio', color: '#00bcd4', rotation: -1, component: Omnidoc, tapeImage: 'masking2.png' },
-  { id: 'open', title: 'Open Approval', type: 'portfolio', color: '#8bc34a', rotation: 2, component: OpenApproval, tapeImage: 'masking3.png' },
-  { id: 'hana', title: 'Hana 1QPay', type: 'portfolio', color: '#e91e63', rotation: -2, component: Hana1QPay, tapeImage: 'masking4.png' },
+  { id: 'open', title: '오픈망 직승인', type: 'portfolio', color: '#8bc34a', rotation: 2, component: OpenApproval, tapeImage: 'masking3.png' },
+  { id: 'hana', title: '하나 1QPay', type: 'portfolio', color: '#e91e63', rotation: -2, component: Hana1QPay, tapeImage: 'masking4.png' },
   { id: 'tasim', title: 'TaSIM', type: 'portfolio', color: '#607d8b', rotation: 1, component: Tasim, tapeImage: 'masking5.png' },
+  { id: 'freelance', title: '그 외', type: 'portfolio', color: '#9c27b0', rotation: -2, component: FreelanceProjects, tapeImage: 'masking5.png' },
+
 ])
 
 // Stack Order State
@@ -265,31 +266,62 @@ const updateStackState = () => {
     let rotationZ = isCurrent ? 0 : page.rotation
     let y = isCurrent ? -pageScrollY.value : 0
 
+    // Unified transform origin to prevent stutter
+    // Use the far-away pivot for everything to ensure smooth transitions
+    const pivotY = 2500
+    const transformOrigin = `30% ${pivotY}px`
+
     if (isHoveringTabs.value && !isCurrent) {
-      // Fan out logic based on Stack Order
-      // Find position in stackOrder
-      // stackOrder: [Bottom, ..., Top]
-      // We want Bottom to be furthest Left.
-      // Top (Current) stays at 0.
+      // Fan out logic
+      // Reset base rotation to ensure uniform fan-out regardless of stack randomness
+      rotationZ = 0
 
       const visualIndex = stackOrder.value.indexOf(i)
       const reverseIndex = (totalPages - 1) - visualIndex
-      // Top page (last in array) -> reverseIndex = 0 -> x = 0
-      // Bottom page (first in array) -> reverseIndex = total - 1 -> x = max offset
 
-      x = -1 * spacing * reverseIndex
+      // Explicit spacing to ensure visibility but prevent overflow
+      // Calculate available space to the left
+      const paperWidth = 800 // Approx width of paper
+      const windowWidth = window.innerWidth
+      const leftMargin = (windowWidth - paperWidth) / 2
+      const safeLeftSpace = Math.max(0, leftMargin - 40) // 40px padding
 
-      // Add slight rotation for fan shape
-      // Rotate counter-clockwise as we go deeper in the stack (leftwards)
-      // reverseIndex 0 (top) -> 0 rotation
-      // reverseIndex N -> -N * 2 degrees
-      rotationZ += -1 * reverseIndex * 2.5
+      // User wants "very little" spread
+      const maxSpacing = 15 // Tight spacing
+      const availableSpacing = safeLeftSpace / (totalPages - 1 || 1)
+      const xSpacing = Math.min(maxSpacing, availableSpacing)
+
+      x = -1 * xSpacing * reverseIndex
+
+      // Subtle rotation
+      rotationZ += -1 * reverseIndex * 0.3
+    } else if (!isCurrent) {
+      // Stack state compensation with subtle fan effect
+
+      // 1. Random component (keep pile messy)
+      const randomRotation = page.rotation
+
+      // 2. Fan component (subtle arc)
+      const visualIndex = stackOrder.value.indexOf(i)
+      const reverseIndex = (totalPages - 1) - visualIndex
+      const stackFanRotation = -1 * reverseIndex * 0.05 // Very subtle fan
+
+      // Combine rotations
+      rotationZ = randomRotation + stackFanRotation
+
+      // 3. X Compensation
+      // We only want to compensate for the RANDOM rotation shift, 
+      // so the pile stays centered but the fan arc (from stackFanRotation) remains.
+      const rad = randomRotation * (Math.PI / 180)
+      const shiftX = Math.sin(rad) * pivotY
+      x = -shiftX
     }
 
     gsap.to(el, {
       x: x,
       y: y,
       rotation: rotationZ,
+      transformOrigin: transformOrigin,
       duration: 0.5,
       ease: 'power2.out',
       overwrite: 'auto'
@@ -310,16 +342,18 @@ const setupTypewriterAnimation = () => {
     gsap.set(deskContainerRef.value, { y: '-100%' })
   }
 
-  const typingEnd = 0.45
-  const liftEnd = 0.75
-  const vanishEnd = 0.9
+  const typingEnd = 0.4
+  const liftEnd = 0.65
+  const vanishStart = 0.75
+  const vanishEnd = 0.85
+  const deskEntryStart = 0.95
 
   const tl = gsap.timeline({
     scrollTrigger: {
       trigger: scrollSpacerRef.value,
       start: 'top top',
       end: 'bottom bottom',
-      scrub: 1,
+      scrub: 1.5, // Smoother scrub
       onUpdate: (self) => {
         const progress = self.progress
 
@@ -332,16 +366,49 @@ const setupTypewriterAnimation = () => {
           const liftProgress = (progress - typingEnd) / (liftEnd - typingEnd)
           typewriterSceneRef.value?.liftPaper(liftProgress)
           typewriterSceneRef.value?.hideTypewriter(0)
+        } else if (progress <= vanishStart) {
+          // Delay phase - hold everything still
+          typewriterSceneRef.value?.setPaperProgress(1)
+          typewriterSceneRef.value?.liftPaper(1)
+          typewriterSceneRef.value?.hideTypewriter(0)
+          typewriterSceneRef.value?.fadeOutScene(0)
+
+          if (typewriterWrapperRef.value) {
+            gsap.set(typewriterWrapperRef.value, { y: '0%' })
+          }
+          if (deskContainerRef.value) {
+            gsap.set(deskContainerRef.value, { y: '-100%' })
+          }
         } else if (progress <= vanishEnd) {
           typewriterSceneRef.value?.setPaperProgress(1)
           typewriterSceneRef.value?.liftPaper(1)
-          const vanishProgress = (progress - liftEnd) / (vanishEnd - liftEnd)
+          const vanishProgress = (progress - vanishStart) / (vanishEnd - vanishStart)
           typewriterSceneRef.value?.hideTypewriter(vanishProgress)
           typewriterSceneRef.value?.fadeOutScene(vanishProgress)
 
           if (typewriterWrapperRef.value) {
             gsap.set(typewriterWrapperRef.value, {
-              y: `${vanishProgress * 10}%`, // Reduced from 110% to 10% to keep it visible
+              y: `${vanishProgress * 10}%`,
+              ease: 'none'
+            })
+          }
+
+          if (deskContainerRef.value) {
+            gsap.set(deskContainerRef.value, {
+              y: '-100%',
+              ease: 'none'
+            })
+          }
+        } else if (progress <= deskEntryStart) {
+          // GAP PHASE: Typewriter gone, Desk waiting
+          typewriterSceneRef.value?.setPaperProgress(1)
+          typewriterSceneRef.value?.liftPaper(1)
+          typewriterSceneRef.value?.hideTypewriter(1)
+          typewriterSceneRef.value?.fadeOutScene(1)
+
+          if (typewriterWrapperRef.value) {
+            gsap.set(typewriterWrapperRef.value, {
+              y: '10%',
               ease: 'none'
             })
           }
@@ -353,7 +420,8 @@ const setupTypewriterAnimation = () => {
             })
           }
         } else {
-          const deskProgress = (progress - vanishEnd) / (1 - vanishEnd)
+          // Desk Entry Phase
+          const deskProgress = (progress - deskEntryStart) / (1 - deskEntryStart)
           typewriterSceneRef.value?.setPaperProgress(1)
           typewriterSceneRef.value?.liftPaper(1)
           typewriterSceneRef.value?.hideTypewriter(1)
@@ -361,7 +429,7 @@ const setupTypewriterAnimation = () => {
 
           if (typewriterWrapperRef.value) {
             gsap.set(typewriterWrapperRef.value, {
-              y: '10%', // Keep it at 10% instead of 120%
+              y: '10%',
               ease: 'none'
             })
           }
@@ -450,7 +518,7 @@ onUnmounted(() => {
               :style="{ zIndex: zIndices[index] }">
               <!-- Attached Post-it Tab -->
               <div class="post-it-tab" :style="{
-                top: `${40 + index * 60 + (page.rotation * 7)}px`
+                top: `${40 + index * 60 + (isHoveringTabs ? 0 : page.rotation * 7)}px`
               }" @click.stop="selectPage(index)" @mouseenter="onTabHover(true)" @mouseleave="onTabHover(false)">
                 <img :src="`/assets/portfolio/${page.tapeImage}`" class="tape-bg" alt="" />
                 <span class="tab-text">{{ page.title }}</span>
@@ -506,7 +574,7 @@ onUnmounted(() => {
 
 .scroll-spacer {
   width: 100%;
-  height: 1000vh; // Increased from 600vh for longer scroll
+  height: 1500vh; // Increased from 1000vh for slower scroll
   position: relative;
 }
 
@@ -737,7 +805,7 @@ onUnmounted(() => {
   cursor: pointer;
   // box-shadow: -2px 3px 5px rgba(0, 0, 0, 0.2); // Removed box-shadow
   filter: drop-shadow(-2px 3px 2px rgba(0, 0, 0, 0.2)); // Use drop-shadow for transparency
-  transition: width 0.2s ease, left 0.2s ease;
+  transition: width 0.2s ease, left 0.2s ease, top 0.3s ease;
   display: flex;
   align-items: center;
   justify-content: center;

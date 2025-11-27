@@ -558,7 +558,7 @@ const presentationData = ref([
 
 .resume-background {
   min-height: 120vh;
-  background: white;
+  // background: white;
   width: 100%;
 }
 
@@ -567,7 +567,7 @@ const presentationData = ref([
   width: 100%;
   margin: 0 auto;
   padding-bottom: 240px;
-  background: white;
+  // background: white;
   color: #666;
   font-family: 'Noto Sans KR', sans-serif;
   line-height: 1.4;
