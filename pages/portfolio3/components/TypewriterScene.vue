@@ -10,6 +10,15 @@
             </div>
         </div>
     </Transition>
+
+    <!-- Intro Overlay -->
+    <div ref="introOverlay" class="intro-overlay">
+        <div class="intro-text">
+            <p class="name">이현수, 프론트엔드</p>
+            <p class="desc">Inspired by Naked Lunch, 어쩔 수가 없다.</p>
+        </div>
+        <img src="/assets/portfolio/naked_lunch.webp" alt="Naked Lunch" class="intro-image" />
+    </div>
 </template>
 
 <script setup lang="ts">
@@ -29,6 +38,7 @@ if (process.client) {
 }
 
 const container = ref<HTMLElement | null>(null);
+const introOverlay = ref<HTMLElement | null>(null);
 const isLoading = ref(true);
 const loadingProgress = ref(0);
 
@@ -54,6 +64,9 @@ const cockroachBounds = {
     minZ: -0.8,
     maxZ: 0.8
 };
+let keyLight: THREE.SpotLight;
+let rimLight: THREE.PointLight;
+let flickerTime = 0;
 
 // Loading Manager
 const loadingManager = new LoadingManager();
@@ -103,18 +116,20 @@ const init = () => {
     const ambientLight = new THREE.AmbientLight(0xbfbfbf, 0.35);
     scene.add(ambientLight);
 
-    const keyLight = new THREE.SpotLight(0xffffff, 1.4, 20, Math.PI / 6, 0.3, 1);
+    keyLight = new THREE.SpotLight(0xffffff, 1.4, 20, Math.PI / 6, 0.3, 1);
     keyLight.position.set(0, 5, 2);
     keyLight.target.position.set(0, 0.5, 0);
     keyLight.castShadow = true;
     keyLight.shadow.mapSize.width = 2048;
     keyLight.shadow.mapSize.height = 2048;
     keyLight.shadow.bias = -0.0001;
+    keyLight.userData.baseIntensity = 1.4;
     scene.add(keyLight);
     scene.add(keyLight.target);
 
-    const rimLight = new THREE.PointLight(0xffe1c4, 0.4, 10);
+    rimLight = new THREE.PointLight(0xffe1c4, 0.4, 10);
     rimLight.position.set(-2, 2, -2);
+    rimLight.userData.baseIntensity = 0.4;
     scene.add(rimLight);
 
     // Desk model
@@ -503,6 +518,30 @@ const animate = () => {
         wanderCockroach(delta);
     }
 
+    // Flickering light effect - stronger intensity changes
+    flickerTime += delta;
+    if (keyLight && keyLight.userData.baseIntensity !== undefined) {
+        // Create irregular flicker pattern with longer delays and stronger drops
+        const baseIntensity = keyLight.userData.baseIntensity;
+        const flickerNoise = Math.sin(flickerTime * 2) * 0.15 +
+            Math.sin(flickerTime * 3.5) * 0.1 +
+            Math.sin(flickerTime * 5) * 0.08;
+
+        // Occasional sharp drops (flicker) - more noticeable
+        const sharpFlicker = (Math.random() < 0.005) ? -0.6 : 0;
+
+        keyLight.intensity = Math.max(0.2, baseIntensity + flickerNoise + sharpFlicker);
+    }
+
+    if (rimLight && rimLight.userData.baseIntensity !== undefined) {
+        const baseIntensity = rimLight.userData.baseIntensity;
+        const flickerNoise = Math.sin(flickerTime * 1.8) * 0.1 +
+            Math.sin(flickerTime * 2.8) * 0.06;
+        const sharpFlicker = (Math.random() < 0.004) ? -0.25 : 0;
+
+        rimLight.intensity = Math.max(0.05, baseIntensity + flickerNoise + sharpFlicker);
+    }
+
     renderer.render(scene, camera);
 };
 
@@ -691,6 +730,9 @@ const fadeOutScene = (progress: number) => {
     if (renderer) {
         renderer.domElement.style.opacity = String(1 - progress);
     }
+    if (introOverlay.value) {
+        introOverlay.value.style.opacity = String(1 - progress);
+    }
 };
 
 defineExpose({
@@ -767,5 +809,75 @@ onBeforeUnmount(() => {
 .fade-enter-from,
 .fade-leave-to {
     opacity: 0;
+}
+
+.intro-overlay {
+    position: absolute;
+    top: 3rem;
+    right: 3rem;
+    z-index: 20;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 1rem;
+    pointer-events: none;
+    transition: opacity 0.1s linear;
+}
+
+.intro-image {
+    width: 50px;
+    height: auto;
+    opacity: 0.9;
+    border-radius: 4px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    animation: flicker 8s infinite alternate;
+}
+
+.intro-text {
+    color: rgba(255, 255, 255, 0.9);
+    font-family: 'Noto Sans KR', sans-serif;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+    text-align: right;
+}
+
+.intro-text .name {
+    font-size: 0.9rem;
+    font-weight: 400;
+    margin-bottom: 0.2rem;
+    letter-spacing: -0.02em;
+}
+
+.intro-text .desc {
+    font-size: 0.7rem;
+    font-weight: 400;
+    opacity: 0.8;
+    letter-spacing: -0.01em;
+}
+
+@keyframes flicker {
+
+    0%,
+    18%,
+    22%,
+    25%,
+    53%,
+    57%,
+    100% {
+        opacity: 0.9;
+        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+    }
+
+    20%,
+    24%,
+    55% {
+        opacity: 0.4;
+        text-shadow: none;
+    }
+
+    21%,
+    23%,
+    56% {
+        opacity: 0.1;
+    }
 }
 </style>
