@@ -1,11 +1,12 @@
 <script setup lang="ts">
-import { ref, onMounted, onUnmounted } from 'vue'
+import { ref, onMounted, onUnmounted, nextTick, markRaw } from 'vue'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import TypewriterScene from '../../components/portfolio/TypewriterScene.vue'
 import ResumePaper from '../../components/portfolio/projects/ResumePaper.vue'
 import ResumePreview from '../../components/portfolio/ResumePreview.vue'
 import UpboxCloud from '../../components/portfolio/projects/UpboxCloud.vue'
+import UpboxCloud2 from '../../components/portfolio/projects/UpboxCloud2.vue'
 import RicoHomepage from '../../components/portfolio/projects/RicoHomepage.vue'
 import BankB from '../../components/portfolio/projects/BankB.vue'
 import DatadogTalk from '../../components/portfolio/projects/DatadogTalk.vue'
@@ -35,16 +36,17 @@ let typewriterScrollTrigger: ScrollTrigger | null = null
 
 // Pages data
 const pages = ref([
-  { id: 'resume', title: '이력서', type: 'resume', color: '#ffeb3b', rotation: -2, component: ResumePaper, tapeImage: 'masking2.png' },
-  { id: 'upbox', title: '업박스 클라우드', type: 'portfolio', color: '#4caf50', rotation: 1, component: UpboxCloud, tapeImage: 'masking3.png' },
-  { id: 'reco', title: '리코 홈페이지', type: 'portfolio', color: '#2196f3', rotation: -1, component: RicoHomepage, tapeImage: 'masking4.png' },
-  { id: 'datadog', title: '데이터독 발표', type: 'portfolio', color: '#ff9800', rotation: 2, component: DatadogTalk, tapeImage: 'masking5.png' },
-  { id: 'bankb', title: '뱅크비', type: 'portfolio', color: '#3f51b5', rotation: 1, component: BankB, tapeImage: 'masking1.png' },
-  { id: 'omnidoc', title: 'Omnidoc', type: 'portfolio', color: '#00bcd4', rotation: -1, component: Omnidoc, tapeImage: 'masking2.png' },
-  // { id: 'open', title: '오픈망 직승인', type: 'portfolio', color: '#8bc34a', rotation: 2, component: OpenApproval, tapeImage: 'masking3.png' },
-  { id: 'hana', title: '하나 1QPay', type: 'portfolio', color: '#e91e63', rotation: -2, component: Hana1QPay, tapeImage: 'masking4.png' },
-  { id: 'tasim', title: 'TaSIM', type: 'portfolio', color: '#607d8b', rotation: 1, component: Tasim, tapeImage: 'masking5.png' },
-  { id: 'freelance', title: '그 외', type: 'portfolio', color: '#9c27b0', rotation: -2, component: FreelanceProjects, tapeImage: 'masking5.png' },
+  { id: 'resume', title: '이력서', type: 'resume', color: '#ffeb3b', rotation: -2, component: markRaw(ResumePaper), tapeImage: 'masking2.png' },
+  { id: 'upbox', title: '업박스 클라우드', type: 'portfolio', color: '#4caf50', rotation: 1, component: markRaw(UpboxCloud), tapeImage: 'masking3.png' },
+  { id: 'upbox2', title: '업박스 클라우드 v2', type: 'portfolio', color: '#4caf50', rotation: 1, component: markRaw(UpboxCloud2), tapeImage: 'masking3.png' },
+  { id: 'reco', title: '리코 홈페이지', type: 'portfolio', color: '#2196f3', rotation: -1, component: markRaw(RicoHomepage), tapeImage: 'masking4.png' },
+  { id: 'datadog', title: '데이터독 발표', type: 'portfolio', color: '#ff9800', rotation: 2, component: markRaw(DatadogTalk), tapeImage: 'masking5.png' },
+  { id: 'bankb', title: '뱅크비', type: 'portfolio', color: '#3f51b5', rotation: 1, component: markRaw(BankB), tapeImage: 'masking1.png' },
+  { id: 'omnidoc', title: 'Omnidoc', type: 'portfolio', color: '#00bcd4', rotation: -1, component: markRaw(Omnidoc), tapeImage: 'masking2.png' },
+  // { id: 'open', title: '오픈망 직승인', type: 'portfolio', color: '#8bc34a', rotation: 2, component: markRaw(OpenApproval), tapeImage: 'masking3.png' },
+  { id: 'hana', title: '하나 1QPay', type: 'portfolio', color: '#e91e63', rotation: -2, component: markRaw(Hana1QPay), tapeImage: 'masking4.png' },
+  { id: 'tasim', title: 'TaSIM', type: 'portfolio', color: '#607d8b', rotation: 1, component: markRaw(Tasim), tapeImage: 'masking5.png' },
+  { id: 'freelance', title: '그 외', type: 'portfolio', color: '#9c27b0', rotation: -2, component: markRaw(FreelanceProjects), tapeImage: 'masking5.png' },
 
 ])
 
@@ -61,20 +63,20 @@ const initStackOrder = () => {
 }
 initStackOrder()
 
-// Z-Index state (dynamic) - mapped by page index
-const zIndices = ref<number[]>([])
-const initZIndices = () => {
-  zIndices.value = Array.from({ length: pages.value.length }, (_, i) => {
-    // If i is 0 (Resume), it should be top (highest index)
-    // Stack order is [Bottom, ..., Top]
-    // Resume is at index 0 in pages array.
-    // In stackOrder, Resume (0) is at the end (Top).
-    // So Resume gets highest Z.
-    // Let's just map based on initial stack order.
-    return pages.value.length - i
+// Z-Index 관리 함수 - stackOrder를 기준으로 z-index를 계산하고 DOM에 직접 설정
+const updateZIndices = () => {
+  pages.value.forEach((_, pageIdx) => {
+    const el = pageRefs.value[pageIdx]
+    if (!el) return
+
+    const stackPosition = stackOrder.value.indexOf(pageIdx)
+    // stackOrder는 [bottom, ..., top] 순서이므로
+    // stackPosition이 클수록 위에 있고, z-index도 높아야 함
+    // stackPosition은 0부터 시작하므로 +1
+    const zIndex = stackPosition + 1
+    ; (el as HTMLElement).style.setProperty('z-index', zIndex.toString(), 'important')
   })
 }
-initZIndices()
 
 // Refs
 const deskContainer = ref<HTMLElement | null>(null)
@@ -98,7 +100,7 @@ const openPortfolio = () => {
       isReading.value = true
       // Initialize stack order if needed, ensuring Resume (0) is top
       // stackOrder is [3, 2, 1, 0] -> 0 is last (top)
-      
+
       // Wait for next tick to ensure DOM is updated
       setTimeout(() => {
         animatePagesEntry()
@@ -115,7 +117,7 @@ const animatePagesEntry = () => {
 
     // Save current transform values to preserve x and rotation
     const currentTransform = gsap.getProperty(el, 'transform')
-    
+
     // Set initial position (below viewport) while preserving other transforms
     gsap.set(el, {
       y: window.innerHeight * 1.2,
@@ -127,7 +129,7 @@ const animatePagesEntry = () => {
   // Calculate final positions by calling updateStackState first (but without animating)
   // We'll manually set the final positions after animation
   const finalPositions: Array<{ x: number; y: number; rotation: number }> = []
-  
+
   pages.value.forEach((page, i) => {
     const isCurrent = i === currentPageIndex.value
     let x = 0
@@ -154,7 +156,7 @@ const animatePagesEntry = () => {
   // Animate pages from bottom to their final positions
   const pivotY = 2500
   const transformOrigin = `30% ${pivotY}px`
-  
+
   pages.value.forEach((page, index) => {
     const el = pageRefs.value[index]
     if (!el) return
@@ -180,6 +182,7 @@ const animatePagesEntry = () => {
   // After all animations complete, update stack state immediately (no additional animation)
   const totalAnimationTime = (pages.value.length - 1) * 0.1 + 0.3
   setTimeout(() => {
+    updateZIndices()
     updateStackState(true) // immediate = true to avoid additional animation
   }, totalAnimationTime * 1000)
 }
@@ -199,6 +202,8 @@ const selectPage = async (index: number) => {
   const oldIndex = currentPageIndex.value
   const newIndex = index
 
+  console.log('selectPage old, new', oldIndex, newIndex)
+
   const oldEl = pageRefs.value[oldIndex]
   const newEl = pageRefs.value[newIndex]
 
@@ -207,6 +212,9 @@ const selectPage = async (index: number) => {
     return
   }
 
+  await gsap.set(oldEl, {
+    z: 2000
+  })
   // 1. Update Stack Order Logic
   // We want to keep the natural order for all pages EXCEPT the new active one.
   // Natural order is [N-1, ..., 0] (reversed indices)
@@ -221,73 +229,71 @@ const selectPage = async (index: number) => {
 
   stackOrder.value = newOrder
 
-  // 2. Update Z-Indices based on new Stack Order
-  // Top (last) gets 100. Others get 1..N
-  stackOrder.value.forEach((pageIdx, visualIdx) => {
-    if (pageIdx === newIndex) {
-      zIndices.value[pageIdx] = 100
-    } else {
-      zIndices.value[pageIdx] = visualIdx + 1
-    }
-  })
+  console.log('stackOrder', stackOrder.value)
 
-  // Temporarily keep oldIndex high for the animation?
-  // No, we want newIndex to be revealed.
-  // But oldIndex is flying UP. It should be above everything until it drops.
-  // So let's force oldIndex to 101 temporarily.
-  const tempZ = [...zIndices.value]
-  tempZ[oldIndex] = 101
-  // We need to apply this immediately to the DOM? 
-  // Vue reactivity will handle it.
-  // But we need to wait for Vue to update? 
-  // Let's just set it directly on the element style if we can, or rely on reactivity.
-  // We'll update the ref and hope it's fast enough.
-  zIndices.value[oldIndex] = 101
+  // 2. 애니메이션을 위한 임시 z-index 설정
+  // oldpage가 위로 올라갈 때 가장 높은 z-index를 가져야 함
+  // pages.value.forEach((_, pageIdx) => {
+  //   const el = pageRefs.value[pageIdx]
+  //   if (!el) return
 
-  // 3. Animate Old Page UP and AWAY
+  //   let zIndex: number
+  //   if (pageIdx === oldIndex) {
+  //     zIndex = 1000 // oldpage가 가장 높음
+  //   } else if (pageIdx === newIndex) {
+  //     zIndex = 999 // newpage는 그 다음
+  //   } else {
+  //     // 나머지 페이지는 현재 stack 순서에 따라
+  //     const stackPosition = stackOrder.value.indexOf(pageIdx)
+  //     zIndex = stackPosition + 2
+  //   }
+  //   ; (el as HTMLElement).style.setProperty('z-index', zIndex.toString(), 'important')
+  // })
+
+  // 브라우저 렌더링 대기
+  // await nextTick()
+  await new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve)))
+
+  // 3. Old Page를 위로 올리는 애니메이션
   await gsap.to(oldEl, {
-    y: -window.innerHeight * 1.2,
-    z: 500, // Lift off the stack to prevent clipping
-    rotationX: 45,
-    opacity: 1, // Keep opacity 1 as requested
+    y: -oldEl.scrollHeight,
+    rotationX: 0,
     duration: 0.5,
-    ease: 'power2.in'
+    ease: 'power2.out'
   })
 
-  // 4. Swap State
+  // 4. 상태 교환
   currentPageIndex.value = newIndex
   pageScrollY.value = 0
 
-  // Restore Z-Indices (Old index goes to bottom)
-  stackOrder.value.forEach((pageIdx, visualIdx) => {
-    if (pageIdx === newIndex) {
-      zIndices.value[pageIdx] = 100
-    } else {
-      zIndices.value[pageIdx] = visualIdx + 1
-    }
-  })
-
-  // 5. Reset Old Page Position (Instant)
+  // 5. Old Page 위치 초기화
   gsap.set(oldEl, {
     y: -window.innerHeight * 1.2,
-    z: 0, // Reset Z
+    z: 0,
     rotationX: 0,
     opacity: 1,
     x: 0,
     rotation: pages.value[oldIndex].rotation
   })
 
-  // 6. Animate Old Page DROP (Restack at bottom)
+  // 6. z-index를 최종 stack 순서에 맞춰 재설정
+  updateZIndices()
+  await nextTick()
+
+  // 7. Animate Old Page DROP (Restack at bottom)
+  // 튕김 효과 없이 부드럽게 내려가기
   gsap.to(oldEl, {
     y: 0,
     opacity: 1,
     duration: 0.6,
-    ease: 'power2.out', // Smooth landing
-    delay: 0.1
+    ease: 'power2.out',
   })
+  console.log('here');
 
   isAnimating.value = false
   updateStackState()
+  // z-index 재확인 (updateStackState 후에도 유지)
+  updateZIndices()
 }
 
 const isAnimating = ref(false)
@@ -336,6 +342,9 @@ const handleScroll = (e: WheelEvent) => {
 
 const updateStackState = (immediate = false) => {
   if (isAnimating.value) return
+  
+  // z-index도 함께 업데이트
+  updateZIndices()
 
   // Calculate responsive spacing
   // Available space on the left = (Window Width - Paper Width) / 2
@@ -433,7 +442,17 @@ const updateStackState = (immediate = false) => {
 }
 
 const setPageRef = (el: any, index: number) => {
-  if (el) pageRefs.value[index] = el
+  if (el) {
+    pageRefs.value[index] = el
+    // 초기 z-index 설정
+    if (stackOrder.value.length > 0) {
+      const stackPosition = stackOrder.value.indexOf(index)
+      if (stackPosition !== -1) {
+        const zIndex = stackPosition + 1
+        ; (el as HTMLElement).style.setProperty('z-index', zIndex.toString(), 'important')
+      }
+    }
+  }
 }
 
 // Typewriter Scroll Animation Setup
@@ -470,7 +489,7 @@ const setupTypewriterAnimation = () => {
       scrub: 1.5,
       onUpdate: (self: ScrollTrigger) => {
         const progress = self.progress
-        
+
         // 디버깅: progress가 업데이트되는지 확인 (너무 많이 찍히지 않도록 제한)
         if (Math.floor(progress * 100) % 10 === 0) {
           console.log('ScrollTrigger progress:', progress.toFixed(2))
@@ -484,9 +503,9 @@ const setupTypewriterAnimation = () => {
         // 자동 트리거: 이력서가 일정 높이까지 올라가면 자동으로 위로 사라지는 애니메이션 시작
         // 먼저 체크해서 스크롤 효과를 즉시 중단
         if (progress >= autoTriggerThreshold && !hasTriggeredAutoAnimation.value) {
-          console.log('Auto trigger condition met!', { 
-            progress: progress.toFixed(3), 
-            autoTriggerThreshold, 
+          console.log('Auto trigger condition met!', {
+            progress: progress.toFixed(3),
+            autoTriggerThreshold,
             hasTriggered: hasTriggeredAutoAnimation.value,
             liftEnd,
             typingEnd
@@ -530,7 +549,7 @@ const setupTypewriterAnimation = () => {
       }
     }
   })
-  
+
   // ScrollTrigger 인스턴스 저장
   typewriterScrollTrigger = mainTimeline.scrollTrigger as ScrollTrigger
 }
@@ -557,7 +576,7 @@ const triggerAutoAnimation = () => {
     value: 1,
     duration: 1,
     ease: 'power2.in',
-    onUpdate: function() {
+    onUpdate: function () {
       if (typewriterSceneRef.value && typewriterSceneRef.value.movePaperUp) {
         typewriterSceneRef.value.movePaperUp(paperProgress.value)
       }
@@ -581,7 +600,7 @@ const triggerAutoAnimation = () => {
     value: 1,
     duration: 1,
     ease: 'power2.in',
-    onUpdate: function() {
+    onUpdate: function () {
       if (typewriterSceneRef.value && typewriterSceneRef.value.moveSceneDown) {
         typewriterSceneRef.value.moveSceneDown(sceneProgress.value)
       }
@@ -592,7 +611,7 @@ const triggerAutoAnimation = () => {
       if (typewriterSceneRef.value && typewriterSceneRef.value.fadeOutScene) {
         typewriterSceneRef.value.fadeOutScene(1)
       }
-      
+
       // 데스크 뷰 표시 (fade in 효과)
       if (deskContainerRef.value) {
         gsap.to(deskContainerRef.value, {
@@ -632,26 +651,16 @@ onUnmounted(() => {
   <div class="portfolio-container" :class="{ 'no-scroll': !showTypewriter }">
 
     <!-- Typewriter Intro (3D Scene) -->
-    <div 
-      v-if="showTypewriter" 
-      class="typewriter-intro"
-    >
+    <div v-if="showTypewriter" class="typewriter-intro">
       <div ref="scrollSpacerRef" class="scroll-spacer">
-        <div 
-          ref="typewriterWrapperRef" 
-          class="typewriter-scene-wrapper"
-        >
+        <div ref="typewriterWrapperRef" class="typewriter-scene-wrapper">
           <TypewriterScene ref="typewriterSceneRef" />
         </div>
       </div>
     </div>
 
     <!-- Desk View (Always rendered, animated in) -->
-    <div 
-      ref="deskContainerRef" 
-      class="desk-view-wrapper"
-      :style="{ zIndex: showTypewriter ? 5 : 20 }"
-    >
+    <div ref="deskContainerRef" class="desk-view-wrapper" :style="{ zIndex: showTypewriter ? 5 : 20 }">
       <!-- Desk Surface View -->
       <div v-if="!isReading" ref="deskContainer" class="desk-view">
         <div class="desk-surface">
@@ -671,8 +680,7 @@ onUnmounted(() => {
 
           <!-- Pages Stack -->
           <div class="pages-stack">
-            <div v-for="(page, index) in pages" :key="page.id" :ref="(el) => setPageRef(el, index)" class="page-sheet"
-              :style="{ zIndex: zIndices[index] }">
+            <div v-for="(page, index) in pages" :key="page.id" :ref="(el) => setPageRef(el, index)" class="page-sheet">
               <!-- Attached Post-it Tab -->
               <div class="post-it-tab" :style="{
                 top: `${40 + index * 60 + (isHoveringTabs ? 0 : page.rotation * 7)}px`
@@ -688,10 +696,7 @@ onUnmounted(() => {
               <div class="page-face page-front">
                 <div class="page-texture"></div>
                 <div class="page-content">
-                  <component 
-                    :is="page.component" 
-                    @select-project="selectPageById"
-                  />
+                  <component :is="page.component" @select-project="selectPageById" />
                 </div>
               </div>
 
@@ -818,6 +823,7 @@ onUnmounted(() => {
   max-height: 1100px;
   display: flex;
   z-index: 1; // Above overlay
+  margin-left: 200px; // 살짝 오른쪽으로 이동
 }
 
 /* Hover Zone */
