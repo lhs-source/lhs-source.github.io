@@ -8,15 +8,9 @@
       <h1 class="project-title">Upbox Cloud</h1>
 
       <div class="project-description">
-        <p>
           폐기물 수집운반 업계를 디지털화하여 투명하고 신뢰성 높은 데이터를 관리하고 제공하는 서비스입니다.
-        </p>
-        <p>
           리코에 입사한 후 바로 맡아서 진행하게 된 프론트엔드 프로젝트입니다.
-        </p>
-        <p>
           이 프로덕트의 궁극적 목표와 가치는 지속 가능한 폐기물 관리의 새로운 기준을 설정하는 것입니다.
-        </p>
       </div>
 
       <!-- 프로젝트 개요 -->
@@ -705,8 +699,8 @@
 }
 
 .project-description {
-  font-size: 16px;
-  line-height: 1.2;
+  font-size: 14px;
+  line-height: 1.6;
   color: #111111;
   margin-top: 8px;
 
@@ -720,23 +714,24 @@
 }
 
 .tech-section {
-  margin-top: 64px;
-  padding-top: 48px;
+  margin-top: 40px;
+  padding-top: 32px;
   border-top: 2px solid rgba(153, 153, 102, 0.3);
 
   &:first-of-type {
-    margin-top: 32px;
-    padding-top: 32px;
+    margin-top: 24px;
+    padding-top: 24px;
     border-top: none;
   }
 }
 
 .section-title {
-  font-size: 28px;
-  line-height: 1.2;
-  margin: 0 0 24px 0;
-  color: #050505;
-  font-weight: 600;
+  font-size: 24px;
+  font-weight: 700;
+  color: #333;
+  margin: 48px 0 20px 0;
+  padding-bottom: 8px;
+  border-bottom: 2px solid #666;
 }
 
 .section-content {
@@ -745,8 +740,8 @@
   gap: 16px;
 
   >p {
-    font-size: 15px;
-    line-height: 1.8;
+    font-size: 14px;
+    line-height: 1.6;
     color: #111111;
     margin: 0;
   }
@@ -760,8 +755,8 @@
   gap: 12px;
 
   li {
-    font-size: 15px;
-    line-height: 1.8;
+    font-size: 14px;
+    line-height: 1.6;
     color: #111111;
   }
 }

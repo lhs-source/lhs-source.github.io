@@ -38,6 +38,7 @@ const techStackData = ref([
   { name: 'C++', isMain: false },
   { name: 'Java', isMain: false },
   { name: 'Android Kotlin', isMain: false },
+  { name: 'React', isMain: false },
   { name: 'AWS', isMain: false },
   { name: 'Github Actions', isMain: false },
   { name: 'Datadog', isMain: false },
@@ -58,22 +59,23 @@ const careerData = ref([
       {
         name: '업박스 클라우드 개발 - 폐기물 매니지먼트 서비스',
         period: '2021년 1월 ~ 진행중',
-        technologies: 'NodeJS, Vite, Vue3, Android Kotlin, Webview, Github Actions, AWS, TailwindCSS, i18n, Storybook',
+        technologies: 'Vite, Vue3, Android Kotlin, Webview, Github Actions, AWS, TailwindCSS, i18n, Storybook',
         description: ['폐기물 처리 과정의 모든 데이터를 투명하게 관리하는 클라우드 서비스. 어드민, 드라이버, 커스터머 앱을 통해 수거 관리부터 정산까지 자동화된 시스템을 제공합니다.'],
         responsibilities: [
-          '프론트엔드 리드로서 1.0부터 현재 2.14.0까지 핵심 멤버로 참여',
+          '프론트엔드 리드로서 1.0부터 현재 2.15.0까지 핵심 멤버로 참여',
+          'TypeScript, Vue3 등 기술 스택 의사결정',
           '권한 기반 데이터 관리, 지도 기반 수거 일정 시스템 등 핵심 기능 개발',
           '안드로이드 Kotlin 네이티브 개발 및 WebView 연동',
-          'UDS(Upbox Design System) 설립 및 디자인 시스템 구축',
-          '데이터독 도입 및 Github Actions CICD 구축으로 배포 시간 70% 단축 (5분 → 1분 40초)',
-          'TypeScript, Vue3 등 기술 스택 의사결정 및 i18n 도입'
+          'UDS(Upbox Design System) 기반의 컴포넌트 및 레이아웃 설계 및 구현',
+          'i18n 도입 및 tailwindcss 도입으로 디자인 통일성 강화',
+          '데이터독 도입 및 Github Actions CICD 구축',
         ]
       },
       {
         name: '업박스 홈페이지 제작',
         period: '2021년 1월 ~ 상시 진행',
         technologies: 'VanilaJS, EJS, AWS',
-        description: ['회사의 정보가 담긴 리코 홈페이지와 제품 측면에서 인바운드에 초점 맞춘 업박스 홈페이지를 제작하고 유지보수했습니다.'],
+        description: ['회사의 정보가 담긴 리코 홈페이지와 제품 측면에서 인바운드에 초점 맞춘 업박스 홈페이지를 유지보수했습니다.'],
         responsibilities: [
           '각 홈페이지를 유지보수하고, 인바운드 측정을 위해 마케팅팀과 협업하여 데이터를 수집'
         ]
@@ -222,10 +224,10 @@ const presentationData = ref([
                 <span class="label">Email</span>
                 <span class="value">iddms5446@gmail.com</span>
               </div>
-              <div class="contact-item">
+              <!-- <div class="contact-item">
                 <span class="label">Phone</span>
                 <span class="value">010-8209-2048</span>
-              </div>
+              </div> -->
               <div class="contact-item">
                 <span class="label">GitHub</span>
                 <span class="value">github.com/lhs-source</span>
@@ -343,7 +345,7 @@ const presentationData = ref([
             <div class="presentation-header">
               <h3 class="presentation-name">{{ presentation.title }}</h3>
               <div class="presentation-meta">
-                <span class="presentation-period">{{ presentation.period }}</span>
+                <span class="presentation-period white-space-nowrap">{{ presentation.period }}</span>
                 <span class="presentation-event">{{ presentation.event }}</span>
               </div>
             </div>
