@@ -4,6 +4,7 @@ import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import TypewriterScene from '../../components/portfolio/TypewriterScene.vue'
 import ResumePaper from '../../components/portfolio/projects/ResumePaper.vue'
+import ResumePreview from '../../components/portfolio/ResumePreview.vue'
 import UpboxCloud from '../../components/portfolio/projects/UpboxCloud.vue'
 import RicoHomepage from '../../components/portfolio/projects/RicoHomepage.vue'
 import BankB from '../../components/portfolio/projects/BankB.vue'
@@ -82,12 +83,16 @@ const pageRefs = ref<HTMLElement[]>([])
 
 // Actions
 const openPortfolio = () => {
+  const deskResume = document.querySelector('.desk-resume') as HTMLElement
+  if (!deskResume) return
+
   const tl = gsap.timeline()
 
-  tl.to('.desk-resume', {
-    scale: 1.5,
-    opacity: 1,
-    duration: 0.5,
+  // 1. 이력서가 화면 하단으로 이동하며 사라지는 애니메이션
+  tl.to(deskResume, {
+    y: window.innerHeight * 1.5,
+    opacity: 0,
+    duration: 0.8,
     ease: 'power2.in',
     onComplete: () => {
       isReading.value = true
@@ -447,9 +452,9 @@ const setupTypewriterAnimation = () => {
     typewriterScene: typewriterSceneRef.value
   })
 
-  // Initial desk position (above viewport)
+  // Initial desk position (above viewport) and opacity
   if (deskContainerRef.value) {
-    gsap.set(deskContainerRef.value, { y: '-100%' })
+    gsap.set(deskContainerRef.value, { y: '-100%', opacity: 0 })
   }
 
   const typingEnd = 0.4
@@ -588,10 +593,11 @@ const triggerAutoAnimation = () => {
         typewriterSceneRef.value.fadeOutScene(1)
       }
       
-      // 데스크 뷰 표시
+      // 데스크 뷰 표시 (fade in 효과)
       if (deskContainerRef.value) {
         gsap.to(deskContainerRef.value, {
           y: '0%',
+          opacity: 1,
           duration: 1,
           ease: 'power2.out',
           onComplete: () => {
@@ -650,11 +656,7 @@ onUnmounted(() => {
       <div v-if="!isReading" ref="deskContainer" class="desk-view">
         <div class="desk-surface">
           <div class="desk-resume" @click="openPortfolio">
-            <div class="resume-preview">
-              <h1>Resume</h1>
-              <p>Lee Hyun Soo</p>
-              <span class="click-hint">(Click to Open)</span>
-            </div>
+            <ResumePreview />
           </div>
         </div>
       </div>
@@ -777,31 +779,10 @@ onUnmounted(() => {
     transform: rotateX(10deg) rotateZ(-5deg);
     cursor: pointer;
     transition: transform 0.3s ease;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
+    overflow: hidden;
 
     &:hover {
       transform: rotateX(0deg) rotateZ(0deg) scale(1.05);
-    }
-
-    .resume-preview {
-      h1 {
-        font-size: 1.8rem;
-        margin-bottom: 0.5rem;
-      }
-
-      p {
-        color: #666;
-      }
-
-      .click-hint {
-        display: block;
-        margin-top: 2rem;
-        color: #999;
-        font-size: 0.75rem;
-      }
     }
   }
 }
