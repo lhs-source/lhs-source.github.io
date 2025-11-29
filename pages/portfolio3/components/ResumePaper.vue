@@ -3,20 +3,12 @@ import { ref } from 'vue';
 import dayjs from 'dayjs';
 
 // 타입 정의
-interface ResponsibilityCategory {
-  category: string;
-  icon: string;
-  color: string;
-  items: string[];
-}
-
 interface Project {
   name: string;
   period: string;
   technologies: string;
-  description: string;
+  description: string[];
   responsibilities?: string[];
-  responsibilityCategories?: ResponsibilityCategory[];
 }
 
 // 자기소개 데이터
@@ -67,102 +59,14 @@ const careerData = ref([
         name: '업박스 클라우드 개발 - 폐기물 매니지먼트 서비스',
         period: '2021년 1월 ~ 진행중',
         technologies: 'NodeJS, Vite, Vue3, Android Kotlin, Webview, Github Actions, AWS, TailwindCSS, i18n, Storybook',
-        isMain: true,
-        description: [
-          '업박스 클라우드는 폐기물의 처리 과정에서 발생하는 모든 데이터를 투명하고 정확하게 관리하는 클라우드 서비스입니다. 제공되는 앱의 종류로는 업박스 어드민, 업박스 드라이버, 업박스 커스터머가 있으며, 각각 기사님들의 수거 및 차량 관리, 업장의 수거 일정 및 정보 확인에 사용됩니다.',
-          '모든 앱은 담당하는 법인과 역할에 맞춰 권한이 부여되고, 권한별로 메뉴와 기능이 차등 제공됩니다. 고객의 업장 특성과 계약을 기반해 맞춤으로 법적 문제가 발생하지 않도록 수거 일정을 조율합니다. 폐기물 처리 데이터 기반한 청구서를 생성하고, 정산까지 자동으로 이루어집니다.',
-          '폐기물 산업 특성상 법적인 문제가 굉장히 복잡하고 행정 처리 업무가 많습니다. 고객들은 번거로운 과정을 줄이고, 행정 처리에 필요한 서류를 원할 때 바로 확인이 가능하도록 업박스에서 서식에 맞는 데이터를 제공합니다.',
-          '초기 음식물류 폐기물 중심에서 현재는 재활용과 폐수오니(슬러지) 등 여러 폐기물 종류를 종합 지원하는 형태로 발전했습니다.'
-        ],
-        responsibilityCategories: [
-          {
-            category: '프론트엔드 리드',
-            items: [
-              '업박스 클라우드 FE 개발을 처음부터 현재까지 핵심 멤버로 참여 (1.0 온보딩 → 2.0 론칭 → 현재 2.14.0 버전)',
-              '약 3~4주마다 전략 과제 배포를 통한 지속적인 제품 개선 및 기능 확장'
-            ]
-          },
-          {
-            category: '핵심 기능 개발',
-            items: [
-              '고객, 계약, 폐기물 처리, 청구 데이터를 관리하는 업박스 어드민 핵심 기능 개발',
-              '복잡한 조건과 권한의 데이터 유효성 검증 및 사용자 친화적 입력 프로세스 구현',
-              '지도 기반 수거 일정 관리 시스템 - 방문 업장 표시 및 일정 최적화 기능',
-              '전자계약, 가상계좌, 자동이체, 채널톡 등 외부 서비스 연동'
-            ]
-          },
-          {
-            category: '안드로이드 개발',
-            items: [
-              '안드로이드 Kotlin 네이티브를 개발하여 권한 요청, 푸시, 네비게이션, 파일 선택 기능 구현',
-              'WebView와 네이티브 간 통신 및 데이터 연동 - 푸시 알림을 Room DB에 저장 후 웹으로 전달',
-              '마케팅 연동을 위한 딥링크 지원'
-            ]
-          },
-          {
-            category: '디자인 시스템 구축',
-            items: [
-              '디자인팀과 협업하여 UDS(Upbox Design System) 설립 및 컴포넌트 가이드화',
-              '복잡한 프로덕트 특성에 맞는 유기적 컴포넌트 설계',
-            ]
-          },
-          {
-            category: 'DevOps & 모니터링',
-            items: [
-              '데이터독 도입 추진 및 초기 구성 - Sourcemap 업로드 자동화로 에러 추적 시스템 구축',
-              '사용량 기반 배포 시간 결정, 사용성 측정을 통한 데이터 기반 의사결정 체계 구축',
-              'Github Actions CICD 구축 - 상용서버 CI/CD 분리로 배포 시간 단축 (5분 → 1분 40초)',
-              'Storybook, Sourcemap 자동 배포 및 Github 릴리즈 자동 생성으로 롤백 시스템 구축'
-            ]
-          },
-          {
-            category: '기술 표준화 & 조직 기여',
-            items: [
-              'i18n 도입으로 용어 통일 및 해외 진출 대비',
-              'Atlassian 툴(Jira 자동화) 및 데이터독 사용법 내부 교육 및 공유'
-            ]
-          }
-        ],
-        // SBI 형태로 재구성 필요
-        // situation, behavior, impact 로 재구성 필요
-        // 최적화, 해결, 도입, 개선, 효율화 용어를 적극 활용 
-        problemSolving: [
-          {
-            title: '기술 스택 의사결정',
-            description: [
-              '업박스 클라우드 1.0 에서 Javascript 의 유지보수 편의성을 위해 Typescript 도입을 적극 추진하여 잠재적 타입 버그 제거',
-              '업박스 클라우드 2.0 개발 착수 시점 기술 분석을 통해 Vue3 로 결정(React 와 비교)'
-            ]
-          },
-          {
-            title: '사용자의 버전 업데이트 지연 시간 단축',
-            description: [
-              '데이터독 도입으로 모니터링을 통해 오동작을 일으키는 케이스가 버전 문제가 대다수임을 확인',
-              '버전 비교를 통해 캐시를 무효화하고 최신 FE 앱을 받을 수 있도록 구현하여 에러 발생 빈도 약 90% 제거',
-              '최신 버전으로 업데이트하는 데 걸리는 시간 최대 7일 → 2일로 단축'
-            ]
-          },
-          {
-            title: '프론트 개발자 컨벤션 통일',
-            description: [
-              '서로 다른 IDE와 규칙을 사용하여 개발자마다 코드 스타일이 다른 문제가 발생',
-              '코딩 컨벤션을 결정한 후, Lint 도입과 공통된 확장프로그램을 활용해 컨벤션 일치',
-            ]
-          },
-          {
-            title: 'CSS 관리 체계 개선',
-            description: [
-              '빠른 CSS 속성 적용을 위해 자체적으로 글로벌 단위의 단일 속성 class 를 지속적으로 추가함',
-              'Tailwindcss 의 Utility class 를 활용하여 직접 정의하는 것보다는 범용적인 컨벤션으로 작업할 수 있게 됨'
-            ]
-          },
-          {
-            title: '안드로이드 배포 시점 제어',
-            description: [
-              '구글 심사 시 원하지 않을 때 배포되어서 웹과 버전이 안맞는 문제가 발생',
-              '관리형 게시를 사용해 원하는 때에 배포하는 간단한 시스템을 발견하고 활용'
-            ]
-          },
+        description: ['폐기물 처리 과정의 모든 데이터를 투명하게 관리하는 클라우드 서비스. 어드민, 드라이버, 커스터머 앱을 통해 수거 관리부터 정산까지 자동화된 시스템을 제공합니다.'],
+        responsibilities: [
+          '프론트엔드 리드로서 1.0부터 현재 2.14.0까지 핵심 멤버로 참여',
+          '권한 기반 데이터 관리, 지도 기반 수거 일정 시스템 등 핵심 기능 개발',
+          '안드로이드 Kotlin 네이티브 개발 및 WebView 연동',
+          'UDS(Upbox Design System) 설립 및 디자인 시스템 구축',
+          '데이터독 도입 및 Github Actions CICD 구축으로 배포 시간 70% 단축 (5분 → 1분 40초)',
+          'TypeScript, Vue3 등 기술 스택 의사결정 및 i18n 도입'
         ]
       },
       {
@@ -269,7 +173,7 @@ const freelanceData = ref([
 // 발표 및 컨퍼런스 데이터
 const presentationData = ref([
   {
-    title: '데이터독 User Journey 세션 발표',
+    title: '데이터독 Observability Day 2024 발표',
     event: 'Datadog Korea Observability Day 2024 - 웨이스트 매니지먼트 스타트업 프론트엔드 개발자의 Datadog을 활용한 효율적인 모니터링 시스템 구축기',
     period: '2024년 9월',
     description: ['O2O 환경의 리코 특성을 살려 데이터독을 에러 분석과 사용성 측정 면에서 활용한 경험을 공유했습니다.'],
@@ -402,8 +306,7 @@ const presentationData = ref([
 
           <!-- 프로젝트별 상세 -->
           <div class="projects">
-            <div v-for="project in career.projects" :key="project.name" class="project-item"
-              :class="{ 'main-project': (project as any).isMain }">
+            <div v-for="project in career.projects" :key="project.name" class="project-item">
               <div class="project-header">
                 <h4 class="project-name">{{ project.name }}</h4>
                 <div class="project-meta">
@@ -426,48 +329,6 @@ const presentationData = ref([
                     {{ responsibility }}
                   </li>
                 </ul>
-              </div>
-
-              <div v-if="project.responsibilityCategories && project.isMain" class="section-divider" />
-              <div v-if="(project as any).responsibilityCategories" class="responsibility-categories">
-                <h5 class="responsibilities-title font-bold">기여 및 성과</h5>
-                <p class="text-xs">프론트엔드 개발의 중심 역할을 맡으며 주요 기능 개발을 담당했습니다.</p>
-                <div class="categories-grid">
-                  <div v-for="category in (project as any).responsibilityCategories" :key="category.category"
-                    class="category-card">
-                    <div class="category-header">
-                      <h6 class="category-title">
-                        {{ category.category }}
-                      </h6>
-                    </div>
-                    <ul class="category-items">
-                      <li v-for="item in category.items" :key="item" class="category-item">
-                        {{ item }}
-                      </li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-              <div v-if="project.problemSolving && project.isMain" class="section-divider" />
-              <!-- 문제 해결 경험 섹션 -->
-              <div v-if="project.problemSolving" class="problem-solving-section">
-
-                <h5 class="problem-solving-title font-bold">문제 해결 경험</h5>
-                <p class="text-xs">프로젝트의 완성도를 높이기 위해 지속적으로 문제를 발견하고 해결한 경험입니다.</p>
-                <div class="problem-solving-categories-grid">
-                  <div v-for="problem in project.problemSolving" :key="problem.title" class="problem-category-card">
-                    <div class="problem-category-header">
-                      <h6 class="problem-category-title">
-                        {{ problem.title }}
-                      </h6>
-                    </div>
-                    <ul class="problem-category-items">
-                      <li v-for="desc in problem.description" :key="desc" class="problem-category-item">
-                        {{ desc }}
-                      </li>
-                    </ul>
-                  </div>
-                </div>
               </div>
             </div>
           </div>

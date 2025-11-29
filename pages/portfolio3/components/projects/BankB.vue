@@ -32,48 +32,5 @@
 </template>
 
 <style scoped lang="scss">
-.project-page {
-    width: 100%;
-}
-
-.project-content {
-    display: flex;
-    flex-direction: column;
-    gap: 24px;
-}
-
-.project-title {
-    font-size: 32px;
-    line-height: 1.2;
-    margin: 0;
-    color: #050505;
-    font-weight: 600;
-}
-
-.project-subtitle {
-    font-size: 18px;
-    line-height: 1.4;
-    margin: 0;
-    color: #64748b;
-    font-weight: 400;
-}
-
-.project-description {
-    font-size: 16px;
-    line-height: 1.8;
-    color: #334155;
-    margin-top: 8px;
-}
-
-.project-body {
-    margin-top: 32px;
-    padding-top: 32px;
-    border-top: 1px solid #e2e8f0;
-}
-
-.project-text {
-    font-size: 15px;
-    line-height: 1.8;
-    color: #475569;
-}
+@import './project-styles.scss';
 </style>

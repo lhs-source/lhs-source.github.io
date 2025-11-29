@@ -32,10 +32,10 @@ const deskContainerRef = ref<HTMLElement | null>(null)
 
 // Pages data
 const pages = ref([
-  { id: 'resume', title: '이력서', type: 'resume', color: '#ffeb3b', rotation: -2, component: ResumePaper, tapeImage: 'masking1.png' },
-  { id: 'upbox', title: '업박스 클라우드', type: 'portfolio', color: '#4caf50', rotation: 1, component: UpboxCloud, tapeImage: 'masking2.png' },
-  { id: 'rico', title: '리코 홈페이지', type: 'portfolio', color: '#2196f3', rotation: -1, component: RicoHomepage, tapeImage: 'masking3.png' },
-  { id: 'datadog', title: '데이터독 발표', type: 'portfolio', color: '#ff9800', rotation: 2, component: DatadogTalk, tapeImage: 'masking4.png' },
+  { id: 'resume', title: '이력서', type: 'resume', color: '#ffeb3b', rotation: -2, component: ResumePaper, tapeImage: 'masking2.png' },
+  { id: 'upbox', title: '업박스 클라우드', type: 'portfolio', color: '#4caf50', rotation: 1, component: UpboxCloud, tapeImage: 'masking3.png' },
+  { id: 'rico', title: '리코 홈페이지', type: 'portfolio', color: '#2196f3', rotation: -1, component: RicoHomepage, tapeImage: 'masking4.png' },
+  { id: 'datadog', title: '데이터독 발표', type: 'portfolio', color: '#ff9800', rotation: 2, component: DatadogTalk, tapeImage: 'masking5.png' },
   { id: 'bankb', title: '뱅크비', type: 'portfolio', color: '#3f51b5', rotation: 1, component: BankB, tapeImage: 'masking1.png' },
   { id: 'omnidoc', title: 'Omnidoc', type: 'portfolio', color: '#00bcd4', rotation: -1, component: Omnidoc, tapeImage: 'masking2.png' },
   { id: 'open', title: '오픈망 직승인', type: 'portfolio', color: '#8bc34a', rotation: 2, component: OpenApproval, tapeImage: 'masking3.png' },
@@ -94,6 +94,13 @@ const openPortfolio = () => {
       updateStackState()
     }
   })
+}
+
+const selectPageById = (pageId: string) => {
+  const index = pages.value.findIndex(p => p.id === pageId)
+  if (index !== -1) {
+    selectPage(index)
+  }
 }
 
 const selectPage = async (index: number) => {
@@ -481,16 +488,26 @@ onUnmounted(() => {
   <div class="portfolio-container" :class="{ 'no-scroll': !showTypewriter }">
 
     <!-- Typewriter Intro (3D Scene) -->
-    <div v-show="showTypewriter" class="typewriter-intro">
+    <div 
+      v-if="showTypewriter" 
+      class="typewriter-intro"
+    >
       <div ref="scrollSpacerRef" class="scroll-spacer">
-        <div ref="typewriterWrapperRef" class="typewriter-scene-wrapper">
+        <div 
+          ref="typewriterWrapperRef" 
+          class="typewriter-scene-wrapper"
+        >
           <TypewriterScene ref="typewriterSceneRef" />
         </div>
       </div>
     </div>
 
     <!-- Desk View (Always rendered, animated in) -->
-    <div ref="deskContainerRef" class="desk-view-wrapper">
+    <div 
+      ref="deskContainerRef" 
+      class="desk-view-wrapper"
+      :style="{ zIndex: showTypewriter ? 5 : 20 }"
+    >
       <!-- Desk Surface View -->
       <div v-if="!isReading" ref="deskContainer" class="desk-view">
         <div class="desk-surface">
@@ -531,7 +548,10 @@ onUnmounted(() => {
               <div class="page-face page-front">
                 <div class="page-texture"></div>
                 <div class="page-content">
-                  <component :is="page.component" />
+                  <component 
+                    :is="page.component" 
+                    @select-project="selectPageById"
+                  />
                 </div>
               </div>
 
