@@ -6,7 +6,7 @@ import dayjs from 'dayjs';
 interface Project {
   name: string;
   period: string;
-  technologies: string;
+  technologies: string[];
   description: string[];
   responsibilities?: string[];
 }
@@ -59,7 +59,17 @@ const careerData = ref([
       {
         name: '업박스 클라우드 개발 - 폐기물 매니지먼트 서비스',
         period: '2021년 1월 ~ 진행중',
-        technologies: 'Vite, Vue3, Android Kotlin, Webview, Github Actions, AWS, TailwindCSS, i18n, Storybook',
+        technologies: [
+          'Vite',
+          'Vue3',
+          'Android Kotlin',
+          'Webview',
+          'Github Actions',
+          'AWS',
+          'TailwindCSS',
+          'i18n',
+          'Storybook'
+        ],
         description: ['폐기물 처리 과정의 모든 데이터를 투명하게 관리하는 클라우드 서비스. 어드민, 드라이버, 커스터머 앱을 통해 수거 관리부터 정산까지 자동화된 시스템을 제공합니다.'],
         responsibilities: [
           '프론트엔드 리드로서 1.0부터 현재 2.15.0까지 핵심 멤버로 참여',
@@ -74,7 +84,7 @@ const careerData = ref([
       {
         name: '업박스 홈페이지 제작',
         period: '2021년 1월 ~ 상시 진행',
-        technologies: 'VanilaJS, EJS, AWS',
+        technologies: ['VanilaJS', 'EJS', 'AWS'],
         description: ['회사의 정보가 담긴 리코 홈페이지와 제품 측면에서 인바운드에 초점 맞춘 업박스 홈페이지를 유지보수했습니다.'],
         responsibilities: [
           '각 홈페이지를 유지보수하고, 인바운드 측정을 위해 마케팅팀과 협업하여 데이터를 수집'
@@ -91,7 +101,7 @@ const careerData = ref([
       {
         name: '뱅크비 - 베트남 통합계좌관리 솔루션',
         period: '2019년 9월 ~ 2020년 12월',
-        technologies: 'C/C++',
+        technologies: ['C/C++'],
         description: ['베트남 은행을 자동으로 연결해주고 입출금내역을 조회하여 계좌를 한눈에 볼 수 있는 모바일 어플리케이션. BIDV, Vietcom, TP 은행 등 약 11개 은행에 대한 계좌조회를 제공합니다.'],
         responsibilities: [
           '은행을 연결하고 내역을 조회하는 스크래핑 모듈을 담당하고(C/C++), 모바일 앱은 베트남 현지 협력사에서 개발',
@@ -104,27 +114,26 @@ const careerData = ref([
       {
         name: 'Omnidoc - 문서발급 솔루션',
         period: '2019년 4월 ~ 2020년 12월',
-        technologies: 'C/C++',
+        technologies: ['C/C++'],
         description: ['17여개의 민원사이트에서 40여개의 민원문서를 발급할 수 있는 솔루션. 타사의 서비스에 탑재되어 고객의 민간업무를 대행해주는 편리한 서비스 제공합니다.'],
         responsibilities: [
           '금융결제원 Payinfo, 신용조회 KCB, 범죄자조회 Crime 등의 사이트 스크래핑 담당'
         ]
       },
-      {
-        name: '오픈망 직승인 프로젝트',
-        period: '2018년 8월 ~ 2019년 3월',
-        technologies: 'SpringBoot, JPA',
-        description: ['VAN사를 통하지 않고 가맹점과 카드사 간의 E2E 보안을 위한 클라우드 POS 서비스입니다.'],
-        responsibilities: [
-          '카드사와의 승인 및 매입 관련 프로세스를 테스트하기 위한 더미카드사 서버를 제작 (Spring boot, JPA, MySQL)',
-          'VAN사에서 제공하는 가맹점 관리, 결제내역 조회 등의 기능을 직접 구현',
-          // '카드사의 결제 시스템을 이해하고 그 안의 보안 시스템을 직접 적용'
-        ]
-      },
+      // {
+      //   name: '오픈망 직승인 프로젝트',
+      //   period: '2018년 8월 ~ 2019년 3월',
+      //   technologies: ['SpringBoot', 'JPA'],
+      //   description: ['VAN사를 통하지 않고 가맹점과 카드사 간의 E2E 보안을 위한 클라우드 POS 서비스입니다.'],
+      //   responsibilities: [
+      //     '카드사와의 승인 및 매입 관련 프로세스를 테스트하기 위한 더미카드사 서버를 제작 (Spring boot, JPA, MySQL)',
+      //     'VAN사에서 제공하는 가맹점 관리, 결제내역 조회 등의 기능을 직접 구현',
+      //   ]
+      // },
       {
         name: '하나1QPay NFC 결제모듈',
         period: '2017년 6월 ~ 2018년 8월',
-        technologies: 'Java, C/C++',
+        technologies: ['Java', 'C/C++'],
         description: ['하나카드 1QPay 앱에 탑재되는 NFC 모듈로 지불카드의 token화 보안 서비스와, HCE 스펙을 따라 NFC 결제 통신을 제공합니다.'],
         responsibilities: [
           'VISA token 발급 및 EMV 카드 결제 스펙을 이해하여 NFC 결제 모듈을 유지보수 (Android java, JNI)',
@@ -135,11 +144,10 @@ const careerData = ref([
       {
         name: 'TaSIM - 대형가맹점 직승인 프로젝트',
         period: '2017년 1월 ~ 2017년 6월',
-        technologies: 'Java Card OS, MFC',
+        technologies: ['Java Card OS', 'MFC'],
         description: ['카드사와 가맹점 사이의 E2E 암호화를 수행하는 임베디드 카드 암호화 모듈입니다. 중간 VAN사의 영향을 받지 않고, 가맹점 단말기와 카드사 간의 암호화를 제공합니다. 여신협회 taSIM Application Specification 인증, EMVCo 및 CC(Common Criteria) 인증을 취득하고 구현했습니다.'],
         responsibilities: [
-          'JavaCOS 에 Applet을 탑재하여 가맹점의 카드 리더 단말기에 장착',
-          'Java COS의 작동을 이해하고, 해당 제품을 유지보수 및 대응',
+          'JavaCOS 에 Applet 유지보수 및 탑재하여 가맹점의 카드 리더 단말기에 장착',
           'Applet 설치용 MFC UI 제작'
         ]
       }
@@ -152,7 +160,7 @@ const freelanceData = ref([
   {
     name: 'MGX 모바일 게임 시세조회 어플리케이션',
     period: '2021년 1월 ~ 2021년 3월',
-    technologies: 'ReactNative',
+    technologies: ['ReactNative'],
     description: ['리니지m, 리니지2m, 바람의나라 등 모바일 게임의 시세조회, 시세추이, 거래소 아이템 검색 등을 제공하는 어플리케이션. 소식 전하기, 커뮤니티 기능을 제공합니다.'],
     responsibilities: [
       '어플리케이션 제작 담당',
@@ -162,7 +170,7 @@ const freelanceData = ref([
   {
     name: 'KlookPay - KlookPay POC 어플리케이션',
     period: '2020년 9월 ~ 2020년 11월',
-    technologies: 'NodeJS, Angular, NativeScript, ExpressJS, Docker',
+    technologies: ['NodeJS', 'Angular', 'NativeScript', 'ExpressJS', 'Docker'],
     description: ['KB카드에서 진행하는 KlookPay 프로젝트의 POC 어플리케이션. KlookPay는 KB카드의 마일리지, 포인트 및 결제 시스템을 Klook에 연동하는 서비스입니다.'],
     responsibilities: [
       'KB카드와 협업하여 안드로이드 앱 기술지원을 진행 (Nativescript-ng)',
@@ -313,7 +321,15 @@ const presentationData = ref([
                 <h4 class="project-name">{{ project.name }}</h4>
                 <div class="project-meta">
                   <span class="project-period">{{ project.period }}</span>
-                  <span class="project-tech">{{ project.technologies }}</span>
+                  <div class="project-tech-list">
+                    <span
+                      v-for="tech in project.technologies"
+                      :key="tech"
+                      class="project-tech-chip"
+                    >
+                      {{ tech }}
+                    </span>
+                  </div>
                 </div>
               </div>
 
@@ -392,7 +408,15 @@ const presentationData = ref([
               <h3 class="project-name">{{ project.name }}</h3>
               <div class="project-meta">
                 <span class="project-period">{{ project.period }}</span>
-                <span class="project-tech">{{ project.technologies }}</span>
+                <div class="project-tech-list">
+                  <span
+                    v-for="tech in project.technologies"
+                    :key="tech"
+                    class="project-tech-chip"
+                  >
+                    {{ tech }}
+                  </span>
+                </div>
               </div>
             </div>
 
@@ -743,8 +767,18 @@ const presentationData = ref([
         font-size: 13px;
         color: #888;
 
-        .project-tech {
-          color: #666;
+        .project-tech-list {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 2px;
+        }
+
+        .project-tech-chip {
+          padding: 1px 6px;
+          border-radius: 999px;
+          background: #f0f0f0;
+          color: #555;
+          font-size: 12px;
         }
       }
     }
@@ -874,8 +908,6 @@ const presentationData = ref([
   gap: 30px;
 
   .presentation-item {
-    background: #f9f9f9;
-    padding: 20px;
     border-radius: 8px;
 
     .presentation-header {
@@ -893,6 +925,10 @@ const presentationData = ref([
         color: #888;
         display: flex;
         gap: 10px;
+
+        .presentation-period {
+          white-space: nowrap;
+        }
       }
     }
 
@@ -965,10 +1001,22 @@ const presentationData = ref([
       .project-meta {
         font-size: 13px;
         color: #888;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
 
-        .project-tech {
-          color: #666;
-          margin-left: 10px;
+        .project-tech-list {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 6px;
+        }
+
+        .project-tech-chip {
+          padding: 3px 8px;
+          border-radius: 999px;
+          background: #f0f0f0;
+          color: #555;
+          font-size: 12px;
         }
       }
     }

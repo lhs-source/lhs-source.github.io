@@ -52,12 +52,14 @@ let paperMesh: THREE.Mesh;
 let animationId: number;
 let initialPaperY = 1.5; // Will be updated when model loads
 let initialTypewriterY = 0;
+let initialDeskY = 0;
 let cockroachMixer: AnimationMixer | null = null;
 let cockroachModel: THREE.Group | null = null;
 let cockroachTarget = new Vector3();
 let cockroachWalkSpeed = 0.8; // Fast like a real cockroach
 let cockroachWalkAction: any = null;
 let cockroachIdleAction: any = null;
+let isSceneMovingDown = false; // 씬이 하단으로 이동 중인지 플래그
 const cockroachBounds = {
     minX: -1.2,
     maxX: 1.2,
@@ -269,6 +271,7 @@ const loadDeskModel = () => {
             deskModel.position.x = -center.x;
             deskModel.position.z = -center.z;
             deskModel.position.y = -scaledBox.max.y - 0.05;
+            initialDeskY = deskModel.position.y;
 
             deskModel.traverse((child: any) => {
                 if (child instanceof THREE.Mesh) {
@@ -652,6 +655,11 @@ function switchToIdle() {
 
 function wanderCockroach(delta: number) {
     if (!cockroachModel) return;
+    
+    // 씬이 하단으로 이동 중이면 바퀴벌레 움직임 중단
+    if (isSceneMovingDown) {
+        return;
+    }
 
     // Long rest period (idle animation)
     if (cockroachIsResting) {
@@ -735,11 +743,63 @@ const fadeOutScene = (progress: number) => {
     }
 };
 
+// Move entire scene (typewriter + desk) down
+const moveSceneDown = (progress: number) => {
+    isSceneMovingDown = progress < 1; // progress가 1이 되면 완료
+    
+    if (typewriterModel) {
+        typewriterModel.position.y = initialTypewriterY - (progress * 3);
+        typewriterModel.position.x = typewriterModel.userData.baseX || 0;
+        typewriterModel.position.z = typewriterModel.userData.baseZ || 0;
+    }
+    if (deskModel) {
+        deskModel.position.y = initialDeskY - (progress * 3);
+    }
+    if (cockroachModel) {
+        // 바퀴벌레도 테이블과 함께 하단으로 이동
+        const currentX = cockroachModel.position.x;
+        const currentZ = cockroachModel.position.z;
+        cockroachModel.position.set(
+            currentX,
+            cockroachYOffset - (progress * 3),
+            currentZ
+        );
+    }
+};
+
+// Move paper up and out of view
+// progress 0.4 시점에서 자동 애니메이션이 시작되므로, 그 시점의 이력서 위치에서 시작
+let paperStartY: number | null = null;
+
+const movePaperUp = (progress: number) => {
+    if (paperMesh) {
+        // 첫 호출 시 현재 위치를 저장 (progress 0일 때)
+        if (paperStartY === null) {
+            paperStartY = paperMesh.position.y;
+        }
+        
+        // progress에 따라 점진적으로 위로 올라가면서 사라지도록
+        // progress 0: 현재 위치 (paperStartY)
+        // progress 1: paperStartY + 5 (화면 위로 완전히 사라짐)
+        const targetY = paperStartY! + (progress * 5);
+        paperMesh.position.y = targetY;
+        
+        // opacity도 조절하여 점점 사라지도록
+        if (paperMesh.material) {
+            const material = paperMesh.material as THREE.MeshStandardMaterial;
+            material.opacity = Math.max(0, 1 - progress);
+            material.transparent = true;
+        }
+    }
+};
+
 defineExpose({
     setPaperProgress,
     hideTypewriter,
     liftPaper,
     fadeOutScene,
+    moveSceneDown,
+    movePaperUp,
     camera,
     paperMesh
 });

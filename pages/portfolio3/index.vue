@@ -29,16 +29,18 @@ const typewriterSceneRef = ref<any>(null)
 const scrollSpacerRef = ref<HTMLElement | null>(null)
 const typewriterWrapperRef = ref<HTMLElement | null>(null)
 const deskContainerRef = ref<HTMLElement | null>(null)
+const hasTriggeredAutoAnimation = ref(false)
+let typewriterScrollTrigger: ScrollTrigger | null = null
 
 // Pages data
 const pages = ref([
   { id: 'resume', title: '이력서', type: 'resume', color: '#ffeb3b', rotation: -2, component: ResumePaper, tapeImage: 'masking2.png' },
   { id: 'upbox', title: '업박스 클라우드', type: 'portfolio', color: '#4caf50', rotation: 1, component: UpboxCloud, tapeImage: 'masking3.png' },
-  { id: 'rico', title: '리코 홈페이지', type: 'portfolio', color: '#2196f3', rotation: -1, component: RicoHomepage, tapeImage: 'masking4.png' },
+  { id: 'reco', title: '리코 홈페이지', type: 'portfolio', color: '#2196f3', rotation: -1, component: RicoHomepage, tapeImage: 'masking4.png' },
   { id: 'datadog', title: '데이터독 발표', type: 'portfolio', color: '#ff9800', rotation: 2, component: DatadogTalk, tapeImage: 'masking5.png' },
   { id: 'bankb', title: '뱅크비', type: 'portfolio', color: '#3f51b5', rotation: 1, component: BankB, tapeImage: 'masking1.png' },
   { id: 'omnidoc', title: 'Omnidoc', type: 'portfolio', color: '#00bcd4', rotation: -1, component: Omnidoc, tapeImage: 'masking2.png' },
-  { id: 'open', title: '오픈망 직승인', type: 'portfolio', color: '#8bc34a', rotation: 2, component: OpenApproval, tapeImage: 'masking3.png' },
+  // { id: 'open', title: '오픈망 직승인', type: 'portfolio', color: '#8bc34a', rotation: 2, component: OpenApproval, tapeImage: 'masking3.png' },
   { id: 'hana', title: '하나 1QPay', type: 'portfolio', color: '#e91e63', rotation: -2, component: Hana1QPay, tapeImage: 'masking4.png' },
   { id: 'tasim', title: 'TaSIM', type: 'portfolio', color: '#607d8b', rotation: 1, component: Tasim, tapeImage: 'masking5.png' },
   { id: 'freelance', title: '그 외', type: 'portfolio', color: '#9c27b0', rotation: -2, component: FreelanceProjects, tapeImage: 'masking5.png' },
@@ -91,9 +93,90 @@ const openPortfolio = () => {
       isReading.value = true
       // Initialize stack order if needed, ensuring Resume (0) is top
       // stackOrder is [3, 2, 1, 0] -> 0 is last (top)
-      updateStackState()
+      
+      // Wait for next tick to ensure DOM is updated
+      setTimeout(() => {
+        animatePagesEntry()
+      }, 50)
     }
   })
+}
+
+const animatePagesEntry = () => {
+  // Set initial positions for all pages (below viewport)
+  pages.value.forEach((page, index) => {
+    const el = pageRefs.value[index]
+    if (!el) return
+
+    // Save current transform values to preserve x and rotation
+    const currentTransform = gsap.getProperty(el, 'transform')
+    
+    // Set initial position (below viewport) while preserving other transforms
+    gsap.set(el, {
+      y: window.innerHeight * 1.2,
+      opacity: 0,
+      clearProps: 'none' // Don't clear other properties
+    })
+  })
+
+  // Calculate final positions by calling updateStackState first (but without animating)
+  // We'll manually set the final positions after animation
+  const finalPositions: Array<{ x: number; y: number; rotation: number }> = []
+  
+  pages.value.forEach((page, i) => {
+    const isCurrent = i === currentPageIndex.value
+    let x = 0
+    let rotationZ = isCurrent ? 0 : page.rotation
+    let y = isCurrent ? -pageScrollY.value : 0
+
+    const pivotY = 2500
+    const transformOrigin = `30% ${pivotY}px`
+
+    if (!isCurrent) {
+      const randomRotation = page.rotation
+      const visualIndex = stackOrder.value.indexOf(i)
+      const reverseIndex = (pages.value.length - 1) - visualIndex
+      const stackFanRotation = -1 * reverseIndex * 0.05
+      rotationZ = randomRotation + stackFanRotation
+      const rad = randomRotation * (Math.PI / 180)
+      const shiftX = Math.sin(rad) * pivotY
+      x = -shiftX
+    }
+
+    finalPositions.push({ x, y, rotation: rotationZ })
+  })
+
+  // Animate pages from bottom to their final positions
+  const pivotY = 2500
+  const transformOrigin = `30% ${pivotY}px`
+  
+  pages.value.forEach((page, index) => {
+    const el = pageRefs.value[index]
+    if (!el) return
+
+    const finalPos = finalPositions[index]
+
+    // Set transform origin
+    gsap.set(el, { transformOrigin })
+
+    // Animate to final position
+    // First page (index 0) starts immediately, each next page starts 0.1s later
+    gsap.to(el, {
+      x: finalPos.x,
+      y: finalPos.y,
+      rotation: finalPos.rotation,
+      opacity: 1,
+      duration: 0.3,
+      ease: 'power2.out',
+      delay: index * 0.1
+    })
+  })
+
+  // After all animations complete, update stack state immediately (no additional animation)
+  const totalAnimationTime = (pages.value.length - 1) * 0.1 + 0.3
+  setTimeout(() => {
+    updateStackState(true) // immediate = true to avoid additional animation
+  }, totalAnimationTime * 1000)
 }
 
 const selectPageById = (pageId: string) => {
@@ -246,7 +329,7 @@ const handleScroll = (e: WheelEvent) => {
   })
 }
 
-const updateStackState = () => {
+const updateStackState = (immediate = false) => {
   if (isAnimating.value) return
 
   // Calculate responsive spacing
@@ -324,15 +407,23 @@ const updateStackState = () => {
       x = -shiftX
     }
 
-    gsap.to(el, {
+    const animationProps = {
       x: x,
       y: y,
       rotation: rotationZ,
       transformOrigin: transformOrigin,
-      duration: 0.5,
-      ease: 'power2.out',
-      overwrite: 'auto'
-    })
+      overwrite: 'auto' as const
+    }
+
+    if (immediate) {
+      gsap.set(el, animationProps)
+    } else {
+      gsap.to(el, {
+        ...animationProps,
+        duration: 0.5,
+        ease: 'power2.out'
+      })
+    }
   })
 }
 
@@ -342,7 +433,19 @@ const setPageRef = (el: any, index: number) => {
 
 // Typewriter Scroll Animation Setup
 const setupTypewriterAnimation = () => {
-  if (!scrollSpacerRef.value || !typewriterSceneRef.value) return
+  if (!scrollSpacerRef.value) {
+    console.warn('scrollSpacerRef is not available')
+    return
+  }
+  if (!typewriterSceneRef.value) {
+    console.warn('typewriterSceneRef is not available')
+    return
+  }
+
+  console.log('Setting up typewriter animation', {
+    scrollSpacer: scrollSpacerRef.value,
+    typewriterScene: typewriterSceneRef.value
+  })
 
   // Initial desk position (above viewport)
   if (deskContainerRef.value) {
@@ -351,18 +454,46 @@ const setupTypewriterAnimation = () => {
 
   const typingEnd = 0.4
   const liftEnd = 0.65
-  const vanishStart = 0.75
-  const vanishEnd = 0.85
-  const deskEntryStart = 0.95
+  const autoTriggerThreshold = 0.4 // 이력서가 이 높이까지 올라가면 자동 트리거 (타이핑 완료 시점)
 
-  const tl = gsap.timeline({
+  // GSAP 타임라인 생성
+  const mainTimeline = gsap.timeline({
     scrollTrigger: {
       trigger: scrollSpacerRef.value,
       start: 'top top',
       end: 'bottom bottom',
-      scrub: 1.5, // Smoother scrub
-      onUpdate: (self) => {
+      scrub: 1.5,
+      onUpdate: (self: ScrollTrigger) => {
         const progress = self.progress
+        
+        // 디버깅: progress가 업데이트되는지 확인 (너무 많이 찍히지 않도록 제한)
+        if (Math.floor(progress * 100) % 10 === 0) {
+          console.log('ScrollTrigger progress:', progress.toFixed(2))
+        }
+
+        // 자동 애니메이션이 시작되면 스크롤 기반 업데이트를 완전히 중단
+        if (hasTriggeredAutoAnimation.value) {
+          return
+        }
+
+        // 자동 트리거: 이력서가 일정 높이까지 올라가면 자동으로 위로 사라지는 애니메이션 시작
+        // 먼저 체크해서 스크롤 효과를 즉시 중단
+        if (progress >= autoTriggerThreshold && !hasTriggeredAutoAnimation.value) {
+          console.log('Auto trigger condition met!', { 
+            progress: progress.toFixed(3), 
+            autoTriggerThreshold, 
+            hasTriggered: hasTriggeredAutoAnimation.value,
+            liftEnd,
+            typingEnd
+          })
+          hasTriggeredAutoAnimation.value = true
+          // 스크롤 트리거 즉시 비활성화하여 스크롤 효과 완전히 중단
+          if (mainTimeline.scrollTrigger) {
+            mainTimeline.scrollTrigger.kill()
+          }
+          triggerAutoAnimation()
+          return // 이후 스크롤 기반 업데이트 중단
+        }
 
         if (progress <= typingEnd) {
           const typingProgress = progress / typingEnd
@@ -373,83 +504,13 @@ const setupTypewriterAnimation = () => {
           const liftProgress = (progress - typingEnd) / (liftEnd - typingEnd)
           typewriterSceneRef.value?.liftPaper(liftProgress)
           typewriterSceneRef.value?.hideTypewriter(0)
-        } else if (progress <= vanishStart) {
-          // Delay phase - hold everything still
-          typewriterSceneRef.value?.setPaperProgress(1)
-          typewriterSceneRef.value?.liftPaper(1)
-          typewriterSceneRef.value?.hideTypewriter(0)
-          typewriterSceneRef.value?.fadeOutScene(0)
-
-          if (typewriterWrapperRef.value) {
-            gsap.set(typewriterWrapperRef.value, { y: '0%' })
-          }
-          if (deskContainerRef.value) {
-            gsap.set(deskContainerRef.value, { y: '-100%' })
-          }
-        } else if (progress <= vanishEnd) {
-          typewriterSceneRef.value?.setPaperProgress(1)
-          typewriterSceneRef.value?.liftPaper(1)
-          const vanishProgress = (progress - vanishStart) / (vanishEnd - vanishStart)
-          typewriterSceneRef.value?.hideTypewriter(vanishProgress)
-          typewriterSceneRef.value?.fadeOutScene(vanishProgress)
-
-          if (typewriterWrapperRef.value) {
-            gsap.set(typewriterWrapperRef.value, {
-              y: `${vanishProgress * 10}%`,
-              ease: 'none'
-            })
-          }
-
-          if (deskContainerRef.value) {
-            gsap.set(deskContainerRef.value, {
-              y: '-100%',
-              ease: 'none'
-            })
-          }
-        } else if (progress <= deskEntryStart) {
-          // GAP PHASE: Typewriter gone, Desk waiting
-          typewriterSceneRef.value?.setPaperProgress(1)
-          typewriterSceneRef.value?.liftPaper(1)
-          typewriterSceneRef.value?.hideTypewriter(1)
-          typewriterSceneRef.value?.fadeOutScene(1)
-
-          if (typewriterWrapperRef.value) {
-            gsap.set(typewriterWrapperRef.value, {
-              y: '10%',
-              ease: 'none'
-            })
-          }
-
-          if (deskContainerRef.value) {
-            gsap.set(deskContainerRef.value, {
-              y: '-100%',
-              ease: 'none'
-            })
-          }
-        } else {
-          // Desk Entry Phase
-          const deskProgress = (progress - deskEntryStart) / (1 - deskEntryStart)
-          typewriterSceneRef.value?.setPaperProgress(1)
-          typewriterSceneRef.value?.liftPaper(1)
-          typewriterSceneRef.value?.hideTypewriter(1)
-          typewriterSceneRef.value?.fadeOutScene(1)
-
-          if (typewriterWrapperRef.value) {
-            gsap.set(typewriterWrapperRef.value, {
-              y: '10%',
-              ease: 'none'
-            })
-          }
-
-          if (deskContainerRef.value) {
-            gsap.set(deskContainerRef.value, {
-              y: `${-100 + deskProgress * 100}%`,
-              ease: 'none'
-            })
-          }
         }
       },
+      onEnter: () => {
+        console.log('ScrollTrigger entered')
+      },
       onLeave: () => {
+        console.log('ScrollTrigger left')
         showTypewriter.value = false
         if (deskContainerRef.value) {
           gsap.set(deskContainerRef.value, { y: 0 })
@@ -464,11 +525,88 @@ const setupTypewriterAnimation = () => {
       }
     }
   })
+  
+  // ScrollTrigger 인스턴스 저장
+  typewriterScrollTrigger = mainTimeline.scrollTrigger as ScrollTrigger
+}
+
+// 자동 애니메이션 트리거: 이력서가 위로 사라지고, 2초 후 테이블과 타자기가 하단으로 사라짐
+const triggerAutoAnimation = () => {
+  if (!typewriterSceneRef.value) {
+    console.warn('TypewriterSceneRef is not available')
+    return
+  }
+
+  console.log('Triggering auto animation')
+
+  // GSAP 타임라인으로 자동 애니메이션 구현
+  const autoTimeline = gsap.timeline({
+    onStart: () => {
+      console.log('Auto animation started')
+    }
+  })
+
+  // 1. 이력서가 상단으로 올라가는 애니메이션 (1초)
+  const paperProgress = { value: 0 }
+  autoTimeline.to(paperProgress, {
+    value: 1,
+    duration: 1,
+    ease: 'power2.in',
+    onUpdate: function() {
+      if (typewriterSceneRef.value && typewriterSceneRef.value.movePaperUp) {
+        typewriterSceneRef.value.movePaperUp(paperProgress.value)
+      }
+    },
+    onComplete: () => {
+      console.log('Paper moved up')
+    }
+  })
+
+  // 2. 이력서가 상단으로 올라간 후 1초 대기
+  autoTimeline.to({}, {
+    duration: 1,
+    onComplete: () => {
+      console.log('1 second wait completed')
+    }
+  })
+
+  // 3. 테이블과 타자기가 하단으로 사라지는 애니메이션 (1초)
+  const sceneProgress = { value: 0 }
+  autoTimeline.to(sceneProgress, {
+    value: 1,
+    duration: 1,
+    ease: 'power2.in',
+    onUpdate: function() {
+      if (typewriterSceneRef.value && typewriterSceneRef.value.moveSceneDown) {
+        typewriterSceneRef.value.moveSceneDown(sceneProgress.value)
+      }
+    },
+    onComplete: () => {
+      console.log('Scene moved down')
+      // 애니메이션 완료 후 타자기 씬 숨김
+      if (typewriterSceneRef.value && typewriterSceneRef.value.fadeOutScene) {
+        typewriterSceneRef.value.fadeOutScene(1)
+      }
+      
+      // 데스크 뷰 표시
+      if (deskContainerRef.value) {
+        gsap.to(deskContainerRef.value, {
+          y: '0%',
+          duration: 1,
+          ease: 'power2.out',
+          onComplete: () => {
+            // desk가 나타나면 스크롤을 못하도록 showTypewriter를 false로 설정
+            showTypewriter.value = false
+          }
+        })
+      }
+    }
+  })
 }
 
 onMounted(() => {
   window.addEventListener('wheel', handleScroll, { passive: false })
-  window.addEventListener('resize', updateStackState)
+  window.addEventListener('resize', () => updateStackState())
 
   // Setup typewriter animation after a short delay to ensure refs are ready
   setTimeout(() => {
@@ -478,7 +616,7 @@ onMounted(() => {
 
 onUnmounted(() => {
   window.removeEventListener('wheel', handleScroll)
-  window.removeEventListener('resize', updateStackState)
+  window.removeEventListener('resize', () => updateStackState())
   ScrollTrigger.getAll().forEach(trigger => trigger.kill())
 })
 
