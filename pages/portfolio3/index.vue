@@ -37,15 +37,15 @@ let typewriterScrollTrigger: ScrollTrigger | null = null
 // Pages data
 const pages = ref([
   { id: 'resume', title: '이력서', type: 'resume', color: '#ffeb3b', rotation: -2, component: markRaw(ResumePaper), tapeImage: 'masking2.png' },
-  { id: 'upbox', title: '업박스 클라우드', type: 'portfolio', color: '#4caf50', rotation: 1, component: markRaw(UpboxCloud), tapeImage: 'masking3.png' },
-  { id: 'upbox2', title: '업박스 클라우드 v2', type: 'portfolio', color: '#4caf50', rotation: 1, component: markRaw(UpboxCloud2), tapeImage: 'masking3.png' },
-  { id: 'reco', title: '리코 홈페이지', type: 'portfolio', color: '#2196f3', rotation: -1, component: markRaw(RicoHomepage), tapeImage: 'masking4.png' },
-  { id: 'datadog', title: '데이터독 발표', type: 'portfolio', color: '#ff9800', rotation: 2, component: markRaw(DatadogTalk), tapeImage: 'masking5.png' },
-  { id: 'bankb', title: '뱅크비', type: 'portfolio', color: '#3f51b5', rotation: 1, component: markRaw(BankB), tapeImage: 'masking1.png' },
-  { id: 'omnidoc', title: 'Omnidoc', type: 'portfolio', color: '#00bcd4', rotation: -1, component: markRaw(Omnidoc), tapeImage: 'masking2.png' },
+  // { id: 'upbox', title: '업박스 클라우드', type: 'portfolio', color: '#4caf50', rotation: 1, component: markRaw(UpboxCloud), tapeImage: 'masking2.png' },
+  { id: 'upbox2', title: '업박스 클라우드', type: 'portfolio', color: '#4caf50', rotation: 1, component: markRaw(UpboxCloud2), tapeImage: 'masking2.png' },
+  { id: 'reco', title: '리코 홈페이지', type: 'portfolio', color: '#2196f3', rotation: -1, component: markRaw(RicoHomepage), tapeImage: 'masking2.png' },
+  { id: 'datadog', title: '데이터독 발표', type: 'portfolio', color: '#ff9800', rotation: 2, component: markRaw(DatadogTalk), tapeImage: 'masking2.png' },
+  { id: 'bankb', title: '뱅크비', type: 'portfolio', color: '#3f51b5', rotation: 1, component: markRaw(BankB), tapeImage: 'masking4.png' },
+  { id: 'omnidoc', title: 'Omnidoc', type: 'portfolio', color: '#00bcd4', rotation: -1, component: markRaw(Omnidoc), tapeImage: 'masking4.png' },
   // { id: 'open', title: '오픈망 직승인', type: 'portfolio', color: '#8bc34a', rotation: 2, component: markRaw(OpenApproval), tapeImage: 'masking3.png' },
   { id: 'hana', title: '하나 1QPay', type: 'portfolio', color: '#e91e63', rotation: -2, component: markRaw(Hana1QPay), tapeImage: 'masking4.png' },
-  { id: 'tasim', title: 'TaSIM', type: 'portfolio', color: '#607d8b', rotation: 1, component: markRaw(Tasim), tapeImage: 'masking5.png' },
+  { id: 'tasim', title: 'TaSIM', type: 'portfolio', color: '#607d8b', rotation: 1, component: markRaw(Tasim), tapeImage: 'masking4.png' },
   { id: 'freelance', title: '그 외', type: 'portfolio', color: '#9c27b0', rotation: -2, component: markRaw(FreelanceProjects), tapeImage: 'masking5.png' },
 
 ])
@@ -74,7 +74,7 @@ const updateZIndices = () => {
     // stackPosition이 클수록 위에 있고, z-index도 높아야 함
     // stackPosition은 0부터 시작하므로 +1
     const zIndex = stackPosition + 1
-    ; (el as HTMLElement).style.setProperty('z-index', zIndex.toString(), 'important')
+      ; (el as HTMLElement).style.setProperty('z-index', zIndex.toString(), 'important')
   })
 }
 
@@ -342,7 +342,7 @@ const handleScroll = (e: WheelEvent) => {
 
 const updateStackState = (immediate = false) => {
   if (isAnimating.value) return
-  
+
   // z-index도 함께 업데이트
   updateZIndices()
 
@@ -449,7 +449,7 @@ const setPageRef = (el: any, index: number) => {
       const stackPosition = stackOrder.value.indexOf(index)
       if (stackPosition !== -1) {
         const zIndex = stackPosition + 1
-        ; (el as HTMLElement).style.setProperty('z-index', zIndex.toString(), 'important')
+          ; (el as HTMLElement).style.setProperty('z-index', zIndex.toString(), 'important')
       }
     }
   }
@@ -655,6 +655,15 @@ onUnmounted(() => {
       <div ref="scrollSpacerRef" class="scroll-spacer">
         <div ref="typewriterWrapperRef" class="typewriter-scene-wrapper">
           <TypewriterScene ref="typewriterSceneRef" />
+          <div class="scroll-indicator">
+            <svg class="mouse-svg" width="24" height="36" viewBox="0 0 24 36" fill="none"
+              xmlns="http://www.w3.org/2000/svg">
+              <rect x="1" y="1" width="22" height="34" rx="11" stroke="rgba(255, 255, 255, 0.7)" stroke-width="2" />
+              <rect class="mouse-wheel" x="10" y="8" width="4" height="6" rx="2" fill="rgba(255, 255, 255, 0.7)" />
+            </svg>
+            <span>SCROLL DOWN</span>
+            <div class="arrow"></div>
+          </div>
         </div>
       </div>
     </div>
@@ -750,6 +759,71 @@ onUnmounted(() => {
   width: 100%;
   height: 100vh;
   z-index: 10;
+}
+
+.scroll-indicator {
+  position: absolute;
+  bottom: 40px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 0.8rem;
+  font-weight: 300;
+  letter-spacing: 0.1em;
+  z-index: 20;
+  pointer-events: none;
+  animation: bounce 2s infinite;
+
+  .mouse-svg {
+    margin-bottom: 8px;
+
+    .mouse-wheel {
+      animation: scrollWheel 1.5s infinite;
+    }
+  }
+
+  .arrow {
+    margin-top: 8px;
+    width: 12px;
+    height: 12px;
+    border-right: 1px solid rgba(255, 255, 255, 0.7);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.7);
+    transform: rotate(45deg);
+  }
+}
+
+@keyframes bounce {
+
+  0%,
+  20%,
+  50%,
+  80%,
+  100% {
+    transform: translateX(-50%) translateY(0);
+  }
+
+  40% {
+    transform: translateX(-50%) translateY(-10px);
+  }
+
+  60% {
+    transform: translateX(-50%) translateY(-5px);
+  }
+}
+
+@keyframes scrollWheel {
+  0% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+
+  100% {
+    transform: translateY(6px);
+    opacity: 0;
+  }
 }
 
 /* Desk View Wrapper */
@@ -869,6 +943,7 @@ onUnmounted(() => {
   overflow: visible;
   box-sizing: border-box;
   pointer-events: none; // Allow hover to pass through
+  opacity: 0; // Initially hidden to prevent flash before animation
 }
 
 .page-face {

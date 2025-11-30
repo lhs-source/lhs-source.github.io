@@ -9,7 +9,9 @@ interface Project {
   technologies: string[];
   description: string[];
   responsibilities?: string[];
+  pageId?: string; // Link to portfolio page
 }
+
 
 // 자기소개 데이터
 const keywordData = ref([
@@ -31,21 +33,61 @@ const keywordData = ref([
   }
 ]);
 
+// 기술 스택 아이콘 매핑
+const getTechIcon = (techName: string): string | null => {
+  const iconMap: Record<string, string> = {
+    'Vue3': 'Vue.js_Logo_2.svg',
+    'Vue': 'Vue.js_Logo_2.svg',
+    'TypeScript': 'icons8-타이프스크립트.svg',
+    'C++': 'ISO_C++_Logo.svg',
+    'C/C++': 'ISO_C++_Logo.svg',
+    'Java': 'java-4-logo-svgrepo-com.svg',
+    'Android Kotlin': 'kotlin-svgrepo-com.svg',
+    'Kotlin': 'kotlin-svgrepo-com.svg',
+    'React': 'react-svgrepo-com.svg',
+    'ReactNative': 'react-svgrepo-com.svg',
+    'AWS': 'aws-svgrepo-com.svg',
+    'Github Actions': 'githubactions-svgrepo-com.svg',
+    'Datadog': 'datadog-svgrepo-com.svg',
+    'Git': 'git-svgrepo-com.svg',
+    'Storybook': 'storybook-icon-svgrepo-com.svg',
+    'Atlassian': 'atlassian-svgrepo-com.svg',
+    'Figma': 'figma-svgrepo-com.svg',
+    'Vite': 'Vitejs-logo.svg',
+    'Webview': 'google-webview-devtools-svgrepo-com.svg',
+    'TailwindCSS': 'tailwind-svgrepo-com.svg',
+    'Tailwind': 'tailwind-svgrepo-com.svg',
+    'i18n': 'i18n.svg',
+    'Java Card OS': 'sim-card-chip-svgrepo-com.svg',
+    'JavaCard': 'sim-card-chip-svgrepo-com.svg',
+    'VanilaJS': 'js-svgrepo-com.svg',
+    'VanillaJS': 'js-svgrepo-com.svg',
+    'EJS': 'ejs-svgrepo-com.svg',
+    'Angular': 'angular-svgrepo-com.svg',
+    'Docker': 'docker-svgrepo-com.svg',
+    'ExpressJS': 'expressjs.svg',
+    'Express': 'expressjs.svg',
+    'NativeScript': 'nativescript.svg',
+    'MFC': 'Microsoft_Foundation_Class_logo.svg',
+  };
+  return iconMap[techName] ? `/assets/portfolio/tools/${iconMap[techName]}` : null;
+};
+
 // 기술 스택 데이터
 const techStackData = ref([
-  { name: 'Vue3', isMain: true },
-  { name: 'TypeScript', isMain: false },
-  { name: 'C++', isMain: false },
-  { name: 'Java', isMain: false },
-  { name: 'Android Kotlin', isMain: false },
-  { name: 'React', isMain: false },
-  { name: 'AWS', isMain: false },
-  { name: 'Github Actions', isMain: false },
-  { name: 'Datadog', isMain: false },
-  { name: 'Git', isMain: false },
-  { name: 'Storybook', isMain: false },
-  { name: 'Atlassian', isMain: false },
-  { name: 'Figma', isMain: false },
+  { name: 'Vue3', isMain: true, icon: getTechIcon('Vue3') },
+  { name: 'TypeScript', isMain: false, icon: getTechIcon('TypeScript') },
+  { name: 'C++', isMain: false, icon: getTechIcon('C++') },
+  { name: 'Java', isMain: false, icon: getTechIcon('Java') },
+  { name: 'Android Kotlin', isMain: false, icon: getTechIcon('Android Kotlin') },
+  { name: 'React', isMain: false, icon: getTechIcon('React') },
+  { name: 'AWS', isMain: false, icon: getTechIcon('AWS') },
+  { name: 'Github Actions', isMain: false, icon: getTechIcon('Github Actions') },
+  { name: 'Datadog', isMain: false, icon: getTechIcon('Datadog') },
+  { name: 'Git', isMain: false, icon: getTechIcon('Git') },
+  { name: 'Storybook', isMain: false, icon: getTechIcon('Storybook') },
+  { name: 'Atlassian', isMain: false, icon: getTechIcon('Atlassian') },
+  { name: 'Figma', isMain: false, icon: getTechIcon('Figma') },
 ]);
 
 // 경력 데이터
@@ -57,7 +99,8 @@ const careerData = ref([
     position: '프론트엔드 개발자',
     projects: [
       {
-        name: '업박스 클라우드 개발 - 폐기물 매니지먼트 서비스',
+        name: '업박스 클라우드 개발',
+        pageId: 'upbox2',
         period: '2021년 1월 ~ 진행중',
         technologies: [
           'Vite',
@@ -70,7 +113,7 @@ const careerData = ref([
           'i18n',
           'Storybook'
         ],
-        description: ['폐기물 처리 과정의 모든 데이터를 투명하게 관리하는 클라우드 서비스. 어드민, 드라이버, 커스터머 앱을 통해 수거 관리부터 정산까지 자동화된 시스템을 제공합니다.'],
+        description: ['폐기물 처리 과정의 모든 데이터를 투명하게 관리하는 클라우드 서비스.'],
         responsibilities: [
           '프론트엔드 리드로서 1.0부터 현재 2.15.0까지 핵심 멤버로 참여',
           'TypeScript, Vue3 등 기술 스택 의사결정',
@@ -83,6 +126,7 @@ const careerData = ref([
       },
       {
         name: '업박스 홈페이지 제작',
+        pageId: 'reco',
         period: '2021년 1월 ~ 상시 진행',
         technologies: ['VanilaJS', 'EJS', 'AWS'],
         description: ['회사의 정보가 담긴 리코 홈페이지와 제품 측면에서 인바운드에 초점 맞춘 업박스 홈페이지를 유지보수했습니다.'],
@@ -99,10 +143,11 @@ const careerData = ref([
     position: 'C++ 개발자',
     projects: [
       {
-        name: '뱅크비 - 베트남 통합계좌관리 솔루션',
+        name: '뱅크비 - 베트남 통합계좌관리',
+        pageId: 'bankb',
         period: '2019년 9월 ~ 2020년 12월',
         technologies: ['C/C++'],
-        description: ['베트남 은행을 자동으로 연결해주고 입출금내역을 조회하여 계좌를 한눈에 볼 수 있는 모바일 어플리케이션. BIDV, Vietcom, TP 은행 등 약 11개 은행에 대한 계좌조회를 제공합니다.'],
+        description: ['베트남 은행을 자동으로 연결해주고 입출금내역을 조회하여 계좌를 한눈에 볼 수 있는 모바일 어플리케이션.'],
         responsibilities: [
           '은행을 연결하고 내역을 조회하는 스크래핑 모듈을 담당하고(C/C++), 모바일 앱은 베트남 현지 협력사에서 개발',
           '크로스 플랫폼 CMAKE 빌드 구성',
@@ -113,9 +158,10 @@ const careerData = ref([
       },
       {
         name: 'Omnidoc - 문서발급 솔루션',
+        pageId: 'omnidoc',
         period: '2019년 4월 ~ 2020년 12월',
         technologies: ['C/C++'],
-        description: ['17여개의 민원사이트에서 40여개의 민원문서를 발급할 수 있는 솔루션. 타사의 서비스에 탑재되어 고객의 민간업무를 대행해주는 편리한 서비스 제공합니다.'],
+        description: ['17여개의 민원사이트에서 40여개의 민원문서를 발급할 수 있는 솔루션.'],
         responsibilities: [
           '금융결제원 Payinfo, 신용조회 KCB, 범죄자조회 Crime 등의 사이트 스크래핑 담당'
         ]
@@ -132,6 +178,7 @@ const careerData = ref([
       // },
       {
         name: '하나1QPay NFC 결제모듈',
+        pageId: 'hana',
         period: '2017년 6월 ~ 2018년 8월',
         technologies: ['Java', 'C/C++'],
         description: ['하나카드 1QPay 앱에 탑재되는 NFC 모듈로 지불카드의 token화 보안 서비스와, HCE 스펙을 따라 NFC 결제 통신을 제공합니다.'],
@@ -142,10 +189,11 @@ const careerData = ref([
         ]
       },
       {
-        name: 'TaSIM - 대형가맹점 직승인 프로젝트',
+        name: 'TaSIM - 대형가맹점 직승인',
+        pageId: 'tasim',
         period: '2017년 1월 ~ 2017년 6월',
         technologies: ['Java Card OS', 'MFC'],
-        description: ['카드사와 가맹점 사이의 E2E 암호화를 수행하는 임베디드 카드 암호화 모듈입니다. 중간 VAN사의 영향을 받지 않고, 가맹점 단말기와 카드사 간의 암호화를 제공합니다. 여신협회 taSIM Application Specification 인증, EMVCo 및 CC(Common Criteria) 인증을 취득하고 구현했습니다.'],
+        description: ['카드사와 가맹점 사이의 E2E 암호화를 수행하는 임베디드 카드 암호화 모듈입니다.'],
         responsibilities: [
           'JavaCOS 에 Applet 유지보수 및 탑재하여 가맹점의 카드 리더 단말기에 장착',
           'Applet 설치용 MFC UI 제작'
@@ -158,20 +206,22 @@ const careerData = ref([
 // 프리랜서 프로젝트 데이터
 const freelanceData = ref([
   {
-    name: 'MGX 모바일 게임 시세조회 어플리케이션',
+    name: 'MGX 모바일 게임 시세조회',
+    pageId: 'freelance',
     period: '2021년 1월 ~ 2021년 3월',
     technologies: ['ReactNative'],
-    description: ['리니지m, 리니지2m, 바람의나라 등 모바일 게임의 시세조회, 시세추이, 거래소 아이템 검색 등을 제공하는 어플리케이션. 소식 전하기, 커뮤니티 기능을 제공합니다.'],
+    description: ['리니지m, 리니지2m, 바람의나라 등 모바일 게임의 시세조회, 시세추이, 거래소 아이템 검색 등을 제공하는 어플리케이션.'],
     responsibilities: [
       '어플리케이션 제작 담당',
       '구글 로그인을 위한 Firebase 연동 및 카카오 로그인 연동'
     ]
   },
   {
-    name: 'KlookPay - KlookPay POC 어플리케이션',
+    name: 'KlookPay - KlookPay POC',
+    pageId: 'freelance',
     period: '2020년 9월 ~ 2020년 11월',
-    technologies: ['NodeJS', 'Angular', 'NativeScript', 'ExpressJS', 'Docker'],
-    description: ['KB카드에서 진행하는 KlookPay 프로젝트의 POC 어플리케이션. KlookPay는 KB카드의 마일리지, 포인트 및 결제 시스템을 Klook에 연동하는 서비스입니다.'],
+    technologies: ['Angular', 'NativeScript', 'ExpressJS', 'Docker'],
+    description: ['KB카드에서 진행하는 KlookPay 프로젝트의 POC 어플리케이션.'],
     responsibilities: [
       'KB카드와 협업하여 안드로이드 앱 기술지원을 진행 (Nativescript-ng)',
       '기존 Angular 개인프로젝트로 진행했던 경험을 바탕으로 현재 버전의 Angular에 맞는 스터디를 다시 진행하고, 어플리케이션 제작',
@@ -183,8 +233,8 @@ const freelanceData = ref([
 // 발표 및 컨퍼런스 데이터
 const presentationData = ref([
   {
-    title: '데이터독 Observability Day 2024 발표',
-    event: 'Datadog Korea Observability Day 2024 - 웨이스트 매니지먼트 스타트업 프론트엔드 개발자의 Datadog을 활용한 효율적인 모니터링 시스템 구축기',
+    title: '데이터독 Datadog Live Seoul 2024 발표',
+    event: 'Datadog Live Seoul 2024 - 웨이스트 매니지먼트 스타트업 프론트엔드 개발자의 Datadog을 활용한 효율적인 모니터링 시스템 구축기',
     period: '2024년 9월',
     description: ['O2O 환경의 리코 특성을 살려 데이터독을 에러 분석과 사용성 측정 면에서 활용한 경험을 공유했습니다.'],
     topics: [
@@ -193,9 +243,18 @@ const presentationData = ref([
       '사용성 측정: Custom Action 활용, Funnel 전환율 측정'
     ],
     link: 'https://tech.e3view.com/content/files/2024/10/--------------------------------------------------------------------------------------.pdf',
-    eventLink: 'https://www.datadoghq.com/ko/event/datadogliveseoul2024/#speakers'
+    eventLink: 'https://www.datadoghq.com/ko/event/datadogliveseoul2024/#speakers',
+    pageId: 'datadog'
   }
 ]);
+
+const emit = defineEmits(['select-project']);
+
+const onProjectClick = (pageId?: string) => {
+  if (pageId) {
+    emit('select-project', pageId);
+  }
+};
 </script>
 
 <template>
@@ -263,10 +322,11 @@ const presentationData = ref([
       <section class="section">
         <h2 class="section-title">기술 스택</h2>
 
-        <div class="tech-stack-horizontal">
-          <div v-for="tech in techStackData" :key="tech.name" class="tech-item-horizontal"
+        <div class="tech-stack-grid">
+          <div v-for="tech in techStackData" :key="tech.name" class="tech-item-grid"
             :class="{ 'main-tech': tech.isMain }">
-            {{ tech.name }}
+            <img v-if="tech.icon" :src="tech.icon" :alt="tech.name" class="tech-icon" />
+            <span class="tech-name">{{ tech.name }}</span>
           </div>
         </div>
       </section>
@@ -314,39 +374,35 @@ const presentationData = ref([
             </div>
           </div>
 
-          <!-- 프로젝트별 상세 -->
-          <div class="projects">
-            <div v-for="project in career.projects" :key="project.name" class="project-item">
-              <div class="project-header">
-                <h4 class="project-name">{{ project.name }}</h4>
-                <div class="project-meta">
-                  <span class="project-period">{{ project.period }}</span>
-                  <div class="project-tech-list">
-                    <span
-                      v-for="tech in project.technologies"
-                      :key="tech"
-                      class="project-tech-chip"
-                    >
-                      {{ tech }}
-                    </span>
-                  </div>
+          <!-- 프로젝트별 상세 (카드형) -->
+          <!-- 프로젝트별 상세 (카드형) -->
+          <div class="projects-grid">
+            <div v-for="project in career.projects" :key="project.name" class="project-card"
+              :class="{ 'clickable': !!project.pageId }" @click="onProjectClick(project.pageId)">
+              <div class="project-card-header">
+                <div class="header-top">
+                  <h4 class="project-name">{{ project.name }}</h4>
+                  <svg v-if="project.pageId" class="arrow-icon" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                      stroke-linejoin="round" />
+                  </svg>
+                </div>
+                <span class="project-period">{{ project.period }}</span>
+              </div>
+
+              <div class="project-tech-list">
+                <div v-for="tech in project.technologies" :key="tech" class="project-tech-icon" :title="tech">
+                  <img v-if="getTechIcon(tech)" :src="getTechIcon(tech)!" :alt="tech" class="tech-icon-img" />
+                  <span v-else class="tech-icon-fallback">{{ tech }}</span>
+                  <div class="tech-tooltip">{{ tech }}</div>
                 </div>
               </div>
 
-              <div>
+              <div class="project-description-wrapper">
                 <p v-for="description in project.description" :key="description" class="project-description">
                   {{ description }}
                 </p>
-              </div>
-
-              <div v-if="project.responsibilities" class="project-responsibilities">
-                <h5 class="responsibilities-title">기여 및 성과</h5>
-                <ul class="responsibilities-list">
-                  <li v-for="responsibility in project.responsibilities" :key="responsibility"
-                    class="responsibility-item">
-                    {{ responsibility }}
-                  </li>
-                </ul>
               </div>
             </div>
           </div>
@@ -357,9 +413,20 @@ const presentationData = ref([
         <h2 class="section-title">발표 & 컨퍼런스</h2>
 
         <div class="presentations">
-          <div v-for="presentation in presentationData" :key="presentation.title" class="presentation-item">
+          <div v-for="presentation in presentationData" :key="presentation.title" class="presentation-item"
+            :class="{ 'clickable': !!presentation.pageId }" @click="onProjectClick(presentation.pageId)">
             <div class="presentation-header">
-              <h3 class="presentation-name">{{ presentation.title }}</h3>
+              <div class="presentation-header-top">
+                <div class="presentation-title-wrapper">
+                  <img v-if="presentation.pageId === 'datadog'" :src="getTechIcon('Datadog')!" alt="Datadog" class="presentation-icon" />
+                  <h3 class="presentation-name">{{ presentation.title }}</h3>
+                </div>
+                <svg v-if="presentation.pageId" class="arrow-icon" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                  xmlns="http://www.w3.org/2000/svg">
+                  <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                    stroke-linejoin="round" />
+                </svg>
+              </div>
               <div class="presentation-meta">
                 <span class="presentation-period white-space-nowrap">{{ presentation.period }}</span>
                 <span class="presentation-event">{{ presentation.event }}</span>
@@ -402,35 +469,33 @@ const presentationData = ref([
       <section class="section">
         <h2 class="section-title">기타 프로젝트</h2>
 
-        <div class="freelance-projects">
-          <div v-for="project in freelanceData" :key="project.name" class="freelance-item">
-            <div class="project-header">
-              <h3 class="project-name">{{ project.name }}</h3>
-              <div class="project-meta">
-                <span class="project-period">{{ project.period }}</span>
-                <div class="project-tech-list">
-                  <span
-                    v-for="tech in project.technologies"
-                    :key="tech"
-                    class="project-tech-chip"
-                  >
-                    {{ tech }}
-                  </span>
-                </div>
+        <div class="projects-grid">
+          <div v-for="project in freelanceData" :key="project.name" class="project-card"
+            :class="{ 'clickable': !!project.pageId }" @click="onProjectClick(project.pageId)">
+            <div class="project-card-header">
+              <div class="header-top">
+                <h4 class="project-name">{{ project.name }}</h4>
+                <svg v-if="project.pageId" class="arrow-icon" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                  xmlns="http://www.w3.org/2000/svg">
+                  <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                    stroke-linejoin="round" />
+                </svg>
+              </div>
+              <span class="project-period">{{ project.period }}</span>
+            </div>
+
+            <div class="project-tech-list">
+              <div v-for="tech in project.technologies" :key="tech" class="project-tech-icon" :title="tech">
+                <img v-if="getTechIcon(tech)" :src="getTechIcon(tech)!" :alt="tech" class="tech-icon-img" />
+                <span v-else class="tech-icon-fallback">{{ tech }}</span>
+                <div class="tech-tooltip">{{ tech }}</div>
               </div>
             </div>
 
-            <p v-for="description in project.description" :key="description" class="project-description">{{
-              description }}</p>
-
-            <div class="project-responsibilities">
-              <h4 class="responsibilities-title">기여 및 성과</h4>
-              <ul class="responsibilities-list">
-                <li v-for="responsibility in project.responsibilities" :key="responsibility"
-                  class="responsibility-item">
-                  {{ responsibility }}
-                </li>
-              </ul>
+            <div class="project-description-wrapper">
+              <p v-for="description in project.description" :key="description" class="project-description">
+                {{ description }}
+              </p>
             </div>
           </div>
         </div>
@@ -642,23 +707,52 @@ const presentationData = ref([
   }
 }
 
-/* Tech Stack Horizontal */
-.tech-stack-horizontal {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
+/* Tech Stack Grid */
+.tech-stack-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+  gap: 12px;
 
-  .tech-item-horizontal {
+  .tech-item-grid {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
     background: #f0f0f0;
-    padding: 8px 16px;
-    border-radius: 20px;
-    font-size: 14px;
-    color: #555;
+    padding: 12px;
+    border-radius: 8px;
+    min-height: 70px;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+
+    &:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    .tech-icon {
+      width: 24px;
+      height: 24px;
+      object-fit: contain;
+      flex-shrink: 0;
+    }
+
+    .tech-name {
+      font-size: 11px;
+      color: #555;
+      text-align: center;
+      font-weight: 500;
+      line-height: 1.3;
+      word-break: keep-all;
+    }
 
     &.main-tech {
       background: #333;
-      color: white;
-      font-weight: 500;
+
+      .tech-name {
+        color: white;
+        font-weight: 600;
+      }
     }
   }
 }
@@ -737,80 +831,193 @@ const presentationData = ref([
 }
 
 /* Projects */
-.projects {
+/* Projects Grid - Modern & Clean */
+.projects-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.project-card {
+  background: #fff;
+  border: 1px solid #e0e0e0;
+  border-radius: 12px;
+  padding: 24px;
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  position: relative;
   display: flex;
   flex-direction: column;
-  gap: 40px;
+  height: 100%;
+  box-sizing: border-box;
 
-  .project-item {
-    border-left: 2px solid #eee;
-    padding-left: 20px;
+  &.main-project {
+    border: 2px solid #333;
+    background: linear-gradient(135deg, #fafafa 0%, #ffffff 100%);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
 
-    &.main-project {
-      border-left: 2px solid #333;
+    .project-name {
+      color: #1a1a1a;
+      font-size: 18px;
+      font-weight: 800;
     }
 
-    .project-header {
-      margin-bottom: 15px;
+    &.clickable:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 28px rgba(0, 0, 0, 0.15);
+      border-color: #333;
+    }
+  }
+
+  &.clickable {
+    cursor: pointer;
+
+    &:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 24px rgba(0, 0, 0, 0.08);
+      border-color: #333;
+
+      .arrow-icon {
+        opacity: 1;
+        animation: arrow-move 1.5s ease-in-out infinite;
+      }
+    }
+  }
+
+  .project-card-header {
+    margin-bottom: 16px;
+
+    .header-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 6px;
 
       .project-name {
-        font-size: 18px;
-        font-weight: 600;
-        color: #333;
-        margin-bottom: 5px;
+        font-size: 17px;
+        font-weight: 700;
+        color: #1a1a1a;
+        margin: 0;
+        line-height: 1.3;
       }
 
-      .project-meta {
+      .arrow-icon {
+        color: #999;
+        opacity: 0.7;
+        transition: all 0.3s ease;
+        flex-shrink: 0;
+        margin-left: 8px;
+        animation: arrow-move 1.5s ease-in-out infinite;
+      }
+    }
+
+    .project-period {
+      font-size: 13px;
+      color: #888;
+      font-weight: 400;
+    }
+  }
+
+  .project-tech-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 16px;
+
+    .project-tech-icon {
+      position: relative;
+      width: 16px;
+      height: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+
+      .tech-icon-img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+        transition: transform 0.2s ease;
+      }
+
+      .tech-icon-fallback {
+        width: 16px;
+        height: 16px;
         display: flex;
-        flex-wrap: wrap;
-        gap: 10px;
-        font-size: 13px;
-        color: #888;
-
-        .project-tech-list {
-          display: flex;
-          flex-wrap: wrap;
-          gap: 2px;
-        }
-
-        .project-tech-chip {
-          padding: 1px 6px;
-          border-radius: 999px;
-          background: #f0f0f0;
-          color: #555;
-          font-size: 12px;
-        }
-      }
-    }
-
-    .project-description {
-      font-size: 14px;
-      color: #555;
-      margin-bottom: 15px;
-      line-height: 1.6;
-    }
-
-    .project-responsibilities {
-      .responsibilities-title {
-        font-size: 14px;
-        font-weight: 600;
-        color: #333;
-        margin-bottom: 8px;
+        align-items: center;
+        justify-content: center;
+        border-radius: 4px;
+        background: #f3f4f6;
+        color: #4b5563;
+        font-size: 8px;
+        font-weight: 500;
+        text-align: center;
+        padding: 2px;
+        line-height: 1.2;
+        word-break: break-all;
       }
 
-      .responsibilities-list {
-        padding-left: 18px;
+      .tech-tooltip {
+        position: absolute;
+        bottom: calc(100% + 8px);
+        left: 50%;
+        transform: translateX(-50%);
+        background: #333;
+        color: #fff;
+        padding: 6px 10px;
+        border-radius: 6px;
+        font-size: 12px;
+        white-space: nowrap;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.2s ease;
+        z-index: 1000;
 
-        .responsibility-item {
-          font-size: 13px;
-          color: #555;
-          margin-bottom: 4px;
-          line-height: 1.5;
+        &::after {
+          content: '';
+          position: absolute;
+          top: 100%;
+          left: 50%;
+          transform: translateX(-50%);
+          border: 5px solid transparent;
+          border-top-color: #333;
+        }
+      }
+
+      &:hover {
+        .tech-icon-img {
+          transform: scale(1.1);
+        }
+
+        .tech-tooltip {
+          opacity: 1;
         }
       }
     }
   }
+
+  .project-description-wrapper {
+    // margin-top: auto; // Push to bottom if needed, or just flow
+
+    .project-description {
+      font-size: 14px;
+      color: #4a4a4a;
+      line-height: 1.6;
+      margin: 0;
+
+      // 3줄 말줄임 for better context
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      line-clamp: 3;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+  }
 }
+
 
 /* Responsibility Categories */
 .section-divider {
@@ -903,21 +1110,70 @@ const presentationData = ref([
 
 /* Presentations */
 .presentations {
-  display: flex;
-  flex-direction: column;
-  gap: 30px;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 24px;
 
   .presentation-item {
-    border-radius: 8px;
+    background: #fff;
+    border: 1px solid #e0e0e0;
+    border-radius: 12px;
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    box-sizing: border-box;
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+
+    &.clickable {
+      cursor: pointer;
+
+      &:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 12px 24px rgba(0, 0, 0, 0.08);
+        border-color: #333;
+      }
+    }
 
     .presentation-header {
       margin-bottom: 15px;
+
+      .presentation-header-top {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        margin-bottom: 5px;
+      }
+
+      .presentation-title-wrapper {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        flex: 1;
+      }
+
+      .presentation-icon {
+        width: 24px;
+        height: 24px;
+        object-fit: contain;
+        flex-shrink: 0;
+      }
 
       .presentation-name {
         font-size: 18px;
         font-weight: 600;
         color: #333;
-        margin-bottom: 5px;
+        margin: 0;
+        line-height: 1.3;
+      }
+
+      .arrow-icon {
+        color: #999;
+        opacity: 0.7;
+        transition: all 0.3s ease;
+        flex-shrink: 0;
+        margin-left: 8px;
+        animation: arrow-move 1.5s ease-in-out infinite;
       }
 
       .presentation-meta {
@@ -962,6 +1218,7 @@ const presentationData = ref([
     .presentation-links {
       display: flex;
       gap: 15px;
+      margin-top: auto;
 
       .link {
         font-size: 13px;
@@ -1045,6 +1302,15 @@ const presentationData = ref([
         }
       }
     }
+  }
+}
+
+@keyframes arrow-move {
+  0%, 100% {
+    transform: translateX(0);
+  }
+  50% {
+    transform: translateX(6px);
   }
 }
 </style>
