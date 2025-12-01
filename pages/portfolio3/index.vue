@@ -36,17 +36,17 @@ let typewriterScrollTrigger: ScrollTrigger | null = null
 
 // Pages data
 const pages = ref([
-  { id: 'resume', title: '이력서', type: 'resume', color: '#ffeb3b', rotation: -2, component: markRaw(ResumePaper), tapeImage: 'masking2.png' },
+  { id: 'resume', title: '이력서', type: 'resume', color: '#ffeb3b', rotation: -2, component: markRaw(ResumePaper), tapeImage: 'masking1.png' },
   // { id: 'upbox', title: '업박스 클라우드', type: 'portfolio', color: '#4caf50', rotation: 1, component: markRaw(UpboxCloud), tapeImage: 'masking2.png' },
   { id: 'upbox2', title: '업박스 클라우드', type: 'portfolio', color: '#4caf50', rotation: 1, component: markRaw(UpboxCloud2), tapeImage: 'masking2.png' },
   { id: 'reco', title: '리코 홈페이지', type: 'portfolio', color: '#2196f3', rotation: -1, component: markRaw(RicoHomepage), tapeImage: 'masking2.png' },
   { id: 'datadog', title: '데이터독 발표', type: 'portfolio', color: '#ff9800', rotation: 2, component: markRaw(DatadogTalk), tapeImage: 'masking2.png' },
-  { id: 'bankb', title: '뱅크비', type: 'portfolio', color: '#3f51b5', rotation: 1, component: markRaw(BankB), tapeImage: 'masking4.png' },
-  { id: 'omnidoc', title: 'Omnidoc', type: 'portfolio', color: '#00bcd4', rotation: -1, component: markRaw(Omnidoc), tapeImage: 'masking4.png' },
+  { id: 'bankb', title: '뱅크비', type: 'portfolio', color: '#3f51b5', rotation: 1, component: markRaw(BankB), tapeImage: 'masking3.png' },
+  { id: 'omnidoc', title: 'Omnidoc', type: 'portfolio', color: '#00bcd4', rotation: -1, component: markRaw(Omnidoc), tapeImage: 'masking3.png' },
   // { id: 'open', title: '오픈망 직승인', type: 'portfolio', color: '#8bc34a', rotation: 2, component: markRaw(OpenApproval), tapeImage: 'masking3.png' },
   { id: 'hana', title: '하나 1QPay', type: 'portfolio', color: '#e91e63', rotation: -2, component: markRaw(Hana1QPay), tapeImage: 'masking4.png' },
   { id: 'tasim', title: 'TaSIM', type: 'portfolio', color: '#607d8b', rotation: 1, component: markRaw(Tasim), tapeImage: 'masking4.png' },
-  { id: 'freelance', title: '그 외', type: 'portfolio', color: '#9c27b0', rotation: -2, component: markRaw(FreelanceProjects), tapeImage: 'masking5.png' },
+  { id: 'freelance', title: '그 외', type: 'portfolio', color: '#9c27b0', rotation: -2, component: markRaw(FreelanceProjects), tapeImage: 'masking4.png' },
 
 ])
 
@@ -95,7 +95,7 @@ const openPortfolio = () => {
     y: window.innerHeight * 1.5,
     opacity: 0,
     duration: 0.8,
-    ease: 'power2.in',
+    ease: 'power2.out',
     onComplete: () => {
       isReading.value = true
       // Initialize stack order if needed, ensuring Resume (0) is top
@@ -391,14 +391,18 @@ const updateStackState = (immediate = false) => {
       const safeLeftSpace = Math.max(0, leftMargin - 40) // 40px padding
 
       // User wants "very little" spread
-      const maxSpacing = 15 // Tight spacing
+      const maxSpacing = 5 // Reduced spacing
       const availableSpacing = safeLeftSpace / (totalPages - 1 || 1)
       const xSpacing = Math.min(maxSpacing, availableSpacing)
 
       x = -1 * xSpacing * reverseIndex
 
-      // Subtle rotation
-      rotationZ += -1 * reverseIndex * 0.3
+      // 뒤쪽 문서로 갈수록 아래로 배치
+      const yOffset = 8 // 각 문서마다 8px씩 아래로
+      y = reverseIndex * yOffset
+
+      // 부채꼴 효과를 위한 회전 각도 증가
+      rotationZ += -1 * reverseIndex * 0.4
     } else if (!isCurrent) {
       // Stack state compensation with subtle fan effect
 
@@ -434,7 +438,7 @@ const updateStackState = (immediate = false) => {
     } else {
       gsap.to(el, {
         ...animationProps,
-        duration: 0.5,
+        duration: 0.3,
         ease: 'power2.out'
       })
     }
@@ -588,7 +592,7 @@ const triggerAutoAnimation = () => {
 
   // 2. 이력서가 상단으로 올라간 후 1초 대기
   autoTimeline.to({}, {
-    duration: 1,
+    duration: 0.5,
     onComplete: () => {
       console.log('1 second wait completed')
     }
@@ -598,7 +602,7 @@ const triggerAutoAnimation = () => {
   const sceneProgress = { value: 0 }
   autoTimeline.to(sceneProgress, {
     value: 1,
-    duration: 1,
+    duration: 0.7,
     ease: 'power2.in',
     onUpdate: function () {
       if (typewriterSceneRef.value && typewriterSceneRef.value.moveSceneDown) {
@@ -615,9 +619,10 @@ const triggerAutoAnimation = () => {
       // 데스크 뷰 표시 (fade in 효과)
       if (deskContainerRef.value) {
         gsap.to(deskContainerRef.value, {
+          delay: 0.5,
           y: '0%',
           opacity: 1,
-          duration: 1,
+          duration: 0.5,
           ease: 'power2.out',
           onComplete: () => {
             // desk가 나타나면 스크롤을 못하도록 showTypewriter를 false로 설정
@@ -689,7 +694,8 @@ onUnmounted(() => {
 
           <!-- Pages Stack -->
           <div class="pages-stack">
-            <div v-for="(page, index) in pages" :key="page.id" :ref="(el) => setPageRef(el, index)" class="page-sheet">
+            <div v-for="(page, index) in pages" :key="page.id" :ref="(el) => setPageRef(el, index)" 
+              class="page-sheet" :class="{ 'inactive': index !== currentPageIndex }">
               <!-- Attached Post-it Tab -->
               <div class="post-it-tab" :style="{
                 top: `${40 + index * 60 + (isHoveringTabs ? 0 : page.rotation * 7)}px`
@@ -1014,10 +1020,10 @@ onUnmounted(() => {
 /* Post-it Tabs (Attached to Page) */
 .post-it-tab {
   position: absolute;
-  left: -100px; // Positioned to stick out from the stack
-  width: 120px;
+  left: -100px; // Positioned to stick out from the stack (moved further inward)
+  width: 160px;
   height: 55px;
-  padding: 10px 25px 10px 15px; // Adjust padding to center text visually
+  padding: 10px 15px 10px 15px; // Adjust padding for left alignment
   box-sizing: border-box;
   font-size: 0.8rem;
   font-weight: 600;
@@ -1028,18 +1034,19 @@ onUnmounted(() => {
   transition: width 0.2s ease, left 0.2s ease, top 0.3s ease;
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start; // Left align text
   // clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%); // Removed clip-path
   // border-radius: 2px 0 0 2px; // Removed border-radius
   z-index: 10; // Ensure tabs are above the page content
   pointer-events: auto; // Re-enable interactions
   background-color: transparent; // Transparent background
+  overflow: visible; // Allow tape to extend beyond bounds
 
   .tape-bg {
     position: absolute;
     top: 0;
-    left: 0;
-    width: 100%;
+    left: -15px; // Extend to the left
+    width: calc(100% + 30px); // Extend 15px on each side
     height: 100%;
     object-fit: fill;
     z-index: -1;
@@ -1052,8 +1059,8 @@ onUnmounted(() => {
   }
 
   &:hover {
-    width: 130px;
-    left: -110px; // Move further out on hover
+    width: 170px;
+    left: -70px; // Move further out on hover (adjusted for new position)
   }
 }
 
@@ -1063,6 +1070,18 @@ onUnmounted(() => {
   position: relative;
   z-index: 1;
   opacity: 0.95; // Allow texture to show through
+}
+
+.page-face {
+  transition: filter 0.3s ease;
+}
+
+.page-sheet.inactive .page-face {
+  filter: brightness(0.8);
+}
+
+.page-sheet.inactive .tape-bg {
+  filter: none !important; // 마스킹 테이프는 어둡게 하지 않음
 }
 
 .resume-page {

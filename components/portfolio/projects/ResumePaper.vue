@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref, computed, onMounted, onUnmounted, nextTick } from 'vue';
 import dayjs from 'dayjs';
 
 // 타입 정의
@@ -94,6 +94,8 @@ const techStackData = ref([
 const careerData = ref([
   {
     company: '주식회사 리코',
+    logo: '/assets/portfolio/reco_logo.png',
+    description: '폐기물 매니지먼트 클라우드 서비스 기업',
     period: '2021년 1월 ~ 재직중',
     duration: '약 4년 8개월',
     position: '프론트엔드 개발자',
@@ -138,6 +140,8 @@ const careerData = ref([
   },
   {
     company: '주식회사 뱅크비',
+    logo: '/assets/portfolio/bankbee_logo.png',
+    description: '스크래핑 전문 핀테크 기업',
     period: '2017년 1월 ~ 2020년 12월',
     duration: '약 4년',
     position: 'C++ 개발자',
@@ -255,6 +259,133 @@ const onProjectClick = (pageId?: string) => {
     emit('select-project', pageId);
   }
 };
+
+// Career Timeline Logic
+const timelineContainer = ref<HTMLElement | null>(null);
+const timelineDots = ref<(HTMLElement | null)[]>([]);
+const svgPath = ref('');
+
+// Get year from period string
+const getYear = (period: string): string => {
+  const match = period.match(/(\d{4})년/);
+  return match ? match[1] : '';
+};
+
+// Calculate duration from period string
+const calculateDuration = (period: string): string => {
+  const startMatch = period.match(/(\d{4})년\s*(\d{1,2})월/);
+  if (!startMatch) return '';
+  
+  const startYear = parseInt(startMatch[1]);
+  const startMonth = parseInt(startMatch[2]) - 1; // dayjs month is 0-indexed
+  
+  let endYear: number, endMonth: number;
+  
+  if (period.includes('재직중') || period.includes('진행중')) {
+    const now = dayjs();
+    endYear = now.year();
+    endMonth = now.month();
+  } else {
+    const endMatches = period.matchAll(/(\d{4})년\s*(\d{1,2})월/g);
+    const matchesArray = Array.from(endMatches);
+    if (matchesArray.length < 2) return '';
+    const endDate = matchesArray[1];
+    endYear = parseInt(endDate[1]);
+    endMonth = parseInt(endDate[2]) - 1;
+  }
+  
+  const start = dayjs().year(startYear).month(startMonth).date(1);
+  const end = dayjs().year(endYear).month(endMonth).date(1);
+  
+  const years = end.diff(start, 'year');
+  const months = end.diff(start.add(years, 'year'), 'month');
+  
+  if (years === 0) {
+    return `약 ${months}개월`;
+  } else if (months === 0) {
+    return `약 ${years}년`;
+  } else {
+    return `약 ${years}년 ${months}개월`;
+  }
+};
+
+// Sort career data by year (newest first)
+const sortedCareerData = computed(() => {
+  return [...careerData.value].sort((a, b) => {
+    const yearA = parseInt(getYear(a.period));
+    const yearB = parseInt(getYear(b.period));
+    return yearB - yearA; // Reverse order: newest first
+  });
+});
+
+// Ref callback to collect dots
+const setDotRef = (el: HTMLElement | null, index: number) => {
+  if (el) {
+    timelineDots.value[index] = el;
+  }
+};
+
+const updateTimelinePath = () => {
+  const dots = timelineDots.value.filter(dot => dot !== null) as HTMLElement[];
+  if (!timelineContainer.value || dots.length < 2) return;
+
+  const containerRect = timelineContainer.value.getBoundingClientRect();
+  let path = '';
+
+  for (let i = 0; i < dots.length - 1; i++) {
+    const dot1 = dots[i].getBoundingClientRect();
+    const dot2 = dots[i + 1].getBoundingClientRect();
+
+    const x1 = dot1.left + dot1.width / 2 - containerRect.left;
+    const y1 = dot1.top + dot1.height / 2 - containerRect.top;
+    const x2 = dot2.left + dot2.width / 2 - containerRect.left;
+    const y2 = dot2.top + dot2.height / 2 - containerRect.top;
+
+    // Calculate control point for curved line (alternate left and right)
+    const midX = (x1 + x2) / 2;
+    const cpY = (y1 + y2) / 2;
+    // Alternate curve direction: even index curves left, odd index curves right
+    const curveOffset = 40; // Reduced from 80 for gentler curve
+    const cpX = i % 2 === 0 ? midX - curveOffset : midX + curveOffset;
+
+    if (i === 0) {
+      path += `M ${x1} ${y1}`;
+    }
+    path += ` Q ${cpX} ${cpY} ${x2} ${y2}`;
+  }
+
+  svgPath.value = path;
+};
+
+let resizeObserver: ResizeObserver | null = null;
+
+onMounted(() => {
+  nextTick(() => {
+    // Initialize dots array size (current + career items)
+    const totalDots = sortedCareerData.value.length + 1; // current + career items
+    timelineDots.value = new Array(totalDots).fill(null);
+    
+    // Wait for DOM to update
+    setTimeout(() => {
+      updateTimelinePath();
+
+      if (timelineContainer.value) {
+        resizeObserver = new ResizeObserver(() => {
+          updateTimelinePath();
+        });
+        resizeObserver.observe(timelineContainer.value);
+      }
+      window.addEventListener('resize', updateTimelinePath);
+    }, 100);
+  });
+});
+
+onUnmounted(() => {
+  if (resizeObserver) {
+    resizeObserver.disconnect();
+  }
+  window.removeEventListener('resize', updateTimelinePath);
+});
 </script>
 
 <template>
@@ -336,41 +467,71 @@ const onProjectClick = (pageId?: string) => {
         <h2 class="section-title">경력 (총 {{ dayjs().diff(dayjs("2017-01-01"), 'year') }}년 {{
           dayjs().diff(dayjs("2021-01-01"), 'month') % 12 }}개월)</h2>
 
-        <div class="career-summary">
-          <div class="career-timeline">
-            <div class="career-item">
-              <div class="timeline-dot"></div>
-              <div class="timeline-content">
-                <span class="company">주식회사 리코</span>
-                <div class="text-sm ml-2">
-                  폐기물 매니지먼트 클라우드 서비스 기업
-                </div>
-                <div class="flex-1"></div>
-                <span class="period">2021년 1월 ~ 재직중 (약 {{ dayjs().diff(dayjs("2021-01-01"), 'year') }}년
-                  {{ dayjs().diff(dayjs("2021-01-01"), 'month') % 12 }}개월)</span>
+        <div class="career-timeline-wrapper" ref="timelineContainer">
+          <svg class="timeline-svg">
+            <path :d="svgPath" fill="none" />
+          </svg>
+
+          <!-- Current Point -->
+          <div class="career-timeline-item dot-row">
+            <div class="timeline-left">
+              <div class="year-box year-box-current">
+                {{ new Date().getFullYear() }}
               </div>
             </div>
-            <div class="career-item">
-              <div class="timeline-dot"></div>
-              <div class="timeline-content">
-                <span class="company">주식회사 뱅크비</span>
-                <div class="text-sm ml-2">
-                  스크래핑 전문 핀테크 기업
-                </div>
-                <div class="flex-1"></div>
-                <span class="period">2017년 1월 ~ 2020년 12월 (약 4년)</span>
-              </div>
+            <div class="timeline-center">
+              <div class="timeline-dot" :ref="(el) => setDotRef(el as HTMLElement, 0)"></div>
             </div>
+            <div class="timeline-right"></div>
           </div>
+
+          <!-- Career Items -->
+          <template v-for="(career, index) in sortedCareerData" :key="career.company">
+            <!-- Content Row (between previous dot and current dot) -->
+            <div class="career-timeline-item content-row">
+              <div class="timeline-left"></div>
+              <div class="timeline-center"></div>
+              <div class="timeline-right">
+                <div class="timeline-content">
+                  <div class="company-info-wrapper">
+                    <img v-if="career.logo" :src="career.logo" :alt="career.company" class="company-logo-timeline" />
+                    <div class="company-text-wrapper">
+                      <div class="company-name">{{ career.company }}</div>
+                      <div v-if="career.period" class="company-period">{{ career.period }} ({{ calculateDuration(career.period) }})</div>
+                      <div v-if="career.description" class="company-description">
+                        {{ career.description }}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Dot Row with Year -->
+            <div class="career-timeline-item dot-row">
+              <div class="timeline-left">
+                <div class="year-box" :class="`year-box-${index + 1}`">
+                  {{ getYear(career.period) }}
+                </div>
+              </div>
+              <div class="timeline-center">
+                <div class="timeline-dot" :ref="(el) => setDotRef(el as HTMLElement, index + 1)"></div>
+              </div>
+              <div class="timeline-right"></div>
+            </div>
+          </template>
         </div>
 
         <!-- 각 회사별 상세 경력 -->
         <div v-for="career in careerData" :key="career.company" class="company-detail">
           <div class="company-header">
-            <h3 class="company-name">{{ career.company }}</h3>
+            <div class="company-header-top">
+              <img v-if="career.logo" :src="career.logo" :alt="career.company" class="company-logo" />
+              <h3 class="company-name">{{ career.company }}</h3>
+            </div>
             <div class="company-info">
               <span class="position">{{ career.position }}</span>
-              <span class="duration">{{ career.period }} ({{ career.duration }})</span>
+              <span class="duration">{{ career.period }} ({{ calculateDuration(career.period) }})</span>
             </div>
           </div>
 
@@ -758,45 +919,167 @@ const onProjectClick = (pageId?: string) => {
 }
 
 /* Career Timeline */
-.career-summary {
+.career-timeline-wrapper {
+  position: relative;
+  padding: 20px 0;
   margin-bottom: 40px;
-  background: #f9f9f9;
-  padding: 20px;
-  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 300px;
 
-  .career-timeline {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
+  .timeline-svg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: visible;
+    pointer-events: none;
+    z-index: 0;
 
-    .career-item {
+    path {
+      stroke: #666;
+      stroke-width: 1.5;
+    }
+  }
+
+  .career-timeline-item {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    width: 100%;
+    max-width: 1000px;
+    position: relative;
+    z-index: 1;
+
+    &.dot-row {
+      margin-bottom: 0;
+    }
+
+    &.content-row {
+      // margin-bottom: 20px;
+      align-items: flex-start;
+      padding-top: 5px;
+      padding-bottom: 5px;
+    }
+
+    .timeline-left {
       display: flex;
+      justify-content: flex-end;
       align-items: center;
-      gap: 15px;
+      padding-right: 40px;
+    }
 
-      .timeline-dot {
-        width: 8px;
-        height: 8px;
-        background: #333;
-        border-radius: 50%;
-      }
+    .timeline-center {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+      z-index: 2;
+    }
 
-      .timeline-content {
+    .timeline-right {
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      padding-left: 40px;
+    }
+
+    .timeline-dot {
+      width: 18px;
+      height: 18px;
+      background: #f9f9f9;
+      border: 2px solid #666;
+      border-radius: 50%;
+      flex-shrink: 0;
+      position: relative;
+      z-index: 3;
+    }
+
+    .year-box {
+      padding: 8px 20px;
+      border-radius: 8px;
+      font-weight: 600;
+      color: #333;
+      font-size: 18px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
+      border: 1px solid #e0e0e0;
+      white-space: nowrap;
+      background-color: #f9f9f9;
+    }
+
+    // Custom colors for year boxes (matching page tone)
+    .year-box-current {
+      background-color: #f0f0f0;
+      border-color: #666;
+    }
+
+    .year-box-1 {
+      background-color: #f5f5f5;
+    }
+
+    .year-box-2 {
+      background-color: #f0f0f0;
+    }
+
+    .year-box-3 {
+      background-color: #f5f5f5;
+    }
+
+    .year-box-4 {
+      background-color: #f0f0f0;
+    }
+
+    .timeline-content {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 6px;
+      max-width: 400px;
+      padding: 0;
+
+      .company-info-wrapper {
         display: flex;
         align-items: center;
-        flex: 1;
-        flex-wrap: wrap;
         gap: 10px;
+        width: 100%;
+      }
 
-        .company {
-          font-weight: 600;
-          color: #333;
-        }
+      .company-logo-timeline {
+        width: 32px;
+        height: 32px;
+        object-fit: contain;
+        flex-shrink: 0;
+      }
 
-        .period {
-          font-size: 13px;
-          color: #888;
-        }
+      .company-text-wrapper {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 4px;
+        flex: 1;
+      }
+
+      .company-name {
+        font-size: 16px;
+        font-weight: 700;
+        color: #333;
+        text-transform: uppercase;
+        margin-bottom: 2px;
+      }
+
+      .company-period {
+        color: #888;
+        font-size: 12px;
+        margin-bottom: 4px;
+      }
+
+      .company-description {
+        color: #666;
+        font-size: 13px;
+        line-height: 1.5;
+        word-break: keep-all;
       }
     }
   }
@@ -809,11 +1092,25 @@ const onProjectClick = (pageId?: string) => {
   .company-header {
     margin-bottom: 30px;
 
+    .company-header-top {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 8px;
+    }
+
+    .company-logo {
+      width: 40px;
+      height: 40px;
+      object-fit: contain;
+      flex-shrink: 0;
+    }
+
     .company-name {
       font-size: 22px;
       font-weight: 700;
       color: #333;
-      margin-bottom: 8px;
+      margin: 0;
     }
 
     .company-info {
