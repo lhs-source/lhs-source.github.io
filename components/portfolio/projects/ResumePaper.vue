@@ -264,6 +264,8 @@ const onProjectClick = (pageId?: string) => {
 const timelineContainer = ref<HTMLElement | null>(null);
 const timelineDots = ref<(HTMLElement | null)[]>([]);
 const svgPath = ref('');
+const timelineSvgWidth = ref(1000);
+const timelineSvgHeight = ref(300);
 
 // Get year from period string
 const getYear = (period: string): string => {
@@ -330,6 +332,11 @@ const updateTimelinePath = () => {
   if (!timelineContainer.value || dots.length < 2) return;
 
   const containerRect = timelineContainer.value.getBoundingClientRect();
+  
+  // SVG 크기를 컨테이너 크기와 일치시킴
+  timelineSvgWidth.value = containerRect.width;
+  timelineSvgHeight.value = containerRect.height;
+  
   let path = '';
 
   for (let i = 0; i < dots.length - 1; i++) {
@@ -468,7 +475,7 @@ onUnmounted(() => {
           dayjs().diff(dayjs("2021-01-01"), 'month') % 12 }}개월)</h2>
 
         <div class="career-timeline-wrapper" ref="timelineContainer">
-          <svg class="timeline-svg">
+          <svg class="timeline-svg" :viewBox="`0 0 ${timelineSvgWidth} ${timelineSvgHeight}`" preserveAspectRatio="none">
             <path :d="svgPath" fill="none" />
           </svg>
 
@@ -482,7 +489,11 @@ onUnmounted(() => {
             <div class="timeline-center">
               <div class="timeline-dot" :ref="(el) => setDotRef(el as HTMLElement, 0)"></div>
             </div>
-            <div class="timeline-right"></div>
+            <div class="timeline-right">
+              <div class="year-box year-box-current mobile-year-box">
+                {{ new Date().getFullYear() }}
+              </div>
+            </div>
           </div>
 
           <!-- Career Items -->
@@ -517,7 +528,11 @@ onUnmounted(() => {
               <div class="timeline-center">
                 <div class="timeline-dot" :ref="(el) => setDotRef(el as HTMLElement, index + 1)"></div>
               </div>
-              <div class="timeline-right"></div>
+              <div class="timeline-right">
+                <div class="year-box mobile-year-box" :class="`year-box-${index + 1}`">
+                  {{ getYear(career.period) }}
+                </div>
+              </div>
             </div>
           </template>
         </div>
@@ -712,7 +727,7 @@ onUnmounted(() => {
     .profile-info {
       z-index: 1;
       flex: 1;
-      padding: 0 40px; // Added padding since container padding was removed
+      padding: 0 24px; // Added padding since container padding was removed
 
       .profile-info-header {
         display: flex;
@@ -759,7 +774,7 @@ onUnmounted(() => {
 
 /* Common Styles */
 .section {
-  padding: 0 40px; // Added padding
+  padding: 0 24px; // Added padding
 }
 
 .section-title {
@@ -845,7 +860,7 @@ onUnmounted(() => {
 /* Keywords Grid */
 .keywords-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  grid-template-columns: repeat(2, minmax(200px, 1fr));
   gap: 20px;
 
   .keyword-item {
@@ -871,20 +886,31 @@ onUnmounted(() => {
 /* Tech Stack Grid */
 .tech-stack-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
-  gap: 12px;
+  grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+  gap: 8px;
+
+  @media (max-width: 720px) {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+  }
 
   .tech-item-grid {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 6px;
+    gap: 4px;
     background: #f0f0f0;
-    padding: 12px;
-    border-radius: 8px;
-    min-height: 70px;
+    padding: 8px;
+    border-radius: 6px;
+    min-height: 60px;
     transition: transform 0.2s ease, box-shadow 0.2s ease;
+
+    @media (max-width: 720px) {
+      padding: 6px;
+      min-height: 50px;
+      gap: 3px;
+    }
 
     &:hover {
       transform: translateY(-2px);
@@ -892,19 +918,29 @@ onUnmounted(() => {
     }
 
     .tech-icon {
-      width: 24px;
-      height: 24px;
+      width: 30px;
+      height: 30px;
       object-fit: contain;
       flex-shrink: 0;
+
+      @media (max-width: 720px) {
+        width: 24px;
+        height: 24px;
+      }
     }
 
     .tech-name {
-      font-size: 11px;
+      font-size: 12px;
       color: #555;
       text-align: center;
       font-weight: 500;
-      line-height: 1.3;
+      line-height: 1.4;
       word-break: keep-all;
+
+      @media (max-width: 720px) {
+        font-size: 12px;
+        line-height: 1.2;
+      }
     }
 
     &.main-tech {
@@ -928,6 +964,14 @@ onUnmounted(() => {
   align-items: center;
   min-height: 300px;
 
+  @media (max-width: 720px) {
+    align-items: center;
+    padding-left: 0;
+    margin-left: 5vw;
+    width: 100%;
+    max-width: calc(100% - 5vw);
+  }
+
   .timeline-svg {
     position: absolute;
     top: 0;
@@ -937,6 +981,10 @@ onUnmounted(() => {
     overflow: visible;
     pointer-events: none;
     z-index: 0;
+
+    @media (max-width: 720px) {
+      left: 0; // 왼쪽 간격 제거
+    }
 
     path {
       stroke: #666;
@@ -953,8 +1001,20 @@ onUnmounted(() => {
     position: relative;
     z-index: 1;
 
+    @media (max-width: 720px) {
+      grid-template-columns: auto 1fr;
+      align-items: flex-start;
+      margin-left: 0;
+      width: 100%;
+      max-width: 100%;
+    }
+
     &.dot-row {
       margin-bottom: 0;
+
+      @media (max-width: 720px) {
+        grid-template-columns: auto 1fr;
+      }
     }
 
     &.content-row {
@@ -962,6 +1022,12 @@ onUnmounted(() => {
       align-items: flex-start;
       padding-top: 5px;
       padding-bottom: 5px;
+
+      @media (max-width: 720px) {
+        grid-template-columns: auto 1fr;
+        margin-top: 16px;
+        margin-bottom: 16px;
+      }
     }
 
     .timeline-left {
@@ -969,6 +1035,10 @@ onUnmounted(() => {
       justify-content: flex-end;
       align-items: center;
       padding-right: 40px;
+
+      @media (max-width: 720px) {
+        display: none;
+      }
     }
 
     .timeline-center {
@@ -977,6 +1047,17 @@ onUnmounted(() => {
       align-items: center;
       position: relative;
       z-index: 2;
+
+      @media (max-width: 720px) {
+        justify-content: flex-start;
+        align-items: flex-start;
+        padding-right: 16px;
+        padding-top: 4px;
+        width: 18px; // dot width와 동일하게 고정
+        flex-shrink: 0;
+        // dot의 중심이 9px 위치에 오도록 조정
+        margin-left: 0;
+      }
     }
 
     .timeline-right {
@@ -984,6 +1065,14 @@ onUnmounted(() => {
       justify-content: flex-start;
       align-items: center;
       padding-left: 40px;
+
+      @media (max-width: 720px) {
+        padding-left: 36px;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+        flex: 1;
+      }
     }
 
     .timeline-dot {
@@ -995,6 +1084,12 @@ onUnmounted(() => {
       flex-shrink: 0;
       position: relative;
       z-index: 3;
+
+      @media (max-width: 720px) {
+        // dot가 SVG 선의 중앙에 오도록 조정
+        margin-left: 0;
+        margin-right: 0;
+      }
     }
 
     .year-box {
@@ -1007,6 +1102,21 @@ onUnmounted(() => {
       border: 1px solid #e0e0e0;
       white-space: nowrap;
       background-color: #f9f9f9;
+
+      // PC 화면에서 오른쪽 연도 숨김
+      &.mobile-year-box {
+        display: none;
+      }
+
+      @media (max-width: 720px) {
+        display: none;
+
+        &.mobile-year-box {
+          display: block;
+          font-size: 14px;
+          padding: 6px 12px;
+        }
+      }
     }
 
     // Custom colors for year boxes (matching page tone)
@@ -1039,11 +1149,22 @@ onUnmounted(() => {
       max-width: 400px;
       padding: 0;
 
+      @media (max-width: 720px) {
+        max-width: none;
+        width: 100%;
+      }
+
       .company-info-wrapper {
         display: flex;
         align-items: center;
         gap: 10px;
         width: 100%;
+
+        @media (max-width: 720px) {
+          flex-direction: column;
+          align-items: flex-start;
+          gap: 2px;
+        }
       }
 
       .company-logo-timeline {
@@ -1122,6 +1243,11 @@ onUnmounted(() => {
       .position {
         font-weight: 500;
         color: #333;
+      }
+
+      @media (max-width: 720px) {
+        flex-direction: column;
+        gap: 5px;
       }
     }
   }
@@ -1447,6 +1573,12 @@ onUnmounted(() => {
         align-items: center;
         gap: 8px;
         flex: 1;
+
+        @media (max-width: 720px) {
+          flex-direction: column;
+          align-items: flex-start;
+          gap: 5px;
+        }
       }
 
       .presentation-icon {
@@ -1481,6 +1613,11 @@ onUnmounted(() => {
 
         .presentation-period {
           white-space: nowrap;
+        }
+
+        @media (max-width: 720px) {
+          flex-direction: column;
+          gap: 5px;
         }
       }
     }

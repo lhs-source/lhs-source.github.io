@@ -1,4 +1,13 @@
 <script setup lang="ts">
+const techStack = ['C/C++']
+
+const techIconMap: Record<string, string> = {
+    'C/C++': '/assets/portfolio/tools/ISO_C++_Logo.svg'
+}
+
+const getTechIcon = (techName: string): string | null => {
+    return techIconMap[techName] ?? null
+}
 </script>
 
 <template>
@@ -18,6 +27,16 @@
                 <div class="content-text">
                     <p>베트남 여러 은행을 자동으로 연결해 계좌를 통합 조회하는 모바일 서비스의 스크래핑 모듈과 핵심 로직을 담당했습니다.</p>
                     <p>베트남 은행을 자동으로 연결해 입출금 내역을 조회하고, 여러 계좌를 한 번에 관리할 수 있는 통합계좌관리 서비스입니다.</p>
+                </div>
+            </section>
+
+            <section class="section">
+                <h2 class="section-title">사용 기술</h2>
+                <div class="tech-stack-grid">
+                    <div v-for="tech in techStack" :key="tech" class="tech-item-grid">
+                        <img v-if="getTechIcon(tech)" :src="getTechIcon(tech)!" :alt="tech" class="tech-icon" />
+                        <span class="tech-name">{{ tech }}</span>
+                    </div>
                 </div>
             </section>
 
@@ -43,4 +62,66 @@
 
 <style scoped lang="scss">
 @import './project-styles.scss';
+
+.tech-stack-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+    gap: 8px;
+    margin-top: 16px;
+
+    @media (max-width: 720px) {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 8px;
+    }
+
+    .tech-item-grid {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 4px;
+        background: #f0f0f0;
+        padding: 8px;
+        border-radius: 6px;
+        min-height: 60px;
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+
+        @media (max-width: 720px) {
+            padding: 6px;
+            min-height: 50px;
+            gap: 3px;
+        }
+
+        &:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .tech-icon {
+            width: 30px;
+            height: 30px;
+            object-fit: contain;
+            flex-shrink: 0;
+
+            @media (max-width: 720px) {
+                width: 24px;
+                height: 24px;
+            }
+        }
+
+        .tech-name {
+            font-size: 12px;
+            color: #555;
+            text-align: center;
+            font-weight: 500;
+            line-height: 1.4;
+            word-break: keep-all;
+
+            @media (max-width: 720px) {
+                font-size: 12px;
+                line-height: 1.2;
+            }
+        }
+    }
+}
 </style>

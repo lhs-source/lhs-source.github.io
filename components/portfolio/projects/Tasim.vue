@@ -1,4 +1,14 @@
 <script setup lang="ts">
+const techStack = ['Java Card OS', 'MFC']
+
+const techIconMap: Record<string, string> = {
+    'Java Card OS': '/assets/portfolio/tools/sim-card-chip-svgrepo-com.svg',
+    'MFC': '/assets/portfolio/tools/Microsoft_Foundation_Class_logo.svg'
+}
+
+const getTechIcon = (techName: string): string | null => {
+    return techIconMap[techName] ?? null
+}
 </script>
 
 <template>
@@ -22,6 +32,16 @@
             </section>
 
             <section class="section">
+                <h2 class="section-title">사용 기술</h2>
+                <div class="tech-stack-grid">
+                    <div v-for="tech in techStack" :key="tech" class="tech-item-grid">
+                        <img v-if="getTechIcon(tech)" :src="getTechIcon(tech)!" :alt="tech" class="tech-icon" />
+                        <span class="tech-name">{{ tech }}</span>
+                    </div>
+                </div>
+            </section>
+
+            <section class="section">
                 <h2 class="section-title">역할 및 기여</h2>
                 <div class="content-text">
                     <p><strong>담당 역할:</strong></p>
@@ -38,4 +58,66 @@
 
 <style scoped lang="scss">
 @import './project-styles.scss';
+
+.tech-stack-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+    gap: 8px;
+    margin-top: 16px;
+
+    @media (max-width: 720px) {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 8px;
+    }
+
+    .tech-item-grid {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 4px;
+        background: #f0f0f0;
+        padding: 8px;
+        border-radius: 6px;
+        min-height: 60px;
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+
+        @media (max-width: 720px) {
+            padding: 6px;
+            min-height: 50px;
+            gap: 3px;
+        }
+
+        &:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .tech-icon {
+            width: 30px;
+            height: 30px;
+            object-fit: contain;
+            flex-shrink: 0;
+
+            @media (max-width: 720px) {
+                width: 24px;
+                height: 24px;
+            }
+        }
+
+        .tech-name {
+            font-size: 12px;
+            color: #555;
+            text-align: center;
+            font-weight: 500;
+            line-height: 1.4;
+            word-break: keep-all;
+
+            @media (max-width: 720px) {
+                font-size: 12px;
+                line-height: 1.2;
+            }
+        }
+    }
+}
 </style>

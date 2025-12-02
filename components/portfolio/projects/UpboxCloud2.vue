@@ -7,8 +7,55 @@ const techStack = [
 ];
 
 const teamComposition = {
-  2020: ['백엔드(1)', '프론트(1)', '디자이너(1)', 'PM(1)'],
-  2025: ['백엔드(4)', '프론트(2)', '디자이너(2)', 'PO(3)', 'QA(1)', 'PM(1)']
+  2020: ['백엔드(1)', '프론트(1)', '디자이너(1)', 'PM&CTO(1)'],
+  2025: ['백엔드(4)', '프론트(2)', '디자이너(2)', 'PO(3)', 'QA(1)', 'PM&CTO(1)']
+};
+
+const techIconMap: Record<string, string> = {
+  'Vue3': '/assets/portfolio/tools/Vue.js_Logo_2.svg',
+  'Vite': '/assets/portfolio/tools/Vitejs-logo.svg',
+  'TypeScript': '/assets/portfolio/tools/icons8-타이프스크립트.svg',
+  'Java': '/assets/portfolio/tools/java-4-logo-svgrepo-com.svg',
+  'Android Kotlin': '/assets/portfolio/tools/kotlin-svgrepo-com.svg',
+  'Kotlin': '/assets/portfolio/tools/kotlin-svgrepo-com.svg',
+  'React': '/assets/portfolio/tools/react-svgrepo-com.svg',
+  'AWS': '/assets/portfolio/tools/aws-svgrepo-com.svg',
+  'Github Actions': '/assets/portfolio/tools/githubactions-svgrepo-com.svg',
+  'Datadog': '/assets/portfolio/tools/datadog-svgrepo-com.svg',
+  'Git': '/assets/portfolio/tools/git-svgrepo-com.svg',
+  'Storybook': '/assets/portfolio/tools/storybook-icon-svgrepo-com.svg',
+  'Atlassian': '/assets/portfolio/tools/atlassian-svgrepo-com.svg',
+  'Figma': '/assets/portfolio/tools/figma-svgrepo-com.svg',
+  'TailwindCSS': '/assets/portfolio/tools/tailwind-svgrepo-com.svg',
+  'Tailwind': '/assets/portfolio/tools/tailwind-svgrepo-com.svg',
+  'i18n': '/assets/portfolio/tools/i18n.svg',
+  'Webview': '/assets/portfolio/tools/google-webview-devtools-svgrepo-com.svg'
+};
+
+const getTechIcon = (techName: string): string | null => {
+  return techIconMap[techName] ?? null;
+};
+
+const roleIconMap: Record<string, string> = {
+  '백엔드': '/assets/portfolio/backend.png',
+  '프론트': '/assets/portfolio/front.png',
+  '디자이너': '/assets/portfolio/uiux.png',
+  'PM&CTO': '/assets/portfolio/pm.png',
+  'PO': '/assets/portfolio/po.png',
+  'QA': '/assets/portfolio/qa.svg'
+};
+
+const getRoleInfo = (role: string) => {
+  const match = role.match(/(.+)\((\d+)\)/);
+  const label = match ? match[1].trim() : role;
+  const count = match ? Number(match[2]) : 1;
+  const icon = roleIconMap[label] ?? null;
+
+  return {
+    label,
+    count,
+    icon
+  };
 };
 
 const roleCards = [
@@ -111,15 +158,29 @@ const subSectionItems = {
           <div class="team-year">
             <h3 class="year-title">2020</h3>
             <div class="member-list">
-              <span v-for="member in teamComposition[2020]" :key="member" class="member-tag">{{ member
-              }}</span>
+              <div v-for="member in teamComposition[2020]" :key="member" class="member-role">
+                <img v-if="getRoleInfo(member).icon" :src="getRoleInfo(member).icon!" :alt="getRoleInfo(member).label"
+                  class="member-role-icon" />
+                <div v-else class="member-role-placeholder">{{ getRoleInfo(member).label.charAt(0) }}</div>
+                <span class="member-role-text">
+                  {{ getRoleInfo(member).label }}
+                  <span class="member-role-count">({{ getRoleInfo(member).count }})</span>
+                </span>
+              </div>
             </div>
           </div>
           <div class="team-year">
             <h3 class="year-title">2025</h3>
             <div class="member-list">
-              <span v-for="member in teamComposition[2025]" :key="member" class="member-tag">{{ member
-              }}</span>
+              <div v-for="member in teamComposition[2025]" :key="member" class="member-role">
+                <img v-if="getRoleInfo(member).icon" :src="getRoleInfo(member).icon!" :alt="getRoleInfo(member).label"
+                  class="member-role-icon" />
+                <div v-else class="member-role-placeholder">{{ getRoleInfo(member).label.charAt(0) }}</div>
+                <span class="member-role-text">
+                  {{ getRoleInfo(member).label }}
+                  <span class="member-role-count">({{ getRoleInfo(member).count }})</span>
+                </span>
+              </div>
             </div>
           </div>
         </div>
@@ -128,9 +189,10 @@ const subSectionItems = {
       <!-- Tech Stack -->
       <section class="section">
         <h2 class="section-title">사용 기술</h2>
-        <div class="tech-stack-horizontal">
-          <div v-for="tech in techStack" :key="tech" class="tech-item-horizontal">
-            {{ tech }}
+        <div class="tech-stack-grid">
+          <div v-for="tech in techStack" :key="tech" class="tech-item-grid">
+            <img v-if="getTechIcon(tech)" :src="getTechIcon(tech)!" :alt="tech" class="tech-icon" />
+            <span class="tech-name">{{ tech }}</span>
           </div>
         </div>
       </section>
@@ -379,4 +441,121 @@ const subSectionItems = {
 
 <style scoped lang="scss">
 @import './project-styles.scss';
+
+.tech-stack-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+  gap: 8px;
+  margin-top: 16px;
+
+  @media (max-width: 720px) {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+  }
+
+  .tech-item-grid {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    background: #f0f0f0;
+    padding: 8px;
+    border-radius: 6px;
+    min-height: 60px;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+
+    @media (max-width: 720px) {
+      padding: 6px;
+      min-height: 50px;
+      gap: 3px;
+    }
+
+    &:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    .tech-icon {
+      width: 30px;
+      height: 30px;
+      object-fit: contain;
+      flex-shrink: 0;
+
+      @media (max-width: 720px) {
+        width: 24px;
+        height: 24px;
+      }
+    }
+
+    .tech-name {
+      font-size: 12px;
+      color: #555;
+      text-align: center;
+      font-weight: 500;
+      line-height: 1.4;
+      word-break: keep-all;
+
+      @media (max-width: 720px) {
+        font-size: 12px;
+        line-height: 1.2;
+      }
+    }
+  }
+}
+
+.team-grid {
+  .member-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: 12px;
+
+    @media (max-width: 720px) {
+      gap: 10px;
+    }
+  }
+
+  .member-role {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 12px;
+    border: 1px solid #ececec;
+    border-radius: 12px;
+    background: #fff;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+  }
+
+  .member-role-icon {
+    width: 32px;
+    height: 32px;
+    object-fit: contain;
+    flex-shrink: 0;
+  }
+
+  .member-role-placeholder {
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    background: #f0f0f0;
+    color: #666;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    font-size: 14px;
+  }
+
+  .member-role-text {
+    font-weight: 600;
+    color: #2c2c2c;
+  }
+
+  .member-role-count {
+    margin-left: 4px;
+    font-weight: 500;
+    color: #8a8a8a;
+  }
+}
 </style>
