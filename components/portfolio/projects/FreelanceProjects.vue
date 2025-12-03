@@ -69,7 +69,7 @@ const getTechIcon = (techName: string): string | null => {
 </template>
 
 <style scoped lang="scss">
-@import './project-styles.scss';
+@use './project-styles.scss';
 
 .tech-stack-grid {
     display: grid;

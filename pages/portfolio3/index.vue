@@ -98,8 +98,8 @@ const openPortfolio = () => {
   // 이력서가 화면 하단으로 이동하며 사라지는 애니메이션
   tl.to(deskResume, {
     y: window.innerHeight * 1.5,
-    opacity: 0,
-    duration: 0.8,
+    opacity: 1,
+    duration: 0.7,
     ease: 'power2.out',
     onComplete: () => {
       isReading.value = true
@@ -876,18 +876,20 @@ onUnmounted(() => {
             </div>
           </div>
 
-          <!-- Navigation Arrows (PC only, active page only) -->
-          <div v-if="isDesktop && isReading" class="page-navigation-arrows">
-            <button v-if="currentPageIndex > 0" class="nav-arrow nav-arrow-left" @click.stop="goToPreviousPage"
-              aria-label="이전 페이지">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <!-- Navigation Arrows -->
+          <div v-if="isReading" class="page-navigation-arrows">
+            <button class="nav-arrow nav-arrow-left" @click.stop="goToPreviousPage" :disabled="currentPageIndex === 0"
+              :class="{ 'disabled': currentPageIndex === 0 }" aria-label="이전 페이지">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M15 18L9 12L15 6" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                   stroke-linejoin="round" />
               </svg>
             </button>
-            <button v-if="currentPageIndex < pages.length - 1" class="nav-arrow nav-arrow-right"
-              @click.stop="goToNextPage" aria-label="다음 페이지">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <div class="nav-divider"></div>
+            <button class="nav-arrow nav-arrow-right" @click.stop="goToNextPage"
+              :disabled="currentPageIndex === pages.length - 1"
+              :class="{ 'disabled': currentPageIndex === pages.length - 1 }" aria-label="다음 페이지">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M9 18L15 12L9 6" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                   stroke-linejoin="round" />
               </svg>
@@ -925,6 +927,8 @@ onUnmounted(() => {
 </template>
 
 <style scoped lang="scss">
+@use '../../components/portfolio/projects/project-styles.scss';
+
 .portfolio-container {
   width: 100vw;
   min-height: 100vh;
@@ -1115,7 +1119,7 @@ onUnmounted(() => {
   display: flex;
   justify-content: center;
   align-items: center;
-  background: url('https://blog.kakaocdn.net/dna/bwpmFU/btsP3eOfPHO/AAAAAAAAAAAAAAAAAAAAAG_g7Pf8IJuIcI_oYMNCZLKgUNKw_Y2d5UxlGwGD_jeZ/img.png?credential=yqXZFxpELC7KVnFOS48ylbz2pIh7yKj8&expires=1764514799&allow_ip=&allow_referer=&signature=X3Xxsm%2FBzrLRWaEHKSNkWo6kX5Y%3D') no-repeat center center;
+  background: url('/assets/portfolio/axe.png') no-repeat center center;
   background-size: cover;
 
   .desk-surface {
@@ -1146,7 +1150,7 @@ onUnmounted(() => {
   justify-content: center;
   align-items: center;
   // Use the same background
-  background: url('https://blog.kakaocdn.net/dna/bwpmFU/btsP3eOfPHO/AAAAAAAAAAAAAAAAAAAAAG_g7Pf8IJuIcI_oYMNCZLKgUNKw_Y2d5UxlGwGD_jeZ/img.png?credential=yqXZFxpELC7KVnFOS48ylbz2pIh7yKj8&expires=1764514799&allow_ip=&allow_referer=&signature=X3Xxsm%2FBzrLRWaEHKSNkWo6kX5Y%3D') no-repeat center center;
+  background: url('/assets/portfolio/axe.png') no-repeat center center;
   background-size: cover;
   perspective: 2500px; // Increased perspective for better 3D feel
   position: relative;
@@ -1339,71 +1343,68 @@ onUnmounted(() => {
 }
 
 /* Page Navigation Arrows (PC only) */
+/* Page Navigation Arrows */
 .page-navigation-arrows {
   position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  pointer-events: none;
+  left: 50%;
+  transform: translateX(-50%);
   z-index: 1000;
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  padding: 0 20px;
-  box-sizing: border-box;
-  will-change: transform;
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 24px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  padding: 4px;
+  gap: 0; // Attached
+
+  // PC: Top Center
+  top: 20px;
+  bottom: auto;
 
   @media (max-width: 720px) {
-    display: none;
+    // Mobile: Bottom Center
+    top: auto;
+    bottom: 20px;
   }
 
   .nav-arrow {
-    position: fixed;
-    width: 48px;
-    height: 48px;
-    top: 50vh;
-    left: auto;
-    right: auto;
-    transform: translateY(-50%);
-    border-radius: 50%;
-    background: rgba(255, 255, 255, 0.9);
-    border: 1px solid rgba(0, 0, 0, 0.1);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    width: 40px;
+    height: 40px;
+    border: none;
+    background: transparent;
     display: flex;
     align-items: center;
     justify-content: center;
     cursor: pointer;
-    pointer-events: auto;
-    transition: all 0.3s ease;
     color: #333;
-    will-change: transform;
-    margin: 0;
+    transition: background 0.2s ease;
+    border-radius: 20px; // Pill ends
 
-    &:hover {
-      background: rgba(255, 255, 255, 1);
-      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
-      transform: translateY(-50%) scale(1.1);
+    &:hover:not(.disabled) {
+      background: rgba(0, 0, 0, 0.05);
     }
 
-    &:active {
-      transform: translateY(-50%) scale(0.95);
+    &:active:not(.disabled) {
+      background: rgba(0, 0, 0, 0.1);
+    }
+
+    &.disabled {
+      opacity: 0.3;
+      cursor: not-allowed;
     }
 
     svg {
-      width: 24px;
-      height: 24px;
+      width: 20px;
+      height: 20px;
     }
   }
 
-  .nav-arrow-left {
-    left: 20px !important;
-    right: auto !important;
-  }
-
-  .nav-arrow-right {
-    right: 20px !important;
-    left: auto !important;
+  .nav-divider {
+    width: 1px;
+    height: 24px;
+    background: rgba(0, 0, 0, 0.1);
+    margin: 0 2px;
   }
 }
 
