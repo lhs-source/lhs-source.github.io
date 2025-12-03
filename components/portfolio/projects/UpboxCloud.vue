@@ -8,16 +8,99 @@
       <h1 class="project-title">Upbox Cloud</h1>
 
       <div class="project-description">
-        <p>
           폐기물 수집운반 업계를 디지털화하여 투명하고 신뢰성 높은 데이터를 관리하고 제공하는 서비스입니다.
-        </p>
-        <p>
           리코에 입사한 후 바로 맡아서 진행하게 된 프론트엔드 프로젝트입니다.
-        </p>
-        <p>
           이 프로덕트의 궁극적 목표와 가치는 지속 가능한 폐기물 관리의 새로운 기준을 설정하는 것입니다.
-        </p>
       </div>
+
+      <!-- 프로젝트 개요 -->
+      <section class="tech-section">
+        <h2 class="section-title">프로젝트 개요</h2>
+        <div class="section-content">
+          <p>
+            업박스 클라우드는 폐기물의 처리 과정에서 발생하는 모든 데이터를 투명하고 정확하게 관리하는 클라우드 서비스입니다. 
+            제공되는 앱의 종류로는 업박스 어드민, 업박스 드라이버, 업박스 커스터머가 있으며, 
+            각각 기사님들의 수거 및 차량 관리, 업장의 수거 일정 및 정보 확인에 사용됩니다.
+          </p>
+          <p>
+            모든 앱은 담당하는 법인과 역할에 맞춰 권한이 부여되고, 권한별로 메뉴와 기능이 차등 제공됩니다. 
+            고객의 업장 특성과 계약을 기반해 맞춤으로 법적 문제가 발생하지 않도록 수거 일정을 조율합니다. 
+            폐기물 처리 데이터 기반한 청구서를 생성하고, 정산까지 자동으로 이루어집니다.
+          </p>
+          <p>
+            폐기물 산업 특성상 법적인 문제가 굉장히 복잡하고 행정 처리 업무가 많습니다. 
+            고객들은 번거로운 과정을 줄이고, 행정 처리에 필요한 서류를 원할 때 바로 확인이 가능하도록 
+            업박스에서 서식에 맞는 데이터를 제공합니다.
+          </p>
+          <p>
+            초기 음식물류 폐기물 중심에서 현재는 재활용과 폐수오니(슬러지) 등 여러 폐기물 종류를 종합 지원하는 형태로 발전했습니다.
+          </p>
+        </div>
+      </section>
+
+      <!-- 기술 스택 -->
+      <section class="tech-section">
+        <h2 class="section-title">기술 스택</h2>
+        <div class="section-content">
+          <div class="tech-stack-list">
+            NodeJS, Vite, Vue3, Android Kotlin, Webview, Github Actions, AWS, TailwindCSS, i18n, Storybook
+          </div>
+        </div>
+      </section>
+
+      <!-- 주요 역할 및 기여 -->
+      <section class="tech-section">
+        <h2 class="section-title">주요 역할 및 기여</h2>
+        <div class="contribution-grid">
+          <div class="contribution-column">
+            <h3 class="contribution-title">프론트엔드 리드</h3>
+            <ul class="contribution-list">
+              <li>업박스 클라우드 FE 개발을 처음부터 현재까지 핵심 멤버로 참여 (1.0 온보딩 → 2.0 론칭 → 현재 2.14.0 버전)</li>
+              <li>약 3~4주마다 전략 과제 배포를 통한 지속적인 제품 개선 및 기능 확장</li>
+            </ul>
+          </div>
+          <div class="contribution-column">
+            <h3 class="contribution-title">핵심 기능 개발</h3>
+            <ul class="contribution-list">
+              <li>고객, 계약, 폐기물 처리, 청구 데이터를 관리하는 업박스 어드민 핵심 기능 개발</li>
+              <li>복잡한 조건과 권한의 데이터 유효성 검증 및 사용자 친화적 입력 프로세스 구현</li>
+              <li>지도 기반 수거 일정 관리 시스템 - 방문 업장 표시 및 일정 최적화 기능</li>
+              <li>전자계약, 가상계좌, 자동이체, 채널톡 등 외부 서비스 연동</li>
+            </ul>
+          </div>
+          <div class="contribution-column">
+            <h3 class="contribution-title">안드로이드 개발</h3>
+            <ul class="contribution-list">
+              <li>안드로이드 Kotlin 네이티브를 개발하여 권한 요청, 푸시, 네비게이션, 파일 선택 기능 구현</li>
+              <li>WebView와 네이티브 간 통신 및 데이터 연동 - 푸시 알림을 Room DB에 저장 후 웹으로 전달</li>
+              <li>마케팅 연동을 위한 딥링크 지원</li>
+            </ul>
+          </div>
+          <div class="contribution-column">
+            <h3 class="contribution-title">디자인 시스템 구축</h3>
+            <ul class="contribution-list">
+              <li>디자인팀과 협업하여 UDS(Upbox Design System) 설립 및 컴포넌트 가이드화</li>
+              <li>복잡한 프로덕트 특성에 맞는 유기적 컴포넌트 설계</li>
+            </ul>
+          </div>
+          <div class="contribution-column">
+            <h3 class="contribution-title">DevOps & 모니터링</h3>
+            <ul class="contribution-list">
+              <li>데이터독 도입 추진 및 초기 구성 - Sourcemap 업로드 자동화로 에러 추적 시스템 구축</li>
+              <li>사용량 기반 배포 시간 결정, 사용성 측정을 통한 데이터 기반 의사결정 체계 구축</li>
+              <li>Github Actions CICD 구축 - 상용서버 CI/CD 분리로 배포 시간 단축 (5분 → 1분 40초)</li>
+              <li>Storybook, Sourcemap 자동 배포 및 Github 릴리즈 자동 생성으로 롤백 시스템 구축</li>
+            </ul>
+          </div>
+          <div class="contribution-column">
+            <h3 class="contribution-title">기술 표준화 & 조직 기여</h3>
+            <ul class="contribution-list">
+              <li>i18n 도입으로 용어 통일 및 해외 진출 대비</li>
+              <li>Atlassian 툴(Jira 자동화) 및 데이터독 사용법 내부 교육 및 공유</li>
+            </ul>
+          </div>
+        </div>
+      </section>
 
       <!-- 목표 -->
       <section class="tech-section">
@@ -70,7 +153,7 @@
           <div class="design-column">
             <h3 class="design-column-title">유효성 체크</h3>
             <p>
-              입력 form 을 위한 유효성 체크 로직은 직접 구현함. 
+              입력 form 을 위한 유효성 체크 로직은 직접 구현함.
               업박스의 컴포넌트 수준에서 원하는 방식으로 사용할 수 있음.
               다중 depth 유효성 검사 존재
             </p>
@@ -79,14 +162,14 @@
             <h3 class="design-column-title">권한 체계</h3>
             <p>
               권한별 접근 가능한 메뉴, 페이지, 필드가 존재함.
-              user 의 권한을 가지고 접근 가능한지 여부를 한곳에서 관리. 
+              user 의 권한을 가지고 접근 가능한지 여부를 한곳에서 관리.
             </p>
           </div>
           <div class="design-column">
             <h3 class="design-column-title">enum 관리</h3>
             <p>
               enum 과 locale 을 함께 관리
-              프론트에서 관리하기 때문에, 
+              프론트에서 관리하기 때문에,
               서버와 통신이 불필요하지만, 변경이되면 패치가 필요하다는 단점
               i18n 과 연관되어 있음
             </p>
@@ -608,26 +691,16 @@
 </template>
 
 <style scoped lang="scss">
-.project-page {
-  width: 100%;
-}
+@import './project-styles.scss';
 
 .project-content {
   display: flex;
   flex-direction: column;
 }
 
-.project-title {
-  font-size: 32px;
-  line-height: 1.2;
-  margin: 0;
-  color: #050505;
-  font-weight: 600;
-}
-
 .project-description {
-  font-size: 16px;
-  line-height: 1.2;
+  font-size: 14px;
+  line-height: 1.6;
   color: #111111;
   margin-top: 8px;
 
@@ -641,23 +714,24 @@
 }
 
 .tech-section {
-  margin-top: 64px;
-  padding-top: 48px;
+  margin-top: 40px;
+  padding-top: 32px;
   border-top: 2px solid rgba(153, 153, 102, 0.3);
 
   &:first-of-type {
-    margin-top: 32px;
-    padding-top: 32px;
+    margin-top: 24px;
+    padding-top: 24px;
     border-top: none;
   }
 }
 
 .section-title {
-  font-size: 28px;
-  line-height: 1.2;
-  margin: 0 0 24px 0;
-  color: #050505;
-  font-weight: 600;
+  font-size: 24px;
+  font-weight: 700;
+  color: #333;
+  margin: 48px 0 20px 0;
+  padding-bottom: 8px;
+  border-bottom: 2px solid #666;
 }
 
 .section-content {
@@ -665,9 +739,9 @@
   flex-direction: column;
   gap: 16px;
 
-  > p {
-    font-size: 15px;
-    line-height: 1.8;
+  >p {
+    font-size: 14px;
+    line-height: 1.6;
     color: #111111;
     margin: 0;
   }
@@ -681,8 +755,56 @@
   gap: 12px;
 
   li {
-    font-size: 15px;
-    line-height: 1.8;
+    font-size: 14px;
+    line-height: 1.6;
+    color: #111111;
+  }
+}
+
+.tech-stack-list {
+  font-size: 15px;
+  line-height: 1.8;
+  color: #111111;
+  padding: 16px 20px;
+  background: rgba(248, 247, 242, 0.6);
+  border: 1px solid rgba(153, 153, 102, 0.2);
+  border-radius: 12px;
+}
+
+.contribution-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  margin: 24px 0;
+}
+
+.contribution-column {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  background: rgba(248, 247, 242, 0.6);
+  border: 1px solid rgba(153, 153, 102, 0.2);
+  border-radius: 12px;
+  padding: 24px;
+}
+
+.contribution-title {
+  font-size: 18px;
+  font-weight: 600;
+  color: #433021;
+  margin: 0 0 8px 0;
+}
+
+.contribution-list {
+  margin: 0;
+  padding-left: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+
+  li {
+    font-size: 14px;
+    line-height: 1.7;
     color: #111111;
   }
 }
@@ -759,7 +881,7 @@
 .dto-diagram-section {
   margin-top: 48px;
 
-  > div {
+  >div {
     font-size: 15px;
     line-height: 1.8;
     color: #111111;
@@ -798,7 +920,7 @@
     border-top: none;
   }
 
-  > p {
+  >p {
     font-size: 15px;
     line-height: 1.8;
     color: #111111;
@@ -1223,7 +1345,7 @@
     border-top: none;
   }
 
-  > p {
+  >p {
     font-size: 15px;
     line-height: 1.8;
     color: #111111;

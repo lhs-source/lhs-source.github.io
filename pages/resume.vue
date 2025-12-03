@@ -607,7 +607,7 @@ const presentationData = ref([
   </div>
 </template>
 
-<style lang="scss">
+<style scoped lang="scss">
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap');
 
 .resume-background {

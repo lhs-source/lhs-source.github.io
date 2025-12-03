@@ -1,6 +1,11 @@
 <template>
     <div ref="container" class="w-full h-full absolute top-0 left-0 z-0 pointer-events-none"></div>
 
+    <!-- Background Text -->
+    <div class="background-text">
+        KNOW ABOUT<br>LEE HYUNSOO
+    </div>
+
     <!-- Loading Screen -->
     <Transition name="fade">
         <div v-if="isLoading" class="loading-overlay">
@@ -10,6 +15,15 @@
             </div>
         </div>
     </Transition>
+
+    <!-- Intro Overlay -->
+    <div ref="introOverlay" class="intro-overlay">
+        <div class="intro-text">
+            <p class="name">이현수, 프론트엔드</p>
+            <p class="desc">Inspired by Naked Lunch, 어쩔 수가 없다.</p>
+        </div>
+        <img src="/assets/portfolio/naked_lunch.webp" alt="Naked Lunch" class="intro-image" />
+    </div>
 </template>
 
 <script setup lang="ts">
@@ -22,6 +36,7 @@ import { AnimationMixer, LoopRepeat, Vector3, LoadingManager } from 'three';
 import { onMounted, onBeforeUnmount, ref } from 'vue';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import dayjs from 'dayjs';
 
 // Register GSAP plugin only on client side
 if (process.client) {
@@ -29,6 +44,7 @@ if (process.client) {
 }
 
 const container = ref<HTMLElement | null>(null);
+const introOverlay = ref<HTMLElement | null>(null);
 const isLoading = ref(true);
 const loadingProgress = ref(0);
 
@@ -42,18 +58,23 @@ let paperMesh: THREE.Mesh;
 let animationId: number;
 let initialPaperY = 1.5; // Will be updated when model loads
 let initialTypewriterY = 0;
+let initialDeskY = 0;
 let cockroachMixer: AnimationMixer | null = null;
 let cockroachModel: THREE.Group | null = null;
 let cockroachTarget = new Vector3();
 let cockroachWalkSpeed = 0.8; // Fast like a real cockroach
 let cockroachWalkAction: any = null;
 let cockroachIdleAction: any = null;
+let isSceneMovingDown = false; // 씬이 하단으로 이동 중인지 플래그
 const cockroachBounds = {
     minX: -1.2,
     maxX: 1.2,
     minZ: -0.8,
     maxZ: 0.8
 };
+let keyLight: THREE.SpotLight;
+let rimLight: THREE.PointLight;
+let flickerTime = 0;
 
 // Loading Manager
 const loadingManager = new LoadingManager();
@@ -69,6 +90,7 @@ loadingManager.onLoad = () => {
     // Add a small delay for smooth transition
     setTimeout(() => {
         isLoading.value = false;
+        playIntroAnimation();
     }, 500);
 };
 
@@ -81,7 +103,7 @@ const init = () => {
 
     // Scene
     scene = new THREE.Scene();
-    scene.background = new THREE.Color(0x1a1a1a);
+    // scene.background = new THREE.Color(0x1a1a1a); // Removed for transparency
     scene.fog = new THREE.Fog(0x1a1a1a, 10, 50);
 
     // Camera - positioned to look at typewriter centered on screen
@@ -102,18 +124,20 @@ const init = () => {
     const ambientLight = new THREE.AmbientLight(0xbfbfbf, 0.35);
     scene.add(ambientLight);
 
-    const keyLight = new THREE.SpotLight(0xffffff, 1.4, 20, Math.PI / 6, 0.3, 1);
+    keyLight = new THREE.SpotLight(0xffffff, 1.4, 20, Math.PI / 6, 0.3, 1);
     keyLight.position.set(0, 5, 2);
     keyLight.target.position.set(0, 0.5, 0);
     keyLight.castShadow = true;
     keyLight.shadow.mapSize.width = 2048;
     keyLight.shadow.mapSize.height = 2048;
     keyLight.shadow.bias = -0.0001;
+    keyLight.userData.baseIntensity = 1.4;
     scene.add(keyLight);
     scene.add(keyLight.target);
 
-    const rimLight = new THREE.PointLight(0xffe1c4, 0.4, 10);
+    rimLight = new THREE.PointLight(0xffe1c4, 0.4, 10);
     rimLight.position.set(-2, 2, -2);
+    rimLight.userData.baseIntensity = 0.4;
     scene.add(rimLight);
 
     // Desk model
@@ -129,6 +153,33 @@ const init = () => {
 
     // Resize Handler
     window.addEventListener('resize', onResize);
+
+    // Set initial state for intro animation
+    if (renderer) {
+        renderer.domElement.style.opacity = '0';
+    }
+};
+
+const playIntroAnimation = () => {
+    if (!scene || !renderer) return;
+
+    // Animate opacity
+    gsap.to(renderer.domElement, {
+        opacity: 1,
+        duration: 1.5,
+        ease: 'power2.out'
+    });
+
+    // Animate camera or scene position for slide-up effect
+    // Let's animate the camera position slightly to give a "rising" feel
+    const targetY = camera.position.y;
+    camera.position.y -= 0.5;
+
+    gsap.to(camera.position, {
+        y: targetY,
+        duration: 1.8,
+        ease: 'power3.out'
+    });
 };
 
 const loadTypewriterModel = () => {
@@ -226,6 +277,7 @@ const loadDeskModel = () => {
             deskModel.position.x = -center.x;
             deskModel.position.z = -center.z;
             deskModel.position.y = -scaledBox.max.y - 0.05;
+            initialDeskY = deskModel.position.y;
 
             deskModel.traverse((child: any) => {
                 if (child instanceof THREE.Mesh) {
@@ -399,32 +451,150 @@ const createPaper = () => {
         ctx.stroke();
     }
 
-    // Typed content
-    const typedLines = [
-        'LEE HYUN SOO — CREATIVE FRONTEND ENGINEER',
-        'Building delightful UX with Vue.js, Three.js, GSAP.',
-        'Focused on immersive motion + polished storytelling.',
-        '',
-        'Selected Works',
-        '- Upbox Cloud  •  BankB  •  Hana 1QPay  •  Omnidoc',
-        '',
-        'Let\'s craft experiences people remember.'
-    ];
+    // Helper function to wrap text
+    function wrapText(context: CanvasRenderingContext2D, text: string, maxWidth: number, fontSize: number): string[] {
+        const words = text.split('');
+        const lines: string[] = [];
+        let currentLine = '';
 
-    ctx.font = '700 52px "Courier New", monospace';
-    ctx.fillStyle = '#000';
+        for (let i = 0; i < words.length; i++) {
+            const testLine = currentLine + words[i];
+            const metrics = context.measureText(testLine);
+
+            if (metrics.width > maxWidth && currentLine !== '') {
+                lines.push(currentLine);
+                currentLine = words[i];
+            } else {
+                currentLine = testLine;
+            }
+        }
+        if (currentLine) {
+            lines.push(currentLine);
+        }
+        return lines;
+    }
+
+    // Resume Preview Data (same as ResumePreview.vue)
+    const previewData = {
+        name: '이현수',
+        title: '프론트엔드 개발자',
+        summary: '주도적인 업무 수행과 협업을 통해 팀의 성장을 이끌어가며 지속 가능한 개발을 추구하는 개발자입니다.',
+        keywords: ['오너십', '신뢰', '커뮤니케이션', '효율성'],
+        mainTech: ['Vue3', 'TypeScript'],
+        experience: [
+            {
+                company: '주식회사 리코',
+                duration: `약 ${dayjs().diff(dayjs("2021-01-01"), 'year')}년 ${dayjs().diff(dayjs("2021-01-01"), 'month') % 12}개월`
+            },
+            {
+                company: '주식회사 뱅크비',
+                duration: '약 4년'
+            }
+        ],
+        totalExperience: `${dayjs().diff(dayjs("2017-01-01"), 'year')}년 ${dayjs().diff(dayjs("2021-01-01"), 'month') % 12}개월`
+    };
+
+    // Header (Name + Title with border)
+    ctx.font = '700 42px "Noto Sans KR", sans-serif';
+    ctx.fillStyle = '#333';
     ctx.textBaseline = 'top';
-    ctx.lineWidth = 3;
-    ctx.strokeStyle = '#111';
+    let yPos = 80;
 
-    typedLines.forEach((line, idx) => {
-        const textY = 160 + idx * 90;
-        // Soft shadow for better readability
-        ctx.shadowColor = 'rgba(255, 255, 255, 0.4)';
-        ctx.shadowBlur = 2;
-        ctx.strokeText(line, 90, textY);
-        ctx.fillText(line, 90, textY);
+    ctx.fillText(previewData.name, 80, yPos);
+    yPos += 50;
+
+    ctx.font = '400 28px "Noto Sans KR", sans-serif';
+    ctx.fillStyle = '#666';
+    ctx.fillText(previewData.title, 80, yPos);
+    yPos += 45;
+
+    // Border line
+    ctx.strokeStyle = '#333';
+    ctx.lineWidth = 2;
+    ctx.beginPath();
+    ctx.moveTo(80, yPos);
+    ctx.lineTo(canvas.width - 80, yPos);
+    ctx.stroke();
+    yPos += 30;
+
+    // Summary
+    ctx.font = '400 24px "Noto Sans KR", sans-serif';
+    ctx.fillStyle = '#555';
+    const summaryLines = wrapText(ctx, previewData.summary, canvas.width - 160, 24);
+    summaryLines.forEach((line: string) => {
+        ctx.fillText(line, 80, yPos);
+        yPos += 35;
     });
+    yPos += 20;
+
+    // Keywords
+    ctx.font = '500 20px "Noto Sans KR", sans-serif';
+    ctx.fillStyle = '#555';
+    let keywordX = 80;
+    previewData.keywords.forEach((keyword) => {
+        const keywordWidth = ctx.measureText(keyword).width;
+        if (keywordX + keywordWidth > canvas.width - 80) {
+            keywordX = 80;
+            yPos += 30;
+        }
+        // Draw keyword background (rounded rect simulation)
+        ctx.fillStyle = '#f0f0f0';
+        ctx.fillRect(keywordX - 8, yPos - 2, keywordWidth + 16, 26);
+        ctx.fillStyle = '#555';
+        ctx.fillText(keyword, keywordX, yPos);
+        keywordX += keywordWidth + 24;
+    });
+    yPos += 40;
+
+    // Main Tech
+    ctx.font = '600 20px "Noto Sans KR", sans-serif';
+    ctx.fillStyle = '#666';
+    ctx.fillText('주요 기술:', 80, yPos);
+    ctx.font = '400 20px "Noto Sans KR", sans-serif';
+    ctx.fillStyle = '#333';
+    const techText = previewData.mainTech.join(', ');
+    ctx.fillText(techText, 80 + ctx.measureText('주요 기술: ').width, yPos);
+    yPos += 40;
+
+    // Experience
+    ctx.strokeStyle = '#e0e0e0';
+    ctx.lineWidth = 1;
+    ctx.beginPath();
+    ctx.moveTo(80, yPos);
+    ctx.lineTo(canvas.width - 80, yPos);
+    ctx.stroke();
+    yPos += 20;
+
+    previewData.experience.forEach((exp) => {
+        ctx.font = '600 20px "Noto Sans KR", sans-serif';
+        ctx.fillStyle = '#333';
+        ctx.fillText(exp.company, 80, yPos);
+
+        ctx.font = '400 18px "Noto Sans KR", sans-serif';
+        ctx.fillStyle = '#888';
+        const durationWidth = ctx.measureText(exp.duration).width;
+        ctx.fillText(exp.duration, canvas.width - 80 - durationWidth, yPos);
+        yPos += 35;
+    });
+    yPos += 20;
+
+    // Footer
+    ctx.strokeStyle = '#e0e0e0';
+    ctx.lineWidth = 1;
+    ctx.beginPath();
+    ctx.moveTo(80, yPos);
+    ctx.lineTo(canvas.width - 80, yPos);
+    ctx.stroke();
+    yPos += 25;
+
+    ctx.font = '500 18px "Noto Sans KR", sans-serif';
+    ctx.fillStyle = '#666';
+    ctx.fillText(`총 경력: ${previewData.totalExperience}`, 80, yPos);
+    yPos += 25;
+
+    ctx.font = '400 italic 16px "Noto Sans KR", sans-serif';
+    ctx.fillStyle = '#999';
+    ctx.fillText('클릭하여 전체 보기', 80, yPos);
 
     const paperTexture = new THREE.CanvasTexture(canvas);
 
@@ -473,6 +643,30 @@ const animate = () => {
     if (cockroachMixer) {
         cockroachMixer.update(delta);
         wanderCockroach(delta);
+    }
+
+    // Flickering light effect - stronger intensity changes
+    flickerTime += delta;
+    if (keyLight && keyLight.userData.baseIntensity !== undefined) {
+        // Create irregular flicker pattern with longer delays and stronger drops
+        const baseIntensity = keyLight.userData.baseIntensity;
+        const flickerNoise = Math.sin(flickerTime * 2) * 0.15 +
+            Math.sin(flickerTime * 3.5) * 0.1 +
+            Math.sin(flickerTime * 5) * 0.08;
+
+        // Occasional sharp drops (flicker) - more noticeable
+        const sharpFlicker = (Math.random() < 0.005) ? -0.6 : 0;
+
+        keyLight.intensity = Math.max(0.2, baseIntensity + flickerNoise + sharpFlicker);
+    }
+
+    if (rimLight && rimLight.userData.baseIntensity !== undefined) {
+        const baseIntensity = rimLight.userData.baseIntensity;
+        const flickerNoise = Math.sin(flickerTime * 1.8) * 0.1 +
+            Math.sin(flickerTime * 2.8) * 0.06;
+        const sharpFlicker = (Math.random() < 0.004) ? -0.25 : 0;
+
+        rimLight.intensity = Math.max(0.05, baseIntensity + flickerNoise + sharpFlicker);
     }
 
     renderer.render(scene, camera);
@@ -586,6 +780,11 @@ function switchToIdle() {
 function wanderCockroach(delta: number) {
     if (!cockroachModel) return;
 
+    // 씬이 하단으로 이동 중이면 바퀴벌레 움직임 중단
+    if (isSceneMovingDown) {
+        return;
+    }
+
     // Long rest period (idle animation)
     if (cockroachIsResting) {
         cockroachRestTimer -= delta;
@@ -663,6 +862,59 @@ const fadeOutScene = (progress: number) => {
     if (renderer) {
         renderer.domElement.style.opacity = String(1 - progress);
     }
+    if (introOverlay.value) {
+        introOverlay.value.style.opacity = String(1 - progress);
+    }
+};
+
+// Move entire scene (typewriter + desk) down
+const moveSceneDown = (progress: number) => {
+    isSceneMovingDown = progress < 1; // progress가 1이 되면 완료
+
+    if (typewriterModel) {
+        typewriterModel.position.y = initialTypewriterY - (progress * 3);
+        typewriterModel.position.x = typewriterModel.userData.baseX || 0;
+        typewriterModel.position.z = typewriterModel.userData.baseZ || 0;
+    }
+    if (deskModel) {
+        deskModel.position.y = initialDeskY - (progress * 3);
+    }
+    if (cockroachModel) {
+        // 바퀴벌레도 테이블과 함께 하단으로 이동
+        const currentX = cockroachModel.position.x;
+        const currentZ = cockroachModel.position.z;
+        cockroachModel.position.set(
+            currentX,
+            cockroachYOffset - (progress * 3),
+            currentZ
+        );
+    }
+};
+
+// Move paper up and out of view
+// progress 0.4 시점에서 자동 애니메이션이 시작되므로, 그 시점의 이력서 위치에서 시작
+let paperStartY: number | null = null;
+
+const movePaperUp = (progress: number) => {
+    if (paperMesh) {
+        // 첫 호출 시 현재 위치를 저장 (progress 0일 때)
+        if (paperStartY === null) {
+            paperStartY = paperMesh.position.y;
+        }
+
+        // progress에 따라 점진적으로 위로 올라가면서 사라지도록
+        // progress 0: 현재 위치 (paperStartY)
+        // progress 1: paperStartY + 5 (화면 위로 완전히 사라짐)
+        const targetY = paperStartY! + (progress * 5);
+        paperMesh.position.y = targetY;
+
+        // opacity도 조절하여 점점 사라지도록
+        if (paperMesh.material) {
+            const material = paperMesh.material as THREE.MeshStandardMaterial;
+            material.opacity = Math.max(0, 1 - progress);
+            material.transparent = true;
+        }
+    }
 };
 
 defineExpose({
@@ -670,6 +922,8 @@ defineExpose({
     hideTypewriter,
     liftPaper,
     fadeOutScene,
+    moveSceneDown,
+    movePaperUp,
     camera,
     paperMesh
 });
@@ -739,5 +993,94 @@ onBeforeUnmount(() => {
 .fade-enter-from,
 .fade-leave-to {
     opacity: 0;
+}
+
+.intro-overlay {
+    position: absolute;
+    top: 3rem;
+    right: 3rem;
+    z-index: 20;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 1rem;
+    pointer-events: none;
+    transition: opacity 0.1s linear;
+}
+
+.intro-image {
+    width: 50px;
+    height: auto;
+    opacity: 0.9;
+    border-radius: 4px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    animation: flicker 8s infinite alternate;
+}
+
+.intro-text {
+    color: rgba(255, 255, 255, 0.9);
+    font-family: 'Noto Sans KR', sans-serif;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+    text-align: right;
+}
+
+.intro-text .name {
+    font-size: 0.9rem;
+    font-weight: 400;
+    margin-bottom: 0.2rem;
+    letter-spacing: -0.02em;
+}
+
+.intro-text .desc {
+    font-size: 0.7rem;
+    font-weight: 400;
+    opacity: 0.8;
+    letter-spacing: -0.01em;
+}
+
+@keyframes flicker {
+
+    0%,
+    18%,
+    22%,
+    25%,
+    53%,
+    57%,
+    100% {
+        opacity: 0.9;
+        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+    }
+
+    20%,
+    24%,
+    55% {
+        opacity: 0.4;
+        text-shadow: none;
+    }
+
+    21%,
+    23%,
+    56% {
+        opacity: 0.1;
+    }
+}
+
+/* Background Text */
+.background-text {
+    position: absolute;
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%, -70%);
+    font-family: 'Inter', sans-serif;
+    font-weight: 900;
+    font-size: 12vw;
+    line-height: 0.9;
+    color: rgba(186, 141, 141, 0.25);
+    text-align: center;
+    z-index: -1;
+    pointer-events: none;
+    white-space: nowrap;
+    user-select: none;
+    letter-spacing: -0.04em;
 }
 </style>
