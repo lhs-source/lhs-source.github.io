@@ -680,7 +680,7 @@ onUnmounted(() => {
   // max-width: 1000px; // Removed max-width constraint
   width: 100%;
   margin: 0 auto;
-  padding-bottom: 240px;
+  padding-bottom: 400px;
   // background: white;
   color: #666;
   font-family: 'Noto Sans KR', sans-serif;
