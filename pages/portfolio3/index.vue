@@ -234,6 +234,48 @@ const closeMobileModal = () => {
   document.body.style.overflow = ''
 }
 
+const goToPreviousPageInModal = () => {
+  if (mobileModalPageIndex.value !== null && mobileModalPageIndex.value > 0) {
+    const newIndex = mobileModalPageIndex.value - 1
+    // 현재 모달 닫기
+    showMobileModal.value = false
+    mobileModalPageIndex.value = null
+    
+    // 모달 닫기 애니메이션 완료 후 다음 모달 열기 (0.3s + 약간의 여유)
+    setTimeout(() => {
+      mobileModalPageIndex.value = newIndex
+      showMobileModal.value = true
+      document.body.style.overflow = 'hidden'
+      // Scroll to top of modal content
+      nextTick(() => {
+        const content = document.querySelector('.mobile-modal-content')
+        if (content) content.scrollTop = 0
+      })
+    }, 350)
+  }
+}
+
+const goToNextPageInModal = () => {
+  if (mobileModalPageIndex.value !== null && mobileModalPageIndex.value < pages.value.length - 1) {
+    const newIndex = mobileModalPageIndex.value + 1
+    // 현재 모달 닫기
+    showMobileModal.value = false
+    mobileModalPageIndex.value = null
+    
+    // 모달 닫기 애니메이션 완료 후 다음 모달 열기 (0.3s + 약간의 여유)
+    setTimeout(() => {
+      mobileModalPageIndex.value = newIndex
+      showMobileModal.value = true
+      document.body.style.overflow = 'hidden'
+      // Scroll to top of modal content
+      nextTick(() => {
+        const content = document.querySelector('.mobile-modal-content')
+        if (content) content.scrollTop = 0
+      })
+    }, 350)
+  }
+}
+
 // 컴포넌트 언마운트 시 body 스크롤 복원
 onUnmounted(() => {
   document.body.style.overflow = ''
@@ -833,6 +875,15 @@ onUnmounted(() => {
         <div class="desk-surface">
           <div class="desk-resume" @click="openPortfolio">
             <ResumePreview />
+            <div class="click-hint">
+              <div class="click-hint-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M9 11L12 14L22 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                  <path d="M21 12V19C21 19.5304 20.7893 20.0391 20.4142 20.4142C20.0391 20.7893 19.5304 21 19 21H5C4.46957 21 3.96086 20.7893 3.58579 20.4142C3.21071 20.0391 3 19.5304 3 19V5C3 4.46957 3.21071 3.96086 3.58579 3.58579C3.96086 3.21071 4.46957 3 5 3H16" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </div>
+              <span class="click-hint-text">클릭하여 포트폴리오 보기</span>
+            </div>
           </div>
         </div>
       </div>
@@ -918,6 +969,25 @@ onUnmounted(() => {
           </div>
           <div class="mobile-modal-content">
             <component :is="pages[mobileModalPageIndex].component" @select-project="selectPageById" />
+          </div>
+          <!-- Mobile Navigation Buttons (모달 안에서만) -->
+          <div class="mobile-modal-nav-buttons-bottom">
+            <button class="mobile-nav-btn" @click="goToPreviousPageInModal" :disabled="mobileModalPageIndex === 0"
+              :class="{ 'disabled': mobileModalPageIndex === 0 }" aria-label="이전 페이지">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M15 18L9 12L15 6" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                  stroke-linejoin="round" />
+              </svg>
+            </button>
+            <div class="mobile-nav-divider"></div>
+            <button class="mobile-nav-btn" @click="goToNextPageInModal"
+              :disabled="mobileModalPageIndex === pages.length - 1"
+              :class="{ 'disabled': mobileModalPageIndex === pages.length - 1 }" aria-label="다음 페이지">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M9 18L15 12L9 6" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                  stroke-linejoin="round" />
+              </svg>
+            </button>
           </div>
         </div>
       </div>
@@ -1127,17 +1197,79 @@ onUnmounted(() => {
   }
 
   .desk-resume {
+    position: relative;
     width: 300px;
     height: 420px;
     background: white;
     box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
     transform: rotateX(10deg) rotateZ(-5deg);
     cursor: pointer;
-    transition: transform 0.3s ease;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
     overflow: hidden;
 
     &:hover {
       transform: rotateX(0deg) rotateZ(0deg) scale(1.05);
+      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.4);
+
+      .click-hint {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .click-hint {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: linear-gradient(to top, rgba(0, 0, 0, 0.7) 0%, rgba(0, 0, 0, 0.4) 50%, transparent 100%);
+      padding: 16px 20px 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      opacity: 0.8;
+      transform: translateY(10px);
+      transition: opacity 0.3s ease, transform 0.3s ease;
+      pointer-events: none;
+
+      .click-hint-icon {
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.95);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #333;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+        animation: clickPulse 2s infinite;
+
+        svg {
+          width: 18px;
+          height: 18px;
+        }
+      }
+
+      .click-hint-text {
+        color: white;
+        font-size: 0.85rem;
+        font-weight: 500;
+        text-align: center;
+        text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+        letter-spacing: 0.02em;
+      }
+    }
+  }
+
+  @keyframes clickPulse {
+    0%, 100% {
+      transform: scale(1);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    }
+    50% {
+      transform: scale(1.1);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
     }
   }
 }
@@ -1363,9 +1495,7 @@ onUnmounted(() => {
   bottom: auto;
 
   @media (max-width: 720px) {
-    // Mobile: Bottom Center
-    top: auto;
-    bottom: 20px;
+    display: none;
   }
 
   .nav-arrow {
@@ -1688,15 +1818,17 @@ onUnmounted(() => {
 }
 
 .mobile-modal-header {
-  position: relative;
+  position: sticky;
+  top: 0;
+  background: white;
+  z-index: 10;
   padding: 16px 20px;
   border-bottom: 1px solid #e0e0e0;
-  background-color: white;
-  flex-shrink: 0;
   display: flex;
+  flex-direction: column;
   align-items: center;
-  justify-content: center;
-  z-index: 10;
+  gap: 12px;
+  flex-shrink: 0;
 }
 
 .mobile-modal-close-btn {
@@ -1712,7 +1844,6 @@ onUnmounted(() => {
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 11;
   transition: opacity 0.2s ease;
 
   &:active {
@@ -1723,6 +1854,65 @@ onUnmounted(() => {
     width: 24px;
     height: 24px;
     flex-shrink: 0;
+  }
+}
+
+.mobile-modal-nav-buttons-bottom {
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 2001;
+  display: flex;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 24px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  padding: 4px;
+  gap: 0;
+
+  @media (min-width: 721px) {
+    display: none;
+  }
+
+  .mobile-nav-btn {
+    width: 40px;
+    height: 40px;
+    border: none;
+    background: transparent;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    color: #333;
+    transition: background 0.2s ease;
+    border-radius: 20px;
+
+    &:hover:not(.disabled) {
+      background: rgba(0, 0, 0, 0.05);
+    }
+
+    &:active:not(.disabled) {
+      background: rgba(0, 0, 0, 0.1);
+    }
+
+    &.disabled {
+      opacity: 0.3;
+      cursor: not-allowed;
+    }
+
+    svg {
+      width: 20px;
+      height: 20px;
+    }
+  }
+
+  .mobile-nav-divider {
+    width: 1px;
+    height: 24px;
+    background: rgba(0, 0, 0, 0.1);
+    margin: 0 2px;
   }
 }
 

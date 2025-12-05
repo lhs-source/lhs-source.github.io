@@ -277,12 +277,12 @@ const getYear = (period: string): string => {
 const calculateDuration = (period: string): string => {
   const startMatch = period.match(/(\d{4})년\s*(\d{1,2})월/);
   if (!startMatch) return '';
-  
+
   const startYear = parseInt(startMatch[1]);
   const startMonth = parseInt(startMatch[2]) - 1; // dayjs month is 0-indexed
-  
+
   let endYear: number, endMonth: number;
-  
+
   if (period.includes('재직중') || period.includes('진행중')) {
     const now = dayjs();
     endYear = now.year();
@@ -295,13 +295,13 @@ const calculateDuration = (period: string): string => {
     endYear = parseInt(endDate[1]);
     endMonth = parseInt(endDate[2]) - 1;
   }
-  
+
   const start = dayjs().year(startYear).month(startMonth).date(1);
   const end = dayjs().year(endYear).month(endMonth).date(1);
-  
+
   const years = end.diff(start, 'year');
   const months = end.diff(start.add(years, 'year'), 'month');
-  
+
   if (years === 0) {
     return `약 ${months}개월`;
   } else if (months === 0) {
@@ -332,11 +332,11 @@ const updateTimelinePath = () => {
   if (!timelineContainer.value || dots.length < 2) return;
 
   const containerRect = timelineContainer.value.getBoundingClientRect();
-  
+
   // SVG 크기를 컨테이너 크기와 일치시킴
   timelineSvgWidth.value = containerRect.width;
   timelineSvgHeight.value = containerRect.height;
-  
+
   let path = '';
 
   for (let i = 0; i < dots.length - 1; i++) {
@@ -371,7 +371,7 @@ onMounted(() => {
     // Initialize dots array size (current + career items)
     const totalDots = sortedCareerData.value.length + 1; // current + career items
     timelineDots.value = new Array(totalDots).fill(null);
-    
+
     // Wait for DOM to update
     setTimeout(() => {
       updateTimelinePath();
@@ -401,41 +401,24 @@ onUnmounted(() => {
       <!-- Header Section with Profile -->
       <header class="resume-header">
         <div class="profile-section">
-          <div class="profile-background"></div>
-          <!-- <div class="profile-photo">
-          <img src="/assets/img/boxing.jpg" />
-        </div> -->
-          <div class="profile-info flex flex-col md:flex-row md:justify-between pb-4 gap-4 md:gap-0">
-            <div>
-              <div class="profile-info-header">
+          <div class="profile-content">
+            <div class="profile-main">
+              <div class="name-title-wrapper">
                 <h1 class="name">이현수</h1>
-                <h2 class="title">프론트엔드 개발자</h2>
+                <span class="title">프론트엔드 개발자</span>
               </div>
-              <!-- <h2 class="title text-sm">토스 플레이스의 시작을 함께 만들어갈 프론트엔드 개발자</h2> -->
-              <!-- <div class="text-xs">토스 플레이스의 시작을 함께 만들어갈 개발자입니다.</div> -->
-              <!-- <h2 class="title text-sm">초기 멤버로서 겪는 시행착오를 성장 동력으로 삼는 능동적인 프론트엔드 개발자</h2> -->
-              <!-- <h2 class="title text-sm">시작부터 안정화까지 경험한 프론트엔드 개발자</h2> -->
-              <!-- <h2 class="title text-xs mt-2">
-                스타트업의 시작부터 안정화까지 경험하며 겪은 시행착오를 성장 동력으로 삼고 발전했습니다. <br />
-                이제는 토스 플레이스팀에 기여하고 함께 성장하고 싶습니다.
-              </h2> -->
-              <h2 class="title text-xs mt-2">
-                스타트업 초기 멤버로서의 경험을 바탕으로
-                무신사 프론트엔드팀에서 글로벌 패션 플랫폼의 성장과 혁신에 기여하겠습니다.
-              </h2>
+              <p class="description">
+                스타트업 초기 멤버로서의 경험을 바탕으로 무신사 프론트엔드팀에서 글로벌 패션 플랫폼의 성장과 혁신에 기여하겠습니다.
+              </p>
             </div>
-            <div class="contact-info mt-4 md:mt-0 md:text-right">
+            <div class="contact-info">
               <div class="contact-item">
                 <span class="label">Email</span>
-                <span class="value">iddms5446@gmail.com</span>
+                <a href="mailto:iddms5446@gmail.com" class="value">iddms5446@gmail.com</a>
               </div>
-              <!-- <div class="contact-item">
-                <span class="label">Phone</span>
-                <span class="value">010-8209-2048</span>
-              </div> -->
               <div class="contact-item">
                 <span class="label">GitHub</span>
-                <span class="value">github.com/lhs-source</span>
+                <a href="https://github.com/lhs-source" target="_blank" class="value">github.com/lhs-source</a>
               </div>
             </div>
           </div>
@@ -475,7 +458,8 @@ onUnmounted(() => {
           dayjs().diff(dayjs("2021-01-01"), 'month') % 12 }}개월)</h2>
 
         <div class="career-timeline-wrapper" ref="timelineContainer">
-          <svg class="timeline-svg" :viewBox="`0 0 ${timelineSvgWidth} ${timelineSvgHeight}`" preserveAspectRatio="none">
+          <svg class="timeline-svg" :viewBox="`0 0 ${timelineSvgWidth} ${timelineSvgHeight}`"
+            preserveAspectRatio="none">
             <path :d="svgPath" fill="none" />
           </svg>
 
@@ -508,7 +492,8 @@ onUnmounted(() => {
                     <img v-if="career.logo" :src="career.logo" :alt="career.company" class="company-logo-timeline" />
                     <div class="company-text-wrapper">
                       <div class="company-name">{{ career.company }}</div>
-                      <div v-if="career.period" class="company-period">{{ career.period }} ({{ calculateDuration(career.period) }})</div>
+                      <div v-if="career.period" class="company-period">{{ career.period }} ({{
+                        calculateDuration(career.period) }})</div>
                       <div v-if="career.description" class="company-description">
                         {{ career.description }}
                       </div>
@@ -560,8 +545,8 @@ onUnmounted(() => {
                   <h4 class="project-name">{{ project.name }}</h4>
                   <svg v-if="project.pageId" class="arrow-icon" width="20" height="20" viewBox="0 0 24 24" fill="none"
                     xmlns="http://www.w3.org/2000/svg">
-                    <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                      stroke-linejoin="round" />
+                    <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" stroke-width="2"
+                      stroke-linecap="round" stroke-linejoin="round" />
                   </svg>
                 </div>
                 <span class="project-period">{{ project.period }}</span>
@@ -594,13 +579,14 @@ onUnmounted(() => {
             <div class="presentation-header">
               <div class="presentation-header-top">
                 <div class="presentation-title-wrapper">
-                  <img v-if="presentation.pageId === 'datadog'" :src="getTechIcon('Datadog')!" alt="Datadog" class="presentation-icon" />
+                  <img v-if="presentation.pageId === 'datadog'" :src="getTechIcon('Datadog')!" alt="Datadog"
+                    class="presentation-icon" />
                   <h3 class="presentation-name">{{ presentation.title }}</h3>
                 </div>
-                <svg v-if="presentation.pageId" class="arrow-icon" width="20" height="20" viewBox="0 0 24 24" fill="none"
-                  xmlns="http://www.w3.org/2000/svg">
-                  <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                    stroke-linejoin="round" />
+                <svg v-if="presentation.pageId" class="arrow-icon" width="20" height="20" viewBox="0 0 24 24"
+                  fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round" />
                 </svg>
               </div>
               <div class="presentation-meta">
@@ -653,8 +639,8 @@ onUnmounted(() => {
                 <h4 class="project-name">{{ project.name }}</h4>
                 <svg v-if="project.pageId" class="arrow-icon" width="20" height="20" viewBox="0 0 24 24" fill="none"
                   xmlns="http://www.w3.org/2000/svg">
-                  <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                    stroke-linejoin="round" />
+                  <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round" />
                 </svg>
               </div>
               <span class="project-period">{{ project.period }}</span>
@@ -704,67 +690,98 @@ onUnmounted(() => {
 
 /* Header Section */
 .resume-header {
-  margin-bottom: 0px;
+  margin-bottom: 60px;
+  padding: 0 24px;
 
   .profile-section {
-    display: flex;
-    gap: 30px;
-    align-items: flex-end;
-    padding-bottom: 16px;
-    background-color: #f9f9f9;
-    min-height: 320px;
-    position: relative; // Added for absolute background
+    padding-top: 120px; // Top spacing
+    padding-bottom: 20px;
+    border-bottom: 1px solid #eee; // Subtle divider if needed, or remove
 
-    .profile-background {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%; // Changed from 100vw
-      height: 320px;
-      background-color: #f9f9f9;
+    .profile-content {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      flex-wrap: wrap;
+      gap: 40px;
+
+      @media (max-width: 768px) {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 24px;
+      }
     }
 
-    .profile-info {
-      z-index: 1;
+    .profile-main {
       flex: 1;
-      padding: 0 24px; // Added padding since container padding was removed
 
-      .profile-info-header {
+      .name-title-wrapper {
         display: flex;
-        align-items: end;
-        gap: 8px;
+        align-items: baseline;
+        gap: 12px;
+        margin-bottom: 16px;
+        flex-wrap: wrap;
 
         .name {
           font-size: 36px;
-          font-weight: 600;
-          color: #333;
+          font-weight: 800;
+          color: #1a1a1a;
+          letter-spacing: -0.03em;
+          line-height: 1;
+          margin: 0;
         }
 
         .title {
           font-size: 16px;
-          font-weight: 400;
-          color: #333;
+          font-weight: 500;
+          color: #555;
+          letter-spacing: -0.02em;
         }
       }
 
-      .contact-info {
+      .description {
         font-size: 14px;
-        margin-top: 12px;
+        color: #444;
+        line-height: 1.6;
+        max-width: 600px;
+        word-break: keep-all;
+        margin: 0;
+      }
+    }
+
+    .contact-info {
+      text-align: right;
+      font-size: 13px;
+
+      @media (max-width: 768px) {
+        text-align: left;
+      }
+
+      .contact-item {
+        margin-bottom: 8px;
         display: flex;
-        flex-direction: column;
+        align-items: center;
+        justify-content: flex-end;
+        gap: 12px;
 
-        .contact-item {
-          display: flex;
-          gap: 8px;
+        @media (max-width: 768px) {
+          justify-content: flex-start;
+        }
 
-          .label {
-            font-weight: 500;
-            min-width: 60px;
-            color: #666;
-          }
+        .label {
+          font-weight: 700;
+          color: #333;
+          min-width: 50px;
+        }
 
-          .value {
-            color: #666;
+        .value {
+          color: #555;
+          text-decoration: none;
+          transition: color 0.2s;
+
+          &:hover {
+            color: #1a1a1a;
+            text-decoration: underline;
           }
         }
       }
@@ -863,22 +880,40 @@ onUnmounted(() => {
   grid-template-columns: repeat(2, minmax(200px, 1fr));
   gap: 20px;
 
+  @media (max-width: 720px) {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
   .keyword-item {
     background: #f9f9f9;
     padding: 20px;
     border-radius: 8px;
+
+    @media (max-width: 720px) {
+      padding: 16px;
+    }
 
     .keyword-title {
       font-size: 16px;
       font-weight: 600;
       color: #333;
       margin-bottom: 8px;
+
+      @media (max-width: 720px) {
+        font-size: 15px;
+      }
     }
 
     .keyword-description {
       font-size: 13px;
       color: #666;
       line-height: 1.5;
+
+      @media (max-width: 720px) {
+        font-size: 12px;
+        line-height: 1.6;
+      }
     }
   }
 }
@@ -908,6 +943,8 @@ onUnmounted(() => {
 
     @media (max-width: 720px) {
       padding: 6px;
+      padding-top: 8px;
+      padding-bottom: 8px;
       min-height: 50px;
       gap: 3px;
     }
@@ -1740,9 +1777,12 @@ onUnmounted(() => {
 }
 
 @keyframes arrow-move {
-  0%, 100% {
+
+  0%,
+  100% {
     transform: translateX(0);
   }
+
   50% {
     transform: translateX(6px);
   }
