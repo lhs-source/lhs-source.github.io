@@ -240,7 +240,7 @@ const goToPreviousPageInModal = () => {
     // 현재 모달 닫기
     showMobileModal.value = false
     mobileModalPageIndex.value = null
-    
+
     // 모달 닫기 애니메이션 완료 후 다음 모달 열기 (0.3s + 약간의 여유)
     setTimeout(() => {
       mobileModalPageIndex.value = newIndex
@@ -261,7 +261,7 @@ const goToNextPageInModal = () => {
     // 현재 모달 닫기
     showMobileModal.value = false
     mobileModalPageIndex.value = null
-    
+
     // 모달 닫기 애니메이션 완료 후 다음 모달 열기 (0.3s + 약간의 여유)
     setTimeout(() => {
       mobileModalPageIndex.value = newIndex
@@ -860,7 +860,7 @@ onUnmounted(() => {
               <path class="touch-arrow" d="M12 34L16 38L20 34" stroke="rgba(255, 255, 255, 0.7)" stroke-width="2"
                 stroke-linecap="round" stroke-linejoin="round" fill="none" />
             </svg>
-            <span class="scroll-text-desktop">SCROLL DOWN</span>
+            <span class="scroll-text-desktop">아래로 스크롤</span>
             <span class="scroll-text-mobile">아래로 스와이프</span>
             <div class="arrow"></div>
           </div>
@@ -878,8 +878,10 @@ onUnmounted(() => {
             <div class="click-hint">
               <div class="click-hint-icon">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M9 11L12 14L22 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                  <path d="M21 12V19C21 19.5304 20.7893 20.0391 20.4142 20.4142C20.0391 20.7893 19.5304 21 19 21H5C4.46957 21 3.96086 20.7893 3.58579 20.4142C3.21071 20.0391 3 19.5304 3 19V5C3 4.46957 3.21071 3.96086 3.58579 3.58579C3.96086 3.21071 4.46957 3 5 3H16" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                  <path d="M9 21H5C3.89543 21 3 20.1046 3 19V5C3 3.89543 3.89543 3 5 3H19C20.1046 3 21 3.89543 21 5V9"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                  <path d="M12 11L12 20L14.5 17.5L17.5 22.5L19.5 21.5L16.5 16.5L21 16.5L12 11Z" fill="currentColor"
+                    stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" />
                 </svg>
               </div>
               <span class="click-hint-text">클릭하여 포트폴리오 보기</span>
@@ -1263,10 +1265,13 @@ onUnmounted(() => {
   }
 
   @keyframes clickPulse {
-    0%, 100% {
+
+    0%,
+    100% {
       transform: scale(1);
       box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
     }
+
     50% {
       transform: scale(1.1);
       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
